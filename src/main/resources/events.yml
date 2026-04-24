@@ -1,0 +1,230 @@
+# ================================
+# RogueCore 随机事件配置
+# ================================
+
+# 事件房楼层成长
+event-scaling:
+  # 事件奖励每层递增倍率
+  reward-per-floor: 0.08
+  max-reward-multiplier: 2.2
+  # 商店/神龛等事件价格每层递增倍率
+  price-per-floor: 0.05
+  max-price-multiplier: 1.8
+  # 试炼/赌局/献祭等风险每层递增倍率
+  risk-per-floor: 0.03
+  max-risk-multiplier: 1.45
+  max-risk-percent: 0.75
+  # 每隔多少层，神恩/遗物候选 +1
+  extra-offer-every-floors: 5
+  max-extra-offers: 1
+  # 每隔多少层，隐藏房材料奖励 +1
+  material-bonus-every-floors: 6
+  max-material-bonus: 2
+
+# 高层事件专属变体
+event-variants:
+  shop:
+    # 达到该层后，商店会出售黑市货柜
+    black-market-floor: 6
+    black-market-price: 72
+    black-market-ember-reward: 2
+    black-market-sigil-reward: 1
+    black-market-grant-hidden-loot: true
+  shrine:
+    # 达到该层后，神龛开放双生祷文
+    twin-prayer-floor: 8
+    twin-prayer-price: 44
+    twin-prayer-heal-percent: 0.45
+  trial:
+    # 达到该层后，试炼房开放歃血试炼
+    blood-trial-floor: 8
+    blood-trial-health-percent: 0.4
+    blood-trial-shard-min: 30
+    blood-trial-shard-max: 56
+
+# 高层事件词缀池
+event-affixes:
+  # 每层可抽取的事件词缀数量
+  rules:
+    "1-7": 0
+    "8-11": 1
+    "12-99": 2
+  affixes:
+    greedy_market:
+      name: "§d贪婪集市"
+      description: "商店额外刷新货品，黑市货柜更便宜也更丰厚。"
+      rooms: ["SHOP"]
+      min-floor: 8
+      weight: 18
+    twinned_faith:
+      name: "§f双生圣像"
+      description: "神龛的治疗更强，并固定开放双生祷文。"
+      rooms: ["SHRINE"]
+      min-floor: 8
+      weight: 16
+    scarlet_oath:
+      name: "§4猩红盟誓"
+      description: "试炼固定开放歃血试炼，代价更高，回报也更高。"
+      rooms: ["TRIAL"]
+      min-floor: 8
+      weight: 16
+    shadow_stockpile:
+      name: "§9幽匿秘储"
+      description: "隐藏房会额外撬开一层秘格，并获得更多秘库印记。"
+      rooms: ["HIDDEN"]
+      min-floor: 8
+      weight: 14
+    loaded_dice:
+      name: "§2灌铅骰盘"
+      description: "赌局更极端，更容易暴富，也更容易遭受重创。"
+      rooms: ["GAMBLE"]
+      min-floor: 8
+      weight: 14
+
+# 商店房配置
+shop:
+  # Boon 商品价格范围
+  boon-price-min: 20
+  boon-price-max: 50
+  # 回复商品价格（回满生命）
+  heal-price: 15
+  # 遗物契据价格（研究解锁后出现）
+  relic-price: 48
+
+# 铁匠房配置
+forge:
+  # 重铸一件已装备临时装备的本局碎片消耗
+  reroll-price: 18
+  # 循环锁定一条随机词条的本局碎片消耗
+  lock-affix-price: 6
+  cooling:
+    # 余烬退火消耗的炉核余烬
+    ember-cost: 1
+    # 每次退火降低的热度
+    heat-reduce: 2
+  no-heat-reforge:
+    # 精炼无热重铸的碎片消耗
+    shard-price: 28
+    # 精炼无热重铸消耗的炉核余烬
+    ember-cost: 1
+    # 精炼无热重铸消耗的秘库印记
+    sigil-cost: 1
+  materials:
+    boss-ember:
+      # Boss 奖励的炉核余烬数量
+      reward-min: 1
+      reward-max: 2
+      # 灵魂淬火消耗的炉核余烬
+      temper-cost: 1
+    hidden-sigil:
+      # 隐藏宝藏奖励的秘库印记数量
+      reward-min: 1
+      reward-max: 1
+      # 锁词操作消耗的秘库印记
+      lock-cost: 1
+  heat:
+    # 单件装备可承受的最大锻造热度；达到后无法继续重铸/升阶/淬火
+    max: 6
+    # 每次重铸增加的热度
+    reforge: 1
+    # 每次升阶增加的热度
+    upgrade: 2
+    # 每次灵魂淬火增加的热度
+    temper: 3
+  # 淬火一件已装备临时装备的基础消耗
+  temper-price: 28
+  # 每有 1 级锻造等级，淬火额外增加的消耗
+  temper-price-per-level: 12
+  # 升阶一件已装备临时装备的基础消耗
+  upgrade-price: 22
+  # 每有 1 级锻造等级，升阶额外增加的消耗
+  upgrade-price-per-level: 10
+  # 每级锻造对属性的增幅
+  attribute-bonus-per-level: 0.18
+  # 单件装备最大锻造等级
+  max-upgrades: 3
+  # 分解任意一件临时装备时的基础返还
+  salvage-base: 8
+  # 分解返还 = 基础返还 + 装备评分 * 该系数
+  salvage-score-scale: 0.35
+  # 每级锻造额外返还的本局碎片
+  salvage-forge-bonus: 6
+
+# 撤离点配置
+extraction:
+  # 提现时可转化为永久灵魂碎片的局内碎片比例
+  cashout-ratio: 0.5
+  # 若当前局内碎片低于该值，则不能提现
+  min-cashout-run-shards: 20
+
+# 契约房配置
+contract:
+  # 镀金契约碎片奖励范围
+  shard-reward-min: 26
+  shard-reward-max: 52
+  # 脆弱诅咒减少的最大生命
+  fragile-health-penalty: 6.0
+  # 凋敝诅咒使治疗量乘以该倍率
+  withered-heal-multiplier: 0.5
+  # 易伤诅咒使受到伤害乘以该倍率
+  vulnerable-damage-multiplier: 1.25
+  # 空蚀诅咒使造成伤害乘以该倍率
+  hollow-damage-multiplier: 0.8
+  # 王冠契约的固定本局碎片奖励
+  crown-shard-reward: 44
+
+# 宝箱房配置
+chest:
+  # 碎片奖励范围
+  shard-min: 10
+  shard-max: 30
+  # 是否给一个随机 Boon
+  give-boon: true
+
+# 休息房配置
+rest:
+  # 回复生命比例（1.0 = 回满）
+  heal-percent: 1.0
+
+# 试炼房配置
+trial:
+  # 试炼扣除当前生命比例
+  hp-cost-percent: 0.2
+  # 超越试炼扣除当前生命比例
+  relic-hp-cost-percent: 0.35
+  # 贪欲试炼本局碎片奖励范围
+  shard-reward-min: 18
+  shard-reward-max: 40
+
+# 赌局房配置
+gamble:
+  # 赌局获胜时的碎片奖励范围
+  shard-win-min: 12
+  shard-win-max: 36
+  # 赌输时失去当前本局碎片比例
+  loss-percent: 0.35
+  # 赌输时受伤比例（按当前生命）
+  damage-percent: 0.25
+
+# 神龛房配置
+shrine:
+  # 祈祷赐福消耗的本局碎片
+  blessing-cost: 20
+  # 净化祷告消耗的本局碎片
+  purify-price: 26
+  # 祈祷时回复最大生命比例
+  heal-percent: 0.3
+  # 献祭时失去当前生命比例
+  sacrifice-health-percent: 0.2
+  # 献祭后获得的本局碎片
+  sacrifice-shard-reward: 28
+
+# 隐藏宝藏房配置
+hidden:
+  # 本局碎片奖励范围
+  shard-min: 24
+  shard-max: 48
+  # 是否额外给一次遗物选择；开启时优先于神恩选择
+  give-relic: true
+  # 是否额外给一次神恩选择
+  give-boon: true

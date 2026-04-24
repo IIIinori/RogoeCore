@@ -1,0 +1,182 @@
+# ================================
+# RogueCore 局外研究解锁
+# ================================
+
+unlocks:
+  advanced_relics:
+    name: "古遗物学"
+    description: "解锁一批更强的稀有/史诗遗物。"
+    icon: ENCHANTED_BOOK
+    cost: 180
+    slot: 4
+    required-best-floor: 3
+
+  extreme_route:
+    name: "险路制图"
+    description: "通关后可额外选择极境路线。"
+    icon: FILLED_MAP
+    cost: 220
+    slot: 18
+    required-best-floor: 4
+
+  void_contract:
+    name: "虚空契约"
+    description: "契约祭坛会开放更危险也更贪婪的第四选项。"
+    icon: CRYING_OBSIDIAN
+    cost: 260
+    slot: 22
+    required-best-floor: 5
+    requires: ["advanced_relics"]
+
+  legendary_relics:
+    name: "神话残章"
+    description: "解锁传说遗物池。"
+    icon: NETHER_STAR
+    cost: 420
+    slot: 40
+    required-best-floor: 8
+    requires: ["advanced_relics"]
+
+  battle_doctrine:
+    name: "征伐兵学"
+    description: "强化征伐路线，进一步提升战斗与精英房权重。"
+    icon: DIAMOND_SWORD
+    cost: 260
+    slot: 27
+    required-best-floor: 5
+    requires: ["extreme_route"]
+
+  black_market_network:
+    name: "黑市联络"
+    description: "强化机遇路线，更容易遇到商店、铁匠与契约。"
+    icon: ENDER_CHEST
+    cost: 280
+    slot: 31
+    required-best-floor: 5
+    requires: ["void_contract"]
+
+  precision_locking:
+    name: "精密锁词"
+    description: "铁匠房解锁锁词工艺，可消耗秘库印记锁定一条随机词条。"
+    icon: NAME_TAG
+    cost: 320
+    slot: 29
+    required-best-floor: 6
+    requires: ["black_market_network"]
+
+  soul_tempering:
+    name: "灵魂淬火"
+    description: "铁匠房解锁淬火工艺，可在重铸时顺势提升装备锻造等级。"
+    icon: SMITHING_TABLE
+    cost: 360
+    slot: 30
+    required-best-floor: 6
+    requires: ["black_market_network"]
+
+  ember_cooling:
+    name: "余烬退火"
+    description: "铁匠房解锁退火工艺，可消耗炉核余烬降低装备锻造热度。"
+    icon: CAMPFIRE
+    cost: 420
+    slot: 33
+    required-best-floor: 7
+    requires: ["soul_tempering"]
+
+  volcanic_tempering:
+    name: "炽火淬锋"
+    description: "强化淬火工艺，使每次淬火额外提升 1 级锻造等级。"
+    icon: MAGMA_CREAM
+    cost: 480
+    slot: 23
+    required-best-floor: 8
+    requires: ["soul_tempering"]
+
+  arcane_exchange:
+    name: "秘法交易"
+    description: "商店房会出售一份昂贵的遗物契据。"
+    icon: EMERALD
+    cost: 380
+    slot: 32
+    required-best-floor: 6
+    requires: ["black_market_network"]
+
+  refined_reforge:
+    name: "精炼重铸"
+    description: "铁匠房解锁无热重铸，可消耗两类锻造材料重铸装备但不增加热度。"
+    icon: BLAST_FURNACE
+    cost: 520
+    slot: 34
+    required-best-floor: 8
+    requires: ["precision_locking", "ember_cooling"]
+
+  steady_forging:
+    name: "稳锻节律"
+    description: "重铸热度降低 1，且余烬退火额外降低 1 点热度。"
+    icon: CHAIN
+    cost: 500
+    slot: 37
+    required-best-floor: 8
+    requires: ["ember_cooling"]
+
+  inscription_mastery:
+    name: "精修铭刻"
+    description: "锁词与精炼重铸的碎片/印记消耗进一步降低。"
+    icon: GLOW_ITEM_FRAME
+    cost: 580
+    slot: 41
+    required-best-floor: 9
+    requires: ["refined_reforge"]
+
+  treasure_cipher:
+    name: "藏宝密钥"
+    description: "强化藏宝路线，并进一步提高隐藏房出现率。"
+    icon: TRIPWIRE_HOOK
+    cost: 300
+    slot: 35
+    required-best-floor: 6
+    requires: ["advanced_relics"]
+
+  sealed_vault:
+    name: "封印秘库"
+    description: "隐藏房会额外撬开一道暗格，再获得一次隐藏战利品。"
+    icon: BARREL
+    cost: 340
+    slot: 39
+    required-best-floor: 7
+    requires: ["treasure_cipher"]
+
+  forbidden_trials:
+    name: "禁忌试炼"
+    description: "试炼房开放第四项超越试炼，以更多生命代价换遗物。"
+    icon: NETHER_WART
+    cost: 400
+    slot: 28
+    required-best-floor: 7
+    requires: ["battle_doctrine"]
+
+  relic_transmutation:
+    name: "遗物转化学"
+    description: "遗物选择会额外出现 1 个候选。"
+    icon: AMETHYST_CLUSTER
+    cost: 520
+    slot: 42
+    required-best-floor: 9
+    requires: ["legendary_relics"]
+
+  abyssal_bargain:
+    name: "深渊交易"
+    description: "契约祭坛解锁第五项王冠契约，以双重诅咒换取巨额收益。"
+    icon: GILDED_BLACKSTONE
+    cost: 460
+    slot: 24
+    required-best-floor: 8
+    requires: ["void_contract"]
+
+  sanctified_prayer:
+    name: "圣谕净祷"
+    description: "神龛房开放净化祷告，可移除一条契约诅咒。"
+    icon: TOTEM_OF_UNDYING
+    cost: 440
+    slot: 20
+    required-best-floor: 8
+    requires: ["void_contract"]

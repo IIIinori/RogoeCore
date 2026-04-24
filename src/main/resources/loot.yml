@@ -1,0 +1,798 @@
+# ================================
+# RogueCore 临时装备配置
+# ================================
+#
+# 属性行会直接写入 lore，交给 AttributePlus 自动读取。
+# 属性键名请使用你服务器 AP 实际配置中的属性名。
+# 若属性键以 % 结尾，则会被渲染为百分比属性，例如：
+#   暴击几率%: [3, 5]
+# 会显示为：
+#   暴击几率: +3~5 (%)
+
+rules:
+  chest-chance: 0.45
+  elite-count: 1
+  boss-count: 1
+  ap-percentage-mark: "(%)"
+  drop-protection:
+    enabled: true
+    empty-slot-weight: 2.1
+    duplicate-slot-penalty: 0.72
+    upgrade-score-scale: 0.02
+    max-upgrade-bonus: 0.75
+    downgrade-penalty-scale: 0.012
+    min-weight-factor: 0.25
+  source-bonus:
+    BOSS:
+      extra-affixes: 1
+      rarity-upgrade-chance: 0.55
+    HIDDEN:
+      extra-affixes: 1
+      rarity-upgrade-chance: 0.35
+
+rarities:
+  common:
+    name: "普通"
+    color: "§f"
+    weight: 58
+    multiplier: 1.0
+    max-affixes: 0
+
+  magic:
+    name: "精制"
+    color: "§b"
+    weight: 28
+    multiplier: 1.12
+    max-affixes: 1
+
+  rare:
+    name: "稀有"
+    color: "§d"
+    weight: 11
+    multiplier: 1.25
+    max-affixes: 2
+
+  epic:
+    name: "史诗"
+    color: "§6"
+    weight: 3
+    multiplier: 1.42
+    max-affixes: 2
+
+  legendary:
+    name: "传说"
+    color: "§e"
+    weight: 1
+    multiplier: 1.65
+    max-affixes: 3
+
+sets:
+  crypt:
+    name: "墓窟遗甲"
+    themes: [crypt]
+    bonuses:
+      "2":
+        lore:
+          - "§8墓室残响让防线更加稳固。"
+        attributes:
+          生命上限: 18
+      "3":
+        lore:
+          - "§8古老守灵誓约继续回应你。"
+        attributes:
+          物理防御: 4
+
+  nether:
+    name: "熔狱战装"
+    themes: [nether]
+    bonuses:
+      "2":
+        lore:
+          - "§8炉心余烬推高了你的压制力。"
+        attributes:
+          物理攻击: 5
+      "3":
+        lore:
+          - "§8灼热气息会在进攻中反哺生命。"
+        attributes:
+          生命偷取%: 3
+
+  end:
+    name: "逐界遗装"
+    themes: [end]
+    bonuses:
+      "2":
+        lore:
+          - "§8空间裂隙让步伐和出手更轻快。"
+        attributes:
+          攻击速度%: 4
+          移动速度%: 4
+      "3":
+        lore:
+          - "§8星界共振强化终结爆发。"
+        attributes:
+          暴击伤害%: 10
+
+  hidden:
+    name: "秘库藏印"
+    themes: [hidden]
+    bonuses:
+      "2":
+        lore:
+          - "§8暗室珍藏总会留下额外余裕。"
+        attributes:
+          生命上限: 16
+          移动速度%: 3
+
+  vanguard:
+    name: "先锋阵列"
+    tags: [bulwark]
+    bonuses:
+      "2":
+        lore:
+          - "§8重装协同让你更难被正面击穿。"
+        attributes:
+          生命上限: 14
+      "3":
+        lore:
+          - "§8整套阵列已经能稳稳顶在最前排。"
+        attributes:
+          物理防御: 3
+
+  slayer:
+    name: "猎杀号令"
+    tags: [assault]
+    bonuses:
+      "2":
+        lore:
+          - "§8进攻节奏开始连成一条线。"
+        attributes:
+          物理攻击: 4
+      "3":
+        lore:
+          - "§8所有杀意会在收尾时彻底爆开。"
+        attributes:
+          暴击伤害%: 8
+
+affixes:
+  brutal:
+    name: "凶暴"
+    type: PREFIX
+    group: power_core
+    weight: 10
+    range: "1-15"
+    slots: [HAND, OFF_HAND]
+    slot-weight:
+      HAND: 1.6
+      OFF_HAND: 1.15
+    source-weight:
+      BOSS: 1.35
+    excludes: [precision_core, crit_core]
+    lore:
+      - "§8偏向更猛烈的进攻面板。"
+    attributes:
+      物理攻击: [3, 6]
+
+  swift:
+    name: "迅击"
+    type: PREFIX
+    group: tempo_core
+    weight: 8
+    range: "1-15"
+    slots: [HAND]
+    source-weight:
+      CHEST: 1.1
+      ELITE: 1.2
+    excludes: [execution_core]
+    lore:
+      - "§8挥砍节奏被进一步拉快。"
+    attributes:
+      攻击速度%: [4, 8]
+
+  precise:
+    name: "锐眼"
+    type: PREFIX
+    group: precision_core
+    weight: 7
+    range: "1-15"
+    slots: [HAND, OFF_HAND]
+    slot-weight:
+      HAND: 1.45
+      OFF_HAND: 1.2
+    source-weight:
+      BOSS: 1.3
+      HIDDEN: 1.15
+    excludes: [power_core]
+    lore:
+      - "§8更容易打出关键一击。"
+    attributes:
+      暴击几率%: [3, 6]
+
+  warded:
+    name: "壁守"
+    type: PREFIX
+    group: guard_core
+    weight: 7
+    range: "1-15"
+    slots: [HEAD, CHEST, OFF_HAND]
+    slot-weight:
+      CHEST: 1.45
+      HEAD: 1.2
+      OFF_HAND: 1.15
+    excludes: [mobility_guard]
+    lore:
+      - "§8更偏向稳健承伤的部位专精。"
+    attributes:
+      生命上限: [18, 30]
+      物理防御: [2, 4]
+
+  rooted:
+    name: "定界"
+    type: PREFIX
+    group: foothold_core
+    weight: 6
+    range: "6-15"
+    slots: [LEGS, FEET]
+    slot-weight:
+      LEGS: 1.2
+      FEET: 1.35
+    source-weight:
+      ELITE: 1.15
+    excludes: [mobility_core]
+    lore:
+      - "§8让下盘更稳定，也更难被击穿。"
+    attributes:
+      物理防御: [3, 6]
+      闪避几率%: [1, 3]
+
+  fortified:
+    name: "壁垒"
+    type: PREFIX
+    group: guard_core
+    weight: 10
+    range: "1-15"
+    slots: [HEAD, CHEST, LEGS, FEET, OFF_HAND]
+    slot-weight:
+      CHEST: 1.55
+      HEAD: 1.2
+      OFF_HAND: 1.2
+    excludes: [mobility_guard]
+    lore:
+      - "§8更适合硬扛正面战斗。"
+    attributes:
+      物理防御: [4, 8]
+
+  vigorous:
+    name: "旺盛"
+    type: PREFIX
+    group: vitality_core
+    weight: 8
+    range: "1-15"
+    slots: [HEAD, CHEST, LEGS, FEET, OFF_HAND]
+    slot-weight:
+      CHEST: 1.35
+      HEAD: 1.25
+      OFF_HAND: 1.15
+    lore:
+      - "§8提供更稳定的生存空间。"
+    attributes:
+      生命上限: [20, 40]
+
+  evasive:
+    name: "幻步"
+    type: PREFIX
+    group: mobility_guard
+    weight: 6
+    range: "1-15"
+    slots: [HEAD, CHEST, LEGS, FEET]
+    slot-weight:
+      FEET: 1.45
+      CHEST: 1.2
+    source-weight:
+      HIDDEN: 1.2
+    excludes: [guard_core]
+    lore:
+      - "§8让致命攻击有机会擦身而过。"
+    attributes:
+      闪避几率%: [2, 5]
+
+  hunter:
+    name: "猎手"
+    type: SUFFIX
+    group: crit_core
+    weight: 8
+    range: "1-15"
+    slots: [HAND, OFF_HAND]
+    slot-weight:
+      HAND: 1.35
+      OFF_HAND: 1.15
+    source-weight:
+      BOSS: 1.25
+    excludes: [power_core]
+    lore:
+      - "§8强化收割和暴击节奏。"
+    attributes:
+      暴击几率%: [2, 5]
+
+  leech:
+    name: "嗜血"
+    type: SUFFIX
+    group: sustain_core
+    weight: 6
+    range: "1-15"
+    slots: [HAND, OFF_HAND]
+    slot-weight:
+      HAND: 1.3
+      OFF_HAND: 1.1
+    source-weight:
+      ELITE: 1.15
+      BOSS: 1.2
+    lore:
+      - "§8让进攻带回一部分续航。"
+    attributes:
+      生命偷取%: [2, 4]
+
+  cruel:
+    name: "残酷"
+    type: SUFFIX
+    group: execution_core
+    weight: 6
+    range: "6-15"
+    slots: [HAND]
+    source-weight:
+      BOSS: 1.4
+    excludes: [tempo_core]
+    lore:
+      - "§8将暴击转化为更夸张的爆发。"
+    attributes:
+      暴击伤害%: [6, 12]
+
+  gale:
+    name: "疾行"
+    type: SUFFIX
+    group: mobility_core
+    weight: 7
+    range: "1-15"
+    slots: [CHEST, FEET]
+    slot-weight:
+      FEET: 1.5
+      CHEST: 1.2
+    source-weight:
+      HIDDEN: 1.2
+    excludes: [foothold_core]
+    lore:
+      - "§8更适合走位与拉扯。"
+    attributes:
+      移动速度%: [3, 6]
+
+  thorned:
+    name: "荆棘"
+    type: SUFFIX
+    group: thorns_core
+    weight: 5
+    range: "1-15"
+    slots: [HEAD, CHEST, LEGS, FEET, OFF_HAND]
+    slot-weight:
+      CHEST: 1.25
+      OFF_HAND: 1.2
+    lore:
+      - "§8挨打时也会让敌人付出代价。"
+    attributes:
+      反伤比例%: [3, 6]
+
+  guardian:
+    name: "守誓"
+    type: SUFFIX
+    group: guard_core
+    weight: 6
+    range: "6-15"
+    slots: [HEAD, CHEST, LEGS, FEET, OFF_HAND]
+    slot-weight:
+      CHEST: 1.4
+      HEAD: 1.2
+      OFF_HAND: 1.15
+    source-weight:
+      ELITE: 1.15
+    excludes: [mobility_guard]
+    lore:
+      - "§8在长线推进中提供更扎实的防线。"
+    attributes:
+      生命上限: [16, 30]
+      物理防御: [2, 5]
+
+  shadow:
+    name: "影行"
+    type: SUFFIX
+    group: mobility_core
+    weight: 5
+    range: "11-15"
+    slots: [HAND, CHEST, FEET]
+    slot-weight:
+      FEET: 1.35
+      HAND: 1.2
+      CHEST: 1.15
+    source-weight:
+      HIDDEN: 1.4
+    excludes: [guard_core, foothold_core]
+    lore:
+      - "§8虚空回响让攻防节奏更飘忽。"
+    attributes:
+      移动速度%: [4, 7]
+      闪避几率%: [2, 4]
+
+  executioner:
+    name: "行刑"
+    type: SUFFIX
+    group: execution_core
+    weight: 5
+    range: "11-15"
+    slots: [HAND]
+    source-weight:
+      BOSS: 1.5
+      HIDDEN: 1.15
+    excludes: [tempo_core]
+    lore:
+      - "§8更适合收尾与终局斩杀。"
+    attributes:
+      物理攻击: [4, 7]
+      暴击伤害%: [8, 14]
+
+  tomb_king:
+    name: "葬王"
+    type: SUFFIX
+    group: relic_core
+    weight: 4
+    range: "1-5"
+    slots: [HEAD, OFF_HAND]
+    sources: [BOSS, HIDDEN]
+    slot-weight:
+      OFF_HAND: 1.25
+      HEAD: 1.15
+    source-weight:
+      HIDDEN: 1.45
+      BOSS: 1.2
+    excludes: [sealed]
+    lore:
+      - "§8只会出现在墓穴深处的重宝上。"
+    attributes:
+      生命上限: [24, 40]
+      反伤比例%: [4, 7]
+
+  hellforged:
+    name: "狱铸"
+    type: PREFIX
+    group: power_core
+    weight: 4
+    range: "6-10"
+    slots: [HAND, CHEST, OFF_HAND]
+    sources: [BOSS]
+    slot-weight:
+      HAND: 1.45
+      CHEST: 1.15
+    source-weight:
+      BOSS: 1.6
+    excludes: [precision_core, crit_core]
+    lore:
+      - "§8炉心压出的装备才会留下这种烙印。"
+    attributes:
+      物理攻击: [5, 9]
+      生命偷取%: [2, 5]
+
+  abyssal:
+    name: "深渊"
+    type: PREFIX
+    group: power_core
+    weight: 4
+    range: "11-15"
+    slots: [HAND, OFF_HAND, CHEST]
+    sources: [BOSS, HIDDEN]
+    slot-weight:
+      HAND: 1.4
+      OFF_HAND: 1.2
+      CHEST: 1.1
+    source-weight:
+      BOSS: 1.35
+      HIDDEN: 1.35
+    excludes: [precision_core, crit_core]
+    lore:
+      - "§8只会在高层重宝中回响的虚空词条。"
+    attributes:
+      物理攻击: [6, 10]
+      闪避几率%: [2, 4]
+
+  sealed:
+    name: "封印"
+    type: SUFFIX
+    group: relic_core
+    weight: 5
+    range: "1-15"
+    slots: [HEAD, CHEST, LEGS, FEET, OFF_HAND]
+    sources: [HIDDEN]
+    slot-weight:
+      OFF_HAND: 1.2
+      HEAD: 1.15
+      CHEST: 1.1
+    source-weight:
+      HIDDEN: 1.55
+    excludes: [tomb_king]
+    lore:
+      - "§8来自秘库暗格的残留印记。"
+    attributes:
+      生命上限: [18, 34]
+      暴击几率%: [2, 4]
+
+  starfall:
+    name: "坠星"
+    type: SUFFIX
+    group: crit_core
+    weight: 3
+    range: "11-15"
+    slots: [HAND, HEAD, OFF_HAND]
+    sources: [BOSS, HIDDEN]
+    slot-weight:
+      HAND: 1.35
+      OFF_HAND: 1.2
+      HEAD: 1.1
+    source-weight:
+      BOSS: 1.35
+      HIDDEN: 1.3
+    excludes: [power_core]
+    lore:
+      - "§8终层珍品才可能染上的星坠碎辉。"
+    attributes:
+      暴击几率%: [4, 7]
+      暴击伤害%: [10, 16]
+
+loot:
+  crypt_blade:
+    name: "墓窟短刃"
+    material: IRON_SWORD
+    theme: crypt
+    tags: [assault]
+    sources: [CHEST, ELITE]
+    range: "1-5"
+    weight: 18
+    equipment-slot: HAND
+    lore:
+      - "§7轻便的短刃，适合快速收割残血敌人。"
+    attributes:
+      物理攻击: [4, 6]
+      攻击速度%: [4, 6]
+
+  crypt_guard:
+    name: "墓穴壁垒"
+    material: IRON_CHESTPLATE
+    theme: crypt
+    tags: [bulwark]
+    sources: [CHEST, ELITE]
+    range: "1-5"
+    weight: 14
+    equipment-slot: CHEST
+    lore:
+      - "§7厚重但可靠的铠甲。"
+    attributes:
+      生命上限: [20, 30]
+      物理防御: [3, 5]
+
+  crypt_crown:
+    name: "守灵头冠"
+    material: GOLDEN_HELMET
+    theme: crypt
+    tags: [bulwark, relic]
+    sources: [BOSS, HIDDEN]
+    range: "1-5"
+    weight: 10
+    equipment-slot: HEAD
+    lore:
+      - "§7陪葬王者的冠饰，能强化冒险者的续航。"
+    attributes:
+      生命上限: [26, 40]
+
+  crypt_greaves:
+    name: "守墓胫甲"
+    material: CHAINMAIL_LEGGINGS
+    theme: crypt
+    tags: [bulwark]
+    sources: [CHEST, ELITE]
+    range: "1-5"
+    weight: 13
+    equipment-slot: LEGS
+    lore:
+      - "§7墓卫留下的旧甲片，仍能挡下不少伤害。"
+    attributes:
+      物理防御: [3, 5]
+      生命上限: [12, 22]
+
+  crypt_lantern:
+    name: "幽光提灯"
+    material: SOUL_LANTERN
+    theme: crypt
+    tags: [relic]
+    sources: [CHEST, HIDDEN]
+    range: "1-5"
+    weight: 9
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7灯火会在黑暗里牵引你的下一次机会。"
+    attributes:
+      暴击几率%: [2, 4]
+      生命上限: [10, 20]
+
+  nether_halberd:
+    name: "深渊长戟"
+    material: DIAMOND_AXE
+    theme: nether
+    tags: [assault]
+    sources: [ELITE, BOSS]
+    range: "6-10"
+    weight: 16
+    equipment-slot: HAND
+    lore:
+      - "§7专为重击打造的炽热兵器。"
+    attributes:
+      物理攻击: [8, 11]
+
+  nether_boots:
+    name: "熔火行者"
+    material: DIAMOND_BOOTS
+    theme: nether
+    tags: [mobility]
+    sources: [CHEST, ELITE]
+    range: "6-10"
+    weight: 14
+    equipment-slot: FEET
+    lore:
+      - "§7让你在战场上保持推进节奏。"
+    attributes:
+      移动速度%: [4, 6]
+      物理防御: [3, 4]
+
+  nether_heart:
+    name: "熔核护符"
+    material: BLAZE_POWDER
+    theme: nether
+    tags: [relic, assault]
+    sources: [BOSS, HIDDEN]
+    range: "6-10"
+    weight: 10
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7高温熔核凝成的战场护符。"
+    attributes:
+      生命上限: [35, 50]
+      物理攻击: [3, 5]
+
+  nether_mask:
+    name: "焦骨战面"
+    material: DIAMOND_HELMET
+    theme: nether
+    tags: [assault]
+    sources: [ELITE, BOSS]
+    range: "6-10"
+    weight: 13
+    equipment-slot: HEAD
+    lore:
+      - "§7戴上后能听见熔岩下的战鼓声。"
+    attributes:
+      暴击几率%: [3, 5]
+      生命上限: [24, 36]
+
+  nether_plate:
+    name: "赤炉重甲"
+    material: DIAMOND_CHESTPLATE
+    theme: nether
+    tags: [bulwark]
+    sources: [CHEST, ELITE]
+    range: "6-10"
+    weight: 13
+    equipment-slot: CHEST
+    lore:
+      - "§7由冷却岩浆层层锻压而成。"
+    attributes:
+      物理防御: [6, 9]
+      生命上限: [30, 44]
+
+  nether_slicer:
+    name: "熔牙弯刃"
+    material: DIAMOND_SWORD
+    theme: nether
+    tags: [assault]
+    sources: [CHEST, ELITE]
+    range: "6-10"
+    weight: 12
+    equipment-slot: HAND
+    lore:
+      - "§7刀锋像仍在流动的熔浆。"
+    attributes:
+      物理攻击: [7, 10]
+      生命偷取%: [2, 4]
+
+  end_spear:
+    name: "虚空裂枪"
+    material: NETHERITE_SWORD
+    theme: end
+    tags: [assault]
+    sources: [ELITE, BOSS]
+    range: "11-15"
+    weight: 16
+    equipment-slot: HAND
+    lore:
+      - "§7来自虚空尽头的锋刃。"
+    attributes:
+      物理攻击: [10, 14]
+      攻击速度%: [6, 9]
+
+  end_cloak:
+    name: "逐界者披风"
+    material: ELYTRA
+    theme: end
+    tags: [mobility]
+    sources: [CHEST, BOSS, HIDDEN]
+    range: "11-15"
+    weight: 12
+    equipment-slot: CHEST
+    lore:
+      - "§7披上后仿佛能撕开空间。"
+    attributes:
+      移动速度%: [5, 8]
+      生命上限: [24, 36]
+
+  hidden_relic:
+    name: "秘库古戒"
+    material: TOTEM_OF_UNDYING
+    theme: hidden
+    tags: [relic, mobility]
+    sources: [HIDDEN]
+    range: "1-15"
+    weight: 10
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7从无人知晓的暗室中找到的古旧戒印。"
+    attributes:
+      生命上限: [20, 32]
+      移动速度%: [2, 4]
+
+  end_visor:
+    name: "凝星面罩"
+    material: NETHERITE_HELMET
+    theme: end
+    tags: [assault]
+    sources: [ELITE, BOSS, HIDDEN]
+    range: "11-15"
+    weight: 12
+    equipment-slot: HEAD
+    lore:
+      - "§7星光被凝成狭窄视野，只留下杀意。"
+    attributes:
+      暴击几率%: [5, 8]
+      闪避几率%: [2, 4]
+
+  end_anchor:
+    name: "界锚护手"
+    material: ECHO_SHARD
+    theme: end
+    tags: [relic, assault]
+    sources: [BOSS, HIDDEN]
+    range: "11-15"
+    weight: 9
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7将漂移的虚空力量短暂固定在掌心。"
+    attributes:
+      物理攻击: [5, 8]
+      生命上限: [30, 45]
+
+  end_stride:
+    name: "折界长靴"
+    material: NETHERITE_BOOTS
+    theme: end
+    tags: [mobility]
+    sources: [CHEST, ELITE, BOSS]
+    range: "11-15"
+    weight: 13
+    equipment-slot: FEET
+    lore:
+      - "§7每一步都像踏过一条细小裂隙。"
+    attributes:
+      移动速度%: [7, 10]
+      闪避几率%: [3, 5]

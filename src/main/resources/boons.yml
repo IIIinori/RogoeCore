@@ -1,0 +1,148 @@
+# ================================
+# RogueCore 神恩(Boon)配置
+# ================================
+# 属性名必须与服务器 AttributePlus 配置中的属性名一致
+# attributes 格式: "属性名": [每级最小值, 每级最大值]
+# 例如 max-level: 3, attributes 物理攻击: [5, 5]
+#   Lv.1 = +5~5, Lv.2 = +10~10, Lv.3 = +15~15
+
+boons:
+  # ===== 攻击型 =====
+  atk_boost:
+    name: "力量祝福"
+    description: "物理攻击 +{value}"
+    rarity: COMMON
+    icon: IRON_SWORD
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "物理攻击": [5.0, 5.0]
+
+  crit_boost:
+    name: "暴击之眼"
+    description: "暴击几率 +{value}%"
+    rarity: RARE
+    icon: SPIDER_EYE
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "暴击几率": [3.0, 3.0]
+
+  speed_boost:
+    name: "疾风步"
+    description: "攻击速度 +{value}%"
+    rarity: COMMON
+    icon: FEATHER
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "攻击速度": [5.0, 5.0]
+
+  # ===== 防御型 =====
+  hp_boost:
+    name: "生命之心"
+    description: "生命上限 +{value}"
+    rarity: COMMON
+    icon: GOLDEN_APPLE
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "生命上限": [20.0, 20.0]
+
+  def_boost:
+    name: "铁壁"
+    description: "物理防御 +{value}"
+    rarity: RARE
+    icon: IRON_CHESTPLATE
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "物理防御": [5.0, 5.0]
+
+  dodge_boost:
+    name: "幻影"
+    description: "闪避几率 +{value}%"
+    rarity: EPIC
+    icon: ENDER_PEARL
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "闪避几率": [3.0, 3.0]
+
+  # ===== 特殊型 =====
+  lifesteal:
+    name: "嗜血"
+    description: "生命偷取 +{value}%"
+    rarity: EPIC
+    icon: REDSTONE
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "生命偷取": [3.0, 3.0]
+
+  thorns:
+    name: "荆棘"
+    description: "反伤比例 +{value}%"
+    rarity: LEGENDARY
+    icon: CACTUS
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "反伤比例": [5.0, 5.0]
+
+  execution_mark:
+    name: "处决印记"
+    description: "狩猎系终结手段"
+    rarity: RARE
+    icon: FLINT
+    max-level: 3
+    tags: ["狩猎"]
+    effects:
+      execute:
+        type: EXECUTE
+        value-per-level: 25.0
+        threshold: 35.0
+        tag: "狩猎"
+        per-tag: 6.0
+
+  blood_festival:
+    name: "猩红盛宴"
+    description: "鲜血系续航核心"
+    rarity: EPIC
+    icon: RED_DYE
+    max-level: 3
+    tags: ["鲜血"]
+    effects:
+      kill_heal:
+        type: KILL_HEAL
+        value-per-level: 2.0
+        tag: "鲜血"
+        per-tag: 1.0
+
+  barbed_carapace:
+    name: "尖刺甲壳"
+    description: "壁垒系反击核心"
+    rarity: EPIC
+    icon: SHIELD
+    max-level: 3
+    tags: ["壁垒"]
+    effects:
+      retaliate:
+        type: RETALIATE
+        value-per-level: 2.5
+        tag: "壁垒"
+        per-tag: 1.0
+
+  sanctuary:
+    name: "静谧圣所"
+    description: "战后恢复并稳固推进"
+    rarity: RARE
+    icon: GHAST_TEAR
+    max-level: 3
+    tags: ["壁垒"]
+    effects:
+      room_heal:
+        type: ROOM_HEAL
+        value-per-level: 6.0
+        tag: "壁垒"
+        per-tag: 2.0

@@ -1,0 +1,171 @@
+# ================================
+# RogueCore 副本词缀配置
+# ================================
+# type: 词缀效果类型
+#   MOB_HP_MULTIPLY   — 怪物生命倍率
+#   MOB_COUNT_MULTIPLY — 怪物数量倍率
+#   MOB_SPEED         — 怪物移速加成
+#   FLOOR_FIRE        — 地板着火（周期性点燃玩家）
+#   NO_HEAL           — 禁止自然回复
+#   SHARD_MULTIPLY    — 碎片奖励倍率
+#   EXTRA_BOON        — 通关房间额外给一次 Boon
+#   WEAPON_LUCK       — 武器掉率倍率
+#
+# difficulty: true=增加难度, false=增加奖励
+# value: 效果数值（倍率类为乘数，如 1.5 = 150%）
+# min-floor: 该词缀最早出现楼层
+# advanced: 是否属于高层进阶词缀池
+# weight: 随机权重
+
+# 词缀选取规则
+rules:
+  # 楼层范围 -> [最少词缀数, 最多词缀数]
+  "1-3": [0, 1]
+  "4-8": [1, 2]
+  "9-99": [2, 3]
+
+# 词缀定义
+affixes:
+  # ===== 难度词缀 =====
+  tough_mobs:
+    name: "§c坚韧"
+    description: "怪物生命值 x1.5"
+    type: MOB_HP_MULTIPLY
+    value: 1.5
+    difficulty: true
+    min-floor: 1
+    weight: 30
+
+  mob_swarm:
+    name: "§c蜂群"
+    description: "怪物数量 x1.5"
+    type: MOB_COUNT_MULTIPLY
+    value: 1.5
+    difficulty: true
+    min-floor: 1
+    weight: 25
+
+  swift_mobs:
+    name: "§c疾行"
+    description: "怪物移速 +30%"
+    type: MOB_SPEED
+    value: 0.3
+    difficulty: true
+    min-floor: 1
+    weight: 20
+
+  burning_floor:
+    name: "§c炼狱"
+    description: "地板周期性着火"
+    type: FLOOR_FIRE
+    value: 3.0
+    difficulty: true
+    min-floor: 1
+    weight: 15
+
+  no_regen:
+    name: "§c枯竭"
+    description: "禁止自然生命回复"
+    type: NO_HEAL
+    value: 1.0
+    difficulty: true
+    min-floor: 1
+    weight: 15
+
+  colossal_mobs:
+    name: "§4巨像"
+    description: "怪物生命值 x2.1"
+    type: MOB_HP_MULTIPLY
+    value: 2.1
+    difficulty: true
+    min-floor: 10
+    advanced: true
+    weight: 18
+
+  stampede:
+    name: "§4践踏"
+    description: "怪物数量 x2.0"
+    type: MOB_COUNT_MULTIPLY
+    value: 2.0
+    difficulty: true
+    min-floor: 10
+    advanced: true
+    weight: 16
+
+  frenzy_mobs:
+    name: "§4狂潮"
+    description: "怪物移速 +55%"
+    type: MOB_SPEED
+    value: 0.55
+    difficulty: true
+    min-floor: 10
+    advanced: true
+    weight: 16
+
+  hellscape:
+    name: "§4焦狱"
+    description: "地板更频繁地灼烧玩家"
+    type: FLOOR_FIRE
+    value: 2.0
+    difficulty: true
+    min-floor: 10
+    advanced: true
+    weight: 14
+
+  # ===== 奖励词缀 =====
+  rich:
+    name: "§6富矿"
+    description: "灵魂碎片 x2"
+    type: SHARD_MULTIPLY
+    value: 2.0
+    difficulty: false
+    min-floor: 1
+    weight: 25
+
+  blessed:
+    name: "§6祝福"
+    description: "通关房间额外获得一次神恩"
+    type: EXTRA_BOON
+    value: 1.0
+    difficulty: false
+    min-floor: 1
+    weight: 20
+
+  lucky:
+    name: "§6幸运"
+    description: "武器掉率 x2"
+    type: WEAPON_LUCK
+    value: 2.0
+    difficulty: false
+    min-floor: 1
+    weight: 25
+
+  treasure_tide:
+    name: "§6宝潮"
+    description: "灵魂碎片 x2.8"
+    type: SHARD_MULTIPLY
+    value: 2.8
+    difficulty: false
+    min-floor: 10
+    advanced: true
+    weight: 16
+
+  holy_festival:
+    name: "§6圣庆"
+    description: "通关房间额外获得两次神恩"
+    type: EXTRA_BOON
+    value: 2.0
+    difficulty: false
+    min-floor: 10
+    advanced: true
+    weight: 14
+
+  grand_armory:
+    name: "§6军械洪流"
+    description: "武器掉率 x3"
+    type: WEAPON_LUCK
+    value: 3.0
+    difficulty: false
+    min-floor: 10
+    advanced: true
+    weight: 16

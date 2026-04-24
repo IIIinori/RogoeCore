@@ -1,0 +1,74 @@
+# ================================
+# RogueCore 遗物配置
+# ================================
+
+relics:
+  coin_of_hunt:
+    name: "猎团金币"
+    description: "每次击杀怪物额外获得 2 本局碎片"
+    rarity: COMMON
+    icon: SUNFLOWER
+    effect-type: KILL_SHARD
+    value: 2
+
+  amber_vial:
+    name: "琥珀药瓶"
+    description: "每次房间通关后恢复 8% 最大生命"
+    rarity: RARE
+    icon: HONEY_BOTTLE
+    effect-type: ROOM_HEAL
+    value: 8
+
+  reaper_tithe:
+    name: "收割什一税"
+    description: "每次击杀怪物额外获得 4 本局碎片"
+    rarity: RARE
+    icon: GOLD_INGOT
+    effect-type: KILL_SHARD
+    value: 4
+    required-unlock: advanced_relics
+
+  phoenix_ash:
+    name: "灰烬重燃"
+    description: "每次房间通关后恢复 15% 最大生命"
+    rarity: EPIC
+    icon: BLAZE_POWDER
+    effect-type: ROOM_HEAL
+    value: 15
+    required-unlock: advanced_relics
+
+  cracked_mask:
+    name: "裂痕战面"
+    description: "生命低于 50% 时，造成伤害提高 25%"
+    rarity: EPIC
+    icon: WITHER_SKELETON_SKULL
+    effect-type: LOW_HEALTH_DAMAGE
+    value: 25
+    threshold: 50
+
+  final_vow:
+    name: "终局誓言"
+    description: "生命低于 65% 时，造成伤害提高 45%"
+    rarity: EPIC
+    icon: NETHERITE_SWORD
+    effect-type: LOW_HEALTH_DAMAGE
+    value: 45
+    threshold: 65
+    required-unlock: advanced_relics
+
+  beast_trophy:
+    name: "兽王战 trophy"
+    description: "精英与 Boss 战利品触发额外掉落的概率提高 20%"
+    rarity: LEGENDARY
+    icon: DRAGON_HEAD
+    effect-type: BONUS_LOOT_CHANCE
+    value: 20
+
+  abyss_hoard:
+    name: "深渊囤积"
+    description: "精英与 Boss 战利品触发额外掉落的概率提高 40%"
+    rarity: LEGENDARY
+    icon: ECHO_SHARD
+    effect-type: BONUS_LOOT_CHANCE
+    value: 40
+    required-unlock: legendary_relics

@@ -1,0 +1,90 @@
+# ================================
+# RogueCore 怪物配置
+# ================================
+# 怪物配置按楼层段读取，不再支持旧的全局通用格式
+# mob-id 必须是 MythicMobs 中已配置的怪物 ID
+# floors:
+#   节点名只是分组名，可自定义
+#   range: "起始层-结束层"
+#   combat:
+#     normal-mobs: 普通战斗房怪物池，会随楼层在列表中轮换
+#     base-count: 基础刷怪数量
+#     count-per-floors: 每多少层额外 +1 只，0 表示固定不变
+#     max-count: 普通房最大刷怪数
+#   elite:
+#     mobs: 精英房怪物池，随机选取
+#     count: 精英房刷怪数量
+#   boss:
+#     mob-id: Boss 的 MythicMobs ID，可用 {floor} 占位符
+#     count: Boss 房刷怪数量
+# 注意：
+# 1. 不同楼层段之间的怪物池、数量、Boss 都互不共享
+# 2. 如果某个 mob-id 在 MythicMobs 中不存在，该房间会刷怪失败并输出警告
+
+floors:
+  crypt:
+    # 适用楼层：1-5
+    range: "1-5"
+    combat:
+      # 普通战斗房怪物池
+      normal-mobs:
+        - "rogue_zombie"
+        - "rogue_skeleton"
+        - "rogue_spider"
+      # 基础刷怪数量
+      base-count: 3
+      # 每 3 层额外 +1 只
+      count-per-floors: 3
+      # 普通房最大 6 只
+      max-count: 6
+    elite:
+      # 精英房怪物池
+      mobs:
+        - "rogue_elite_knight"
+        - "rogue_elite_mage"
+      # 精英房数量
+      count: 1
+    boss:
+      # Boss ID 支持 {floor} 占位符
+      mob-id: "rogue_boss_floor{floor}"
+      count: 1
+
+  nether:
+    # 适用楼层：6-10
+    range: "6-10"
+    combat:
+      normal-mobs:
+        - "rogue_blaze"
+        - "rogue_piglin"
+        - "rogue_wither_skeleton"
+      base-count: 4
+      count-per-floors: 2
+      max-count: 7
+    elite:
+      mobs:
+        - "rogue_nether_guard"
+        - "rogue_nether_mage"
+      count: 1
+    boss:
+      mob-id: "rogue_nether_boss_floor{floor}"
+      count: 1
+
+  end:
+    # 适用楼层：11-15
+    range: "11-15"
+    combat:
+      normal-mobs:
+        - "rogue_enderman"
+        - "rogue_shulker"
+        - "rogue_void_walker"
+      base-count: 4
+      count-per-floors: 2
+      max-count: 8
+    elite:
+      mobs:
+        - "rogue_end_knight"
+        - "rogue_void_priest"
+      count: 2
+    boss:
+      mob-id: "rogue_end_boss_floor{floor}"
+      count: 1

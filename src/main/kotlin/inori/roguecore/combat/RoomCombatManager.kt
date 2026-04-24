@@ -1,0 +1,316 @@
+package inori.roguecore.combat
+
+import inori.roguecore.affix.AffixManager
+import inori.roguecore.affix.AffixType
+import inori.roguecore.boon.BoonEffectHandler
+import inori.roguecore.boon.BoonSelectManager
+import inori.roguecore.data.PlayerDataManager
+import inori.roguecore.data.ForgeMaterialManager
+import inori.roguecore.data.ForgeMaterialType
+import inori.roguecore.data.ShardRewardManager
+import inori.roguecore.dungeon.DungeonInstance
+import inori.roguecore.dungeon.DungeonManager
+import inori.roguecore.event.RoomEventManager
+import inori.roguecore.dungeon.room.Room
+import inori.roguecore.dungeon.room.RoomType
+import inori.roguecore.item.DungeonLootManager
+import inori.roguecore.party.PartyManager
+import inori.roguecore.relic.RelicEffectHandler
+import inori.roguecore.ui.RunCompleteUI
+import org.bukkit.Bukkit
+import org.bukkit.Location
+import org.bukkit.entity.Entity
+import org.bukkit.entity.Player
+import taboolib.common.platform.function.info
+import taboolib.module.configuration.Config
+import taboolib.module.configuration.Configuration
+import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
+import kotlin.random.Random
+
+/**
+ * 房间战斗管理器
+ * 负责：怪物生成、战斗状态追踪、通关判定
+ */
+object RoomCombatManager {
+
+    @Config("events.yml")
+    lateinit var eventsConfig: Configuration
+        private set
+
+    /** 怪物 UUID -> (副本ID, 房间ID) 的反向映射，用于快速查找怪物所属房间 */
+    private val mobRoomMap = ConcurrentHashMap<UUID, Pair<String, Int>>()
+
+    /** 玩家当前所在的房间 ID: 玩家UUID -> (副本ID, 房间ID) */
+    private val playerRoomMap = ConcurrentHashMap<UUID, Pair<String, Int>>()
+
+    /**
+     * 检测玩家位置，判断是否进入了新房间
+     */
+    fun checkPlayerRoom(player: Player) {
+        val instance = DungeonManager.getPlayerDungeon(player) ?: return
+        val room = getRoomAtPlayer(player, instance) ?: return
+
+        val current = playerRoomMap[player.uniqueId]
+        // 还在同一个房间，不处理
+        if (current != null && current.first == instance.id && current.second == room.id) return
+
+        // 进入了新房间
+        playerRoomMap[player.uniqueId] = instance.id to room.id
+        onPlayerEnterRoom(player, instance, room)
+    }
+
+    /**
+     * 玩家进入房间时的处理
+     */
+    private fun onPlayerEnterRoom(player: Player, instance: DungeonInstance, room: Room) {
+        // 非战斗房间交给事件管理器处理
+        if (!room.isCombatRoom) {
+            RoomEventManager.onEnterRoom(player, instance, room)
+            return
+        }
+
+        // 战斗房间：只有 IDLE 状态才触发
+        if (room.state != RoomState.IDLE) return
+
+        room.state = RoomState.ACTIVE
+        val spawned = spawnMonstersInRoom(instance, room)
+        if (spawned <= 0) {
+            room.state = RoomState.CLEARED
+            player.sendMessage("§e该房间未能生成怪物，已自动跳过")
+            checkDungeonComplete(instance)
+            return
+        }
+
+        val typeName = room.type.displayName
+        for (member in instance.getOnlinePlayers()) {
+            member.sendMessage("§c⚔ ${typeName}房间已激活! 消灭所有怪物!")
+        }
+    }
+
+    /**
+     * 在房间内生成怪物
+     */
+    private fun spawnMonstersInRoom(instance: DungeonInstance, room: Room): Int {
+        val waves = MonsterConfig.getWaves(room.type, instance.config.floorNumber)
+        if (waves.isEmpty()) return 0
+
+        val origin = instance.origin
+        val baseY = instance.config.floorLevel + 1
+        var spawnedCount = 0
+
+        // 词缀倍率
+        val countMultiplier = AffixManager.getMobCountMultiplier(instance) * getPartySizeMultiplier(instance)
+        val speedBonus = AffixManager.getMobSpeedBonus(instance)
+
+        for (wave in waves) {
+            val adjustedCount = (wave.count * countMultiplier).toInt().coerceAtLeast(1)
+
+            for (i in 0 until adjustedCount) {
+                val spawnLoc = getRandomSpawnLocation(room, origin, baseY)
+                val entity = MythicMobBridge.spawnMob(wave.mobId, spawnLoc)
+                if (entity != null) {
+                    room.aliveMobs.add(entity.uniqueId)
+                    mobRoomMap[entity.uniqueId] = instance.id to room.id
+                    spawnedCount++
+
+                    // 移速词缀
+                    if (speedBonus > 0 && entity is org.bukkit.entity.LivingEntity) {
+                        val attr = entity.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MOVEMENT_SPEED)
+                        if (attr != null) {
+                            attr.baseValue = attr.baseValue * (1.0 + speedBonus)
+                        }
+                    }
+                }
+            }
+        }
+
+        info("[RogueCore] 副本 ${instance.id} 房间 #${room.id}(${room.type.displayName}) 生成了 ${room.aliveMobs.size} 只怪物")
+        return spawnedCount
+    }
+
+    private fun getPartySizeMultiplier(instance: DungeonInstance): Double {
+        val onlinePlayers = instance.getOnlinePlayerCount().coerceAtLeast(1)
+        return 1.0 + (onlinePlayers - 1) * 0.5
+    }
+
+    /**
+     * 在房间内部随机取一个生成点
+     */
+    private fun getRandomSpawnLocation(room: Room, origin: Location, y: Int): Location {
+        // 房间内部区域（排除墙壁，留 2 格边距）
+        val minX = room.x + 2
+        val maxX = room.x + room.width - 3
+        val minZ = room.z + 2
+        val maxZ = room.z + room.depth - 3
+
+        val rx = if (maxX > minX) (minX..maxX).random() else minX
+        val rz = if (maxZ > minZ) (minZ..maxZ).random() else minZ
+
+        return Location(
+            origin.world,
+            (origin.blockX + rx).toDouble() + 0.5,
+            y.toDouble(),
+            (origin.blockZ + rz).toDouble() + 0.5
+        )
+    }
+
+    /**
+     * 怪物死亡处理
+     */
+    fun onMobDeath(entity: Entity) {
+        val mobUUID = entity.uniqueId
+        val (dungeonId, roomId) = mobRoomMap.remove(mobUUID) ?: return
+
+        val instance = DungeonManager.getDungeonById(dungeonId) ?: return
+        val room = instance.rooms.firstOrNull { it.id == roomId } ?: return
+
+        room.aliveMobs.remove(mobUUID)
+
+        // 击杀统计
+        for (uuid in instance.players) {
+            PlayerDataManager.addKills(uuid, 1)
+        }
+
+        // 检查房间是否清完
+        if (room.aliveMobs.isEmpty() && room.state == RoomState.ACTIVE) {
+            onRoomCleared(instance, room)
+        }
+    }
+
+    /**
+     * 房间通关处理
+     */
+    private fun onRoomCleared(instance: DungeonInstance, room: Room) {
+        room.state = RoomState.CLEARED
+        rewardHiddenKeys(instance, room)
+
+        // 通知副本内所有玩家 + Boon 选择 + 碎片积累 + 词缀效果
+        for (uuid in instance.players) {
+            val player = Bukkit.getPlayer(uuid) ?: continue
+            player.sendMessage("§a✔ ${room.type.displayName}房间已通关!")
+            ShardRewardManager.onRoomClear(uuid, instance.config.floorNumber, AffixManager.getShardMultiplier(instance))
+            BoonEffectHandler.onRoomCleared(player)
+            RelicEffectHandler.onRoomCleared(player)
+            when (room.type) {
+                RoomType.ELITE -> {
+                    if (DungeonLootManager.grantEliteLoot(player, instance)) {
+                        player.sendMessage("§6精英倒下后留下了一件临时装备。")
+                    }
+                }
+                RoomType.BOSS -> {
+                    if (DungeonLootManager.grantBossLoot(player, instance)) {
+                        player.sendMessage("§6Boss 战利品中包含临时装备。")
+                    }
+                    val embers = rewardBossEmbers(player)
+                    if (embers > 0) {
+                        player.sendMessage("§6Boss 炉心崩裂，掉出了 ${ForgeMaterialType.BOSS_EMBER.coloredName()} §ex$embers")
+                    }
+                }
+                else -> Unit
+            }
+            if (room.type != RoomType.BOSS) {
+                BoonSelectManager.offerBoonSelection(player)
+                repeat(AffixManager.getExtraBoonCount(instance)) {
+                    BoonSelectManager.offerBoonSelection(player)
+                }
+            }
+        }
+
+        info("[RogueCore] 副本 ${instance.id} 房间 #${room.id}(${room.type.displayName}) 已通关")
+
+        // 检查是否所有战斗房间都通关了
+        checkDungeonComplete(instance)
+    }
+
+    /**
+     * 检查副本是否全部通关
+     */
+    private fun checkDungeonComplete(instance: DungeonInstance) {
+        if (instance.completed) {
+            return
+        }
+
+        val allCombatRooms = instance.rooms.filter { it.isCombatRoom }
+        val allCleared = allCombatRooms.all { it.state == RoomState.CLEARED }
+
+        if (allCleared) {
+            instance.completed = true
+            val party = PartyManager.getPartyByDungeonId(instance.id)
+            for (uuid in instance.players) {
+                val player = Bukkit.getPlayer(uuid) ?: continue
+                ShardRewardManager.onDungeonClear(uuid, instance.config.floorNumber, AffixManager.getShardMultiplier(instance))
+                PlayerDataManager.updateBestFloor(uuid, instance.config.floorNumber)
+                player.sendMessage("§6§l★ 副本通关! 所有房间已清除!")
+                player.sendMessage("§e当前本局碎片: §6${ShardRewardManager.getRunShards(uuid)}")
+                player.sendMessage("§e立即结算可获得: §6${ShardRewardManager.getSettlementPreview(uuid)} §e灵魂碎片")
+
+                if (party != null && !party.isLeader(uuid)) {
+                    player.sendMessage("§e等待队长选择：前往下一层或结算离开")
+                    continue
+                }
+
+                RunCompleteUI.open(player, instance, party)
+            }
+            info("[RogueCore] 副本 ${instance.id} 全部通关!")
+        }
+    }
+
+    private fun rewardHiddenKeys(instance: DungeonInstance, room: Room) {
+        val reward = when (room.type) {
+            RoomType.ELITE -> if (Random.nextDouble() <= instance.config.hiddenEliteKeyChance) 1 else 0
+            RoomType.BOSS -> instance.config.hiddenBossKeys
+            else -> 0
+        }
+        if (reward <= 0) {
+            return
+        }
+        val total = instance.addHiddenKeys(reward)
+        for (player in instance.getOnlinePlayers()) {
+            player.sendMessage("§9获得隐藏钥匙 §bx$reward §7(当前: §b$total§7)")
+        }
+    }
+
+    private fun rewardBossEmbers(player: Player): Int {
+        val min = eventsConfig.getInt("forge.materials.boss-ember.reward-min", 1).coerceAtLeast(0)
+        val max = eventsConfig.getInt("forge.materials.boss-ember.reward-max", min).coerceAtLeast(min)
+        if (max <= 0) {
+            return 0
+        }
+        val amount = if (max > min) Random.nextInt(min, max + 1) else min
+        if (amount <= 0) {
+            return 0
+        }
+        ForgeMaterialManager.add(player.uniqueId, ForgeMaterialType.BOSS_EMBER, amount)
+        return amount
+    }
+
+    /**
+     * 获取玩家当前所在的房间
+     */
+    private fun getRoomAtPlayer(player: Player, instance: DungeonInstance): Room? {
+        val ox = instance.origin.blockX
+        val oz = instance.origin.blockZ
+        val px = player.location.blockX - ox
+        val pz = player.location.blockZ - oz
+
+        return instance.rooms.firstOrNull { it.contains(px, pz) }
+    }
+
+    /**
+     * 玩家离开副本时清理
+     */
+    fun onPlayerLeave(player: Player) {
+        playerRoomMap.remove(player.uniqueId)
+    }
+
+    /**
+     * 副本销毁时清理所有关联数据
+     */
+    fun onDungeonDestroy(dungeonId: String) {
+        // 清理怪物映射
+        mobRoomMap.entries.removeIf { it.value.first == dungeonId }
+        // 清理玩家房间映射
+        playerRoomMap.entries.removeIf { it.value.first == dungeonId }
+    }
+}

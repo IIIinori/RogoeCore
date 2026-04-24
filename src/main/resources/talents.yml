@@ -1,0 +1,57 @@
+# ================================
+# RogueCore 天赋配置
+# ================================
+# cost: 每级升级消耗的灵魂碎片列表（第1级消耗第1个值，以此类推）
+# effect-type: 效果类型
+#   ATTRIBUTE — 进入副本时通过 AP 添加属性（需要 attribute + value-per-level）
+#   SHARD_BONUS — 灵魂碎片获取加成（百分比，value-per-level）
+#   BOON_LUCK — 稀有 Boon 概率提升（百分比，value-per-level）
+
+talents:
+  hp_talent:
+    name: "生命强化"
+    description: "进入副本时生命上限 +{value}"
+    icon: GOLDEN_APPLE
+    max-level: 3
+    cost: [50, 120, 250]
+    effect-type: ATTRIBUTE
+    attribute: "生命上限"
+    value-per-level: 10.0
+
+  atk_talent:
+    name: "攻击强化"
+    description: "进入副本时物理攻击 +{value}"
+    icon: IRON_SWORD
+    max-level: 3
+    cost: [50, 120, 250]
+    effect-type: ATTRIBUTE
+    attribute: "物理攻击"
+    value-per-level: 3.0
+
+  def_talent:
+    name: "防御强化"
+    description: "进入副本时物理防御 +{value}"
+    icon: IRON_CHESTPLATE
+    max-level: 3
+    cost: [50, 120, 250]
+    effect-type: ATTRIBUTE
+    attribute: "物理防御"
+    value-per-level: 3.0
+
+  shard_talent:
+    name: "灵魂亲和"
+    description: "灵魂碎片获取 +{value}%"
+    icon: AMETHYST_SHARD
+    max-level: 3
+    cost: [80, 200, 400]
+    effect-type: SHARD_BONUS
+    value-per-level: 10.0
+
+  boon_talent:
+    name: "神恩眷顾"
+    description: "稀有神恩概率 +{value}%"
+    icon: NETHER_STAR
+    max-level: 3
+    cost: [100, 250, 500]
+    effect-type: BOON_LUCK
+    value-per-level: 5.0

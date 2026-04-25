@@ -4,6 +4,7 @@ import inori.roguecore.combat.RoomState
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.room.Room
 import inori.roguecore.dungeon.room.RoomType
+import inori.roguecore.ui.DungeonSceneCueManager
 import org.bukkit.entity.Player
 
 /**
@@ -12,11 +13,16 @@ import org.bukkit.entity.Player
  */
 object RoomEventManager {
 
+    private fun announceEventRoom(trigger: Player, instance: DungeonInstance, roomType: RoomType) {
+        DungeonSceneCueManager.broadcastEventRoom(instance, trigger, roomType)
+    }
+
     private fun sendEventAffixHint(player: Player, instance: DungeonInstance, roomType: RoomType) {
         val affixes = EventAffixManager.getAffixesForRoom(instance, roomType)
         if (affixes.isEmpty()) {
             return
         }
+        DungeonSceneCueManager.showEventAffixHint(player, affixes)
         player.sendMessage("§d本层事件词缀:")
         affixes.forEach { affix ->
             player.sendMessage("  ${affix.name} §7- ${affix.description}")
@@ -40,6 +46,7 @@ object RoomEventManager {
         when (room.type) {
             RoomType.SHOP -> {
                 room.state = RoomState.CLEARED
+                announceEventRoom(player, instance, room.type)
                 for (member in onlinePlayers) {
                     if (member.uniqueId == player.uniqueId) {
                         member.sendMessage("§e§l🏪 你找到了商店，全队都可以购买。")
@@ -53,6 +60,7 @@ object RoomEventManager {
             }
             RoomType.FORGE -> {
                 room.state = RoomState.CLEARED
+                announceEventRoom(player, instance, room.type)
                 for (member in onlinePlayers) {
                     if (member.uniqueId == player.uniqueId) {
                         member.sendMessage("§6§l⚒ 你找到了铁匠铺，全队都可以重整装备。")
@@ -65,6 +73,7 @@ object RoomEventManager {
             }
             RoomType.CHEST -> {
                 room.state = RoomState.CLEARED
+                announceEventRoom(player, instance, room.type)
                 for (member in onlinePlayers) {
                     if (member.uniqueId == player.uniqueId) {
                         member.sendMessage("§6§l✦ 你发现了共享宝箱!")
@@ -77,36 +86,42 @@ object RoomEventManager {
             }
             RoomType.REST -> {
                 room.state = RoomState.CLEARED
+                announceEventRoom(player, instance, room.type)
                 for (member in onlinePlayers) {
                     if (member.uniqueId == player.uniqueId) {
                         member.sendMessage("§b§l🛏 你找到了休息点，全队都可以选择恢复。")
                     } else {
                         member.sendMessage("§b§l🛏 ${player.name} 找到了休息点，你也可以进行选择。")
                     }
+                    sendEventAffixHint(member, instance, room.type)
                     RestEvent.trigger(member, instance)
                 }
                 return true
             }
             RoomType.EXTRACTION -> {
                 room.state = RoomState.CLEARED
+                announceEventRoom(player, instance, room.type)
                 for (member in onlinePlayers) {
                     if (member.uniqueId == player.uniqueId) {
                         member.sendMessage("§3§l⬖ 你找到了撤离点，全队都可以选择撤离或继续冒险。")
                     } else {
                         member.sendMessage("§3§l⬖ ${player.name} 找到了撤离点，你也可以做出选择。")
                     }
+                    sendEventAffixHint(member, instance, room.type)
                     ExtractionEvent.trigger(member, instance)
                 }
                 return true
             }
             RoomType.CONTRACT -> {
                 room.state = RoomState.CLEARED
+                announceEventRoom(player, instance, room.type)
                 for (member in onlinePlayers) {
                     if (member.uniqueId == player.uniqueId) {
                         member.sendMessage("§4§l✒ 你触碰了契约祭坛，全队都可以签下一份代价。")
                     } else {
                         member.sendMessage("§4§l✒ ${player.name} 触碰了契约祭坛，你也获得了选择权。")
                     }
+                    sendEventAffixHint(member, instance, room.type)
                     ContractEvent.trigger(member, instance)
                 }
                 return true
@@ -118,6 +133,7 @@ object RoomEventManager {
                     return true
                 }
                 room.state = RoomState.CLEARED
+                announceEventRoom(player, instance, room.type)
                 for (member in onlinePlayers) {
                     if (member.uniqueId == player.uniqueId) {
                         member.sendMessage("§9§l✦ 你使用隐藏钥匙开启了宝藏房。")
@@ -132,6 +148,7 @@ object RoomEventManager {
             }
             RoomType.TRIAL -> {
                 room.state = RoomState.CLEARED
+                announceEventRoom(player, instance, room.type)
                 for (member in onlinePlayers) {
                     if (member.uniqueId == player.uniqueId) {
                         member.sendMessage("§5§l⚖ 你踏入了试炼之室，全队都要面对抉择。")
@@ -145,6 +162,7 @@ object RoomEventManager {
             }
             RoomType.GAMBLE -> {
                 room.state = RoomState.CLEARED
+                announceEventRoom(player, instance, room.type)
                 for (member in onlinePlayers) {
                     if (member.uniqueId == player.uniqueId) {
                         member.sendMessage("§2§l☘ 你找到了赌局桌，全队都能翻一次牌。")
@@ -158,6 +176,7 @@ object RoomEventManager {
             }
             RoomType.SHRINE -> {
                 room.state = RoomState.CLEARED
+                announceEventRoom(player, instance, room.type)
                 for (member in onlinePlayers) {
                     if (member.uniqueId == player.uniqueId) {
                         member.sendMessage("§f§l✧ 你唤醒了古老神龛，全队都能接受赐福。")

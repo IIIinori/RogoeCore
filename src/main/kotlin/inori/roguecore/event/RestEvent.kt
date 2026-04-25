@@ -21,7 +21,10 @@ object RestEvent {
         private set
 
     fun trigger(player: Player, instance: DungeonInstance) {
+        val restfulEcho = EventAffixManager.hasAffix(instance, "restful_echo")
         val healPercent = config.getDouble("rest.heal-percent", 1.0)
+        val effectiveHealPercent = (healPercent + if (restfulEcho) 0.15 else 0.0).coerceAtMost(1.0)
+        val boonHealPercent = if (restfulEcho) 0.2 else 0.0
         val boons = PlayerBoonData.getBoons(player)
         val upgradeable = boons.firstOrNull { it.canUpgrade }
         val optionSlots = setOf(11, 15)
@@ -46,8 +49,16 @@ object RestEvent {
             val healItem = XMaterial.GOLDEN_APPLE.parseItem()!!.apply {
                 itemMeta = itemMeta?.also { meta ->
                     meta.setDisplayName("§a回复生命")
-                    val percent = (healPercent * 100).toInt()
-                    meta.lore = listOf("", "§7回复 §a${percent}% §7生命值", "", "§e点击选择")
+                    val percent = (effectiveHealPercent * 100).toInt()
+                    meta.lore = buildList {
+                        add("")
+                        add("§7回复 §a${percent}% §7生命值")
+                        if (restfulEcho) {
+                            add("§b事件词缀使休息点额外强化。")
+                        }
+                        add("")
+                        add("§e点击选择")
+                    }
                 }
             }
             set(11, healItem)
@@ -57,13 +68,16 @@ object RestEvent {
                 (upgradeable.boon.icon.parseItem() ?: XMaterial.PAPER.parseItem()!!).apply {
                     itemMeta = itemMeta?.also { meta ->
                         meta.setDisplayName("§6升级神恩")
-                        meta.lore = listOf(
-                            "",
-                            "§7升级 ${upgradeable.boon.rarity.color}${upgradeable.boon.name}",
-                            "§7Lv.${upgradeable.level} → Lv.${upgradeable.level + 1}",
-                            "",
-                            "§e点击选择"
-                        )
+                        meta.lore = buildList {
+                            add("")
+                            add("§7升级 ${upgradeable.boon.rarity.color}${upgradeable.boon.name}")
+                            add("§7Lv.${upgradeable.level} → Lv.${upgradeable.level + 1}")
+                            if (restfulEcho) {
+                                add("§7并恢复 §a${(boonHealPercent * 100).toInt()}% §7最大生命")
+                            }
+                            add("")
+                            add("§e点击选择")
+                        }
                     }
                 }
             } else {
@@ -84,9 +98,9 @@ object RestEvent {
                         DungeonGuiGuard.unlock(player)
                         player.closeInventory()
                         val maxHp = player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH)?.value ?: 20.0
-                        val healAmount = maxHp * healPercent
+                        val healAmount = maxHp * effectiveHealPercent
                         player.health = (player.health + healAmount).coerceAtMost(maxHp)
-                        player.sendMessage("§a生命已回复!")
+                        player.sendMessage(if (restfulEcho) "§b安眠回响使你的生命恢复得更加充沛。" else "§a生命已回复!")
                     }
                     15 -> {
                         // 升级 Boon
@@ -94,6 +108,11 @@ object RestEvent {
                         player.closeInventory()
                         if (upgradeable != null && upgradeable.canUpgrade) {
                             PlayerBoonData.addBoon(player, upgradeable.boon)
+                            if (boonHealPercent > 0.0) {
+                                val maxHp = player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH)?.value ?: 20.0
+                                player.health = (player.health + maxHp * boonHealPercent).coerceAtMost(maxHp)
+                                player.sendMessage("§b安眠回响在升级神恩时也抚平了你的伤势。")
+                            }
                         } else {
                             player.sendMessage("§c没有可升级的神恩!")
                         }

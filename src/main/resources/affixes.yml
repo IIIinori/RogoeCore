@@ -169,3 +169,48 @@ affixes:
     min-floor: 10
     advanced: true
     weight: 16
+
+  bone_fortress:
+    name: "§c骨垒"
+    description: "怪物生命值 x1.8"
+    type: MOB_HP_MULTIPLY
+    value: 1.8
+    difficulty: true
+    min-floor: 5
+    weight: 18
+
+  ashen_march:
+    name: "§c灰烬行军"
+    description: "怪物移速 +40%"
+    type: MOB_SPEED
+    value: 0.4
+    difficulty: true
+    min-floor: 6
+    weight: 16
+
+  soul_harvest:
+    name: "§6灵采"
+    description: "灵魂碎片 x2.3"
+    type: SHARD_MULTIPLY
+    value: 2.3
+    difficulty: false
+    min-floor: 6
+    weight: 18
+
+  battle_psalm:
+    name: "§6战祷"
+    description: "通关房间额外获得一次神恩"
+    type: EXTRA_BOON
+    value: 1.0
+    difficulty: false
+    min-floor: 6
+    weight: 16
+
+  hunter_moon:
+    name: "§6猎月"
+    description: "武器掉率 x2.4"
+    type: WEAPON_LUCK
+    value: 2.4
+    difficulty: false
+    min-floor: 7
+    weight: 14

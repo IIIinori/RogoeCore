@@ -22,6 +22,15 @@ object MythicMobBridge {
         }
     }
 
+    fun mobExists(mobId: String): Boolean {
+        if (!isAvailable()) return false
+        return try {
+            Mythic.API.getMobType(mobId) != null
+        } catch (_: Exception) {
+            false
+        }
+    }
+
     /**
      * 在指定位置生成 MM 怪物
      * @param mobId MythicMobs 怪物 ID

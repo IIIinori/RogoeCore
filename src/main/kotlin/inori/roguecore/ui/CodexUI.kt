@@ -1,6 +1,9 @@
 package inori.roguecore.ui
 
+import inori.roguecore.affix.AffixRegistry
+import inori.roguecore.boon.BoonRegistry
 import inori.roguecore.dungeon.route.NextFloorRoute
+import inori.roguecore.event.EventAffixManager
 import inori.roguecore.relic.RelicRegistry
 import inori.roguecore.unlock.UnlockManager
 import inori.roguecore.unlock.UnlockRegistry
@@ -15,25 +18,28 @@ object CodexUI {
         val unlockedIds = UnlockManager.getUnlockedIds(player.uniqueId)
 
         player.openMenu<Chest>("§5§l冒险图鉴") {
-            rows(5)
+            rows(6)
             handLocked(true)
 
-            val contentSlots = setOf(10, 12, 14, 16, 22, 40)
+            val contentSlots = setOf(10, 12, 14, 16, 28, 30, 32, 34, 49)
             val glass = XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()!!.apply {
                 itemMeta = itemMeta?.also { it.setDisplayName(" ") }
             }
-            for (slot in 0 until 45) {
+            for (slot in 0 until 54) {
                 if (slot !in contentSlots) {
                     set(slot, glass)
                 }
             }
 
             set(10, buildRoutesItem(player))
-            set(12, buildRelicsItem(player))
-            set(14, buildCoreEventsItem(player))
-            set(16, buildAdvancedEventsItem(player))
-            set(22, buildProgressItem(player, unlockedIds.size))
-            set(40, XMaterial.ENCHANTING_TABLE.parseItem()!!.apply {
+            set(12, buildBoonsItem())
+            set(14, buildRelicsItem(player))
+            set(16, buildDungeonAffixesItem())
+            set(28, buildCoreEventsItem(player))
+            set(30, buildAdvancedEventsItem(player))
+            set(32, buildEventAffixesItem())
+            set(34, buildProgressItem(player, unlockedIds.size))
+            set(49, XMaterial.ENCHANTING_TABLE.parseItem()!!.apply {
                 itemMeta = itemMeta?.also { meta ->
                     meta.setDisplayName("§d返回研究所")
                     meta.lore = listOf("", "§7点击返回研究界面")
@@ -43,7 +49,7 @@ object CodexUI {
             onClick { event ->
                 event.isCancelled = true
                 when (event.rawSlot) {
-                    40 -> {
+                    49 -> {
                         player.closeInventory()
                         UnlockUI.open(player)
                     }
@@ -72,6 +78,28 @@ object CodexUI {
         }
     }
 
+    private fun buildBoonsItem() = XMaterial.ENCHANTED_BOOK.parseItem()!!.apply {
+        val boons = BoonRegistry.getAll()
+        val byRarity = boons.groupBy { it.rarity }
+        val tags = boons.flatMap { it.tags }.groupingBy { it }.eachCount()
+            .entries.sortedByDescending { it.value }
+            .joinToString(" / ") { "${it.key}x${it.value}" }
+
+        itemMeta = itemMeta?.also { meta ->
+            meta.setDisplayName("§6神恩图鉴")
+            meta.lore = buildList {
+                add("")
+                add("§7神恩总数: §f${boons.size}")
+                for (rarity in byRarity.keys.sortedBy { it.ordinal }) {
+                    add("${rarity.color}${rarity.displayName} §7x${byRarity[rarity]?.size ?: 0}")
+                }
+                add("")
+                add("§7流派分布: §f$tags")
+                add("§7更高稀有度更容易成为构筑核心")
+            }
+        }
+    }
+
     private fun buildRelicsItem(player: Player) = XMaterial.AMETHYST_CLUSTER.parseItem()!!.apply {
         itemMeta = itemMeta?.also { meta ->
             meta.setDisplayName("§d遗物图鉴")
@@ -93,6 +121,26 @@ object CodexUI {
             lore += markLine(player, "legendary_relics", "神话残章")
             lore += markLine(player, "relic_transmutation", "遗物转化学")
             meta.lore = lore
+        }
+    }
+
+    private fun buildDungeonAffixesItem() = XMaterial.BLAZE_POWDER.parseItem()!!.apply {
+        val affixes = AffixRegistry.getAll()
+        val difficulty = affixes.count { it.difficulty }
+        val reward = affixes.count { !it.difficulty }
+        val advanced = affixes.count { it.advanced }
+
+        itemMeta = itemMeta?.also { meta ->
+            meta.setDisplayName("§c副本词缀")
+            meta.lore = listOf(
+                "",
+                "§7总词缀数: §f${affixes.size}",
+                "§7难度词缀: §c$difficulty",
+                "§7奖励词缀: §6$reward",
+                "§7高层进阶词缀: §5$advanced",
+                "",
+                "§7越深层越容易遇到复合词缀组合"
+            )
         }
     }
 
@@ -120,6 +168,28 @@ object CodexUI {
                 markLine(player, "forbidden_trials", "试炼房开启超越试炼"),
                 markLine(player, "sanctified_prayer", "神龛房开启净化祷告"),
                 markLine(player, "extreme_route", "通关后可选择极境路线")
+            )
+        }
+    }
+
+    private fun buildEventAffixesItem() = XMaterial.BEACON.parseItem()!!.apply {
+        val eventAffixes = EventAffixManager.getAll()
+        val roomSummary = eventAffixes.flatMap { it.rooms }
+            .groupingBy { it.displayName }
+            .eachCount()
+            .entries
+            .sortedByDescending { it.value }
+            .joinToString(" / ") { "${it.key}x${it.value}" }
+
+        itemMeta = itemMeta?.also { meta ->
+            meta.setDisplayName("§d事件词缀")
+            meta.lore = listOf(
+                "",
+                "§7事件词缀数: §f${eventAffixes.size}",
+                "§7覆盖房型: §f$roomSummary",
+                "§7高层会让事件房产生更明显变化",
+                "",
+                "§7留意房间提示，可提前判断收益倾向"
             )
         }
     }

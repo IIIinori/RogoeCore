@@ -1,5 +1,7 @@
 package inori.roguecore.party
 
+import inori.roguecore.dungeon.DungeonManager
+import inori.roguecore.dungeon.RunPersistenceManager
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import taboolib.common.LifeCycle
@@ -14,6 +16,19 @@ import java.util.concurrent.ConcurrentHashMap
  */
 object PartyManager {
 
+    private data class DungeonReconnect(
+        val dungeonId: String,
+        val disconnectAt: Long
+    )
+
+    data class PartySnapshot(
+        val id: String,
+        val leader: UUID,
+        val maxSize: Int,
+        val members: Set<UUID>,
+        val dungeonId: String?
+    )
+
     @Config("config.yml")
     lateinit var config: Configuration
         private set
@@ -26,6 +41,9 @@ object PartyManager {
 
     /** 待处理的邀请: 被邀请者UUID -> (队伍ID, 过期时间戳) */
     private val pendingInvites = ConcurrentHashMap<UUID, Pair<String, Long>>()
+
+    /** 副本中断线后的重连资格 */
+    private val dungeonReconnects = ConcurrentHashMap<UUID, DungeonReconnect>()
 
     private var maxSize = 4
     private var inviteTimeout = 60
@@ -49,6 +67,7 @@ object PartyManager {
         val party = Party(id, leader.uniqueId, maxSize)
         parties[id] = party
         playerPartyMap[leader.uniqueId] = id
+        RunPersistenceManager.markDirty()
 
         leader.sendMessage("§a队伍已创建! §7(ID: $id)")
         return party
@@ -71,9 +90,11 @@ object PartyManager {
         // 通知所有成员
         for (uuid in party.members.toList()) {
             playerPartyMap.remove(uuid)
+            clearDungeonReconnect(uuid)
             Bukkit.getPlayer(uuid)?.sendMessage("§c队伍已被解散")
         }
         parties.remove(party.id)
+        RunPersistenceManager.markDirty()
     }
 
     /**
@@ -152,6 +173,7 @@ object PartyManager {
 
         party.addMember(player.uniqueId)
         playerPartyMap[player.uniqueId] = partyId
+        RunPersistenceManager.markDirty()
 
         // 通知全队
         for (uuid in party.members) {
@@ -169,15 +191,26 @@ object PartyManager {
             return
         }
 
-        // 队长离开 = 解散
-        if (party.isLeader(player.uniqueId)) {
-            disbandParty(player)
+        val wasLeader = party.isLeader(player.uniqueId)
+        val oldLeader = party.leader
+        party.removeMember(player.uniqueId)
+        playerPartyMap.remove(player.uniqueId)
+        clearDungeonReconnect(player.uniqueId)
+
+        if (party.members.isEmpty()) {
+            parties.remove(party.id)
+            RunPersistenceManager.markDirty()
+            player.sendMessage("§e你离开了队伍")
             return
         }
 
-        party.removeMember(player.uniqueId)
-        playerPartyMap.remove(player.uniqueId)
+        if (wasLeader) {
+            val newLeader = findOnlineMember(party) ?: party.members.first()
+            party.leader = newLeader
+            broadcastLeaderChanged(party, oldLeader, newLeader)
+        }
 
+        RunPersistenceManager.markDirty()
         player.sendMessage("§e你离开了队伍")
         for (uuid in party.members) {
             Bukkit.getPlayer(uuid)?.sendMessage("§e${player.name} §7离开了队伍 §7(${party.size}/${party.maxSize})")
@@ -210,6 +243,8 @@ object PartyManager {
 
         party.removeMember(target.uniqueId)
         playerPartyMap.remove(target.uniqueId)
+        clearDungeonReconnect(target.uniqueId)
+        RunPersistenceManager.markDirty()
 
         target.sendMessage("§c你被踢出了队伍")
         for (uuid in party.members) {
@@ -221,7 +256,11 @@ object PartyManager {
      * 获取玩家所在的队伍
      */
     fun getParty(player: Player): Party? {
-        val partyId = playerPartyMap[player.uniqueId] ?: return null
+        return getParty(player.uniqueId)
+    }
+
+    fun getParty(uuid: UUID): Party? {
+        val partyId = playerPartyMap[uuid] ?: return null
         return parties[partyId]
     }
 
@@ -237,6 +276,75 @@ object PartyManager {
         return parties.values.firstOrNull { it.dungeonId == dungeonId }
     }
 
+    fun hasDungeonReconnect(uuid: UUID): Boolean {
+        return dungeonReconnects.containsKey(uuid)
+    }
+
+    fun resolveReconnectDungeonId(uuid: UUID): String? {
+        val partyDungeonId = getParty(uuid)?.dungeonId
+        if (partyDungeonId != null) {
+            return partyDungeonId
+        }
+        return dungeonReconnects[uuid]?.dungeonId
+    }
+
+    fun clearDungeonReconnect(uuid: UUID) {
+        if (dungeonReconnects.remove(uuid) != null) {
+            RunPersistenceManager.markDirty()
+        }
+    }
+
+    fun getReconnectPlayersForDungeon(dungeonId: String): List<UUID> {
+        return dungeonReconnects.filterValues { it.dungeonId == dungeonId }.keys.toList()
+    }
+
+    fun clearReconnectsForDungeon(dungeonId: String) {
+        if (dungeonReconnects.entries.removeIf { (_, reconnect) -> reconnect.dungeonId == dungeonId }) {
+            RunPersistenceManager.markDirty()
+        }
+    }
+
+    fun markDungeonDisconnect(player: Player, dungeonId: String) {
+        dungeonReconnects[player.uniqueId] = DungeonReconnect(dungeonId, System.currentTimeMillis())
+        RunPersistenceManager.markDirty()
+        getParty(player.uniqueId)?.let { party ->
+            if (party.dungeonId == dungeonId && party.isLeader(player.uniqueId)) {
+                promoteLeaderIfNeeded(party, player.uniqueId, dungeonId)
+            }
+            for (memberUuid in party.members) {
+                if (memberUuid == player.uniqueId) {
+                    continue
+                }
+                Bukkit.getPlayer(memberUuid)?.sendMessage("§e${player.name} §7暂时断开连接，可在回来后使用 §f/rogue rejoin §7回到副本。")
+            }
+        }
+    }
+
+    fun onDungeonMemberRemoved(uuid: UUID, dungeonId: String) {
+        val party = getParty(uuid) ?: return
+        if (party.dungeonId != dungeonId || !party.isLeader(uuid)) {
+            return
+        }
+        promoteLeaderIfNeeded(party, uuid, dungeonId)
+    }
+
+    fun onPlayerJoin(player: Player) {
+        val party = getParty(player.uniqueId) ?: return
+        if (party.dungeonId != null) {
+            ensureOnlineLeader(party, preferred = player.uniqueId, dungeonId = party.dungeonId)
+        }
+    }
+
+    fun clearDungeonBinding(dungeonId: String) {
+        clearReconnectsForDungeon(dungeonId)
+        for (party in parties.values) {
+            if (party.dungeonId == dungeonId) {
+                party.dungeonId = null
+                RunPersistenceManager.markDirty()
+            }
+        }
+    }
+
     /**
      * 玩家下线时清理
      */
@@ -245,11 +353,96 @@ object PartyManager {
         // 不自动离开队伍，允许短暂掉线重连
     }
 
-    fun clearDungeonBinding(dungeonId: String) {
-        for (party in parties.values) {
-            if (party.dungeonId == dungeonId) {
-                party.dungeonId = null
+    private fun ensureOnlineLeader(party: Party, preferred: UUID? = null, dungeonId: String? = null): UUID? {
+        if (Bukkit.getPlayer(party.leader) != null) {
+            return party.leader
+        }
+        val candidates = party.members.filter { memberUuid ->
+            memberUuid != party.leader &&
+                Bukkit.getPlayer(memberUuid) != null &&
+                (dungeonId == null || DungeonManager.getDungeonId(memberUuid) == dungeonId || memberUuid == preferred)
+        }
+        val newLeader = when {
+            preferred != null && preferred in candidates -> preferred
+            candidates.isNotEmpty() -> candidates.first()
+            else -> null
+        } ?: return null
+        val oldLeader = party.leader
+        party.leader = newLeader
+        broadcastLeaderChanged(party, oldLeader, newLeader)
+        RunPersistenceManager.markDirty()
+        return newLeader
+    }
+
+    private fun promoteLeaderIfNeeded(party: Party, leavingUuid: UUID, dungeonId: String? = null) {
+        if (!party.isLeader(leavingUuid)) {
+            return
+        }
+        val candidates = party.members.filter { memberUuid ->
+            memberUuid != leavingUuid &&
+                Bukkit.getPlayer(memberUuid) != null &&
+                (dungeonId == null || DungeonManager.getDungeonId(memberUuid) == dungeonId)
+        }
+        val newLeader = candidates.firstOrNull() ?: return
+        val oldLeader = party.leader
+        party.leader = newLeader
+        broadcastLeaderChanged(party, oldLeader, newLeader)
+        RunPersistenceManager.markDirty()
+    }
+
+    private fun findOnlineMember(party: Party): UUID? {
+        return party.members.firstOrNull { Bukkit.getPlayer(it) != null }
+    }
+
+    private fun broadcastLeaderChanged(party: Party, oldLeader: UUID, newLeader: UUID) {
+        val oldLeaderName = Bukkit.getOfflinePlayer(oldLeader).name ?: oldLeader.toString()
+        val newLeaderName = Bukkit.getOfflinePlayer(newLeader).name ?: newLeader.toString()
+        for (memberUuid in party.members) {
+            Bukkit.getPlayer(memberUuid)?.sendMessage("§e队长已从 §f$oldLeaderName §e转移为 §f$newLeaderName§e。")
+        }
+    }
+
+    fun getPartySnapshots(): List<PartySnapshot> {
+        return parties.values.map { party ->
+            PartySnapshot(
+                id = party.id,
+                leader = party.leader,
+                maxSize = party.maxSize,
+                members = party.members.toSet(),
+                dungeonId = party.dungeonId
+            )
+        }
+    }
+
+    fun getReconnectSnapshots(): Map<UUID, String> {
+        return dungeonReconnects.mapValues { it.value.dungeonId }
+    }
+
+    fun restoreState(partiesSnapshot: List<PartySnapshot>, reconnects: Map<UUID, String>) {
+        parties.clear()
+        playerPartyMap.clear()
+        pendingInvites.clear()
+        dungeonReconnects.clear()
+
+        for (snapshot in partiesSnapshot) {
+            val party = Party(snapshot.id, snapshot.leader, snapshot.maxSize)
+            party.members.clear()
+            party.members.addAll(snapshot.members)
+            party.dungeonId = snapshot.dungeonId
+            parties[party.id] = party
+            for (member in party.members) {
+                playerPartyMap[member] = party.id
             }
         }
+
+        for ((uuid, dungeonId) in reconnects) {
+            dungeonReconnects[uuid] = DungeonReconnect(dungeonId, System.currentTimeMillis())
+        }
+        RunPersistenceManager.markDirty()
+    }
+
+    fun restoreDungeonReconnect(uuid: UUID, dungeonId: String) {
+        dungeonReconnects[uuid] = DungeonReconnect(dungeonId, System.currentTimeMillis())
+        RunPersistenceManager.markDirty()
     }
 }

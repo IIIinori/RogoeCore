@@ -23,10 +23,13 @@ object ExtractionEvent {
         private set
 
     fun trigger(player: Player, instance: DungeonInstance) {
+        val goldenWaypoint = EventAffixManager.hasAffix(instance, "golden_waypoint")
         val ratio = config.getDouble("extraction.cashout-ratio", 0.5).coerceIn(0.0, 1.0)
+        val effectiveRatio = (ratio + if (goldenWaypoint) 0.15 else 0.0).coerceIn(0.0, 1.0)
         val minCashOut = config.getInt("extraction.min-cashout-run-shards", 20).coerceAtLeast(0)
+        val effectiveMinCashOut = (minCashOut - if (goldenWaypoint) 8 else 0).coerceAtLeast(0)
         val runShards = ShardRewardManager.getRunShards(player.uniqueId)
-        val preview = ShardRewardManager.getCashOutPreview(player.uniqueId, ratio)
+        val preview = ShardRewardManager.getCashOutPreview(player.uniqueId, effectiveRatio)
         val title = "§3§l撤离点 §7(本局碎片: §e$runShards§7)"
         val optionSlots = setOf(11, 13, 15)
 
@@ -74,17 +77,18 @@ object ExtractionEvent {
                 }
             })
 
-            val canCashOut = runShards >= minCashOut && preview > 0
+            val canCashOut = runShards >= effectiveMinCashOut && preview > 0
             set(15, (if (canCashOut) XMaterial.AMETHYST_SHARD else XMaterial.BARRIER).parseItem()!!.apply {
                 itemMeta = itemMeta?.also { meta ->
                     meta.setDisplayName(if (canCashOut) "§6提现继续" else "§7提现继续")
                     meta.lore = listOf(
                         "",
-                        "§7将 §e${(ratio * 100).toInt()}% §7本局碎片提前结算",
+                        "§7将 §e${(effectiveRatio * 100).toInt()}% §7本局碎片提前结算",
                         "§7预计获得: §6$preview §7灵魂碎片",
                         "§7剩余本局碎片保留并继续冒险",
+                        if (goldenWaypoint) "§6事件词缀使提现门槛下降。" else "",
                         "",
-                        if (canCashOut) "§e点击提现" else "§c至少需要 $minCashOut 本局碎片"
+                        if (canCashOut) "§e点击提现" else "§c至少需要 $effectiveMinCashOut 本局碎片"
                     )
                 }
             })
@@ -112,7 +116,7 @@ object ExtractionEvent {
                         }
                         DungeonGuiGuard.unlock(player)
                         player.closeInventory()
-                        val gained = ShardRewardManager.cashOut(player.uniqueId, ratio)
+                        val gained = ShardRewardManager.cashOut(player.uniqueId, effectiveRatio)
                         if (gained > 0) {
                             player.sendMessage("§6你提前提现了 §e$gained §6灵魂碎片，剩余收益继续冒险。")
                         } else {

@@ -133,6 +133,15 @@ object DungeonLootManager {
         info("[RogueCore] 已加载 ${definitions.size} 个临时装备定义, ${rarities.size} 个稀有度, ${affixes.size} 个随机词条, ${setBonuses.size} 个装备联动")
     }
 
+    fun getConfiguredAttributeNames(): Set<String> {
+        val names = linkedSetOf<String>()
+        definitions.flatMapTo(names) { definition -> definition.attributes.map { it.name } }
+        affixes.flatMapTo(names) { affix -> affix.attributes.map { it.name } }
+        setBonuses.flatMap { bonus -> bonus.tiers }
+            .flatMapTo(names) { tier -> tier.attributes.map { it.name } }
+        return names.filter { it.isNotBlank() }.toSet()
+    }
+
     private fun loadDropProtectionRules() {
         protectionEnabled = config.getBoolean("rules.drop-protection.enabled", true)
         protectionEmptySlotWeight = config.getDouble("rules.drop-protection.empty-slot-weight", 2.1).coerceAtLeast(1.0)

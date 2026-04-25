@@ -32,6 +32,9 @@ data class Room(
     /** 房间内存活的怪物 UUID */
     val aliveMobs: MutableSet<UUID> = ConcurrentHashMap.newKeySet()
 
+    /** 本次激活时总共生成的怪物数量，用于 HUD 进度显示 */
+    var spawnedMobCount: Int = 0
+
     /** 该房间是否需要战斗（战斗/精英/Boss 房间） */
     val isCombatRoom: Boolean
         get() = type == RoomType.COMBAT || type == RoomType.ELITE || type == RoomType.BOSS

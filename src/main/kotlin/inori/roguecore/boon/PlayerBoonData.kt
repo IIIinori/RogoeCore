@@ -1,5 +1,7 @@
 package inori.roguecore.boon
 
+import inori.roguecore.dependency.DependencySelfCheckManager
+import inori.roguecore.dungeon.RunPersistenceManager
 import org.bukkit.entity.Player
 import org.serverct.ersha.api.AttributeAPI
 import taboolib.common.platform.function.warning
@@ -47,12 +49,14 @@ object PlayerBoonData {
             // 已有，升级
             existing.upgrade()
             applyBoonToAP(player, existing)
+            RunPersistenceManager.markDirty()
             player.sendMessage("§6${boon.rarity.color}${boon.name} §e升级到 Lv.${existing.level}!")
         } else {
             // 新增
             val instance = BoonInstance(boon)
             boons.add(instance)
             applyBoonToAP(player, instance)
+            RunPersistenceManager.markDirty()
             player.sendMessage("§a获得 ${boon.rarity.color}${boon.name} §aLv.1!")
         }
     }
@@ -67,6 +71,23 @@ object PlayerBoonData {
         for (instance in boons) {
             removeBoonFromAP(player, instance)
         }
+        RunPersistenceManager.markDirty()
+    }
+
+    fun restoreBoons(uuid: UUID, boons: List<BoonInstance>) {
+        if (boons.isEmpty()) {
+            playerBoons.remove(uuid)
+            RunPersistenceManager.markDirty()
+            return
+        }
+        playerBoons[uuid] = boons.toMutableList()
+        RunPersistenceManager.markDirty()
+    }
+
+    fun reapply(player: Player) {
+        for (instance in getBoons(player.uniqueId)) {
+            applyBoonToAP(player, instance)
+        }
     }
 
     /**
@@ -74,6 +95,10 @@ object PlayerBoonData {
      * 先移除旧的再添加新的（处理升级场景）
      */
     private fun applyBoonToAP(player: Player, instance: BoonInstance) {
+        if (!DependencySelfCheckManager.isAttributePlusAvailable()) {
+            DependencySelfCheckManager.warnAttributePlusUnavailable("神恩 ${instance.boon.id}")
+            return
+        }
         try {
             val data = AttributeAPI.getAttrData(player) ?: return
             val sourceKey = "$AP_SOURCE_PREFIX${instance.boon.id}"
@@ -96,6 +121,9 @@ object PlayerBoonData {
      * 从 AP 移除单个 Boon 的属性
      */
     private fun removeBoonFromAP(player: Player, instance: BoonInstance) {
+        if (!DependencySelfCheckManager.isAttributePlusAvailable()) {
+            return
+        }
         try {
             val data = AttributeAPI.getAttrData(player) ?: return
             val sourceKey = "$AP_SOURCE_PREFIX${instance.boon.id}"

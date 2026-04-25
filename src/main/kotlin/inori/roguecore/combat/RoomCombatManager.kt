@@ -10,18 +10,27 @@ import inori.roguecore.data.ForgeMaterialType
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.DungeonManager
+import inori.roguecore.dungeon.RunPersistenceManager
 import inori.roguecore.event.RoomEventManager
 import inori.roguecore.dungeon.room.Room
 import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.item.DungeonLootManager
 import inori.roguecore.party.PartyManager
 import inori.roguecore.relic.RelicEffectHandler
+import inori.roguecore.ui.DungeonHudManager
+import inori.roguecore.ui.DungeonSceneCueManager
 import inori.roguecore.ui.RunCompleteUI
 import org.bukkit.Bukkit
 import org.bukkit.Location
+import org.bukkit.Particle
+import org.bukkit.Sound
+import org.bukkit.World
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
 import taboolib.common.platform.function.info
+import taboolib.common.platform.function.submit
 import taboolib.module.configuration.Config
 import taboolib.module.configuration.Configuration
 import java.util.UUID
@@ -44,6 +53,24 @@ object RoomCombatManager {
     /** 玩家当前所在的房间 ID: 玩家UUID -> (副本ID, 房间ID) */
     private val playerRoomMap = ConcurrentHashMap<UUID, Pair<String, Int>>()
 
+    /** 玩家移动拦截提示冷却，避免连续刷屏 */
+    private val movementWarnAt = ConcurrentHashMap<UUID, Long>()
+
+    /** 当前激活战斗房的可视封门粒子点位 */
+    private val activeRoomSeals = ConcurrentHashMap<String, List<Location>>()
+
+    @Awake(LifeCycle.ENABLE)
+    fun startSealRenderer() {
+        submit(period = 8L) {
+            for (points in activeRoomSeals.values) {
+                for (point in points) {
+                    val world = point.world ?: continue
+                    world.spawnParticle(Particle.PORTAL, point, 3, 0.12, 0.22, 0.12, 0.01)
+                }
+            }
+        }
+    }
+
     /**
      * 检测玩家位置，判断是否进入了新房间
      */
@@ -61,6 +88,52 @@ object RoomCombatManager {
     }
 
     /**
+     * 处理副本中的房间封锁移动。
+     *
+     * 当某个战斗房正在进行时：
+     * - 已在战斗房里的玩家不能离开；
+     * - 其他玩家只能进入该战斗房，不能继续探别的房间。
+     *
+     * @return true 表示本次移动需要被拦截
+     */
+    fun handleMovement(player: Player, from: Location, to: Location): Boolean {
+        val instance = DungeonManager.getPlayerDungeon(player) ?: return false
+        if (instance.completed) {
+            return false
+        }
+
+        val activeRoom = instance.rooms.firstOrNull { it.isCombatRoom && it.state == RoomState.ACTIVE } ?: return false
+        val fromRoom = getRoomAtLocation(from, instance)
+        val toRoom = getRoomAtLocation(to, instance)
+
+        if (toRoom?.id == activeRoom.id) {
+            return false
+        }
+
+        if (fromRoom?.id == activeRoom.id) {
+            warnMovementLocked(player, "§c当前房间战斗未结束，无法离开。")
+            return true
+        }
+
+        if (toRoom != null && toRoom.id != activeRoom.id) {
+            warnMovementLocked(player, "§c请先完成当前战斗房，再前往其他房间。")
+            return true
+        }
+
+        return false
+    }
+
+    private fun warnMovementLocked(player: Player, message: String) {
+        val now = System.currentTimeMillis()
+        val last = movementWarnAt[player.uniqueId] ?: 0L
+        if (now - last < 1000L) {
+            return
+        }
+        movementWarnAt[player.uniqueId] = now
+        player.sendMessage(message)
+    }
+
+    /**
      * 玩家进入房间时的处理
      */
     private fun onPlayerEnterRoom(player: Player, instance: DungeonInstance, room: Room) {
@@ -74,24 +147,30 @@ object RoomCombatManager {
         if (room.state != RoomState.IDLE) return
 
         room.state = RoomState.ACTIVE
+        RunPersistenceManager.markDirty()
         val spawned = spawnMonstersInRoom(instance, room)
         if (spawned <= 0) {
             room.state = RoomState.CLEARED
+            RunPersistenceManager.markDirty()
             player.sendMessage("§e该房间未能生成怪物，已自动跳过")
             checkDungeonComplete(instance)
             return
         }
 
+        sealRoom(instance, room)
         val typeName = room.type.displayName
         for (member in instance.getOnlinePlayers()) {
             member.sendMessage("§c⚔ ${typeName}房间已激活! 消灭所有怪物!")
+            DungeonHudManager.pushActionBar(member, "§c$typeName 已封锁，清除全部怪物")
         }
+        DungeonSceneCueManager.broadcastCombatStart(instance, room)
     }
 
     /**
      * 在房间内生成怪物
      */
     private fun spawnMonstersInRoom(instance: DungeonInstance, room: Room): Int {
+        room.spawnedMobCount = 0
         val waves = MonsterConfig.getWaves(room.type, instance.config.floorNumber)
         if (waves.isEmpty()) return 0
 
@@ -125,6 +204,8 @@ object RoomCombatManager {
             }
         }
 
+        room.spawnedMobCount = spawnedCount
+        RunPersistenceManager.markDirty()
         info("[RogueCore] 副本 ${instance.id} 房间 #${room.id}(${room.type.displayName}) 生成了 ${room.aliveMobs.size} 只怪物")
         return spawnedCount
     }
@@ -132,6 +213,87 @@ object RoomCombatManager {
     private fun getPartySizeMultiplier(instance: DungeonInstance): Double {
         val onlinePlayers = instance.getOnlinePlayerCount().coerceAtLeast(1)
         return 1.0 + (onlinePlayers - 1) * 0.5
+    }
+
+    private fun sealRoom(instance: DungeonInstance, room: Room) {
+        val sealPoints = collectSealPoints(instance, room)
+        if (sealPoints.isEmpty()) {
+            activeRoomSeals.remove(instance.id)
+            return
+        }
+        activeRoomSeals[instance.id] = sealPoints
+        for (player in instance.getOnlinePlayers()) {
+            player.playSound(player.location, Sound.BLOCK_BEACON_ACTIVATE, 0.6f, 1.8f)
+        }
+    }
+
+    private fun unsealRoom(instance: DungeonInstance) {
+        if (activeRoomSeals.remove(instance.id) == null) {
+            return
+        }
+        for (player in instance.getOnlinePlayers()) {
+            player.playSound(player.location, Sound.BLOCK_AMETHYST_BLOCK_BREAK, 0.6f, 1.2f)
+        }
+    }
+
+    private fun collectSealPoints(instance: DungeonInstance, room: Room): List<Location> {
+        val points = mutableListOf<Location>()
+        val baseY = instance.config.floorLevel
+        val height = instance.config.roomHeight
+        val world = instance.world
+        val originX = instance.origin.blockX
+        val originZ = instance.origin.blockZ
+
+        for (x in (room.x + 1) until (room.x + room.width - 1)) {
+            appendSealColumn(points, world, originX + x, originZ + room.z, 0, -1, baseY, height)
+            appendSealColumn(points, world, originX + x, originZ + room.z + room.depth - 1, 0, 1, baseY, height)
+        }
+        for (z in (room.z + 1) until (room.z + room.depth - 1)) {
+            appendSealColumn(points, world, originX + room.x, originZ + z, -1, 0, baseY, height)
+            appendSealColumn(points, world, originX + room.x + room.width - 1, originZ + z, 1, 0, baseY, height)
+        }
+        return points
+    }
+
+    private fun appendSealColumn(
+        points: MutableList<Location>,
+        world: World,
+        blockX: Int,
+        blockZ: Int,
+        outsideDx: Int,
+        outsideDz: Int,
+        baseY: Int,
+        height: Int
+    ) {
+        if (!isOpenDoorway(world, blockX, blockZ, outsideDx, outsideDz, baseY, height)) {
+            return
+        }
+        for (y in 1..height) {
+            points += Location(world, blockX + 0.5, baseY + y + 0.5, blockZ + 0.5)
+        }
+    }
+
+    private fun isOpenDoorway(
+        world: World,
+        blockX: Int,
+        blockZ: Int,
+        outsideDx: Int,
+        outsideDz: Int,
+        baseY: Int,
+        height: Int
+    ): Boolean {
+        val outsideX = blockX + outsideDx
+        val outsideZ = blockZ + outsideDz
+        var hasAirColumn = false
+        for (y in 1..height) {
+            val inner = world.getBlockAt(blockX, baseY + y, blockZ)
+            val outer = world.getBlockAt(outsideX, baseY + y, outsideZ)
+            if (inner.type.isSolid || outer.type.isSolid) {
+                return false
+            }
+            hasAirColumn = true
+        }
+        return hasAirColumn
     }
 
     /**
@@ -183,12 +345,15 @@ object RoomCombatManager {
      */
     private fun onRoomCleared(instance: DungeonInstance, room: Room) {
         room.state = RoomState.CLEARED
+        RunPersistenceManager.markDirty()
+        unsealRoom(instance)
         rewardHiddenKeys(instance, room)
 
         // 通知副本内所有玩家 + Boon 选择 + 碎片积累 + 词缀效果
         for (uuid in instance.players) {
             val player = Bukkit.getPlayer(uuid) ?: continue
             player.sendMessage("§a✔ ${room.type.displayName}房间已通关!")
+            DungeonHudManager.pushActionBar(player, "§a${room.type.displayName}已通关")
             ShardRewardManager.onRoomClear(uuid, instance.config.floorNumber, AffixManager.getShardMultiplier(instance))
             BoonEffectHandler.onRoomCleared(player)
             RelicEffectHandler.onRoomCleared(player)
@@ -217,6 +382,7 @@ object RoomCombatManager {
             }
         }
 
+        DungeonSceneCueManager.broadcastRoomCleared(instance, room)
         info("[RogueCore] 副本 ${instance.id} 房间 #${room.id}(${room.type.displayName}) 已通关")
 
         // 检查是否所有战斗房间都通关了
@@ -236,6 +402,8 @@ object RoomCombatManager {
 
         if (allCleared) {
             instance.completed = true
+            RunPersistenceManager.markDirty()
+            DungeonSceneCueManager.broadcastDungeonComplete(instance)
             val party = PartyManager.getPartyByDungeonId(instance.id)
             for (uuid in instance.players) {
                 val player = Bukkit.getPlayer(uuid) ?: continue
@@ -266,8 +434,10 @@ object RoomCombatManager {
             return
         }
         val total = instance.addHiddenKeys(reward)
+        RunPersistenceManager.markDirty()
         for (player in instance.getOnlinePlayers()) {
             player.sendMessage("§9获得隐藏钥匙 §bx$reward §7(当前: §b$total§7)")
+            DungeonHudManager.pushActionBar(player, "§b隐藏钥匙 +$reward §7(当前 $total)")
         }
     }
 
@@ -285,15 +455,33 @@ object RoomCombatManager {
         return amount
     }
 
+    fun getPlayerRoom(player: Player): Room? {
+        val instance = DungeonManager.getPlayerDungeon(player) ?: return null
+        return getRoomAtPlayer(player, instance)
+    }
+
+    fun getActiveRoom(instance: DungeonInstance): Room? {
+        return instance.rooms.firstOrNull { it.isCombatRoom && it.state == RoomState.ACTIVE }
+    }
+
+    fun getCombatProgress(instance: DungeonInstance): Pair<Int, Int> {
+        val combatRooms = instance.rooms.filter { it.isCombatRoom }
+        val cleared = combatRooms.count { it.state == RoomState.CLEARED }
+        return cleared to combatRooms.size
+    }
+
     /**
      * 获取玩家当前所在的房间
      */
     private fun getRoomAtPlayer(player: Player, instance: DungeonInstance): Room? {
+        return getRoomAtLocation(player.location, instance)
+    }
+
+    private fun getRoomAtLocation(location: Location, instance: DungeonInstance): Room? {
         val ox = instance.origin.blockX
         val oz = instance.origin.blockZ
-        val px = player.location.blockX - ox
-        val pz = player.location.blockZ - oz
-
+        val px = location.blockX - ox
+        val pz = location.blockZ - oz
         return instance.rooms.firstOrNull { it.contains(px, pz) }
     }
 
@@ -302,6 +490,7 @@ object RoomCombatManager {
      */
     fun onPlayerLeave(player: Player) {
         playerRoomMap.remove(player.uniqueId)
+        movementWarnAt.remove(player.uniqueId)
     }
 
     /**
@@ -310,7 +499,13 @@ object RoomCombatManager {
     fun onDungeonDestroy(dungeonId: String) {
         // 清理怪物映射
         mobRoomMap.entries.removeIf { it.value.first == dungeonId }
-        // 清理玩家房间映射
+        activeRoomSeals.remove(dungeonId)
+
+        // 清理玩家房间映射与移动提示状态
+        val leavingPlayers = playerRoomMap.entries
+            .filter { it.value.first == dungeonId }
+            .map { it.key }
         playerRoomMap.entries.removeIf { it.value.first == dungeonId }
+        leavingPlayers.forEach(movementWarnAt::remove)
     }
 }

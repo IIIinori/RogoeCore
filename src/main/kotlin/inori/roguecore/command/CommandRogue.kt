@@ -7,6 +7,7 @@ import inori.roguecore.combat.MonsterConfig
 import inori.roguecore.curse.RunCurseManager
 import inori.roguecore.data.PlayerDataManager
 import inori.roguecore.data.ShardRewardManager
+import inori.roguecore.dependency.DependencySelfCheckManager
 import inori.roguecore.dungeon.DungeonManager
 import inori.roguecore.dungeon.floor.FloorManager
 import inori.roguecore.dungeon.generator.RoomTypeWeights
@@ -24,6 +25,7 @@ import inori.roguecore.event.TrialEvent
 import inori.roguecore.item.DungeonLootManager
 import inori.roguecore.relic.RelicRegistry
 import inori.roguecore.relic.PlayerRelicData
+import inori.roguecore.talent.TalentManager
 import inori.roguecore.talent.TalentRegistry
 import inori.roguecore.ui.TalentUI
 import inori.roguecore.ui.CodexUI
@@ -38,6 +40,7 @@ import taboolib.common.platform.command.CommandHeader
 import taboolib.common.platform.command.mainCommand
 import taboolib.common.platform.command.subCommand
 import taboolib.expansion.createHelper
+import java.util.UUID
 
 @CommandHeader("rogue", permission = "roguecore.admin")
 object CommandRogue {
@@ -123,6 +126,19 @@ object CommandRogue {
             }
             DungeonManager.leaveDungeon(sender)
             sender.sendMessage("§a已离开地牢")
+        }
+    }
+
+    @CommandBody(description = "重连返回未结束的副本")
+    val rejoin = subCommand {
+        execute<Player> { sender, _, _ ->
+            if (DungeonManager.isInDungeon(sender)) {
+                sender.sendMessage("§e你已经在副本中，无需重连。")
+                return@execute
+            }
+            if (!DungeonManager.rejoinDungeon(sender)) {
+                sender.sendMessage("§c没有可重连的副本，或该副本已经结束。")
+            }
         }
     }
 
@@ -274,6 +290,204 @@ object CommandRogue {
         }
     }
 
+    // ==================== 管理员命令 ====================
+
+    @CommandBody(description = "管理员 - 查看所有活跃副本", permission = "roguecore.admin")
+    val dungeons = subCommand {
+        execute<CommandSender> { sender, _, _ ->
+            val dungeons = DungeonManager.getActiveDungeons()
+            if (dungeons.isEmpty()) {
+                sender.sendMessage("§7当前没有活跃副本。")
+                return@execute
+            }
+            sender.sendMessage("§6===== 活跃副本 ${dungeons.size} 个 =====")
+            for (dungeon in dungeons) {
+                val names = dungeon.players.map { uuid ->
+                    Bukkit.getPlayer(uuid)?.name ?: Bukkit.getOfflinePlayer(uuid).name ?: uuid.toString()
+                }
+                val playerSummary = if (names.isEmpty()) "无" else names.joinToString(", ")
+                sender.sendMessage("§e${dungeon.id} §7- Floor §f${dungeon.config.floorNumber} §8(${dungeon.config.theme.name}) §7玩家:${dungeon.players.size} §8[$playerSummary]")
+            }
+        }
+    }
+
+    @CommandBody(description = "管理员 - 销毁指定副本", permission = "roguecore.admin")
+    val destroy = subCommand {
+        dynamic("dungeonId") {
+            suggestion<CommandSender> { _, _ -> DungeonManager.getActiveDungeons().map { it.id } }
+            execute<CommandSender> { sender, _, argument ->
+                val dungeon = DungeonManager.getDungeonById(argument)
+                if (dungeon == null) {
+                    sender.sendMessage("§c未找到副本: §f$argument")
+                    return@execute
+                }
+                val playerCount = dungeon.players.size
+                val floor = dungeon.config.floorNumber
+                DungeonManager.destroyDungeon(dungeon.id)
+                sender.sendMessage("§a已销毁副本 §f${dungeon.id} §7(Floor $floor, 玩家 $playerCount)")
+            }
+        }
+    }
+
+    @CommandBody(description = "管理员 - 强制让玩家离开副本", permission = "roguecore.admin")
+    val forceleave = subCommand {
+        dynamic("player") {
+            suggestion<CommandSender> { _, _ -> Bukkit.getOnlinePlayers().map { it.name } }
+            execute<CommandSender> { sender, _, argument ->
+                val target = Bukkit.getPlayerExact(argument)
+                if (target == null) {
+                    sender.sendMessage("§c玩家不在线: §f$argument")
+                    return@execute
+                }
+                val dungeon = DungeonManager.getPlayerDungeon(target)
+                if (dungeon == null) {
+                    sender.sendMessage("§c${target.name} 当前不在副本中。")
+                    return@execute
+                }
+                DungeonManager.leaveDungeon(target)
+                sender.sendMessage("§a已强制让 §f${target.name} §a离开副本 §f${dungeon.id}")
+                target.sendMessage("§c管理员已强制将你移出副本。")
+            }
+        }
+    }
+
+    @CommandBody(description = "管理员 - 管理永久灵魂碎片", permission = "roguecore.admin")
+    val shards = subCommand {
+        dynamic("action") {
+            suggestion<CommandSender> { _, _ -> listOf("give", "take", "set") }
+            dynamic("player") {
+                suggestion<CommandSender> { _, _ -> Bukkit.getOnlinePlayers().map { it.name } }
+                dynamic("amount") {
+                    suggestion<CommandSender> { _, _ -> listOf("10", "50", "100", "500", "1000") }
+                    execute<CommandSender> { sender, context, argument ->
+                        val action = context["action"].lowercase()
+                        val playerName = context["player"]
+                        val target = resolveTarget(playerName)
+                        if (target == null) {
+                            sender.sendMessage("§c未找到玩家: §f$playerName §7(需在线或至少进服一次)")
+                            return@execute
+                        }
+                        val amount = argument.toIntOrNull()
+                        if (amount == null || amount < 0) {
+                            sender.sendMessage("§c金额必须是大于等于 0 的整数。")
+                            return@execute
+                        }
+                        when (action) {
+                            "give" -> {
+                                PlayerDataManager.addSoulShards(target.uuid, amount)
+                                sender.sendMessage("§a已为 §f${target.name} §a增加 §6$amount §a灵魂碎片。")
+                            }
+                            "take" -> {
+                                if (!PlayerDataManager.takeSoulShards(target.uuid, amount)) {
+                                    sender.sendMessage("§c${target.name} 的灵魂碎片不足，无法扣除 §6$amount§c。")
+                                    return@execute
+                                }
+                                sender.sendMessage("§a已从 §f${target.name} §a扣除 §6$amount §a灵魂碎片。")
+                            }
+                            "set" -> {
+                                PlayerDataManager.setSoulShards(target.uuid, amount)
+                                sender.sendMessage("§a已将 §f${target.name} §a的灵魂碎片设置为 §6$amount§a。")
+                            }
+                            else -> sender.sendMessage("§c未知操作: §f$action")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @CommandBody(description = "管理员 - 直接授予研究", permission = "roguecore.admin")
+    val unlock = subCommand {
+        dynamic("player") {
+            suggestion<CommandSender> { _, _ -> Bukkit.getOnlinePlayers().map { it.name } }
+            dynamic("unlockId") {
+                suggestion<CommandSender> { _, _ -> UnlockRegistry.getAll().map { it.id }.sorted() }
+                execute<CommandSender> { sender, context, argument ->
+                    val playerName = context["player"]
+                    val target = resolveTarget(playerName)
+                    if (target == null) {
+                        sender.sendMessage("§c未找到玩家: §f$playerName §7(需在线或至少进服一次)")
+                        return@execute
+                    }
+                    val unlock = UnlockRegistry.get(argument)
+                    if (unlock == null) {
+                        sender.sendMessage("§c未找到研究: §f$argument")
+                        return@execute
+                    }
+                    if (!UnlockManager.grantUnlock(target.uuid, unlock.id)) {
+                        sender.sendMessage("§c${target.name} 已拥有研究 §f${unlock.name}§c。")
+                        return@execute
+                    }
+                    sender.sendMessage("§a已为 §f${target.name} §a授予研究 §d${unlock.name}§a。")
+                }
+            }
+        }
+    }
+
+    @CommandBody(description = "管理员 - 设置玩家天赋等级", permission = "roguecore.admin")
+    val talentset = subCommand {
+        dynamic("player") {
+            suggestion<CommandSender> { _, _ -> Bukkit.getOnlinePlayers().map { it.name } }
+            dynamic("talentId") {
+                suggestion<CommandSender> { _, _ -> TalentRegistry.getAll().map { it.id }.sorted() }
+                dynamic("level") {
+                    suggestion<CommandSender> { _, context ->
+                        val talent = TalentRegistry.get(context["talentId"])
+                        if (talent == null) emptyList() else (0..talent.maxLevel).map { it.toString() }
+                    }
+                    execute<CommandSender> { sender, context, argument ->
+                        val playerName = context["player"]
+                        val target = resolveTarget(playerName)
+                        if (target == null) {
+                            sender.sendMessage("§c未找到玩家: §f$playerName §7(需在线或至少进服一次)")
+                            return@execute
+                        }
+                        val talent = TalentRegistry.get(context["talentId"])
+                        if (talent == null) {
+                            sender.sendMessage("§c未找到天赋: §f${context["talentId"]}")
+                            return@execute
+                        }
+                        val level = argument.toIntOrNull()
+                        if (level == null || level !in 0..talent.maxLevel) {
+                            sender.sendMessage("§c等级必须在 0-${talent.maxLevel} 之间。")
+                            return@execute
+                        }
+                        TalentManager.setTalentLevel(target.uuid, talent.id, level)
+                        target.player?.takeIf { DungeonManager.isInDungeon(it) }?.let {
+                            TalentManager.removeTalents(it)
+                            TalentManager.applyTalents(it)
+                        }
+                        sender.sendMessage("§a已将 §f${target.name} §a的天赋 §f${talent.name} §a设置为 Lv.$level。")
+                    }
+                }
+            }
+        }
+    }
+
+    @CommandBody(description = "管理员 - 重置玩家数据", permission = "roguecore.admin")
+    val reset = subCommand {
+        dynamic("player") {
+            suggestion<CommandSender> { _, _ -> Bukkit.getOnlinePlayers().map { it.name } }
+            execute<CommandSender> { sender, _, argument ->
+                val target = resolveTarget(argument)
+                if (target == null) {
+                    sender.sendMessage("§c未找到玩家: §f$argument §7(需在线或至少进服一次)")
+                    return@execute
+                }
+                target.player?.let { online ->
+                    if (DungeonManager.isInDungeon(online)) {
+                        DungeonManager.leaveDungeon(online)
+                    }
+                }
+                TalentManager.clearAll(target.uuid)
+                UnlockManager.clearAll(target.uuid)
+                PlayerDataManager.reset(target.uuid)
+                sender.sendMessage("§a已重置玩家 §f${target.name} §a的永久数据、研究与天赋。")
+                target.player?.sendMessage("§c管理员已重置你的 RogueCore 进度。")
+            }
+        }
+    }
+
     @CommandBody(description = "查看地牢信息(调试)", permission = "roguecore.admin")
     val info = subCommand {
         execute<Player> { sender, _, _ ->
@@ -359,7 +573,22 @@ object CommandRogue {
             AffixRegistry.config.reload()
             AffixRegistry.load()
             PartyManager.load()
+            DependencySelfCheckManager.runCheck(sender)
             sender.sendMessage("§a配置文件已重载")
         }
+    }
+
+    private data class ResolvedTarget(
+        val uuid: UUID,
+        val name: String,
+        val player: Player? = null
+    )
+
+    private fun resolveTarget(name: String): ResolvedTarget? {
+        Bukkit.getPlayerExact(name)?.let { player ->
+            return ResolvedTarget(player.uniqueId, player.name, player)
+        }
+        val offline = Bukkit.getOfflinePlayers().firstOrNull { it.name?.equals(name, ignoreCase = true) == true } ?: return null
+        return ResolvedTarget(offline.uniqueId, offline.name ?: name)
     }
 }

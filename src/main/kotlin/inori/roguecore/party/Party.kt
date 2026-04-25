@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap
  */
 class Party(
     val id: String,
-    val leader: UUID,
+    var leader: UUID,
     val maxSize: Int
 ) {
     /** 所有成员（包含队长） */

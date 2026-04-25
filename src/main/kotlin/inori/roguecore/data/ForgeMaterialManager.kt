@@ -1,5 +1,6 @@
 package inori.roguecore.data
 
+import inori.roguecore.dungeon.RunPersistenceManager
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
@@ -18,6 +19,7 @@ object ForgeMaterialManager {
         }
         val bag = materials.computeIfAbsent(uuid) { ConcurrentHashMap() }
         bag[type] = (bag[type] ?: 0) + amount
+        RunPersistenceManager.markDirty()
     }
 
     fun get(uuid: UUID, type: ForgeMaterialType): Int {
@@ -42,11 +44,37 @@ object ForgeMaterialManager {
         if (bag.isEmpty()) {
             materials.remove(uuid)
         }
+        RunPersistenceManager.markDirty()
         return true
     }
 
     fun clear(uuid: UUID) {
-        materials.remove(uuid)
+        if (materials.remove(uuid) != null) {
+            RunPersistenceManager.markDirty()
+        }
+    }
+
+    fun getAll(uuid: UUID): Map<ForgeMaterialType, Int> {
+        return materials[uuid]?.toMap() ?: emptyMap()
+    }
+
+    fun restore(uuid: UUID, values: Map<ForgeMaterialType, Int>) {
+        if (values.isEmpty()) {
+            materials.remove(uuid)
+            return
+        }
+        val bag = ConcurrentHashMap<ForgeMaterialType, Int>()
+        for ((type, amount) in values) {
+            if (amount > 0) {
+                bag[type] = amount
+            }
+        }
+        if (bag.isEmpty()) {
+            materials.remove(uuid)
+        } else {
+            materials[uuid] = bag
+        }
+        RunPersistenceManager.markDirty()
     }
 }
 

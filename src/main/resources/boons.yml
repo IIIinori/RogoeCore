@@ -146,3 +146,79 @@ boons:
         value-per-level: 6.0
         tag: "壁垒"
         per-tag: 2.0
+
+  hunter_momentum:
+    name: "追猎余势"
+    description: "攻击速度 +{value}% 且移动更轻快"
+    rarity: RARE
+    icon: RABBIT_FOOT
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "攻击速度": [4.0, 4.0]
+      "移动速度": [2.0, 2.0]
+
+  exposed_weakness:
+    name: "破绽洞察"
+    description: "狩猎系会更早进入处决窗口"
+    rarity: EPIC
+    icon: FERMENTED_SPIDER_EYE
+    max-level: 3
+    tags: ["狩猎"]
+    effects:
+      execute:
+        type: EXECUTE
+        value-per-level: 18.0
+        threshold: 50.0
+        tag: "狩猎"
+        per-tag: 4.0
+
+  bulwark_march:
+    name: "壁垒行军"
+    description: "生命上限 +{value} 并稳固前线"
+    rarity: RARE
+    icon: TURTLE_HELMET
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "生命上限": [16.0, 16.0]
+      "移动速度": [1.5, 1.5]
+
+  iron_rebuke:
+    name: "铁律回敬"
+    description: "壁垒系每次反击都会更沉重"
+    rarity: RARE
+    icon: IRON_BARS
+    max-level: 3
+    tags: ["壁垒"]
+    effects:
+      retaliate:
+        type: RETALIATE
+        value-per-level: 1.5
+        tag: "壁垒"
+        per-tag: 0.8
+
+  crimson_contract:
+    name: "猩红契约"
+    description: "生命偷取 +{value}% 并附带进攻增益"
+    rarity: RARE
+    icon: CRIMSON_FUNGUS
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "生命偷取": [2.0, 2.0]
+      "物理攻击": [3.0, 3.0]
+
+  feast_of_ruin:
+    name: "破灭宴飨"
+    description: "鲜血系击杀后会掠取更多生命"
+    rarity: LEGENDARY
+    icon: GOLDEN_CARROT
+    max-level: 3
+    tags: ["鲜血"]
+    effects:
+      kill_heal:
+        type: KILL_HEAL
+        value-per-level: 3.0
+        tag: "鲜血"
+        per-tag: 1.5

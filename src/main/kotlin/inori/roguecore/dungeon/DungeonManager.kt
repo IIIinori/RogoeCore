@@ -15,6 +15,9 @@ import inori.roguecore.item.DungeonBoundItem
 import inori.roguecore.item.DungeonLootManager
 import inori.roguecore.relic.PlayerRelicData
 import inori.roguecore.ui.DungeonGuiGuard
+import inori.roguecore.ui.DungeonHudManager
+import inori.roguecore.ui.DungeonSceneCueManager
+import inori.roguecore.ui.RunCompleteUI
 import inori.roguecore.party.Party
 import inori.roguecore.party.PartyManager
 import inori.roguecore.talent.TalentManager
@@ -43,6 +46,9 @@ object DungeonManager {
     /** 玩家进入副本前的位置 */
     private val returnLocations = ConcurrentHashMap<UUID, Location>()
 
+    /** 离线期间副本结束后，等待玩家下次上线时清理的 run 临时状态 */
+    private val pendingOfflineCleanup = ConcurrentHashMap.newKeySet<UUID>()
+
     /**
      * 创建新副本实例（独立世界）
      */
@@ -65,6 +71,7 @@ object DungeonManager {
         val instance = generator.generate(instanceId, affixes, eventAffixes)
 
         instances[instance.id] = instance
+        RunPersistenceManager.markDirty()
         val affixNames = if (affixes.isNotEmpty()) affixes.joinToString(", ") { it.name } else "无"
         val eventAffixNames = if (eventAffixes.isNotEmpty()) eventAffixes.joinToString(", ") { it.name } else "无"
         info("[RogueCore] 副本 ${instance.id} 已创建 (${instance.rooms.size}个房间, 战斗词缀: $affixNames, 事件词缀: $eventAffixNames)")
@@ -104,11 +111,16 @@ object DungeonManager {
             leaveDungeon(player)
         }
 
-        // 保存返回位置
-        returnLocations[player.uniqueId] = player.location.clone()
+        // 保存返回位置（重连回副本时保留首次进入前的位置）
+        if (PartyManager.hasDungeonReconnect(player.uniqueId)) {
+            returnLocations.putIfAbsent(player.uniqueId, player.location.clone())
+        } else {
+            returnLocations[player.uniqueId] = player.location.clone()
+        }
 
         instance.players.add(player.uniqueId)
         playerDungeonMap[player.uniqueId] = dungeonId
+        PartyManager.clearDungeonReconnect(player.uniqueId)
 
         // 传送到起点
         player.teleport(instance.getSpawnLocation())
@@ -121,7 +133,15 @@ object DungeonManager {
 
         notifyAffixes(player, instance)
         DungeonLootManager.refreshEquippedSetBonuses(player)
+        DungeonHudManager.attach(player)
+        DungeonSceneCueManager.showDungeonEntry(player, instance)
+        RunPersistenceManager.markDirty()
         return true
+    }
+
+    fun restoreDungeon(instance: DungeonInstance) {
+        instances[instance.id] = instance
+        RunPersistenceManager.markDirty()
     }
 
     /**
@@ -138,6 +158,73 @@ object DungeonManager {
         }
 
         return instance
+    }
+
+    fun canRejoinDungeon(uuid: UUID): Boolean {
+        val dungeonId = PartyManager.resolveReconnectDungeonId(uuid) ?: return false
+        return instances.containsKey(dungeonId)
+    }
+
+    fun processPendingJoinState(player: Player) {
+        if (!pendingOfflineCleanup.remove(player.uniqueId)) {
+            return
+        }
+        PlayerBoonData.clearBoons(player)
+        RunCurseManager.clear(player)
+        PlayerRelicData.clearRelics(player)
+        DungeonBoundItem.clearFromPlayer(player)
+        DungeonGuiGuard.unlock(player)
+        DungeonHudManager.detach(player)
+        player.sendMessage("§e你离线期间本次冒险已经结束，临时状态已自动结算并清理。")
+    }
+
+    fun rejoinDungeon(player: Player): Boolean {
+        if (isInDungeon(player)) {
+            return true
+        }
+        val dungeonId = PartyManager.resolveReconnectDungeonId(player.uniqueId) ?: return false
+        val instance = instances[dungeonId] ?: run {
+            PartyManager.clearDungeonReconnect(player.uniqueId)
+            return false
+        }
+
+        returnLocations.putIfAbsent(player.uniqueId, player.location.clone())
+        instance.players.add(player.uniqueId)
+        playerDungeonMap[player.uniqueId] = dungeonId
+        PartyManager.clearDungeonReconnect(player.uniqueId)
+        PartyManager.onPlayerJoin(player)
+        player.teleport(instance.getSpawnLocation())
+        TalentManager.applyTalents(player)
+        PlayerBoonData.reapply(player)
+        RunCurseManager.reapply(player)
+        notifyAffixes(player, instance)
+        DungeonLootManager.refreshEquippedSetBonuses(player)
+        DungeonHudManager.attach(player)
+        DungeonSceneCueManager.showDungeonEntry(player, instance, "重返冒险")
+        player.sendMessage("§a你已重返未结束的副本 §f${instance.id}§a。")
+        RunPersistenceManager.markDirty()
+        val party = PartyManager.getPartyByDungeonId(instance.id)
+        if (instance.completed) {
+            if (party != null && !party.isLeader(player.uniqueId)) {
+                player.sendMessage("§e该副本已通关，等待队长决定去留。")
+            } else {
+                RunCompleteUI.open(player, instance, party)
+            }
+        }
+        return true
+    }
+
+    fun handleDisconnect(player: Player) {
+        val dungeonId = playerDungeonMap.remove(player.uniqueId) ?: return
+        val instance = instances[dungeonId] ?: return
+
+        instance.players.remove(player.uniqueId)
+        RoomCombatManager.onPlayerLeave(player)
+        DungeonGuiGuard.unlock(player)
+        DungeonHudManager.detach(player)
+        PartyManager.markDungeonDisconnect(player, dungeonId)
+        RunPersistenceManager.markDirty()
+        info("[RogueCore] 玩家 ${player.name} 从副本 $dungeonId 断线离场，保留重连资格")
     }
 
     /**
@@ -185,13 +272,16 @@ object DungeonManager {
             player.teleport(nextInstance.getSpawnLocation())
             notifyAffixes(player, nextInstance)
             DungeonLootManager.refreshEquippedSetBonuses(player)
+            DungeonHudManager.attach(player)
             val routeText = route?.let { " §7(${it.displayName})" } ?: ""
             player.sendMessage("§b已进入下一层: §f${nextConfig.floorNumber}$routeText")
+            DungeonSceneCueManager.showDungeonEntry(player, nextInstance, route?.displayName)
         }
 
         party?.dungeonId = nextInstance.id
         instances.remove(current.id)
         cleanupDungeonWorld(current, clearPartyBinding = false)
+        RunPersistenceManager.markDirty()
         return true
     }
 
@@ -217,6 +307,7 @@ object DungeonManager {
                 leaveDungeon(player)
             }
         }
+        RunPersistenceManager.markDirty()
         return true
     }
 
@@ -227,7 +318,9 @@ object DungeonManager {
         val dungeonId = playerDungeonMap.remove(player.uniqueId) ?: return
         val instance = instances[dungeonId]
 
+        PartyManager.clearDungeonReconnect(player.uniqueId)
         instance?.players?.remove(player.uniqueId)
+        PartyManager.onDungeonMemberRemoved(player.uniqueId, dungeonId)
         RoomCombatManager.onPlayerLeave(player)
         PlayerBoonData.clearBoons(player)
         RunCurseManager.clear(player)
@@ -243,6 +336,7 @@ object DungeonManager {
         }
 
         DungeonGuiGuard.unlock(player)
+        DungeonHudManager.detach(player)
 
         // 传送回原位
         val returnLoc = returnLocations.remove(player.uniqueId)
@@ -257,6 +351,7 @@ object DungeonManager {
         if (instance != null && instance.players.isEmpty()) {
             destroyDungeon(dungeonId)
         }
+        RunPersistenceManager.markDirty()
     }
 
     /**
@@ -267,11 +362,19 @@ object DungeonManager {
         return instances[dungeonId]
     }
 
+    fun getDungeonId(uuid: UUID): String? {
+        return playerDungeonMap[uuid]
+    }
+
     /**
      * 通过 ID 获取副本实例
      */
     fun getDungeonById(dungeonId: String): DungeonInstance? {
         return instances[dungeonId]
+    }
+
+    fun getActiveDungeons(): List<DungeonInstance> {
+        return instances.values.sortedWith(compareBy<DungeonInstance> { it.config.floorNumber }.thenBy { it.id })
     }
 
     /**
@@ -301,6 +404,7 @@ object DungeonManager {
                 TalentManager.removeTalents(player)
                 DungeonBoundItem.clearFromPlayer(player)
                 DungeonGuiGuard.unlock(player)
+                DungeonHudManager.detach(player)
                 if (returnLoc != null) {
                     player.teleport(returnLoc)
                 } else {
@@ -312,6 +416,7 @@ object DungeonManager {
         instance.players.clear()
 
         cleanupDungeonWorld(instance, clearPartyBinding = true)
+        RunPersistenceManager.markDirty()
     }
 
     /**
@@ -323,14 +428,49 @@ object DungeonManager {
         }
         playerDungeonMap.clear()
         returnLocations.clear()
+        pendingOfflineCleanup.clear()
         // 清理可能残留的副本世界
         VoidWorldManager.destroyAll()
         info("[RogueCore] 所有副本已清理")
     }
 
+    fun getReturnLocations(): Map<UUID, Location> {
+        return returnLocations.mapValues { it.value.clone() }
+    }
+
+    fun restoreReturnLocations(values: Map<UUID, Location>) {
+        returnLocations.clear()
+        for ((uuid, location) in values) {
+            returnLocations[uuid] = location.clone()
+        }
+        RunPersistenceManager.markDirty()
+    }
+
+    private fun scheduleOfflineCleanup(uuid: UUID) {
+        pendingOfflineCleanup.add(uuid)
+        ShardRewardManager.settle(uuid)
+        ForgeMaterialManager.clear(uuid)
+        RunPersistenceManager.markDirty()
+    }
+
     private fun cleanupDungeonWorld(instance: DungeonInstance, clearPartyBinding: Boolean) {
         RoomCombatManager.onDungeonDestroy(instance.id)
         if (clearPartyBinding) {
+            val party = PartyManager.getPartyByDungeonId(instance.id)
+            if (party != null) {
+                for (uuid in party.members) {
+                    if (PartyManager.hasDungeonReconnect(uuid)) {
+                        scheduleOfflineCleanup(uuid)
+                    }
+                    returnLocations.remove(uuid)
+                    PartyManager.clearDungeonReconnect(uuid)
+                }
+            } else {
+                for (uuid in PartyManager.getReconnectPlayersForDungeon(instance.id)) {
+                    scheduleOfflineCleanup(uuid)
+                    returnLocations.remove(uuid)
+                }
+            }
             PartyManager.clearDungeonBinding(instance.id)
         }
         instance.destroy()

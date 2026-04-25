@@ -72,3 +72,47 @@ relics:
     effect-type: BONUS_LOOT_CHANCE
     value: 40
     required-unlock: legendary_relics
+
+  gilded_spur:
+    name: "镀金马刺"
+    description: "每次击杀怪物额外获得 3 本局碎片"
+    rarity: COMMON
+    icon: GOLD_NUGGET
+    effect-type: KILL_SHARD
+    value: 3
+
+  banner_of_vigor:
+    name: "不屈旗帜"
+    description: "每次房间通关后恢复 10% 最大生命"
+    rarity: RARE
+    icon: WHITE_BANNER
+    effect-type: ROOM_HEAL
+    value: 10
+
+  quartermaster_ledger:
+    name: "军需簿册"
+    description: "精英与 Boss 战利品触发额外掉落的概率提高 15%"
+    rarity: EPIC
+    icon: BOOK
+    effect-type: BONUS_LOOT_CHANCE
+    value: 15
+    required-unlock: advanced_relics
+
+  ashen_resolve:
+    name: "余烬决意"
+    description: "生命低于 70% 时，造成伤害提高 18%"
+    rarity: RARE
+    icon: FIRE_CHARGE
+    effect-type: LOW_HEALTH_DAMAGE
+    value: 18
+    threshold: 70
+
+  void_pact_seal:
+    name: "虚誓封印"
+    description: "生命低于 75% 时，造成伤害提高 55%"
+    rarity: LEGENDARY
+    icon: CRYING_OBSIDIAN
+    effect-type: LOW_HEALTH_DAMAGE
+    value: 55
+    threshold: 75
+    required-unlock: legendary_relics

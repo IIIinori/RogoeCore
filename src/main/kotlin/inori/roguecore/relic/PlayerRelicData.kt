@@ -1,5 +1,6 @@
 package inori.roguecore.relic
 
+import inori.roguecore.dungeon.RunPersistenceManager
 import org.bukkit.entity.Player
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
@@ -22,11 +23,28 @@ object PlayerRelicData {
             return false
         }
         list += relic
+        RunPersistenceManager.markDirty()
         player.sendMessage("§d获得遗物 ${relic.rarity.color}${relic.name}§d!")
         return true
     }
 
     fun clearRelics(player: Player) {
-        playerRelics.remove(player.uniqueId)
+        if (playerRelics.remove(player.uniqueId) != null) {
+            RunPersistenceManager.markDirty()
+        }
+    }
+
+    fun getRelics(uuid: UUID): List<Relic> {
+        return playerRelics[uuid]?.toList() ?: emptyList()
+    }
+
+    fun restoreRelics(uuid: UUID, relics: List<Relic>) {
+        if (relics.isEmpty()) {
+            playerRelics.remove(uuid)
+            RunPersistenceManager.markDirty()
+            return
+        }
+        playerRelics[uuid] = relics.toMutableList()
+        RunPersistenceManager.markDirty()
     }
 }

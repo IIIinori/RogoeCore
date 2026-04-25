@@ -21,6 +21,8 @@ object EventAffixManager {
     private val affixes = mutableMapOf<String, DungeonEventAffix>()
     private val rules = mutableListOf<Triple<Int, Int, Int>>()
 
+    fun getAll(): Collection<DungeonEventAffix> = affixes.values
+
     @Awake(LifeCycle.ENABLE)
     fun load() {
         affixes.clear()

@@ -80,6 +80,24 @@ event-affixes:
       rooms: ["GAMBLE"]
       min-floor: 8
       weight: 14
+    restful_echo:
+      name: "§b安眠回响"
+      description: "休息点会提供更强恢复，升级神恩时也会顺带疗伤。"
+      rooms: ["REST"]
+      min-floor: 8
+      weight: 14
+    golden_waypoint:
+      name: "§6鎏金路标"
+      description: "撤离点会放宽提现门槛，并提高提前兑现比例。"
+      rooms: ["EXTRACTION"]
+      min-floor: 8
+      weight: 13
+    void_broker:
+      name: "§5虚空经纪"
+      description: "契约祭坛的代价与回报都会进一步放大。"
+      rooms: ["CONTRACT"]
+      min-floor: 8
+      weight: 13
 
 # 商店房配置
 shop:

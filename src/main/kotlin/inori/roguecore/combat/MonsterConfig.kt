@@ -99,6 +99,23 @@ object MonsterConfig {
         info("[RogueCore] 已加载 ${floorEntries.size} 组楼层怪物配置")
     }
 
+    fun getConfiguredMobIdsForSelfCheck(): Set<String> {
+        val ids = linkedSetOf<String>()
+        for (entry in floorEntries) {
+            ids += entry.normalMobs
+            ids += entry.eliteMobs
+            if (entry.bossMobId.contains("{floor}")) {
+                val floorCount = (entry.maxFloor - entry.minFloor + 1).coerceIn(1, 200)
+                for (floor in entry.minFloor until entry.minFloor + floorCount) {
+                    ids += entry.bossMobId.replace("{floor}", floor.toString())
+                }
+            } else {
+                ids += entry.bossMobId
+            }
+        }
+        return ids.filter { it.isNotBlank() }.toSet()
+    }
+
     /**
      * 获取房间的怪物波次
      */

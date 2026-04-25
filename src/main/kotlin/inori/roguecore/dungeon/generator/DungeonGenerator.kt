@@ -72,10 +72,41 @@ class DungeonGenerator(
             world = world,
             origin = origin,
             rooms = rooms,
+            corridorCoords = corridorCoords,
             config = config,
             affixes = affixes,
             eventAffixes = eventAffixes
         )
+    }
+
+    fun restore(
+        instanceId: String,
+        rooms: List<Room>,
+        corridorCoords: Set<Pair<Int, Int>>,
+        affixes: List<DungeonAffix> = emptyList(),
+        eventAffixes: List<DungeonEventAffix> = emptyList(),
+        hiddenKeys: Int = 0,
+        completed: Boolean = false
+    ): DungeonInstance {
+        buildRooms(rooms)
+        buildCorridors(corridorCoords, rooms)
+        reinforceShell(rooms, corridorCoords)
+        lightCorridors(corridorCoords, rooms)
+        populateRooms(rooms)
+
+        return DungeonInstance(
+            id = instanceId,
+            world = world,
+            origin = origin,
+            rooms = rooms,
+            corridorCoords = corridorCoords,
+            config = config,
+            affixes = affixes,
+            eventAffixes = eventAffixes,
+            hiddenKeys = hiddenKeys
+        ).also {
+            it.completed = completed
+        }
     }
 
     /**

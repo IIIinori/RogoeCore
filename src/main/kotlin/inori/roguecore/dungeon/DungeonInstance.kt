@@ -20,14 +20,15 @@ class DungeonInstance(
     val world: World,
     val origin: Location,
     val rooms: List<Room>,
+    val corridorCoords: Set<Pair<Int, Int>> = emptySet(),
     val config: DungeonConfig,
     val affixes: List<DungeonAffix> = emptyList(),
     val eventAffixes: List<DungeonEventAffix> = emptyList(),
-    val players: MutableSet<UUID> = ConcurrentHashMap.newKeySet()
+    val players: MutableSet<UUID> = ConcurrentHashMap.newKeySet(),
+    private var hiddenKeys: Int = 0
 ) {
 
     var completed = false
-    private var hiddenKeys = 0
 
     fun getOnlinePlayers(): List<Player> {
         return players.mapNotNull { Bukkit.getPlayer(it) }

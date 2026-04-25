@@ -70,9 +70,26 @@ object UnlockManager {
             return false
         }
 
-        DatabaseManager.getOrCreateContainer(player.uniqueId)[unlockKey(unlockId)] = "true"
+        grantUnlock(player.uniqueId, unlockId)
         player.sendMessage("§a已解锁研究: §f${definition.name}")
         return true
+    }
+
+    fun grantUnlock(uuid: UUID, unlockId: String): Boolean {
+        val definition = UnlockRegistry.get(unlockId) ?: return false
+        val container = DatabaseManager.getOrCreateContainer(uuid)
+        if (container[unlockKey(definition.id)] == "true") {
+            return false
+        }
+        container[unlockKey(definition.id)] = "true"
+        return true
+    }
+
+    fun clearAll(uuid: UUID) {
+        val container = DatabaseManager.getOrCreateContainer(uuid)
+        for (id in getUnlockedIds(uuid)) {
+            container[unlockKey(id)] = "false"
+        }
     }
 
     fun getRelicOfferBonus(player: Player): Int {

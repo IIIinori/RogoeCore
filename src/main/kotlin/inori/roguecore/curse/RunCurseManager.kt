@@ -1,6 +1,7 @@
 package inori.roguecore.curse
 
 import inori.roguecore.dungeon.DungeonManager
+import inori.roguecore.dungeon.RunPersistenceManager
 import org.bukkit.attribute.Attribute
 import org.bukkit.attribute.AttributeModifier
 import org.bukkit.entity.Player
@@ -36,6 +37,7 @@ object RunCurseManager {
             RunCurseType.FRAGILE -> applyFragile(player)
             RunCurseType.WITHERED, RunCurseType.VULNERABLE, RunCurseType.HOLLOW -> Unit
         }
+        RunPersistenceManager.markDirty()
         player.sendMessage("§4你背负了契约诅咒: §c${type.displayName}")
         return true
     }
@@ -46,6 +48,10 @@ object RunCurseManager {
 
     fun getCurses(player: Player): Set<RunCurseType> {
         return playerCurses[player.uniqueId]?.toSet() ?: emptySet()
+    }
+
+    fun getCurses(uuid: UUID): Set<RunCurseType> {
+        return playerCurses[uuid]?.toSet() ?: emptySet()
     }
 
     fun removeCurse(player: Player, type: RunCurseType): Boolean {
@@ -60,6 +66,7 @@ object RunCurseManager {
         if (curses.isEmpty()) {
             playerCurses.remove(player.uniqueId)
         }
+        RunPersistenceManager.markDirty()
         player.sendMessage("§a一条契约诅咒已被净化: §f${type.displayName}")
         return true
     }
@@ -68,6 +75,25 @@ object RunCurseManager {
         val removed = playerCurses.remove(player.uniqueId) ?: return
         if (RunCurseType.FRAGILE in removed) {
             removeFragile(player)
+        }
+        RunPersistenceManager.markDirty()
+    }
+
+    fun restore(uuid: UUID, curses: Set<RunCurseType>) {
+        if (curses.isEmpty()) {
+            playerCurses.remove(uuid)
+            fragileModifiers.remove(uuid)
+            RunPersistenceManager.markDirty()
+            return
+        }
+        playerCurses[uuid] = curses.toMutableSet()
+        fragileModifiers.remove(uuid)
+        RunPersistenceManager.markDirty()
+    }
+
+    fun reapply(player: Player) {
+        if (hasCurse(player, RunCurseType.FRAGILE)) {
+            applyFragile(player)
         }
     }
 

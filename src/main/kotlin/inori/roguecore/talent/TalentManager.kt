@@ -2,6 +2,7 @@ package inori.roguecore.talent
 
 import inori.roguecore.data.DatabaseManager
 import inori.roguecore.data.PlayerDataManager
+import inori.roguecore.dependency.DependencySelfCheckManager
 import org.bukkit.entity.Player
 import org.serverct.ersha.api.AttributeAPI
 import taboolib.common.platform.function.warning
@@ -55,7 +56,25 @@ object TalentManager {
         return true
     }
 
+    fun setTalentLevel(uuid: UUID, talentId: String, level: Int): Boolean {
+        val talent = TalentRegistry.get(talentId) ?: return false
+        val container = DatabaseManager.getOrCreateContainer(uuid)
+        container[talentKey(talent.id)] = level.coerceIn(0, talent.maxLevel)
+        return true
+    }
+
+    fun clearAll(uuid: UUID) {
+        val container = DatabaseManager.getOrCreateContainer(uuid)
+        for (talentId in getPlayerTalents(uuid).keys) {
+            container[talentKey(talentId)] = 0
+        }
+    }
+
     fun applyTalents(player: Player) {
+        if (!DependencySelfCheckManager.isAttributePlusAvailable()) {
+            DependencySelfCheckManager.warnAttributePlusUnavailable("天赋属性")
+            return
+        }
         val talents = getPlayerTalents(player.uniqueId)
 
         for ((talentId, level) in talents) {
@@ -80,6 +99,9 @@ object TalentManager {
     }
 
     fun removeTalents(player: Player) {
+        if (!DependencySelfCheckManager.isAttributePlusAvailable()) {
+            return
+        }
         val talents = getPlayerTalents(player.uniqueId)
 
         for ((talentId, level) in talents) {
@@ -125,11 +147,6 @@ object TalentManager {
 
     fun unload(uuid: UUID) {
         DatabaseManager.release(uuid)
-    }
-
-    private fun setTalentLevel(uuid: UUID, talentId: String, level: Int) {
-        val container = DatabaseManager.getOrCreateContainer(uuid)
-        container[talentKey(talentId)] = level
     }
 
     private fun DataContainer.getInt(key: String): Int {

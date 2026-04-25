@@ -1,6 +1,10 @@
 package inori.roguecore.data
 
+import inori.roguecore.dungeon.DungeonManager
+import inori.roguecore.dungeon.RunPersistenceManager
 import inori.roguecore.talent.TalentManager
+import inori.roguecore.ui.DungeonHudManager
+import org.bukkit.Bukkit
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.function.info
@@ -43,7 +47,7 @@ object ShardRewardManager {
         val base = perRoomClear
         val multiplier = 1.0 + (floorNumber - 1) * floorMultiplier
         val shards = (base * multiplier * affixMultiplier).toInt()
-        runShards[uuid] = (runShards[uuid] ?: 0) + shards
+        addRunShards(uuid, shards)
     }
 
     /**
@@ -53,7 +57,7 @@ object ShardRewardManager {
         val base = perDungeonClear
         val multiplier = 1.0 + (floorNumber - 1) * floorMultiplier
         val shards = (base * multiplier * affixMultiplier).toInt()
-        runShards[uuid] = (runShards[uuid] ?: 0) + shards
+        addRunShards(uuid, shards)
     }
 
     /**
@@ -64,6 +68,8 @@ object ShardRewardManager {
             return
         }
         runShards[uuid] = (runShards[uuid] ?: 0) + amount
+        RunPersistenceManager.markDirty()
+        notifyHud(uuid, "§6本局碎片 +$amount")
     }
 
     /**
@@ -83,6 +89,8 @@ object ShardRewardManager {
         } else {
             runShards.remove(uuid)
         }
+        RunPersistenceManager.markDirty()
+        notifyHud(uuid, "§c本局碎片 -$amount")
         return true
     }
 
@@ -93,6 +101,7 @@ object ShardRewardManager {
     fun settle(uuid: UUID): Int {
         val base = runShards.remove(uuid) ?: 0
         if (base <= 0) return 0
+        RunPersistenceManager.markDirty()
 
         val bonus = TalentManager.getShardBonus(uuid)
         val total = (base * bonus).toInt()
@@ -107,6 +116,7 @@ object ShardRewardManager {
     fun settleDeath(uuid: UUID): Int {
         val base = runShards.remove(uuid) ?: 0
         if (base <= 0) return 0
+        RunPersistenceManager.markDirty()
 
         val bonus = TalentManager.getShardBonus(uuid)
         val total = (base * bonus * deathPenalty).toInt()
@@ -139,6 +149,8 @@ object ShardRewardManager {
         val bonus = TalentManager.getShardBonus(uuid)
         val total = (base * bonus).toInt()
         PlayerDataManager.addSoulShards(uuid, total)
+        RunPersistenceManager.markDirty()
+        notifyHud(uuid, "§b提前提现 +$total 灵魂碎片")
         return total
     }
 
@@ -178,6 +190,30 @@ object ShardRewardManager {
      * 清除（不结算，用于异常情况）
      */
     fun clear(uuid: UUID) {
-        runShards.remove(uuid)
+        if (runShards.remove(uuid) != null) {
+            RunPersistenceManager.markDirty()
+        }
+    }
+
+    fun getAllRunShards(): Map<UUID, Int> {
+        return runShards.toMap()
+    }
+
+    fun restoreRunShards(values: Map<UUID, Int>) {
+        runShards.clear()
+        for ((uuid, amount) in values) {
+            if (amount > 0) {
+                runShards[uuid] = amount
+            }
+        }
+        RunPersistenceManager.markDirty()
+    }
+
+    private fun notifyHud(uuid: UUID, message: String) {
+        val player = Bukkit.getPlayer(uuid) ?: return
+        if (!DungeonManager.isInDungeon(player)) {
+            return
+        }
+        DungeonHudManager.pushActionBar(player, message)
     }
 }

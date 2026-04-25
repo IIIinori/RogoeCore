@@ -42,12 +42,26 @@ object PlayerDataManager {
         container.setInt(KEY_SOUL_SHARDS, container.getInt(KEY_SOUL_SHARDS) + amount)
     }
 
+    fun setSoulShards(uuid: UUID, amount: Int) {
+        val container = DatabaseManager.getOrCreateContainer(uuid)
+        container.setInt(KEY_SOUL_SHARDS, amount.coerceAtLeast(0))
+    }
+
     fun takeSoulShards(uuid: UUID, amount: Int): Boolean {
         val container = DatabaseManager.getOrCreateContainer(uuid)
         val current = container.getInt(KEY_SOUL_SHARDS)
         if (current < amount) return false
         container.setInt(KEY_SOUL_SHARDS, current - amount)
         return true
+    }
+
+    fun reset(uuid: UUID) {
+        val container = DatabaseManager.getOrCreateContainer(uuid)
+        container.setInt(KEY_SOUL_SHARDS, 0)
+        container.setInt(KEY_TOTAL_RUNS, 0)
+        container.setInt(KEY_TOTAL_CLEARS, 0)
+        container.setInt(KEY_BEST_FLOOR, 0)
+        container.setInt(KEY_TOTAL_KILLS, 0)
     }
 
     fun recordRunStart(uuid: UUID) {

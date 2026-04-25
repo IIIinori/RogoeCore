@@ -7,8 +7,8 @@
 boons:
   # ===== 狩猎系 =====
   hunt_001:
-    name: "追猎01式"
-    description: "狩猎构筑属性成长"
+    name: "鹰眼初誓"
+    description: "狩猎共鸣强化：物理攻击与移动速度随神恩等级成长"
     rarity: COMMON
     icon: DIAMOND_SWORD
     max-level: 3
@@ -17,8 +17,8 @@ boons:
       "物理攻击": [2.5, 2.5]
       "移动速度": [1.3, 1.3]
   hunt_002:
-    name: "追猎02式"
-    description: "狩猎构筑属性成长"
+    name: "裂喉锋芒"
+    description: "狩猎共鸣强化：暴击几率与暴击伤害随神恩等级成长"
     rarity: COMMON
     icon: FEATHER
     max-level: 3
@@ -27,8 +27,8 @@ boons:
       "暴击几率": [2.9, 2.9]
       "暴击伤害": [1.5, 1.5]
   hunt_003:
-    name: "追猎03式"
-    description: "狩猎构筑属性成长"
+    name: "迅羽步伐"
+    description: "狩猎共鸣强化：攻击速度与精英伤害随神恩等级成长"
     rarity: COMMON
     icon: SPIDER_EYE
     max-level: 3
@@ -37,8 +37,8 @@ boons:
       "攻击速度": [3.4, 3.4]
       "精英伤害": [1.8, 1.8]
   hunt_004:
-    name: "追猎04式"
-    description: "击杀后回复生命"
+    name: "血迹追踪"
+    description: "狩猎共鸣在击杀后抽回血气"
     rarity: COMMON
     icon: GOLDEN_APPLE
     max-level: 3
@@ -51,8 +51,8 @@ boons:
         tag: "狩猎"
         per-tag: 2.2
   hunt_005:
-    name: "追猎05式"
-    description: "狩猎构筑属性成长"
+    name: "月下伏击"
+    description: "狩猎共鸣强化：暴击伤害与破甲随神恩等级成长"
     rarity: COMMON
     icon: IRON_CHESTPLATE
     max-level: 3
@@ -61,8 +61,8 @@ boons:
       "暴击伤害": [4.3, 4.3]
       "破甲": [2.3, 2.3]
   hunt_006:
-    name: "追猎06式"
-    description: "狩猎构筑属性成长"
+    name: "穿林箭息"
+    description: "狩猎共鸣强化：精英伤害与物理攻击随神恩等级成长"
     rarity: COMMON
     icon: ENDER_PEARL
     max-level: 3
@@ -71,8 +71,8 @@ boons:
       "精英伤害": [4.7, 4.7]
       "物理攻击": [2.5, 2.5]
   hunt_007:
-    name: "追猎07式"
-    description: "狩猎构筑属性成长"
+    name: "猎王号令"
+    description: "狩猎共鸣强化：首领伤害与暴击几率随神恩等级成长"
     rarity: COMMON
     icon: REDSTONE
     max-level: 3
@@ -81,8 +81,8 @@ boons:
       "首领伤害": [5.2, 5.2]
       "暴击几率": [2.8, 2.8]
   hunt_008:
-    name: "追猎08式"
-    description: "受击后反击敌人"
+    name: "灰狼围猎"
+    description: "狩猎共鸣在受击后反刺敌人"
     rarity: COMMON
     icon: SHIELD
     max-level: 4
@@ -95,8 +95,8 @@ boons:
         tag: "狩猎"
         per-tag: 1.5
   hunt_009:
-    name: "追猎09式"
-    description: "狩猎构筑属性成长"
+    name: "断筋一击"
+    description: "狩猎共鸣强化：物理攻击与移动速度随神恩等级成长"
     rarity: COMMON
     icon: GHAST_TEAR
     max-level: 3
@@ -105,8 +105,8 @@ boons:
       "物理攻击": [6.0, 6.0]
       "移动速度": [3.3, 3.3]
   hunt_010:
-    name: "追猎10式"
-    description: "狩猎构筑属性成长"
+    name: "疾影连袭"
+    description: "狩猎共鸣强化：暴击几率与暴击伤害随神恩等级成长"
     rarity: RARE
     icon: RABBIT_FOOT
     max-level: 3
@@ -115,8 +115,8 @@ boons:
       "暴击几率": [6.5, 6.5]
       "暴击伤害": [3.5, 3.5]
   hunt_011:
-    name: "追猎11式"
-    description: "狩猎构筑属性成长"
+    name: "猎鹰俯冲"
+    description: "狩猎共鸣强化：攻击速度与精英伤害随神恩等级成长"
     rarity: RARE
     icon: FIRE_CHARGE
     max-level: 3
@@ -125,8 +125,8 @@ boons:
       "攻击速度": [7.0, 7.0]
       "精英伤害": [3.8, 3.8]
   hunt_012:
-    name: "追猎12式"
-    description: "房间通关后回复生命"
+    name: "兽牙印记"
+    description: "狩猎共鸣在清理房间后修复伤势"
     rarity: RARE
     icon: BLAZE_POWDER
     max-level: 3
@@ -139,8 +139,8 @@ boons:
         tag: "狩猎"
         per-tag: 0.8
   hunt_013:
-    name: "追猎13式"
-    description: "狩猎构筑属性成长"
+    name: "破甲猎刃"
+    description: "狩猎共鸣强化：暴击伤害与破甲随神恩等级成长"
     rarity: RARE
     icon: AMETHYST_SHARD
     max-level: 3
@@ -149,8 +149,8 @@ boons:
       "暴击伤害": [7.9, 7.9]
       "破甲": [4.3, 4.3]
   hunt_014:
-    name: "追猎14式"
-    description: "狩猎构筑属性成长"
+    name: "赤羽狂欢"
+    description: "狩猎共鸣强化：精英伤害与物理攻击随神恩等级成长"
     rarity: RARE
     icon: PACKED_ICE
     max-level: 3
@@ -159,8 +159,8 @@ boons:
       "精英伤害": [8.3, 8.3]
       "物理攻击": [4.5, 4.5]
   hunt_015:
-    name: "追猎15式"
-    description: "狩猎构筑属性成长"
+    name: "夜枭凝视"
+    description: "狩猎共鸣强化：首领伤害与暴击几率随神恩等级成长"
     rarity: RARE
     icon: CRYING_OBSIDIAN
     max-level: 3
@@ -169,8 +169,8 @@ boons:
       "首领伤害": [8.8, 8.8]
       "暴击几率": [4.8, 4.8]
   hunt_016:
-    name: "追猎16式"
-    description: "低血目标处决追加伤害"
+    name: "逐鹿长歌"
+    description: "狩猎共鸣会在敌人虚弱时追加终结伤害"
     rarity: RARE
     icon: BEACON
     max-level: 4
@@ -183,8 +183,8 @@ boons:
         tag: "狩猎"
         per-tag: 2.2
   hunt_017:
-    name: "追猎17式"
-    description: "狩猎构筑属性成长"
+    name: "剥皮者礼赞"
+    description: "狩猎共鸣强化：物理攻击与移动速度随神恩等级成长"
     rarity: RARE
     icon: NETHER_STAR
     max-level: 3
@@ -193,8 +193,8 @@ boons:
       "物理攻击": [9.7, 9.7]
       "移动速度": [5.3, 5.3]
   hunt_018:
-    name: "追猎18式"
-    description: "狩猎构筑属性成长"
+    name: "凛风投矛"
+    description: "狩猎共鸣强化：暴击几率与暴击伤害随神恩等级成长"
     rarity: EPIC
     icon: TOTEM_OF_UNDYING
     max-level: 3
@@ -203,8 +203,8 @@ boons:
       "暴击几率": [10.1, 10.1]
       "暴击伤害": [5.5, 5.5]
   hunt_019:
-    name: "追猎19式"
-    description: "狩猎构筑属性成长"
+    name: "尾随之影"
+    description: "狩猎共鸣强化：攻击速度与精英伤害随神恩等级成长"
     rarity: EPIC
     icon: ECHO_SHARD
     max-level: 3
@@ -213,8 +213,8 @@ boons:
       "攻击速度": [10.6, 10.6]
       "精英伤害": [5.8, 5.8]
   hunt_020:
-    name: "追猎20式"
-    description: "击杀后回复生命"
+    name: "狩魂缰绳"
+    description: "狩猎共鸣在击杀后抽回血气"
     rarity: EPIC
     icon: IRON_SWORD
     max-level: 3
@@ -227,8 +227,8 @@ boons:
         tag: "狩猎"
         per-tag: 1.5
   hunt_021:
-    name: "追猎21式"
-    description: "狩猎构筑属性成长"
+    name: "瞄心瞬杀"
+    description: "狩猎共鸣强化：暴击伤害与破甲随神恩等级成长"
     rarity: EPIC
     icon: DIAMOND_SWORD
     max-level: 3
@@ -237,8 +237,8 @@ boons:
       "暴击伤害": [11.5, 11.5]
       "破甲": [6.3, 6.3]
   hunt_022:
-    name: "追猎22式"
-    description: "狩猎构筑属性成长"
+    name: "林间回响"
+    description: "狩猎共鸣强化：精英伤害与物理攻击随神恩等级成长"
     rarity: EPIC
     icon: FEATHER
     max-level: 3
@@ -247,8 +247,8 @@ boons:
       "精英伤害": [11.9, 11.9]
       "物理攻击": [6.5, 6.5]
   hunt_023:
-    name: "追猎23式"
-    description: "狩猎构筑属性成长"
+    name: "黄金猎潮"
+    description: "狩猎共鸣强化：首领伤害与暴击几率随神恩等级成长"
     rarity: EPIC
     icon: SPIDER_EYE
     max-level: 3
@@ -257,8 +257,8 @@ boons:
       "首领伤害": [12.3, 12.3]
       "暴击几率": [6.8, 6.8]
   hunt_024:
-    name: "追猎24式"
-    description: "受击后反击敌人"
+    name: "终猎宣告"
+    description: "狩猎共鸣在受击后反刺敌人"
     rarity: LEGENDARY
     icon: GOLDEN_APPLE
     max-level: 5
@@ -271,8 +271,8 @@ boons:
         tag: "狩猎"
         per-tag: 0.8
   hunt_025:
-    name: "追猎25式"
-    description: "狩猎构筑属性成长"
+    name: "万兽归弦"
+    description: "狩猎共鸣强化：物理攻击与移动速度随神恩等级成长"
     rarity: LEGENDARY
     icon: IRON_CHESTPLATE
     max-level: 4
@@ -282,8 +282,8 @@ boons:
       "移动速度": [7.3, 7.3]
   # ===== 壁垒系 =====
   bulwark_001:
-    name: "壁垒01式"
-    description: "壁垒构筑属性成长"
+    name: "古墙余温"
+    description: "壁垒共鸣强化：生命上限与反伤比例随神恩等级成长"
     rarity: COMMON
     icon: GOLDEN_APPLE
     max-level: 3
@@ -292,8 +292,8 @@ boons:
       "生命上限": [3.0, 3.0]
       "反伤比例": [1.3, 1.3]
   bulwark_002:
-    name: "壁垒02式"
-    description: "壁垒构筑属性成长"
+    name: "铁山誓约"
+    description: "壁垒共鸣强化：物理防御与护盾强度随神恩等级成长"
     rarity: COMMON
     icon: IRON_CHESTPLATE
     max-level: 3
@@ -302,8 +302,8 @@ boons:
       "物理防御": [3.4, 3.4]
       "护盾强度": [1.5, 1.5]
   bulwark_003:
-    name: "壁垒03式"
-    description: "壁垒构筑属性成长"
+    name: "盾卫晨祷"
+    description: "壁垒共鸣强化：减伤比例与生命恢复随神恩等级成长"
     rarity: COMMON
     icon: ENDER_PEARL
     max-level: 3
@@ -312,8 +312,8 @@ boons:
       "减伤比例": [3.9, 3.9]
       "生命恢复": [1.8, 1.8]
   bulwark_004:
-    name: "壁垒04式"
-    description: "受击后反击敌人"
+    name: "不动石心"
+    description: "壁垒共鸣在受击后反刺敌人"
     rarity: COMMON
     icon: REDSTONE
     max-level: 3
@@ -326,8 +326,8 @@ boons:
         tag: "壁垒"
         per-tag: 2.2
   bulwark_005:
-    name: "壁垒05式"
-    description: "壁垒构筑属性成长"
+    name: "壁垒回廊"
+    description: "壁垒共鸣强化：护盾强度与闪避几率随神恩等级成长"
     rarity: COMMON
     icon: SHIELD
     max-level: 3
@@ -336,8 +336,8 @@ boons:
       "护盾强度": [4.8, 4.8]
       "闪避几率": [2.3, 2.3]
   bulwark_006:
-    name: "壁垒06式"
-    description: "壁垒构筑属性成长"
+    name: "青铜脊梁"
+    description: "壁垒共鸣强化：生命恢复与生命上限随神恩等级成长"
     rarity: COMMON
     icon: GHAST_TEAR
     max-level: 3
@@ -346,8 +346,8 @@ boons:
       "生命恢复": [5.2, 5.2]
       "生命上限": [2.5, 2.5]
   bulwark_007:
-    name: "壁垒07式"
-    description: "壁垒构筑属性成长"
+    name: "守夜钟声"
+    description: "壁垒共鸣强化：治疗加成与物理防御随神恩等级成长"
     rarity: COMMON
     icon: RABBIT_FOOT
     max-level: 3
@@ -356,8 +356,8 @@ boons:
       "治疗加成": [5.7, 5.7]
       "物理防御": [2.8, 2.8]
   bulwark_008:
-    name: "壁垒08式"
-    description: "房间通关后回复生命"
+    name: "沉默堡垒"
+    description: "壁垒共鸣在清理房间后修复伤势"
     rarity: COMMON
     icon: FIRE_CHARGE
     max-level: 4
@@ -370,8 +370,8 @@ boons:
         tag: "壁垒"
         per-tag: 1.5
   bulwark_009:
-    name: "壁垒09式"
-    description: "壁垒构筑属性成长"
+    name: "巨门锁链"
+    description: "壁垒共鸣强化：生命上限与反伤比例随神恩等级成长"
     rarity: COMMON
     icon: BLAZE_POWDER
     max-level: 3
@@ -380,8 +380,8 @@ boons:
       "生命上限": [6.5, 6.5]
       "反伤比例": [3.3, 3.3]
   bulwark_010:
-    name: "壁垒10式"
-    description: "壁垒构筑属性成长"
+    name: "磐岩血脉"
+    description: "壁垒共鸣强化：物理防御与护盾强度随神恩等级成长"
     rarity: RARE
     icon: AMETHYST_SHARD
     max-level: 3
@@ -390,8 +390,8 @@ boons:
       "物理防御": [7.0, 7.0]
       "护盾强度": [3.5, 3.5]
   bulwark_011:
-    name: "壁垒11式"
-    description: "壁垒构筑属性成长"
+    name: "灰塔坚守"
+    description: "壁垒共鸣强化：减伤比例与生命恢复随神恩等级成长"
     rarity: RARE
     icon: PACKED_ICE
     max-level: 3
@@ -400,8 +400,8 @@ boons:
       "减伤比例": [7.5, 7.5]
       "生命恢复": [3.8, 3.8]
   bulwark_012:
-    name: "壁垒12式"
-    description: "低血目标处决追加伤害"
+    name: "圣盾回音"
+    description: "壁垒共鸣会在敌人虚弱时追加终结伤害"
     rarity: RARE
     icon: CRYING_OBSIDIAN
     max-level: 3
@@ -414,8 +414,8 @@ boons:
         tag: "壁垒"
         per-tag: 0.8
   bulwark_013:
-    name: "壁垒13式"
-    description: "壁垒构筑属性成长"
+    name: "棱堡行军"
+    description: "壁垒共鸣强化：护盾强度与闪避几率随神恩等级成长"
     rarity: RARE
     icon: BEACON
     max-level: 3
@@ -424,8 +424,8 @@ boons:
       "护盾强度": [8.4, 8.4]
       "闪避几率": [4.3, 4.3]
   bulwark_014:
-    name: "壁垒14式"
-    description: "壁垒构筑属性成长"
+    name: "铁律回敬"
+    description: "壁垒共鸣强化：生命恢复与生命上限随神恩等级成长"
     rarity: RARE
     icon: NETHER_STAR
     max-level: 3
@@ -434,8 +434,8 @@ boons:
       "生命恢复": [8.8, 8.8]
       "生命上限": [4.5, 4.5]
   bulwark_015:
-    name: "壁垒15式"
-    description: "壁垒构筑属性成长"
+    name: "寒铁披风"
+    description: "壁垒共鸣强化：治疗加成与物理防御随神恩等级成长"
     rarity: RARE
     icon: TOTEM_OF_UNDYING
     max-level: 3
@@ -444,8 +444,8 @@ boons:
       "治疗加成": [9.3, 9.3]
       "物理防御": [4.8, 4.8]
   bulwark_016:
-    name: "壁垒16式"
-    description: "击杀后回复生命"
+    name: "王城残壁"
+    description: "壁垒共鸣在击杀后抽回血气"
     rarity: RARE
     icon: ECHO_SHARD
     max-level: 4
@@ -458,8 +458,8 @@ boons:
         tag: "壁垒"
         per-tag: 2.2
   bulwark_017:
-    name: "壁垒17式"
-    description: "壁垒构筑属性成长"
+    name: "盾阵号角"
+    description: "壁垒共鸣强化：生命上限与反伤比例随神恩等级成长"
     rarity: RARE
     icon: IRON_SWORD
     max-level: 3
@@ -468,8 +468,8 @@ boons:
       "生命上限": [10.2, 10.2]
       "反伤比例": [5.3, 5.3]
   bulwark_018:
-    name: "壁垒18式"
-    description: "壁垒构筑属性成长"
+    name: "不屈旗影"
+    description: "壁垒共鸣强化：物理防御与护盾强度随神恩等级成长"
     rarity: EPIC
     icon: DIAMOND_SWORD
     max-level: 3
@@ -478,8 +478,8 @@ boons:
       "物理防御": [10.6, 10.6]
       "护盾强度": [5.5, 5.5]
   bulwark_019:
-    name: "壁垒19式"
-    description: "壁垒构筑属性成长"
+    name: "重甲礼赞"
+    description: "壁垒共鸣强化：减伤比例与生命恢复随神恩等级成长"
     rarity: EPIC
     icon: FEATHER
     max-level: 3
@@ -488,8 +488,8 @@ boons:
       "减伤比例": [11.1, 11.1]
       "生命恢复": [5.8, 5.8]
   bulwark_020:
-    name: "壁垒20式"
-    description: "受击后反击敌人"
+    name: "铸墙者梦"
+    description: "壁垒共鸣在受击后反刺敌人"
     rarity: EPIC
     icon: SPIDER_EYE
     max-level: 3
@@ -502,8 +502,8 @@ boons:
         tag: "壁垒"
         per-tag: 1.5
   bulwark_021:
-    name: "壁垒21式"
-    description: "壁垒构筑属性成长"
+    name: "城垛星火"
+    description: "壁垒共鸣强化：护盾强度与闪避几率随神恩等级成长"
     rarity: EPIC
     icon: GOLDEN_APPLE
     max-level: 3
@@ -512,8 +512,8 @@ boons:
       "护盾强度": [12.0, 12.0]
       "闪避几率": [6.3, 6.3]
   bulwark_022:
-    name: "壁垒22式"
-    description: "壁垒构筑属性成长"
+    name: "坚壁长歌"
+    description: "壁垒共鸣强化：生命恢复与生命上限随神恩等级成长"
     rarity: EPIC
     icon: IRON_CHESTPLATE
     max-level: 3
@@ -522,8 +522,8 @@ boons:
       "生命恢复": [12.4, 12.4]
       "生命上限": [6.5, 6.5]
   bulwark_023:
-    name: "壁垒23式"
-    description: "壁垒构筑属性成长"
+    name: "千盾归一"
+    description: "壁垒共鸣强化：治疗加成与物理防御随神恩等级成长"
     rarity: EPIC
     icon: ENDER_PEARL
     max-level: 3
@@ -532,8 +532,8 @@ boons:
       "治疗加成": [12.8, 12.8]
       "物理防御": [6.8, 6.8]
   bulwark_024:
-    name: "壁垒24式"
-    description: "房间通关后回复生命"
+    name: "终垒圣印"
+    description: "壁垒共鸣在清理房间后修复伤势"
     rarity: LEGENDARY
     icon: REDSTONE
     max-level: 5
@@ -546,8 +546,8 @@ boons:
         tag: "壁垒"
         per-tag: 0.8
   bulwark_025:
-    name: "壁垒25式"
-    description: "壁垒构筑属性成长"
+    name: "山脉不倒"
+    description: "壁垒共鸣强化：生命上限与反伤比例随神恩等级成长"
     rarity: LEGENDARY
     icon: SHIELD
     max-level: 4
@@ -557,8 +557,8 @@ boons:
       "反伤比例": [7.3, 7.3]
   # ===== 鲜血系 =====
   blood_001:
-    name: "鲜血01式"
-    description: "鲜血构筑属性成长"
+    name: "血杯低语"
+    description: "鲜血共鸣强化：生命偷取与生命恢复随神恩等级成长"
     rarity: COMMON
     icon: REDSTONE
     max-level: 3
@@ -567,8 +567,8 @@ boons:
       "生命偷取": [3.5, 3.5]
       "生命恢复": [1.3, 1.3]
   blood_002:
-    name: "鲜血02式"
-    description: "鲜血构筑属性成长"
+    name: "猩红契约"
+    description: "鲜血共鸣强化：物理攻击与深渊伤害随神恩等级成长"
     rarity: COMMON
     icon: SHIELD
     max-level: 3
@@ -577,8 +577,8 @@ boons:
       "物理攻击": [3.9, 3.9]
       "深渊伤害": [1.5, 1.5]
   blood_003:
-    name: "鲜血03式"
-    description: "鲜血构筑属性成长"
+    name: "裂脉狂欢"
+    description: "鲜血共鸣强化：暴击伤害与治疗加成随神恩等级成长"
     rarity: COMMON
     icon: GHAST_TEAR
     max-level: 3
@@ -587,8 +587,8 @@ boons:
       "暴击伤害": [4.3, 4.3]
       "治疗加成": [1.8, 1.8]
   blood_004:
-    name: "鲜血04式"
-    description: "房间通关后回复生命"
+    name: "赤潮回流"
+    description: "鲜血共鸣在清理房间后修复伤势"
     rarity: COMMON
     icon: RABBIT_FOOT
     max-level: 3
@@ -601,8 +601,8 @@ boons:
         tag: "鲜血"
         per-tag: 2.2
   blood_005:
-    name: "鲜血05式"
-    description: "鲜血构筑属性成长"
+    name: "饮血铭文"
+    description: "鲜血共鸣强化：深渊伤害与破甲随神恩等级成长"
     rarity: COMMON
     icon: FIRE_CHARGE
     max-level: 3
@@ -611,8 +611,8 @@ boons:
       "深渊伤害": [5.3, 5.3]
       "破甲": [2.3, 2.3]
   blood_006:
-    name: "鲜血06式"
-    description: "鲜血构筑属性成长"
+    name: "心脏祭礼"
+    description: "鲜血共鸣强化：治疗加成与生命偷取随神恩等级成长"
     rarity: COMMON
     icon: BLAZE_POWDER
     max-level: 3
@@ -621,8 +621,8 @@ boons:
       "治疗加成": [5.7, 5.7]
       "生命偷取": [2.5, 2.5]
   blood_007:
-    name: "鲜血07式"
-    description: "鲜血构筑属性成长"
+    name: "血月余烬"
+    description: "鲜血共鸣强化：首领伤害与物理攻击随神恩等级成长"
     rarity: COMMON
     icon: AMETHYST_SHARD
     max-level: 3
@@ -631,8 +631,8 @@ boons:
       "首领伤害": [6.2, 6.2]
       "物理攻击": [2.8, 2.8]
   blood_008:
-    name: "鲜血08式"
-    description: "低血目标处决追加伤害"
+    name: "伤口花冠"
+    description: "鲜血共鸣会在敌人虚弱时追加终结伤害"
     rarity: COMMON
     icon: PACKED_ICE
     max-level: 4
@@ -645,8 +645,8 @@ boons:
         tag: "鲜血"
         per-tag: 1.5
   blood_009:
-    name: "鲜血09式"
-    description: "鲜血构筑属性成长"
+    name: "脉搏战鼓"
+    description: "鲜血共鸣强化：生命偷取与生命恢复随神恩等级成长"
     rarity: COMMON
     icon: CRYING_OBSIDIAN
     max-level: 3
@@ -655,8 +655,8 @@ boons:
       "生命偷取": [7.0, 7.0]
       "生命恢复": [3.3, 3.3]
   blood_010:
-    name: "鲜血10式"
-    description: "鲜血构筑属性成长"
+    name: "红泪圣餐"
+    description: "鲜血共鸣强化：物理攻击与深渊伤害随神恩等级成长"
     rarity: RARE
     icon: BEACON
     max-level: 3
@@ -665,8 +665,8 @@ boons:
       "物理攻击": [7.5, 7.5]
       "深渊伤害": [3.5, 3.5]
   blood_011:
-    name: "鲜血11式"
-    description: "鲜血构筑属性成长"
+    name: "剜心誓言"
+    description: "鲜血共鸣强化：暴击伤害与治疗加成随神恩等级成长"
     rarity: RARE
     icon: NETHER_STAR
     max-level: 3
@@ -675,8 +675,8 @@ boons:
       "暴击伤害": [8.0, 8.0]
       "治疗加成": [3.8, 3.8]
   blood_012:
-    name: "鲜血12式"
-    description: "击杀后回复生命"
+    name: "血荆缠绕"
+    description: "鲜血共鸣在击杀后抽回血气"
     rarity: RARE
     icon: TOTEM_OF_UNDYING
     max-level: 3
@@ -689,8 +689,8 @@ boons:
         tag: "鲜血"
         per-tag: 0.8
   blood_013:
-    name: "鲜血13式"
-    description: "鲜血构筑属性成长"
+    name: "猩红盛宴"
+    description: "鲜血共鸣强化：深渊伤害与破甲随神恩等级成长"
     rarity: RARE
     icon: ECHO_SHARD
     max-level: 3
@@ -699,8 +699,8 @@ boons:
       "深渊伤害": [8.9, 8.9]
       "破甲": [4.3, 4.3]
   blood_014:
-    name: "鲜血14式"
-    description: "鲜血构筑属性成长"
+    name: "残躯复燃"
+    description: "鲜血共鸣强化：治疗加成与生命偷取随神恩等级成长"
     rarity: RARE
     icon: IRON_SWORD
     max-level: 3
@@ -709,8 +709,8 @@ boons:
       "治疗加成": [9.3, 9.3]
       "生命偷取": [4.5, 4.5]
   blood_015:
-    name: "鲜血15式"
-    description: "鲜血构筑属性成长"
+    name: "鲜血阶梯"
+    description: "鲜血共鸣强化：首领伤害与物理攻击随神恩等级成长"
     rarity: RARE
     icon: DIAMOND_SWORD
     max-level: 3
@@ -719,8 +719,8 @@ boons:
       "首领伤害": [9.8, 9.8]
       "物理攻击": [4.8, 4.8]
   blood_016:
-    name: "鲜血16式"
-    description: "受击后反击敌人"
+    name: "赤脉王令"
+    description: "鲜血共鸣在受击后反刺敌人"
     rarity: RARE
     icon: FEATHER
     max-level: 4
@@ -733,8 +733,8 @@ boons:
         tag: "鲜血"
         per-tag: 2.2
   blood_017:
-    name: "鲜血17式"
-    description: "鲜血构筑属性成长"
+    name: "血誓回响"
+    description: "鲜血共鸣强化：生命偷取与生命恢复随神恩等级成长"
     rarity: RARE
     icon: SPIDER_EYE
     max-level: 3
@@ -743,8 +743,8 @@ boons:
       "生命偷取": [10.7, 10.7]
       "生命恢复": [5.3, 5.3]
   blood_018:
-    name: "鲜血18式"
-    description: "鲜血构筑属性成长"
+    name: "创口赐福"
+    description: "鲜血共鸣强化：物理攻击与深渊伤害随神恩等级成长"
     rarity: EPIC
     icon: GOLDEN_APPLE
     max-level: 3
@@ -753,8 +753,8 @@ boons:
       "物理攻击": [11.1, 11.1]
       "深渊伤害": [5.5, 5.5]
   blood_019:
-    name: "鲜血19式"
-    description: "鲜血构筑属性成长"
+    name: "红海航标"
+    description: "鲜血共鸣强化：暴击伤害与治疗加成随神恩等级成长"
     rarity: EPIC
     icon: IRON_CHESTPLATE
     max-level: 3
@@ -763,8 +763,8 @@ boons:
       "暴击伤害": [11.6, 11.6]
       "治疗加成": [5.8, 5.8]
   blood_020:
-    name: "鲜血20式"
-    description: "房间通关后回复生命"
+    name: "噬心余香"
+    description: "鲜血共鸣在清理房间后修复伤势"
     rarity: EPIC
     icon: ENDER_PEARL
     max-level: 3
@@ -777,8 +777,8 @@ boons:
         tag: "鲜血"
         per-tag: 1.5
   blood_021:
-    name: "鲜血21式"
-    description: "鲜血构筑属性成长"
+    name: "血色终章"
+    description: "鲜血共鸣强化：深渊伤害与破甲随神恩等级成长"
     rarity: EPIC
     icon: REDSTONE
     max-level: 3
@@ -787,8 +787,8 @@ boons:
       "深渊伤害": [12.5, 12.5]
       "破甲": [6.3, 6.3]
   blood_022:
-    name: "鲜血22式"
-    description: "鲜血构筑属性成长"
+    name: "心火复苏"
+    description: "鲜血共鸣强化：治疗加成与生命偷取随神恩等级成长"
     rarity: EPIC
     icon: SHIELD
     max-level: 3
@@ -797,8 +797,8 @@ boons:
       "治疗加成": [12.9, 12.9]
       "生命偷取": [6.5, 6.5]
   blood_023:
-    name: "鲜血23式"
-    description: "鲜血构筑属性成长"
+    name: "猩红冠冕"
+    description: "鲜血共鸣强化：首领伤害与物理攻击随神恩等级成长"
     rarity: EPIC
     icon: GHAST_TEAR
     max-level: 3
@@ -807,8 +807,8 @@ boons:
       "首领伤害": [13.3, 13.3]
       "物理攻击": [6.8, 6.8]
   blood_024:
-    name: "鲜血24式"
-    description: "低血目标处决追加伤害"
+    name: "破灭宴飨"
+    description: "鲜血共鸣会在敌人虚弱时追加终结伤害"
     rarity: LEGENDARY
     icon: RABBIT_FOOT
     max-level: 5
@@ -821,8 +821,8 @@ boons:
         tag: "鲜血"
         per-tag: 0.8
   blood_025:
-    name: "鲜血25式"
-    description: "鲜血构筑属性成长"
+    name: "万血归池"
+    description: "鲜血共鸣强化：生命偷取与生命恢复随神恩等级成长"
     rarity: LEGENDARY
     icon: FIRE_CHARGE
     max-level: 4
@@ -832,8 +832,8 @@ boons:
       "生命恢复": [7.3, 7.3]
   # ===== 雷霆系 =====
   thunder_001:
-    name: "雷霆01式"
-    description: "雷霆构筑属性成长"
+    name: "雷矛初鸣"
+    description: "雷霆共鸣强化：雷霆伤害与暴击几率随神恩等级成长"
     rarity: COMMON
     icon: RABBIT_FOOT
     max-level: 3
@@ -842,8 +842,8 @@ boons:
       "雷霆伤害": [4.0, 4.0]
       "暴击几率": [1.3, 1.3]
   thunder_002:
-    name: "雷霆02式"
-    description: "雷霆构筑属性成长"
+    name: "电弧跃迁"
+    description: "雷霆共鸣强化：攻击速度与暴击伤害随神恩等级成长"
     rarity: COMMON
     icon: FIRE_CHARGE
     max-level: 3
@@ -852,8 +852,8 @@ boons:
       "攻击速度": [4.4, 4.4]
       "暴击伤害": [1.5, 1.5]
   thunder_003:
-    name: "雷霆03式"
-    description: "雷霆构筑属性成长"
+    name: "风暴之踵"
+    description: "雷霆共鸣强化：移动速度与冷却缩减随神恩等级成长"
     rarity: COMMON
     icon: BLAZE_POWDER
     max-level: 3
@@ -862,8 +862,8 @@ boons:
       "移动速度": [4.8, 4.8]
       "冷却缩减": [1.8, 1.8]
   thunder_004:
-    name: "雷霆04式"
-    description: "低血目标处决追加伤害"
+    name: "云裂鼓点"
+    description: "雷霆共鸣会在敌人虚弱时追加终结伤害"
     rarity: COMMON
     icon: AMETHYST_SHARD
     max-level: 3
@@ -876,8 +876,8 @@ boons:
         tag: "雷霆"
         per-tag: 2.2
   thunder_005:
-    name: "雷霆05式"
-    description: "雷霆构筑属性成长"
+    name: "霆光断刃"
+    description: "雷霆共鸣强化：暴击伤害与破甲随神恩等级成长"
     rarity: COMMON
     icon: PACKED_ICE
     max-level: 3
@@ -886,8 +886,8 @@ boons:
       "暴击伤害": [5.8, 5.8]
       "破甲": [2.3, 2.3]
   thunder_006:
-    name: "雷霆06式"
-    description: "雷霆构筑属性成长"
+    name: "静电王冠"
+    description: "雷霆共鸣强化：冷却缩减与雷霆伤害随神恩等级成长"
     rarity: COMMON
     icon: CRYING_OBSIDIAN
     max-level: 3
@@ -896,8 +896,8 @@ boons:
       "冷却缩减": [6.2, 6.2]
       "雷霆伤害": [2.5, 2.5]
   thunder_007:
-    name: "雷霆07式"
-    description: "雷霆构筑属性成长"
+    name: "雷鹰俯冲"
+    description: "雷霆共鸣强化：技能伤害与攻击速度随神恩等级成长"
     rarity: COMMON
     icon: BEACON
     max-level: 3
@@ -906,8 +906,8 @@ boons:
       "技能伤害": [6.7, 6.7]
       "攻击速度": [2.8, 2.8]
   thunder_008:
-    name: "雷霆08式"
-    description: "击杀后回复生命"
+    name: "暴雨连锁"
+    description: "雷霆共鸣在击杀后抽回血气"
     rarity: COMMON
     icon: NETHER_STAR
     max-level: 4
@@ -920,8 +920,8 @@ boons:
         tag: "雷霆"
         per-tag: 1.5
   thunder_009:
-    name: "雷霆09式"
-    description: "雷霆构筑属性成长"
+    name: "震荡脉冲"
+    description: "雷霆共鸣强化：雷霆伤害与暴击几率随神恩等级成长"
     rarity: COMMON
     icon: TOTEM_OF_UNDYING
     max-level: 3
@@ -930,8 +930,8 @@ boons:
       "雷霆伤害": [7.5, 7.5]
       "暴击几率": [3.3, 3.3]
   thunder_010:
-    name: "雷霆10式"
-    description: "雷霆构筑属性成长"
+    name: "银蛇缠腕"
+    description: "雷霆共鸣强化：攻击速度与暴击伤害随神恩等级成长"
     rarity: RARE
     icon: ECHO_SHARD
     max-level: 3
@@ -940,8 +940,8 @@ boons:
       "攻击速度": [8.0, 8.0]
       "暴击伤害": [3.5, 3.5]
   thunder_011:
-    name: "雷霆11式"
-    description: "雷霆构筑属性成长"
+    name: "天罚预兆"
+    description: "雷霆共鸣强化：移动速度与冷却缩减随神恩等级成长"
     rarity: RARE
     icon: IRON_SWORD
     max-level: 3
@@ -950,8 +950,8 @@ boons:
       "移动速度": [8.4, 8.4]
       "冷却缩减": [3.8, 3.8]
   thunder_012:
-    name: "雷霆12式"
-    description: "受击后反击敌人"
+    name: "疾雷刻印"
+    description: "雷霆共鸣在受击后反刺敌人"
     rarity: RARE
     icon: DIAMOND_SWORD
     max-level: 3
@@ -964,8 +964,8 @@ boons:
         tag: "雷霆"
         per-tag: 0.8
   thunder_013:
-    name: "雷霆13式"
-    description: "雷霆构筑属性成长"
+    name: "鸣雷步法"
+    description: "雷霆共鸣强化：暴击伤害与破甲随神恩等级成长"
     rarity: RARE
     icon: FEATHER
     max-level: 3
@@ -974,8 +974,8 @@ boons:
       "暴击伤害": [9.4, 9.4]
       "破甲": [4.3, 4.3]
   thunder_014:
-    name: "雷霆14式"
-    description: "雷霆构筑属性成长"
+    name: "闪电审判"
+    description: "雷霆共鸣强化：冷却缩减与雷霆伤害随神恩等级成长"
     rarity: RARE
     icon: SPIDER_EYE
     max-level: 3
@@ -984,8 +984,8 @@ boons:
       "冷却缩减": [9.8, 9.8]
       "雷霆伤害": [4.5, 4.5]
   thunder_015:
-    name: "雷霆15式"
-    description: "雷霆构筑属性成长"
+    name: "云端怒号"
+    description: "雷霆共鸣强化：技能伤害与攻击速度随神恩等级成长"
     rarity: RARE
     icon: GOLDEN_APPLE
     max-level: 3
@@ -994,8 +994,8 @@ boons:
       "技能伤害": [10.3, 10.3]
       "攻击速度": [4.8, 4.8]
   thunder_016:
-    name: "雷霆16式"
-    description: "房间通关后回复生命"
+    name: "雷车破阵"
+    description: "雷霆共鸣在清理房间后修复伤势"
     rarity: RARE
     icon: IRON_CHESTPLATE
     max-level: 4
@@ -1008,8 +1008,8 @@ boons:
         tag: "雷霆"
         per-tag: 2.2
   thunder_017:
-    name: "雷霆17式"
-    description: "雷霆构筑属性成长"
+    name: "风暴脊骨"
+    description: "雷霆共鸣强化：雷霆伤害与暴击几率随神恩等级成长"
     rarity: RARE
     icon: ENDER_PEARL
     max-level: 3
@@ -1018,8 +1018,8 @@ boons:
       "雷霆伤害": [11.2, 11.2]
       "暴击几率": [5.3, 5.3]
   thunder_018:
-    name: "雷霆18式"
-    description: "雷霆构筑属性成长"
+    name: "电痕重燃"
+    description: "雷霆共鸣强化：攻击速度与暴击伤害随神恩等级成长"
     rarity: EPIC
     icon: REDSTONE
     max-level: 3
@@ -1028,8 +1028,8 @@ boons:
       "攻击速度": [11.6, 11.6]
       "暴击伤害": [5.5, 5.5]
   thunder_019:
-    name: "雷霆19式"
-    description: "雷霆构筑属性成长"
+    name: "雷火同心"
+    description: "雷霆共鸣强化：移动速度与冷却缩减随神恩等级成长"
     rarity: EPIC
     icon: SHIELD
     max-level: 3
@@ -1038,8 +1038,8 @@ boons:
       "移动速度": [12.1, 12.1]
       "冷却缩减": [5.8, 5.8]
   thunder_020:
-    name: "雷霆20式"
-    description: "低血目标处决追加伤害"
+    name: "高塔落雷"
+    description: "雷霆共鸣会在敌人虚弱时追加终结伤害"
     rarity: EPIC
     icon: GHAST_TEAR
     max-level: 3
@@ -1052,8 +1052,8 @@ boons:
         tag: "雷霆"
         per-tag: 1.5
   thunder_021:
-    name: "雷霆21式"
-    description: "雷霆构筑属性成长"
+    name: "雷暴合奏"
+    description: "雷霆共鸣强化：暴击伤害与破甲随神恩等级成长"
     rarity: EPIC
     icon: RABBIT_FOOT
     max-level: 3
@@ -1062,8 +1062,8 @@ boons:
       "暴击伤害": [13.0, 13.0]
       "破甲": [6.3, 6.3]
   thunder_022:
-    name: "雷霆22式"
-    description: "雷霆构筑属性成长"
+    name: "苍穹短歌"
+    description: "雷霆共鸣强化：冷却缩减与雷霆伤害随神恩等级成长"
     rarity: EPIC
     icon: FIRE_CHARGE
     max-level: 3
@@ -1072,8 +1072,8 @@ boons:
       "冷却缩减": [13.4, 13.4]
       "雷霆伤害": [6.5, 6.5]
   thunder_023:
-    name: "雷霆23式"
-    description: "雷霆构筑属性成长"
+    name: "万钧引线"
+    description: "雷霆共鸣强化：技能伤害与攻击速度随神恩等级成长"
     rarity: EPIC
     icon: BLAZE_POWDER
     max-level: 3
@@ -1082,8 +1082,8 @@ boons:
       "技能伤害": [13.8, 13.8]
       "攻击速度": [6.8, 6.8]
   thunder_024:
-    name: "雷霆24式"
-    description: "击杀后回复生命"
+    name: "天幕击穿"
+    description: "雷霆共鸣在击杀后抽回血气"
     rarity: LEGENDARY
     icon: AMETHYST_SHARD
     max-level: 5
@@ -1096,8 +1096,8 @@ boons:
         tag: "雷霆"
         per-tag: 0.8
   thunder_025:
-    name: "雷霆25式"
-    description: "雷霆构筑属性成长"
+    name: "诸雷归心"
+    description: "雷霆共鸣强化：雷霆伤害与暴击几率随神恩等级成长"
     rarity: LEGENDARY
     icon: PACKED_ICE
     max-level: 4
@@ -1107,8 +1107,8 @@ boons:
       "暴击几率": [7.3, 7.3]
   # ===== 秘术系 =====
   arcane_001:
-    name: "秘术01式"
-    description: "秘术构筑属性成长"
+    name: "星盘推演"
+    description: "秘术共鸣强化：技能伤害与幸运随神恩等级成长"
     rarity: COMMON
     icon: AMETHYST_SHARD
     max-level: 3
@@ -1117,8 +1117,8 @@ boons:
       "技能伤害": [4.5, 4.5]
       "幸运": [1.3, 1.3]
   arcane_002:
-    name: "秘术02式"
-    description: "秘术构筑属性成长"
+    name: "秘文回路"
+    description: "秘术共鸣强化：元素伤害与暴击几率随神恩等级成长"
     rarity: COMMON
     icon: PACKED_ICE
     max-level: 3
@@ -1127,8 +1127,8 @@ boons:
       "元素伤害": [4.9, 4.9]
       "暴击几率": [1.5, 1.5]
   arcane_003:
-    name: "秘术03式"
-    description: "秘术构筑属性成长"
+    name: "银钥咒印"
+    description: "秘术共鸣强化：冷却缩减与暴击伤害随神恩等级成长"
     rarity: COMMON
     icon: CRYING_OBSIDIAN
     max-level: 3
@@ -1137,8 +1137,8 @@ boons:
       "冷却缩减": [5.3, 5.3]
       "暴击伤害": [1.8, 1.8]
   arcane_004:
-    name: "秘术04式"
-    description: "击杀后回复生命"
+    name: "奥术潮汐"
+    description: "秘术共鸣在击杀后抽回血气"
     rarity: COMMON
     icon: BEACON
     max-level: 3
@@ -1151,8 +1151,8 @@ boons:
         tag: "秘术"
         per-tag: 2.2
   arcane_005:
-    name: "秘术05式"
-    description: "秘术构筑属性成长"
+    name: "折光符阵"
+    description: "秘术共鸣强化：暴击几率与治疗加成随神恩等级成长"
     rarity: COMMON
     icon: NETHER_STAR
     max-level: 3
@@ -1161,8 +1161,8 @@ boons:
       "暴击几率": [6.3, 6.3]
       "治疗加成": [2.3, 2.3]
   arcane_006:
-    name: "秘术06式"
-    description: "秘术构筑属性成长"
+    name: "灵核演算"
+    description: "秘术共鸣强化：暴击伤害与技能伤害随神恩等级成长"
     rarity: COMMON
     icon: TOTEM_OF_UNDYING
     max-level: 3
@@ -1171,8 +1171,8 @@ boons:
       "暴击伤害": [6.7, 6.7]
       "技能伤害": [2.5, 2.5]
   arcane_007:
-    name: "秘术07式"
-    description: "秘术构筑属性成长"
+    name: "远星低语"
+    description: "秘术共鸣强化：物理攻击与元素伤害随神恩等级成长"
     rarity: COMMON
     icon: ECHO_SHARD
     max-level: 3
@@ -1181,8 +1181,8 @@ boons:
       "物理攻击": [7.2, 7.2]
       "元素伤害": [2.8, 2.8]
   arcane_008:
-    name: "秘术08式"
-    description: "受击后反击敌人"
+    name: "蓝火书页"
+    description: "秘术共鸣在受击后反刺敌人"
     rarity: COMMON
     icon: IRON_SWORD
     max-level: 4
@@ -1195,8 +1195,8 @@ boons:
         tag: "秘术"
         per-tag: 1.5
   arcane_009:
-    name: "秘术09式"
-    description: "秘术构筑属性成长"
+    name: "穹顶公式"
+    description: "秘术共鸣强化：技能伤害与幸运随神恩等级成长"
     rarity: COMMON
     icon: DIAMOND_SWORD
     max-level: 3
@@ -1205,8 +1205,8 @@ boons:
       "技能伤害": [8.1, 8.1]
       "幸运": [3.3, 3.3]
   arcane_010:
-    name: "秘术10式"
-    description: "秘术构筑属性成长"
+    name: "符文学派"
+    description: "秘术共鸣强化：元素伤害与暴击几率随神恩等级成长"
     rarity: RARE
     icon: FEATHER
     max-level: 3
@@ -1215,8 +1215,8 @@ boons:
       "元素伤害": [8.5, 8.5]
       "暴击几率": [3.5, 3.5]
   arcane_011:
-    name: "秘术11式"
-    description: "秘术构筑属性成长"
+    name: "魔网裂隙"
+    description: "秘术共鸣强化：冷却缩减与暴击伤害随神恩等级成长"
     rarity: RARE
     icon: SPIDER_EYE
     max-level: 3
@@ -1225,8 +1225,8 @@ boons:
       "冷却缩减": [8.9, 8.9]
       "暴击伤害": [3.8, 3.8]
   arcane_012:
-    name: "秘术12式"
-    description: "房间通关后回复生命"
+    name: "灵视棱镜"
+    description: "秘术共鸣在清理房间后修复伤势"
     rarity: RARE
     icon: GOLDEN_APPLE
     max-level: 3
@@ -1239,8 +1239,8 @@ boons:
         tag: "秘术"
         per-tag: 0.8
   arcane_013:
-    name: "秘术13式"
-    description: "秘术构筑属性成长"
+    name: "秘仪钟摆"
+    description: "秘术共鸣强化：暴击几率与治疗加成随神恩等级成长"
     rarity: RARE
     icon: IRON_CHESTPLATE
     max-level: 3
@@ -1249,8 +1249,8 @@ boons:
       "暴击几率": [9.9, 9.9]
       "治疗加成": [4.3, 4.3]
   arcane_014:
-    name: "秘术14式"
-    description: "秘术构筑属性成长"
+    name: "无垠抄本"
+    description: "秘术共鸣强化：暴击伤害与技能伤害随神恩等级成长"
     rarity: RARE
     icon: ENDER_PEARL
     max-level: 3
@@ -1259,8 +1259,8 @@ boons:
       "暴击伤害": [10.3, 10.3]
       "技能伤害": [4.5, 4.5]
   arcane_015:
-    name: "秘术15式"
-    description: "秘术构筑属性成长"
+    name: "星尘咏唱"
+    description: "秘术共鸣强化：物理攻击与元素伤害随神恩等级成长"
     rarity: RARE
     icon: REDSTONE
     max-level: 3
@@ -1269,8 +1269,8 @@ boons:
       "物理攻击": [10.8, 10.8]
       "元素伤害": [4.8, 4.8]
   arcane_016:
-    name: "秘术16式"
-    description: "低血目标处决追加伤害"
+    name: "回环法印"
+    description: "秘术共鸣会在敌人虚弱时追加终结伤害"
     rarity: RARE
     icon: SHIELD
     max-level: 4
@@ -1283,8 +1283,8 @@ boons:
         tag: "秘术"
         per-tag: 2.2
   arcane_017:
-    name: "秘术17式"
-    description: "秘术构筑属性成长"
+    name: "灵能泉涌"
+    description: "秘术共鸣强化：技能伤害与幸运随神恩等级成长"
     rarity: RARE
     icon: GHAST_TEAR
     max-level: 3
@@ -1293,8 +1293,8 @@ boons:
       "技能伤害": [11.7, 11.7]
       "幸运": [5.3, 5.3]
   arcane_018:
-    name: "秘术18式"
-    description: "秘术构筑属性成长"
+    name: "咒式叠代"
+    description: "秘术共鸣强化：元素伤害与暴击几率随神恩等级成长"
     rarity: EPIC
     icon: RABBIT_FOOT
     max-level: 3
@@ -1303,8 +1303,8 @@ boons:
       "元素伤害": [12.1, 12.1]
       "暴击几率": [5.5, 5.5]
   arcane_019:
-    name: "秘术19式"
-    description: "秘术构筑属性成长"
+    name: "古卷余辉"
+    description: "秘术共鸣强化：冷却缩减与暴击伤害随神恩等级成长"
     rarity: EPIC
     icon: FIRE_CHARGE
     max-level: 3
@@ -1313,8 +1313,8 @@ boons:
       "冷却缩减": [12.6, 12.6]
       "暴击伤害": [5.8, 5.8]
   arcane_020:
-    name: "秘术20式"
-    description: "击杀后回复生命"
+    name: "虚数星图"
+    description: "秘术共鸣在击杀后抽回血气"
     rarity: EPIC
     icon: BLAZE_POWDER
     max-level: 3
@@ -1327,8 +1327,8 @@ boons:
         tag: "秘术"
         per-tag: 1.5
   arcane_021:
-    name: "秘术21式"
-    description: "秘术构筑属性成长"
+    name: "秘术共鸣"
+    description: "秘术共鸣强化：暴击几率与治疗加成随神恩等级成长"
     rarity: EPIC
     icon: AMETHYST_SHARD
     max-level: 3
@@ -1337,8 +1337,8 @@ boons:
       "暴击几率": [13.5, 13.5]
       "治疗加成": [6.3, 6.3]
   arcane_022:
-    name: "秘术22式"
-    description: "秘术构筑属性成长"
+    name: "万象译本"
+    description: "秘术共鸣强化：暴击伤害与技能伤害随神恩等级成长"
     rarity: EPIC
     icon: PACKED_ICE
     max-level: 3
@@ -1347,8 +1347,8 @@ boons:
       "暴击伤害": [13.9, 13.9]
       "技能伤害": [6.5, 6.5]
   arcane_023:
-    name: "秘术23式"
-    description: "秘术构筑属性成长"
+    name: "终式法环"
+    description: "秘术共鸣强化：物理攻击与元素伤害随神恩等级成长"
     rarity: EPIC
     icon: CRYING_OBSIDIAN
     max-level: 3
@@ -1357,8 +1357,8 @@ boons:
       "物理攻击": [14.3, 14.3]
       "元素伤害": [6.8, 6.8]
   arcane_024:
-    name: "秘术24式"
-    description: "受击后反击敌人"
+    name: "源点刻录"
+    description: "秘术共鸣在受击后反刺敌人"
     rarity: LEGENDARY
     icon: BEACON
     max-level: 5
@@ -1371,8 +1371,8 @@ boons:
         tag: "秘术"
         per-tag: 0.8
   arcane_025:
-    name: "秘术25式"
-    description: "秘术构筑属性成长"
+    name: "群星归档"
+    description: "秘术共鸣强化：技能伤害与幸运随神恩等级成长"
     rarity: LEGENDARY
     icon: NETHER_STAR
     max-level: 4
@@ -1382,8 +1382,8 @@ boons:
       "幸运": [7.3, 7.3]
   # ===== 霜寒系 =====
   frost_001:
-    name: "霜寒01式"
-    description: "霜寒构筑属性成长"
+    name: "霜枝轻触"
+    description: "霜寒共鸣强化：冰霜伤害与生命上限随神恩等级成长"
     rarity: COMMON
     icon: BEACON
     max-level: 3
@@ -1392,8 +1392,8 @@ boons:
       "冰霜伤害": [5.0, 5.0]
       "生命上限": [1.3, 1.3]
   frost_002:
-    name: "霜寒02式"
-    description: "霜寒构筑属性成长"
+    name: "白霜护符"
+    description: "霜寒共鸣强化：物理防御与闪避几率随神恩等级成长"
     rarity: COMMON
     icon: NETHER_STAR
     max-level: 3
@@ -1402,8 +1402,8 @@ boons:
       "物理防御": [5.4, 5.4]
       "闪避几率": [1.5, 1.5]
   frost_003:
-    name: "霜寒03式"
-    description: "霜寒构筑属性成长"
+    name: "冰镜步伐"
+    description: "霜寒共鸣强化：减伤比例与护盾强度随神恩等级成长"
     rarity: COMMON
     icon: TOTEM_OF_UNDYING
     max-level: 3
@@ -1412,8 +1412,8 @@ boons:
       "减伤比例": [5.8, 5.8]
       "护盾强度": [1.8, 1.8]
   frost_004:
-    name: "霜寒04式"
-    description: "受击后反击敌人"
+    name: "雪线壁障"
+    description: "霜寒共鸣在受击后反刺敌人"
     rarity: COMMON
     icon: ECHO_SHARD
     max-level: 3
@@ -1426,8 +1426,8 @@ boons:
         tag: "霜寒"
         per-tag: 2.2
   frost_005:
-    name: "霜寒05式"
-    description: "霜寒构筑属性成长"
+    name: "寒潮脉络"
+    description: "霜寒共鸣强化：闪避几率与元素伤害随神恩等级成长"
     rarity: COMMON
     icon: IRON_SWORD
     max-level: 3
@@ -1436,8 +1436,8 @@ boons:
       "闪避几率": [6.8, 6.8]
       "元素伤害": [2.3, 2.3]
   frost_006:
-    name: "霜寒06式"
-    description: "霜寒构筑属性成长"
+    name: "冻土誓言"
+    description: "霜寒共鸣强化：护盾强度与冰霜伤害随神恩等级成长"
     rarity: COMMON
     icon: DIAMOND_SWORD
     max-level: 3
@@ -1446,8 +1446,8 @@ boons:
       "护盾强度": [7.2, 7.2]
       "冰霜伤害": [2.5, 2.5]
   frost_007:
-    name: "霜寒07式"
-    description: "霜寒构筑属性成长"
+    name: "冰棘王冠"
+    description: "霜寒共鸣强化：生命恢复与物理防御随神恩等级成长"
     rarity: COMMON
     icon: FEATHER
     max-level: 3
@@ -1456,8 +1456,8 @@ boons:
       "生命恢复": [7.7, 7.7]
       "物理防御": [2.8, 2.8]
   frost_008:
-    name: "霜寒08式"
-    description: "房间通关后回复生命"
+    name: "凛冬吐息"
+    description: "霜寒共鸣在清理房间后修复伤势"
     rarity: COMMON
     icon: SPIDER_EYE
     max-level: 4
@@ -1470,8 +1470,8 @@ boons:
         tag: "霜寒"
         per-tag: 1.5
   frost_009:
-    name: "霜寒09式"
-    description: "霜寒构筑属性成长"
+    name: "霜狼守望"
+    description: "霜寒共鸣强化：冰霜伤害与生命上限随神恩等级成长"
     rarity: COMMON
     icon: GOLDEN_APPLE
     max-level: 3
@@ -1480,8 +1480,8 @@ boons:
       "冰霜伤害": [8.6, 8.6]
       "生命上限": [3.3, 3.3]
   frost_010:
-    name: "霜寒10式"
-    description: "霜寒构筑属性成长"
+    name: "雪盲回廊"
+    description: "霜寒共鸣强化：物理防御与闪避几率随神恩等级成长"
     rarity: RARE
     icon: IRON_CHESTPLATE
     max-level: 3
@@ -1490,8 +1490,8 @@ boons:
       "物理防御": [9.0, 9.0]
       "闪避几率": [3.5, 3.5]
   frost_011:
-    name: "霜寒11式"
-    description: "霜寒构筑属性成长"
+    name: "冻星火花"
+    description: "霜寒共鸣强化：减伤比例与护盾强度随神恩等级成长"
     rarity: RARE
     icon: ENDER_PEARL
     max-level: 3
@@ -1500,8 +1500,8 @@ boons:
       "减伤比例": [9.4, 9.4]
       "护盾强度": [3.8, 3.8]
   frost_012:
-    name: "霜寒12式"
-    description: "低血目标处决追加伤害"
+    name: "寒铁心室"
+    description: "霜寒共鸣会在敌人虚弱时追加终结伤害"
     rarity: RARE
     icon: REDSTONE
     max-level: 3
@@ -1514,8 +1514,8 @@ boons:
         tag: "霜寒"
         per-tag: 0.8
   frost_013:
-    name: "霜寒13式"
-    description: "霜寒构筑属性成长"
+    name: "冰河低语"
+    description: "霜寒共鸣强化：闪避几率与元素伤害随神恩等级成长"
     rarity: RARE
     icon: SHIELD
     max-level: 3
@@ -1524,8 +1524,8 @@ boons:
       "闪避几率": [10.4, 10.4]
       "元素伤害": [4.3, 4.3]
   frost_014:
-    name: "霜寒14式"
-    description: "霜寒构筑属性成长"
+    name: "霜幕垂落"
+    description: "霜寒共鸣强化：护盾强度与冰霜伤害随神恩等级成长"
     rarity: RARE
     icon: GHAST_TEAR
     max-level: 3
@@ -1534,8 +1534,8 @@ boons:
       "护盾强度": [10.8, 10.8]
       "冰霜伤害": [4.5, 4.5]
   frost_015:
-    name: "霜寒15式"
-    description: "霜寒构筑属性成长"
+    name: "白夜凝霜"
+    description: "霜寒共鸣强化：生命恢复与物理防御随神恩等级成长"
     rarity: RARE
     icon: RABBIT_FOOT
     max-level: 3
@@ -1544,8 +1544,8 @@ boons:
       "生命恢复": [11.3, 11.3]
       "物理防御": [4.8, 4.8]
   frost_016:
-    name: "霜寒16式"
-    description: "击杀后回复生命"
+    name: "极地行军"
+    description: "霜寒共鸣在击杀后抽回血气"
     rarity: RARE
     icon: FIRE_CHARGE
     max-level: 4
@@ -1558,8 +1558,8 @@ boons:
         tag: "霜寒"
         per-tag: 2.2
   frost_017:
-    name: "霜寒17式"
-    description: "霜寒构筑属性成长"
+    name: "冬眠秘仪"
+    description: "霜寒共鸣强化：冰霜伤害与生命上限随神恩等级成长"
     rarity: RARE
     icon: BLAZE_POWDER
     max-level: 3
@@ -1568,8 +1568,8 @@ boons:
       "冰霜伤害": [12.2, 12.2]
       "生命上限": [5.3, 5.3]
   frost_018:
-    name: "霜寒18式"
-    description: "霜寒构筑属性成长"
+    name: "冰封旧约"
+    description: "霜寒共鸣强化：物理防御与闪避几率随神恩等级成长"
     rarity: EPIC
     icon: AMETHYST_SHARD
     max-level: 3
@@ -1578,8 +1578,8 @@ boons:
       "物理防御": [12.6, 12.6]
       "闪避几率": [5.5, 5.5]
   frost_019:
-    name: "霜寒19式"
-    description: "霜寒构筑属性成长"
+    name: "霜痕回声"
+    description: "霜寒共鸣强化：减伤比例与护盾强度随神恩等级成长"
     rarity: EPIC
     icon: PACKED_ICE
     max-level: 3
@@ -1588,8 +1588,8 @@ boons:
       "减伤比例": [13.1, 13.1]
       "护盾强度": [5.8, 5.8]
   frost_020:
-    name: "霜寒20式"
-    description: "受击后反击敌人"
+    name: "雪墓之门"
+    description: "霜寒共鸣在受击后反刺敌人"
     rarity: EPIC
     icon: CRYING_OBSIDIAN
     max-level: 3
@@ -1602,8 +1602,8 @@ boons:
         tag: "霜寒"
         per-tag: 1.5
   frost_021:
-    name: "霜寒21式"
-    description: "霜寒构筑属性成长"
+    name: "冷月绷带"
+    description: "霜寒共鸣强化：闪避几率与元素伤害随神恩等级成长"
     rarity: EPIC
     icon: BEACON
     max-level: 3
@@ -1612,8 +1612,8 @@ boons:
       "闪避几率": [14.0, 14.0]
       "元素伤害": [6.3, 6.3]
   frost_022:
-    name: "霜寒22式"
-    description: "霜寒构筑属性成长"
+    name: "永冻羽衣"
+    description: "霜寒共鸣强化：护盾强度与冰霜伤害随神恩等级成长"
     rarity: EPIC
     icon: NETHER_STAR
     max-level: 3
@@ -1622,8 +1622,8 @@ boons:
       "护盾强度": [14.4, 14.4]
       "冰霜伤害": [6.5, 6.5]
   frost_023:
-    name: "霜寒23式"
-    description: "霜寒构筑属性成长"
+    name: "冰原终歌"
+    description: "霜寒共鸣强化：生命恢复与物理防御随神恩等级成长"
     rarity: EPIC
     icon: TOTEM_OF_UNDYING
     max-level: 3
@@ -1632,8 +1632,8 @@ boons:
       "生命恢复": [14.8, 14.8]
       "物理防御": [6.8, 6.8]
   frost_024:
-    name: "霜寒24式"
-    description: "房间通关后回复生命"
+    name: "霜王敕令"
+    description: "霜寒共鸣在清理房间后修复伤势"
     rarity: LEGENDARY
     icon: ECHO_SHARD
     max-level: 5
@@ -1646,8 +1646,8 @@ boons:
         tag: "霜寒"
         per-tag: 0.8
   frost_025:
-    name: "霜寒25式"
-    description: "霜寒构筑属性成长"
+    name: "万雪归寂"
+    description: "霜寒共鸣强化：冰霜伤害与生命上限随神恩等级成长"
     rarity: LEGENDARY
     icon: IRON_SWORD
     max-level: 4
@@ -1657,8 +1657,8 @@ boons:
       "生命上限": [7.3, 7.3]
   # ===== 深渊系 =====
   abyss_001:
-    name: "深渊01式"
-    description: "深渊构筑属性成长"
+    name: "黑潮窥视"
+    description: "深渊共鸣强化：深渊伤害与暴击伤害随神恩等级成长"
     rarity: COMMON
     icon: ECHO_SHARD
     max-level: 3
@@ -1667,8 +1667,8 @@ boons:
       "深渊伤害": [5.5, 5.5]
       "暴击伤害": [1.3, 1.3]
   abyss_002:
-    name: "深渊02式"
-    description: "深渊构筑属性成长"
+    name: "深井回音"
+    description: "深渊共鸣强化：物理攻击与首领伤害随神恩等级成长"
     rarity: COMMON
     icon: IRON_SWORD
     max-level: 3
@@ -1677,8 +1677,8 @@ boons:
       "物理攻击": [5.9, 5.9]
       "首领伤害": [1.5, 1.5]
   abyss_003:
-    name: "深渊03式"
-    description: "深渊构筑属性成长"
+    name: "无光誓书"
+    description: "深渊共鸣强化：生命偷取与破甲随神恩等级成长"
     rarity: COMMON
     icon: DIAMOND_SWORD
     max-level: 3
@@ -1687,8 +1687,8 @@ boons:
       "生命偷取": [6.3, 6.3]
       "破甲": [1.8, 1.8]
   abyss_004:
-    name: "深渊04式"
-    description: "房间通关后回复生命"
+    name: "坠渊锋刃"
+    description: "深渊共鸣在清理房间后修复伤势"
     rarity: COMMON
     icon: FEATHER
     max-level: 3
@@ -1701,8 +1701,8 @@ boons:
         tag: "深渊"
         per-tag: 2.2
   abyss_005:
-    name: "深渊05式"
-    description: "深渊构筑属性成长"
+    name: "空洞凝望"
+    description: "深渊共鸣强化：首领伤害与移动速度随神恩等级成长"
     rarity: COMMON
     icon: SPIDER_EYE
     max-level: 3
@@ -1711,8 +1711,8 @@ boons:
       "首领伤害": [7.3, 7.3]
       "移动速度": [2.3, 2.3]
   abyss_006:
-    name: "深渊06式"
-    description: "深渊构筑属性成长"
+    name: "暗涌契记"
+    description: "深渊共鸣强化：破甲与深渊伤害随神恩等级成长"
     rarity: COMMON
     icon: GOLDEN_APPLE
     max-level: 3
@@ -1721,8 +1721,8 @@ boons:
       "破甲": [7.7, 7.7]
       "深渊伤害": [2.5, 2.5]
   abyss_007:
-    name: "深渊07式"
-    description: "深渊构筑属性成长"
+    name: "深渊脉冲"
+    description: "深渊共鸣强化：技能伤害与物理攻击随神恩等级成长"
     rarity: COMMON
     icon: IRON_CHESTPLATE
     max-level: 3
@@ -1731,8 +1731,8 @@ boons:
       "技能伤害": [8.2, 8.2]
       "物理攻击": [2.8, 2.8]
   abyss_008:
-    name: "深渊08式"
-    description: "低血目标处决追加伤害"
+    name: "裂界爪痕"
+    description: "深渊共鸣会在敌人虚弱时追加终结伤害"
     rarity: COMMON
     icon: ENDER_PEARL
     max-level: 4
@@ -1745,8 +1745,8 @@ boons:
         tag: "深渊"
         per-tag: 1.5
   abyss_009:
-    name: "深渊09式"
-    description: "深渊构筑属性成长"
+    name: "虚无王冠"
+    description: "深渊共鸣强化：深渊伤害与暴击伤害随神恩等级成长"
     rarity: COMMON
     icon: REDSTONE
     max-level: 3
@@ -1755,8 +1755,8 @@ boons:
       "深渊伤害": [9.1, 9.1]
       "暴击伤害": [3.3, 3.3]
   abyss_010:
-    name: "深渊10式"
-    description: "深渊构筑属性成长"
+    name: "沉底星火"
+    description: "深渊共鸣强化：物理攻击与首领伤害随神恩等级成长"
     rarity: RARE
     icon: SHIELD
     max-level: 3
@@ -1765,8 +1765,8 @@ boons:
       "物理攻击": [9.5, 9.5]
       "首领伤害": [3.5, 3.5]
   abyss_011:
-    name: "深渊11式"
-    description: "深渊构筑属性成长"
+    name: "黑曜呓语"
+    description: "深渊共鸣强化：生命偷取与破甲随神恩等级成长"
     rarity: RARE
     icon: GHAST_TEAR
     max-level: 3
@@ -1775,8 +1775,8 @@ boons:
       "生命偷取": [9.9, 9.9]
       "破甲": [3.8, 3.8]
   abyss_012:
-    name: "深渊12式"
-    description: "击杀后回复生命"
+    name: "暗海祷词"
+    description: "深渊共鸣在击杀后抽回血气"
     rarity: RARE
     icon: RABBIT_FOOT
     max-level: 3
@@ -1789,8 +1789,8 @@ boons:
         tag: "深渊"
         per-tag: 0.8
   abyss_013:
-    name: "深渊13式"
-    description: "深渊构筑属性成长"
+    name: "渊面倒影"
+    description: "深渊共鸣强化：首领伤害与移动速度随神恩等级成长"
     rarity: RARE
     icon: FIRE_CHARGE
     max-level: 3
@@ -1799,8 +1799,8 @@ boons:
       "首领伤害": [10.9, 10.9]
       "移动速度": [4.3, 4.3]
   abyss_014:
-    name: "深渊14式"
-    description: "深渊构筑属性成长"
+    name: "无底债契"
+    description: "深渊共鸣强化：破甲与深渊伤害随神恩等级成长"
     rarity: RARE
     icon: BLAZE_POWDER
     max-level: 3
@@ -1809,8 +1809,8 @@ boons:
       "破甲": [11.3, 11.3]
       "深渊伤害": [4.5, 4.5]
   abyss_015:
-    name: "深渊15式"
-    description: "深渊构筑属性成长"
+    name: "空蚀花环"
+    description: "深渊共鸣强化：技能伤害与物理攻击随神恩等级成长"
     rarity: RARE
     icon: AMETHYST_SHARD
     max-level: 3
@@ -1819,8 +1819,8 @@ boons:
       "技能伤害": [11.8, 11.8]
       "物理攻击": [4.8, 4.8]
   abyss_016:
-    name: "深渊16式"
-    description: "受击后反击敌人"
+    name: "深梦枷锁"
+    description: "深渊共鸣在受击后反刺敌人"
     rarity: RARE
     icon: PACKED_ICE
     max-level: 4
@@ -1833,8 +1833,8 @@ boons:
         tag: "深渊"
         per-tag: 2.2
   abyss_017:
-    name: "深渊17式"
-    description: "深渊构筑属性成长"
+    name: "黑月沉降"
+    description: "深渊共鸣强化：深渊伤害与暴击伤害随神恩等级成长"
     rarity: RARE
     icon: CRYING_OBSIDIAN
     max-level: 3
@@ -1843,8 +1843,8 @@ boons:
       "深渊伤害": [12.7, 12.7]
       "暴击伤害": [5.3, 5.3]
   abyss_018:
-    name: "深渊18式"
-    description: "深渊构筑属性成长"
+    name: "虚空鲸歌"
+    description: "深渊共鸣强化：物理攻击与首领伤害随神恩等级成长"
     rarity: EPIC
     icon: BEACON
     max-level: 3
@@ -1853,8 +1853,8 @@ boons:
       "物理攻击": [13.1, 13.1]
       "首领伤害": [5.5, 5.5]
   abyss_019:
-    name: "深渊19式"
-    description: "深渊构筑属性成长"
+    name: "裂隙回舌"
+    description: "深渊共鸣强化：生命偷取与破甲随神恩等级成长"
     rarity: EPIC
     icon: NETHER_STAR
     max-level: 3
@@ -1863,8 +1863,8 @@ boons:
       "生命偷取": [13.6, 13.6]
       "破甲": [5.8, 5.8]
   abyss_020:
-    name: "深渊20式"
-    description: "房间通关后回复生命"
+    name: "吞星旧约"
+    description: "深渊共鸣在清理房间后修复伤势"
     rarity: EPIC
     icon: TOTEM_OF_UNDYING
     max-level: 3
@@ -1877,8 +1877,8 @@ boons:
         tag: "深渊"
         per-tag: 1.5
   abyss_021:
-    name: "深渊21式"
-    description: "深渊构筑属性成长"
+    name: "无明灯火"
+    description: "深渊共鸣强化：首领伤害与移动速度随神恩等级成长"
     rarity: EPIC
     icon: ECHO_SHARD
     max-level: 3
@@ -1887,8 +1887,8 @@ boons:
       "首领伤害": [14.5, 14.5]
       "移动速度": [6.3, 6.3]
   abyss_022:
-    name: "深渊22式"
-    description: "深渊构筑属性成长"
+    name: "渊王低语"
+    description: "深渊共鸣强化：破甲与深渊伤害随神恩等级成长"
     rarity: EPIC
     icon: IRON_SWORD
     max-level: 3
@@ -1897,8 +1897,8 @@ boons:
       "破甲": [14.9, 14.9]
       "深渊伤害": [6.5, 6.5]
   abyss_023:
-    name: "深渊23式"
-    description: "深渊构筑属性成长"
+    name: "暗界馈赠"
+    description: "深渊共鸣强化：技能伤害与物理攻击随神恩等级成长"
     rarity: EPIC
     icon: DIAMOND_SWORD
     max-level: 3
@@ -1907,8 +1907,8 @@ boons:
       "技能伤害": [15.3, 15.3]
       "物理攻击": [6.8, 6.8]
   abyss_024:
-    name: "深渊24式"
-    description: "低血目标处决追加伤害"
+    name: "终渊召唤"
+    description: "深渊共鸣会在敌人虚弱时追加终结伤害"
     rarity: LEGENDARY
     icon: FEATHER
     max-level: 5
@@ -1921,8 +1921,8 @@ boons:
         tag: "深渊"
         per-tag: 0.8
   abyss_025:
-    name: "深渊25式"
-    description: "深渊构筑属性成长"
+    name: "万暗归巢"
+    description: "深渊共鸣强化：深渊伤害与暴击伤害随神恩等级成长"
     rarity: LEGENDARY
     icon: SPIDER_EYE
     max-level: 4
@@ -1932,8 +1932,8 @@ boons:
       "暴击伤害": [7.3, 7.3]
   # ===== 圣辉系 =====
   radiance_001:
-    name: "圣辉01式"
-    description: "圣辉构筑属性成长"
+    name: "晨曦祝文"
+    description: "圣辉共鸣强化：圣辉伤害与生命恢复随神恩等级成长"
     rarity: COMMON
     icon: FEATHER
     max-level: 3
@@ -1942,8 +1942,8 @@ boons:
       "圣辉伤害": [6.0, 6.0]
       "生命恢复": [1.3, 1.3]
   radiance_002:
-    name: "圣辉02式"
-    description: "圣辉构筑属性成长"
+    name: "金辉护誓"
+    description: "圣辉共鸣强化：治疗加成与物理防御随神恩等级成长"
     rarity: COMMON
     icon: SPIDER_EYE
     max-level: 3
@@ -1952,8 +1952,8 @@ boons:
       "治疗加成": [6.4, 6.4]
       "物理防御": [1.5, 1.5]
   radiance_003:
-    name: "圣辉03式"
-    description: "圣辉构筑属性成长"
+    name: "白烛赦令"
+    description: "圣辉共鸣强化：生命上限与减伤比例随神恩等级成长"
     rarity: COMMON
     icon: GOLDEN_APPLE
     max-level: 3
@@ -1962,8 +1962,8 @@ boons:
       "生命上限": [6.8, 6.8]
       "减伤比例": [1.8, 1.8]
   radiance_004:
-    name: "圣辉04式"
-    description: "低血目标处决追加伤害"
+    name: "圣铃回响"
+    description: "圣辉共鸣会在敌人虚弱时追加终结伤害"
     rarity: COMMON
     icon: IRON_CHESTPLATE
     max-level: 3
@@ -1976,8 +1976,8 @@ boons:
         tag: "圣辉"
         per-tag: 2.2
   radiance_005:
-    name: "圣辉05式"
-    description: "圣辉构筑属性成长"
+    name: "黎明羽冠"
+    description: "圣辉共鸣强化：物理防御与护盾强度随神恩等级成长"
     rarity: COMMON
     icon: ENDER_PEARL
     max-level: 3
@@ -1986,8 +1986,8 @@ boons:
       "物理防御": [7.8, 7.8]
       "护盾强度": [2.3, 2.3]
   radiance_006:
-    name: "圣辉06式"
-    description: "圣辉构筑属性成长"
+    name: "辉光圣杯"
+    description: "圣辉共鸣强化：减伤比例与圣辉伤害随神恩等级成长"
     rarity: COMMON
     icon: REDSTONE
     max-level: 3
@@ -1996,8 +1996,8 @@ boons:
       "减伤比例": [8.2, 8.2]
       "圣辉伤害": [2.5, 2.5]
   radiance_007:
-    name: "圣辉07式"
-    description: "圣辉构筑属性成长"
+    name: "日冕庇护"
+    description: "圣辉共鸣强化：幸运与治疗加成随神恩等级成长"
     rarity: COMMON
     icon: SHIELD
     max-level: 3
@@ -2006,8 +2006,8 @@ boons:
       "幸运": [8.7, 8.7]
       "治疗加成": [2.8, 2.8]
   radiance_008:
-    name: "圣辉08式"
-    description: "击杀后回复生命"
+    name: "圣焰行歌"
+    description: "圣辉共鸣在击杀后抽回血气"
     rarity: COMMON
     icon: GHAST_TEAR
     max-level: 4
@@ -2020,8 +2020,8 @@ boons:
         tag: "圣辉"
         per-tag: 1.5
   radiance_009:
-    name: "圣辉09式"
-    description: "圣辉构筑属性成长"
+    name: "光棱祷词"
+    description: "圣辉共鸣强化：圣辉伤害与生命恢复随神恩等级成长"
     rarity: COMMON
     icon: RABBIT_FOOT
     max-level: 3
@@ -2030,8 +2030,8 @@ boons:
       "圣辉伤害": [9.6, 9.6]
       "生命恢复": [3.3, 3.3]
   radiance_010:
-    name: "圣辉10式"
-    description: "圣辉构筑属性成长"
+    name: "无垢印记"
+    description: "圣辉共鸣强化：治疗加成与物理防御随神恩等级成长"
     rarity: RARE
     icon: FIRE_CHARGE
     max-level: 3
@@ -2040,8 +2040,8 @@ boons:
       "治疗加成": [10.0, 10.0]
       "物理防御": [3.5, 3.5]
   radiance_011:
-    name: "圣辉11式"
-    description: "圣辉构筑属性成长"
+    name: "曙光披肩"
+    description: "圣辉共鸣强化：生命上限与减伤比例随神恩等级成长"
     rarity: RARE
     icon: BLAZE_POWDER
     max-level: 3
@@ -2050,8 +2050,8 @@ boons:
       "生命上限": [10.4, 10.4]
       "减伤比例": [3.8, 3.8]
   radiance_012:
-    name: "圣辉12式"
-    description: "受击后反击敌人"
+    name: "圣泉涌流"
+    description: "圣辉共鸣在受击后反刺敌人"
     rarity: RARE
     icon: AMETHYST_SHARD
     max-level: 3
@@ -2064,8 +2064,8 @@ boons:
         tag: "圣辉"
         per-tag: 0.8
   radiance_013:
-    name: "圣辉13式"
-    description: "圣辉构筑属性成长"
+    name: "金叶赐福"
+    description: "圣辉共鸣强化：物理防御与护盾强度随神恩等级成长"
     rarity: RARE
     icon: PACKED_ICE
     max-level: 3
@@ -2074,8 +2074,8 @@ boons:
       "物理防御": [11.4, 11.4]
       "护盾强度": [4.3, 4.3]
   radiance_014:
-    name: "圣辉14式"
-    description: "圣辉构筑属性成长"
+    name: "白塔钟鸣"
+    description: "圣辉共鸣强化：减伤比例与圣辉伤害随神恩等级成长"
     rarity: RARE
     icon: CRYING_OBSIDIAN
     max-level: 3
@@ -2084,8 +2084,8 @@ boons:
       "减伤比例": [11.8, 11.8]
       "圣辉伤害": [4.5, 4.5]
   radiance_015:
-    name: "圣辉15式"
-    description: "圣辉构筑属性成长"
+    name: "辉翼环绕"
+    description: "圣辉共鸣强化：幸运与治疗加成随神恩等级成长"
     rarity: RARE
     icon: BEACON
     max-level: 3
@@ -2094,8 +2094,8 @@ boons:
       "幸运": [12.3, 12.3]
       "治疗加成": [4.8, 4.8]
   radiance_016:
-    name: "圣辉16式"
-    description: "房间通关后回复生命"
+    name: "净光长阶"
+    description: "圣辉共鸣在清理房间后修复伤势"
     rarity: RARE
     icon: NETHER_STAR
     max-level: 4
@@ -2108,8 +2108,8 @@ boons:
         tag: "圣辉"
         per-tag: 2.2
   radiance_017:
-    name: "圣辉17式"
-    description: "圣辉构筑属性成长"
+    name: "祈愿星火"
+    description: "圣辉共鸣强化：圣辉伤害与生命恢复随神恩等级成长"
     rarity: RARE
     icon: TOTEM_OF_UNDYING
     max-level: 3
@@ -2118,8 +2118,8 @@ boons:
       "圣辉伤害": [13.2, 13.2]
       "生命恢复": [5.3, 5.3]
   radiance_018:
-    name: "圣辉18式"
-    description: "圣辉构筑属性成长"
+    name: "圣辉回廊"
+    description: "圣辉共鸣强化：治疗加成与物理防御随神恩等级成长"
     rarity: EPIC
     icon: ECHO_SHARD
     max-level: 3
@@ -2128,8 +2128,8 @@ boons:
       "治疗加成": [13.6, 13.6]
       "物理防御": [5.5, 5.5]
   radiance_019:
-    name: "圣辉19式"
-    description: "圣辉构筑属性成长"
+    name: "晨星引路"
+    description: "圣辉共鸣强化：生命上限与减伤比例随神恩等级成长"
     rarity: EPIC
     icon: IRON_SWORD
     max-level: 3
@@ -2138,8 +2138,8 @@ boons:
       "生命上限": [14.1, 14.1]
       "减伤比例": [5.8, 5.8]
   radiance_020:
-    name: "圣辉20式"
-    description: "低血目标处决追加伤害"
+    name: "赦罪花冠"
+    description: "圣辉共鸣会在敌人虚弱时追加终结伤害"
     rarity: EPIC
     icon: DIAMOND_SWORD
     max-level: 3
@@ -2152,8 +2152,8 @@ boons:
         tag: "圣辉"
         per-tag: 1.5
   radiance_021:
-    name: "圣辉21式"
-    description: "圣辉构筑属性成长"
+    name: "日轮余温"
+    description: "圣辉共鸣强化：物理防御与护盾强度随神恩等级成长"
     rarity: EPIC
     icon: FEATHER
     max-level: 3
@@ -2162,8 +2162,8 @@ boons:
       "物理防御": [15.0, 15.0]
       "护盾强度": [6.3, 6.3]
   radiance_022:
-    name: "圣辉22式"
-    description: "圣辉构筑属性成长"
+    name: "圣域合唱"
+    description: "圣辉共鸣强化：减伤比例与圣辉伤害随神恩等级成长"
     rarity: EPIC
     icon: SPIDER_EYE
     max-level: 3
@@ -2172,8 +2172,8 @@ boons:
       "减伤比例": [15.4, 15.4]
       "圣辉伤害": [6.5, 6.5]
   radiance_023:
-    name: "圣辉23式"
-    description: "圣辉构筑属性成长"
+    name: "光王敕命"
+    description: "圣辉共鸣强化：幸运与治疗加成随神恩等级成长"
     rarity: EPIC
     icon: GOLDEN_APPLE
     max-level: 3
@@ -2182,8 +2182,8 @@ boons:
       "幸运": [15.8, 15.8]
       "治疗加成": [6.8, 6.8]
   radiance_024:
-    name: "圣辉24式"
-    description: "击杀后回复生命"
+    name: "终晨礼赞"
+    description: "圣辉共鸣在击杀后抽回血气"
     rarity: LEGENDARY
     icon: IRON_CHESTPLATE
     max-level: 5
@@ -2196,8 +2196,8 @@ boons:
         tag: "圣辉"
         per-tag: 0.8
   radiance_025:
-    name: "圣辉25式"
-    description: "圣辉构筑属性成长"
+    name: "万辉归堂"
+    description: "圣辉共鸣强化：圣辉伤害与生命恢复随神恩等级成长"
     rarity: LEGENDARY
     icon: ENDER_PEARL
     max-level: 4

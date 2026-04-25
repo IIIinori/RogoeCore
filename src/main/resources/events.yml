@@ -43,800 +43,800 @@ event-affixes:
     "91-100": 6
   affixes:
     shop_affix_01:
-      name: "§d商店异象01"
-      description: "强化商店房：货品、黑市与材料换购，强度 1。"
+      name: "§d月幕集市"
+      description: "月幕集市强化本房：货品、黑市与材料换购，强度 1。"
       rooms: ["SHOP"]
       family: SHOP
       power: 1
       min-floor: 11
       weight: 17
     shop_affix_02:
-      name: "§d商店异象02"
-      description: "强化商店房：货品、黑市与材料换购，强度 2。"
+      name: "§d赊账铜铃"
+      description: "赊账铜铃强化本房：货品、黑市与材料换购，强度 2。"
       rooms: ["SHOP"]
       family: SHOP
       power: 2
       min-floor: 20
       weight: 16
     shop_affix_03:
-      name: "§d商店异象03"
-      description: "强化商店房：货品、黑市与材料换购，强度 3。"
+      name: "§d黑市暗号"
+      description: "黑市暗号强化本房：货品、黑市与材料换购，强度 3。"
       rooms: ["SHOP"]
       family: SHOP
       power: 3
       min-floor: 29
       weight: 15
     shop_affix_04:
-      name: "§d商店异象04"
-      description: "强化商店房：货品、黑市与材料换购，强度 4。"
+      name: "§d异乡商队"
+      description: "异乡商队强化本房：货品、黑市与材料换购，强度 4。"
       rooms: ["SHOP"]
       family: SHOP
       power: 4
       min-floor: 38
       weight: 14
     shop_affix_05:
-      name: "§d商店异象05"
-      description: "强化商店房：货品、黑市与材料换购，强度 5。"
+      name: "§d金蛇柜台"
+      description: "金蛇柜台强化本房：货品、黑市与材料换购，强度 5。"
       rooms: ["SHOP"]
       family: SHOP
       power: 5
       min-floor: 47
       weight: 13
     shop_affix_06:
-      name: "§d商店异象06"
-      description: "强化商店房：货品、黑市与材料换购，强度 6。"
+      name: "§d夜航拍卖"
+      description: "夜航拍卖强化本房：货品、黑市与材料换购，强度 6。"
       rooms: ["SHOP"]
       family: SHOP
       power: 6
       min-floor: 56
       weight: 12
     shop_affix_07:
-      name: "§d商店异象07"
-      description: "强化商店房：货品、黑市与材料换购，强度 7。"
+      name: "§d秘银找零"
+      description: "秘银找零强化本房：货品、黑市与材料换购，强度 7。"
       rooms: ["SHOP"]
       family: SHOP
       power: 7
       min-floor: 65
       weight: 11
     shop_affix_08:
-      name: "§d商店异象08"
-      description: "强化商店房：货品、黑市与材料换购，强度 8。"
+      name: "§d烛光货架"
+      description: "烛光货架强化本房：货品、黑市与材料换购，强度 8。"
       rooms: ["SHOP"]
       family: SHOP
       power: 8
       min-floor: 74
       weight: 10
     shop_affix_09:
-      name: "§d商店异象09"
-      description: "强化商店房：货品、黑市与材料换购，强度 9。"
+      name: "§d盐与黄金"
+      description: "盐与黄金强化本房：货品、黑市与材料换购，强度 9。"
       rooms: ["SHOP"]
       family: SHOP
       power: 9
       min-floor: 83
       weight: 9
     shop_affix_10:
-      name: "§d商店异象10"
-      description: "强化商店房：货品、黑市与材料换购，强度 10。"
+      name: "§d无名当铺"
+      description: "无名当铺强化本房：货品、黑市与材料换购，强度 10。"
       rooms: ["SHOP"]
       family: SHOP
       power: 10
       min-floor: 92
       weight: 8
     forge_affix_01:
-      name: "§d铁匠异象01"
-      description: "强化铁匠房：锻造价格、热度与材料，强度 1。"
+      name: "§d余烬铁砧"
+      description: "余烬铁砧强化本房：锻造价格、热度与材料，强度 1。"
       rooms: ["FORGE"]
       family: FORGE
       power: 1
       min-floor: 11
       weight: 17
     forge_affix_02:
-      name: "§d铁匠异象02"
-      description: "强化铁匠房：锻造价格、热度与材料，强度 2。"
+      name: "§d火舌退锻"
+      description: "火舌退锻强化本房：锻造价格、热度与材料，强度 2。"
       rooms: ["FORGE"]
       family: FORGE
       power: 2
       min-floor: 20
       weight: 16
     forge_affix_03:
-      name: "§d铁匠异象03"
-      description: "强化铁匠房：锻造价格、热度与材料，强度 3。"
+      name: "§d黑曜炉心"
+      description: "黑曜炉心强化本房：锻造价格、热度与材料，强度 3。"
       rooms: ["FORGE"]
       family: FORGE
       power: 3
       min-floor: 29
       weight: 15
     forge_affix_04:
-      name: "§d铁匠异象04"
-      description: "强化铁匠房：锻造价格、热度与材料，强度 4。"
+      name: "§d铜锤节律"
+      description: "铜锤节律强化本房：锻造价格、热度与材料，强度 4。"
       rooms: ["FORGE"]
       family: FORGE
       power: 4
       min-floor: 38
       weight: 14
     forge_affix_05:
-      name: "§d铁匠异象05"
-      description: "强化铁匠房：锻造价格、热度与材料，强度 5。"
+      name: "§d熔星铭刻"
+      description: "熔星铭刻强化本房：锻造价格、热度与材料，强度 5。"
       rooms: ["FORGE"]
       family: FORGE
       power: 5
       min-floor: 47
       weight: 13
     forge_affix_06:
-      name: "§d铁匠异象06"
-      description: "强化铁匠房：锻造价格、热度与材料，强度 6。"
+      name: "§d烟尘冷却"
+      description: "烟尘冷却强化本房：锻造价格、热度与材料，强度 6。"
       rooms: ["FORGE"]
       family: FORGE
       power: 6
       min-floor: 56
       weight: 12
     forge_affix_07:
-      name: "§d铁匠异象07"
-      description: "强化铁匠房：锻造价格、热度与材料，强度 7。"
+      name: "§d炉神欠账"
+      description: "炉神欠账强化本房：锻造价格、热度与材料，强度 7。"
       rooms: ["FORGE"]
       family: FORGE
       power: 7
       min-floor: 65
       weight: 11
     forge_affix_08:
-      name: "§d铁匠异象08"
-      description: "强化铁匠房：锻造价格、热度与材料，强度 8。"
+      name: "§d赤铁工坊"
+      description: "赤铁工坊强化本房：锻造价格、热度与材料，强度 8。"
       rooms: ["FORGE"]
       family: FORGE
       power: 8
       min-floor: 74
       weight: 10
     forge_affix_09:
-      name: "§d铁匠异象09"
-      description: "强化铁匠房：锻造价格、热度与材料，强度 9。"
+      name: "§d灵魂淬池"
+      description: "灵魂淬池强化本房：锻造价格、热度与材料，强度 9。"
       rooms: ["FORGE"]
       family: FORGE
       power: 9
       min-floor: 83
       weight: 9
     forge_affix_10:
-      name: "§d铁匠异象10"
-      description: "强化铁匠房：锻造价格、热度与材料，强度 10。"
+      name: "§d灰烬铸约"
+      description: "灰烬铸约强化本房：锻造价格、热度与材料，强度 10。"
       rooms: ["FORGE"]
       family: FORGE
       power: 10
       min-floor: 92
       weight: 8
     chest_affix_01:
-      name: "§d宝箱异象01"
-      description: "强化宝箱房：碎片、神恩与额外装备，强度 1。"
+      name: "§d秘库暗格"
+      description: "秘库暗格强化本房：碎片、神恩与额外装备，强度 1。"
       rooms: ["CHEST"]
       family: CHEST
       power: 1
       min-floor: 11
       weight: 17
     chest_affix_02:
-      name: "§d宝箱异象02"
-      description: "强化宝箱房：碎片、神恩与额外装备，强度 2。"
+      name: "§d双层锁匣"
+      description: "双层锁匣强化本房：碎片、神恩与额外装备，强度 2。"
       rooms: ["CHEST"]
       family: CHEST
       power: 2
       min-floor: 20
       weight: 16
     chest_affix_03:
-      name: "§d宝箱异象03"
-      description: "强化宝箱房：碎片、神恩与额外装备，强度 3。"
+      name: "§d星砂箱底"
+      description: "星砂箱底强化本房：碎片、神恩与额外装备，强度 3。"
       rooms: ["CHEST"]
       family: CHEST
       power: 3
       min-floor: 29
       weight: 15
     chest_affix_04:
-      name: "§d宝箱异象04"
-      description: "强化宝箱房：碎片、神恩与额外装备，强度 4。"
+      name: "§d龙骨宝封"
+      description: "龙骨宝封强化本房：碎片、神恩与额外装备，强度 4。"
       rooms: ["CHEST"]
       family: CHEST
       power: 4
       min-floor: 38
       weight: 14
     chest_affix_05:
-      name: "§d宝箱异象05"
-      description: "强化宝箱房：碎片、神恩与额外装备，强度 5。"
+      name: "§d蓝焰宝箱"
+      description: "蓝焰宝箱强化本房：碎片、神恩与额外装备，强度 5。"
       rooms: ["CHEST"]
       family: CHEST
       power: 5
       min-floor: 47
       weight: 13
     chest_affix_06:
-      name: "§d宝箱异象06"
-      description: "强化宝箱房：碎片、神恩与额外装备，强度 6。"
+      name: "§d旧王遗柜"
+      description: "旧王遗柜强化本房：碎片、神恩与额外装备，强度 6。"
       rooms: ["CHEST"]
       family: CHEST
       power: 6
       min-floor: 56
       weight: 12
     chest_affix_07:
-      name: "§d宝箱异象07"
-      description: "强化宝箱房：碎片、神恩与额外装备，强度 7。"
+      name: "§d缚魂暗扣"
+      description: "缚魂暗扣强化本房：碎片、神恩与额外装备，强度 7。"
       rooms: ["CHEST"]
       family: CHEST
       power: 7
       min-floor: 65
       weight: 11
     chest_affix_08:
-      name: "§d宝箱异象08"
-      description: "强化宝箱房：碎片、神恩与额外装备，强度 8。"
+      name: "§d沉金匣室"
+      description: "沉金匣室强化本房：碎片、神恩与额外装备，强度 8。"
       rooms: ["CHEST"]
       family: CHEST
       power: 8
       min-floor: 74
       weight: 10
     chest_affix_09:
-      name: "§d宝箱异象09"
-      description: "强化宝箱房：碎片、神恩与额外装备，强度 9。"
+      name: "§d月影夹层"
+      description: "月影夹层强化本房：碎片、神恩与额外装备，强度 9。"
       rooms: ["CHEST"]
       family: CHEST
       power: 9
       min-floor: 83
       weight: 9
     chest_affix_10:
-      name: "§d宝箱异象10"
-      description: "强化宝箱房：碎片、神恩与额外装备，强度 10。"
+      name: "§d终层宝锁"
+      description: "终层宝锁强化本房：碎片、神恩与额外装备，强度 10。"
       rooms: ["CHEST"]
       family: CHEST
       power: 10
       min-floor: 92
       weight: 8
     rest_affix_01:
-      name: "§d休息异象01"
-      description: "强化休息房：治疗、神恩升级与恢复，强度 1。"
+      name: "§d安眠回廊"
+      description: "安眠回廊强化本房：治疗、神恩升级与恢复，强度 1。"
       rooms: ["REST"]
       family: REST
       power: 1
       min-floor: 11
       weight: 17
     rest_affix_02:
-      name: "§d休息异象02"
-      description: "强化休息房：治疗、神恩升级与恢复，强度 2。"
+      name: "§d蓝火营地"
+      description: "蓝火营地强化本房：治疗、神恩升级与恢复，强度 2。"
       rooms: ["REST"]
       family: REST
       power: 2
       min-floor: 20
       weight: 16
     rest_affix_03:
-      name: "§d休息异象03"
-      description: "强化休息房：治疗、神恩升级与恢复，强度 3。"
+      name: "§d静水绷带"
+      description: "静水绷带强化本房：治疗、神恩升级与恢复，强度 3。"
       rooms: ["REST"]
       family: REST
       power: 3
       min-floor: 29
       weight: 15
     rest_affix_04:
-      name: "§d休息异象04"
-      description: "强化休息房：治疗、神恩升级与恢复，强度 4。"
+      name: "§d星灯卧席"
+      description: "星灯卧席强化本房：治疗、神恩升级与恢复，强度 4。"
       rooms: ["REST"]
       family: REST
       power: 4
       min-floor: 38
       weight: 14
     rest_affix_05:
-      name: "§d休息异象05"
-      description: "强化休息房：治疗、神恩升级与恢复，强度 5。"
+      name: "§d冬青长椅"
+      description: "冬青长椅强化本房：治疗、神恩升级与恢复，强度 5。"
       rooms: ["REST"]
       family: REST
       power: 5
       min-floor: 47
       weight: 13
     rest_affix_06:
-      name: "§d休息异象06"
-      description: "强化休息房：治疗、神恩升级与恢复，强度 6。"
+      name: "§d旧歌疗伤"
+      description: "旧歌疗伤强化本房：治疗、神恩升级与恢复，强度 6。"
       rooms: ["REST"]
       family: REST
       power: 6
       min-floor: 56
       weight: 12
     rest_affix_07:
-      name: "§d休息异象07"
-      description: "强化休息房：治疗、神恩升级与恢复，强度 7。"
+      name: "§d圣泉低眠"
+      description: "圣泉低眠强化本房：治疗、神恩升级与恢复，强度 7。"
       rooms: ["REST"]
       family: REST
       power: 7
       min-floor: 65
       weight: 11
     rest_affix_08:
-      name: "§d休息异象08"
-      description: "强化休息房：治疗、神恩升级与恢复，强度 8。"
+      name: "§d月井歇脚"
+      description: "月井歇脚强化本房：治疗、神恩升级与恢复，强度 8。"
       rooms: ["REST"]
       family: REST
       power: 8
       min-floor: 74
       weight: 10
     rest_affix_09:
-      name: "§d休息异象09"
-      description: "强化休息房：治疗、神恩升级与恢复，强度 9。"
+      name: "§d白羽帐幕"
+      description: "白羽帐幕强化本房：治疗、神恩升级与恢复，强度 9。"
       rooms: ["REST"]
       family: REST
       power: 9
       min-floor: 83
       weight: 9
     rest_affix_10:
-      name: "§d休息异象10"
-      description: "强化休息房：治疗、神恩升级与恢复，强度 10。"
+      name: "§d无梦篝火"
+      description: "无梦篝火强化本房：治疗、神恩升级与恢复，强度 10。"
       rooms: ["REST"]
       family: REST
       power: 10
       min-floor: 92
       weight: 8
     extraction_affix_01:
-      name: "§d撤离异象01"
-      description: "强化撤离房：提现门槛与提现比例，强度 1。"
+      name: "§d鎏金路标"
+      description: "鎏金路标强化本房：提现门槛与提现比例，强度 1。"
       rooms: ["EXTRACTION"]
       family: EXTRACTION
       power: 1
       min-floor: 11
       weight: 17
     extraction_affix_02:
-      name: "§d撤离异象02"
-      description: "强化撤离房：提现门槛与提现比例，强度 2。"
+      name: "§d雾港渡票"
+      description: "雾港渡票强化本房：提现门槛与提现比例，强度 2。"
       rooms: ["EXTRACTION"]
       family: EXTRACTION
       power: 2
       min-floor: 20
       weight: 16
     extraction_affix_03:
-      name: "§d撤离异象03"
-      description: "强化撤离房：提现门槛与提现比例，强度 3。"
+      name: "§d中途结算"
+      description: "中途结算强化本房：提现门槛与提现比例，强度 3。"
       rooms: ["EXTRACTION"]
       family: EXTRACTION
       power: 3
       min-floor: 29
       weight: 15
     extraction_affix_04:
-      name: "§d撤离异象04"
-      description: "强化撤离房：提现门槛与提现比例，强度 4。"
+      name: "§d归途契据"
+      description: "归途契据强化本房：提现门槛与提现比例，强度 4。"
       rooms: ["EXTRACTION"]
       family: EXTRACTION
       power: 4
       min-floor: 38
       weight: 14
     extraction_affix_05:
-      name: "§d撤离异象05"
-      description: "强化撤离房：提现门槛与提现比例，强度 5。"
+      name: "§d银环传送"
+      description: "银环传送强化本房：提现门槛与提现比例，强度 5。"
       rooms: ["EXTRACTION"]
       family: EXTRACTION
       power: 5
       min-floor: 47
       weight: 13
     extraction_affix_06:
-      name: "§d撤离异象06"
-      description: "强化撤离房：提现门槛与提现比例，强度 6。"
+      name: "§d灯塔赎买"
+      description: "灯塔赎买强化本房：提现门槛与提现比例，强度 6。"
       rooms: ["EXTRACTION"]
       family: EXTRACTION
       power: 6
       min-floor: 56
       weight: 12
     extraction_affix_07:
-      name: "§d撤离异象07"
-      description: "强化撤离房：提现门槛与提现比例，强度 7。"
+      name: "§d半程归航"
+      description: "半程归航强化本房：提现门槛与提现比例，强度 7。"
       rooms: ["EXTRACTION"]
       family: EXTRACTION
       power: 7
       min-floor: 65
       weight: 11
     extraction_affix_08:
-      name: "§d撤离异象08"
-      description: "强化撤离房：提现门槛与提现比例，强度 8。"
+      name: "§d旅人押金"
+      description: "旅人押金强化本房：提现门槛与提现比例，强度 8。"
       rooms: ["EXTRACTION"]
       family: EXTRACTION
       power: 8
       min-floor: 74
       weight: 10
     extraction_affix_09:
-      name: "§d撤离异象09"
-      description: "强化撤离房：提现门槛与提现比例，强度 9。"
+      name: "§d旧门票根"
+      description: "旧门票根强化本房：提现门槛与提现比例，强度 9。"
       rooms: ["EXTRACTION"]
       family: EXTRACTION
       power: 9
       min-floor: 83
       weight: 9
     extraction_affix_10:
-      name: "§d撤离异象10"
-      description: "强化撤离房：提现门槛与提现比例，强度 10。"
+      name: "§d安全航线"
+      description: "安全航线强化本房：提现门槛与提现比例，强度 10。"
       rooms: ["EXTRACTION"]
       family: EXTRACTION
       power: 10
       min-floor: 92
       weight: 8
     contract_affix_01:
-      name: "§d契约异象01"
-      description: "强化契约房：代价、遗物候选与碎片，强度 1。"
+      name: "§d虚空经纪"
+      description: "虚空经纪强化本房：代价、遗物候选与碎片，强度 1。"
       rooms: ["CONTRACT"]
       family: CONTRACT
       power: 1
       min-floor: 11
       weight: 17
     contract_affix_02:
-      name: "§d契约异象02"
-      description: "强化契约房：代价、遗物候选与碎片，强度 2。"
+      name: "§d血墨契书"
+      description: "血墨契书强化本房：代价、遗物候选与碎片，强度 2。"
       rooms: ["CONTRACT"]
       family: CONTRACT
       power: 2
       min-floor: 20
       weight: 16
     contract_affix_03:
-      name: "§d契约异象03"
-      description: "强化契约房：代价、遗物候选与碎片，强度 3。"
+      name: "§d王冠债务"
+      description: "王冠债务强化本房：代价、遗物候选与碎片，强度 3。"
       rooms: ["CONTRACT"]
       family: CONTRACT
       power: 3
       min-floor: 29
       weight: 15
     contract_affix_04:
-      name: "§d契约异象04"
-      description: "强化契约房：代价、遗物候选与碎片，强度 4。"
+      name: "§d黑羊见证"
+      description: "黑羊见证强化本房：代价、遗物候选与碎片，强度 4。"
       rooms: ["CONTRACT"]
       family: CONTRACT
       power: 4
       min-floor: 38
       weight: 14
     contract_affix_05:
-      name: "§d契约异象05"
-      description: "强化契约房：代价、遗物候选与碎片，强度 5。"
+      name: "§d深井抵押"
+      description: "深井抵押强化本房：代价、遗物候选与碎片，强度 5。"
       rooms: ["CONTRACT"]
       family: CONTRACT
       power: 5
       min-floor: 47
       weight: 13
     contract_affix_06:
-      name: "§d契约异象06"
-      description: "强化契约房：代价、遗物候选与碎片，强度 6。"
+      name: "§d镀金条款"
+      description: "镀金条款强化本房：代价、遗物候选与碎片，强度 6。"
       rooms: ["CONTRACT"]
       family: CONTRACT
       power: 6
       min-floor: 56
       weight: 12
     contract_affix_07:
-      name: "§d契约异象07"
-      description: "强化契约房：代价、遗物候选与碎片，强度 7。"
+      name: "§d空蚀签名"
+      description: "空蚀签名强化本房：代价、遗物候选与碎片，强度 7。"
       rooms: ["CONTRACT"]
       family: CONTRACT
       power: 7
       min-floor: 65
       weight: 11
     contract_affix_08:
-      name: "§d契约异象08"
-      description: "强化契约房：代价、遗物候选与碎片，强度 8。"
+      name: "§d红蜡封口"
+      description: "红蜡封口强化本房：代价、遗物候选与碎片，强度 8。"
       rooms: ["CONTRACT"]
       family: CONTRACT
       power: 8
       min-floor: 74
       weight: 10
     contract_affix_09:
-      name: "§d契约异象09"
-      description: "强化契约房：代价、遗物候选与碎片，强度 9。"
+      name: "§d无光交易"
+      description: "无光交易强化本房：代价、遗物候选与碎片，强度 9。"
       rooms: ["CONTRACT"]
       family: CONTRACT
       power: 9
       min-floor: 83
       weight: 9
     contract_affix_10:
-      name: "§d契约异象10"
-      description: "强化契约房：代价、遗物候选与碎片，强度 10。"
+      name: "§d终末公证"
+      description: "终末公证强化本房：代价、遗物候选与碎片，强度 10。"
       rooms: ["CONTRACT"]
       family: CONTRACT
       power: 10
       min-floor: 92
       weight: 8
     hidden_affix_01:
-      name: "§d隐藏异象01"
-      description: "强化隐藏房：秘库材料与深层宝藏，强度 1。"
+      name: "§d幽匿秘储"
+      description: "幽匿秘储强化本房：秘库材料与深层宝藏，强度 1。"
       rooms: ["HIDDEN"]
       family: HIDDEN
       power: 1
       min-floor: 11
       weight: 17
     hidden_affix_02:
-      name: "§d隐藏异象02"
-      description: "强化隐藏房：秘库材料与深层宝藏，强度 2。"
+      name: "§d墙后星图"
+      description: "墙后星图强化本房：秘库材料与深层宝藏，强度 2。"
       rooms: ["HIDDEN"]
       family: HIDDEN
       power: 2
       min-floor: 20
       weight: 16
     hidden_affix_03:
-      name: "§d隐藏异象03"
-      description: "强化隐藏房：秘库材料与深层宝藏，强度 3。"
+      name: "§d密室回声"
+      description: "密室回声强化本房：秘库材料与深层宝藏，强度 3。"
       rooms: ["HIDDEN"]
       family: HIDDEN
       power: 3
       min-floor: 29
       weight: 15
     hidden_affix_04:
-      name: "§d隐藏异象04"
-      description: "强化隐藏房：秘库材料与深层宝藏，强度 4。"
+      name: "§d旧钥宝库"
+      description: "旧钥宝库强化本房：秘库材料与深层宝藏，强度 4。"
       rooms: ["HIDDEN"]
       family: HIDDEN
       power: 4
       min-floor: 38
       weight: 14
     hidden_affix_05:
-      name: "§d隐藏异象05"
-      description: "强化隐藏房：秘库材料与深层宝藏，强度 5。"
+      name: "§d镜后暗盒"
+      description: "镜后暗盒强化本房：秘库材料与深层宝藏，强度 5。"
       rooms: ["HIDDEN"]
       family: HIDDEN
       power: 5
       min-floor: 47
       weight: 13
     hidden_affix_06:
-      name: "§d隐藏异象06"
-      description: "强化隐藏房：秘库材料与深层宝藏，强度 6。"
+      name: "§d石缝金线"
+      description: "石缝金线强化本房：秘库材料与深层宝藏，强度 6。"
       rooms: ["HIDDEN"]
       family: HIDDEN
       power: 6
       min-floor: 56
       weight: 12
     hidden_affix_07:
-      name: "§d隐藏异象07"
-      description: "强化隐藏房：秘库材料与深层宝藏，强度 7。"
+      name: "§d深层抽屉"
+      description: "深层抽屉强化本房：秘库材料与深层宝藏，强度 7。"
       rooms: ["HIDDEN"]
       family: HIDDEN
       power: 7
       min-floor: 65
       weight: 11
     hidden_affix_08:
-      name: "§d隐藏异象08"
-      description: "强化隐藏房：秘库材料与深层宝藏，强度 8。"
+      name: "§d封印地窖"
+      description: "封印地窖强化本房：秘库材料与深层宝藏，强度 8。"
       rooms: ["HIDDEN"]
       family: HIDDEN
       power: 8
       min-floor: 74
       weight: 10
     hidden_affix_09:
-      name: "§d隐藏异象09"
-      description: "强化隐藏房：秘库材料与深层宝藏，强度 9。"
+      name: "§d失落侧厅"
+      description: "失落侧厅强化本房：秘库材料与深层宝藏，强度 9。"
       rooms: ["HIDDEN"]
       family: HIDDEN
       power: 9
       min-floor: 83
       weight: 9
     hidden_affix_10:
-      name: "§d隐藏异象10"
-      description: "强化隐藏房：秘库材料与深层宝藏，强度 10。"
+      name: "§d无名夹层"
+      description: "无名夹层强化本房：秘库材料与深层宝藏，强度 10。"
       rooms: ["HIDDEN"]
       family: HIDDEN
       power: 10
       min-floor: 92
       weight: 8
     trial_affix_01:
-      name: "§d试炼异象01"
-      description: "强化试炼房：风险代价与试炼奖励，强度 1。"
+      name: "§d猩红盟誓"
+      description: "猩红盟誓强化本房：风险代价与试炼奖励，强度 1。"
       rooms: ["TRIAL"]
       family: TRIAL
       power: 1
       min-floor: 11
       weight: 17
     trial_affix_02:
-      name: "§d试炼异象02"
-      description: "强化试炼房：风险代价与试炼奖励，强度 2。"
+      name: "§d苦痛阶梯"
+      description: "苦痛阶梯强化本房：风险代价与试炼奖励，强度 2。"
       rooms: ["TRIAL"]
       family: TRIAL
       power: 2
       min-floor: 20
       weight: 16
     trial_affix_03:
-      name: "§d试炼异象03"
-      description: "强化试炼房：风险代价与试炼奖励，强度 3。"
+      name: "§d夺火试炼"
+      description: "夺火试炼强化本房：风险代价与试炼奖励，强度 3。"
       rooms: ["TRIAL"]
       family: TRIAL
       power: 3
       min-floor: 29
       weight: 15
     trial_affix_04:
-      name: "§d试炼异象04"
-      description: "强化试炼房：风险代价与试炼奖励，强度 4。"
+      name: "§d断剑誓约"
+      description: "断剑誓约强化本房：风险代价与试炼奖励，强度 4。"
       rooms: ["TRIAL"]
       family: TRIAL
       power: 4
       min-floor: 38
       weight: 14
     trial_affix_05:
-      name: "§d试炼异象05"
-      description: "强化试炼房：风险代价与试炼奖励，强度 5。"
+      name: "§d黑塔测验"
+      description: "黑塔测验强化本房：风险代价与试炼奖励，强度 5。"
       rooms: ["TRIAL"]
       family: TRIAL
       power: 5
       min-floor: 47
       weight: 13
     trial_affix_06:
-      name: "§d试炼异象06"
-      description: "强化试炼房：风险代价与试炼奖励，强度 6。"
+      name: "§d逆风献礼"
+      description: "逆风献礼强化本房：风险代价与试炼奖励，强度 6。"
       rooms: ["TRIAL"]
       family: TRIAL
       power: 6
       min-floor: 56
       weight: 12
     trial_affix_07:
-      name: "§d试炼异象07"
-      description: "强化试炼房：风险代价与试炼奖励，强度 7。"
+      name: "§d剜心问答"
+      description: "剜心问答强化本房：风险代价与试炼奖励，强度 7。"
       rooms: ["TRIAL"]
       family: TRIAL
       power: 7
       min-floor: 65
       weight: 11
     trial_affix_08:
-      name: "§d试炼异象08"
-      description: "强化试炼房：风险代价与试炼奖励，强度 8。"
+      name: "§d死线奖赏"
+      description: "死线奖赏强化本房：风险代价与试炼奖励，强度 8。"
       rooms: ["TRIAL"]
       family: TRIAL
       power: 8
       min-floor: 74
       weight: 10
     trial_affix_09:
-      name: "§d试炼异象09"
-      description: "强化试炼房：风险代价与试炼奖励，强度 9。"
+      name: "§d铁律审判"
+      description: "铁律审判强化本房：风险代价与试炼奖励，强度 9。"
       rooms: ["TRIAL"]
       family: TRIAL
       power: 9
       min-floor: 83
       weight: 9
     trial_affix_10:
-      name: "§d试炼异象10"
-      description: "强化试炼房：风险代价与试炼奖励，强度 10。"
+      name: "§d终局考题"
+      description: "终局考题强化本房：风险代价与试炼奖励，强度 10。"
       rooms: ["TRIAL"]
       family: TRIAL
       power: 10
       min-floor: 92
       weight: 8
     gamble_affix_01:
-      name: "§d赌局异象01"
-      description: "强化赌局房：暴富概率与反噬强度，强度 1。"
+      name: "§d灌铅骰盘"
+      description: "灌铅骰盘强化本房：暴富概率与反噬强度，强度 1。"
       rooms: ["GAMBLE"]
       family: GAMBLE
       power: 1
       min-floor: 11
       weight: 17
     gamble_affix_02:
-      name: "§d赌局异象02"
-      description: "强化赌局房：暴富概率与反噬强度，强度 2。"
+      name: "§d三面银牌"
+      description: "三面银牌强化本房：暴富概率与反噬强度，强度 2。"
       rooms: ["GAMBLE"]
       family: GAMBLE
       power: 2
       min-floor: 20
       weight: 16
     gamble_affix_03:
-      name: "§d赌局异象03"
-      description: "强化赌局房：暴富概率与反噬强度，强度 3。"
+      name: "§d绿呢赌桌"
+      description: "绿呢赌桌强化本房：暴富概率与反噬强度，强度 3。"
       rooms: ["GAMBLE"]
       family: GAMBLE
       power: 3
       min-floor: 29
       weight: 15
     gamble_affix_04:
-      name: "§d赌局异象04"
-      description: "强化赌局房：暴富概率与反噬强度，强度 4。"
+      name: "§d蛇眼暗注"
+      description: "蛇眼暗注强化本房：暴富概率与反噬强度，强度 4。"
       rooms: ["GAMBLE"]
       family: GAMBLE
       power: 4
       min-floor: 38
       weight: 14
     gamble_affix_05:
-      name: "§d赌局异象05"
-      description: "强化赌局房：暴富概率与反噬强度，强度 5。"
+      name: "§d幸运反噬"
+      description: "幸运反噬强化本房：暴富概率与反噬强度，强度 5。"
       rooms: ["GAMBLE"]
       family: GAMBLE
       power: 5
       min-floor: 47
       weight: 13
     gamble_affix_06:
-      name: "§d赌局异象06"
-      description: "强化赌局房：暴富概率与反噬强度，强度 6。"
+      name: "§d黑桃赊命"
+      description: "黑桃赊命强化本房：暴富概率与反噬强度，强度 6。"
       rooms: ["GAMBLE"]
       family: GAMBLE
       power: 6
       min-floor: 56
       weight: 12
     gamble_affix_07:
-      name: "§d赌局异象07"
-      description: "强化赌局房：暴富概率与反噬强度，强度 7。"
+      name: "§d金币雨夜"
+      description: "金币雨夜强化本房：暴富概率与反噬强度，强度 7。"
       rooms: ["GAMBLE"]
       family: GAMBLE
       power: 7
       min-floor: 65
       weight: 11
     gamble_affix_08:
-      name: "§d赌局异象08"
-      description: "强化赌局房：暴富概率与反噬强度，强度 8。"
+      name: "§d翻牌诡局"
+      description: "翻牌诡局强化本房：暴富概率与反噬强度，强度 8。"
       rooms: ["GAMBLE"]
       family: GAMBLE
       power: 8
       min-floor: 74
       weight: 10
     gamble_affix_09:
-      name: "§d赌局异象09"
-      description: "强化赌局房：暴富概率与反噬强度，强度 9。"
+      name: "§d旧王轮盘"
+      description: "旧王轮盘强化本房：暴富概率与反噬强度，强度 9。"
       rooms: ["GAMBLE"]
       family: GAMBLE
       power: 9
       min-floor: 83
       weight: 9
     gamble_affix_10:
-      name: "§d赌局异象10"
-      description: "强化赌局房：暴富概率与反噬强度，强度 10。"
+      name: "§d命运签筒"
+      description: "命运签筒强化本房：暴富概率与反噬强度，强度 10。"
       rooms: ["GAMBLE"]
       family: GAMBLE
       power: 10
       min-floor: 92
       weight: 8
     shrine_affix_01:
-      name: "§d神龛异象01"
-      description: "强化神龛房：治疗、净化与祷文，强度 1。"
+      name: "§d双生圣像"
+      description: "双生圣像强化本房：治疗、净化与祷文，强度 1。"
       rooms: ["SHRINE"]
       family: SHRINE
       power: 1
       min-floor: 11
       weight: 17
     shrine_affix_02:
-      name: "§d神龛异象02"
-      description: "强化神龛房：治疗、净化与祷文，强度 2。"
+      name: "§d白烛祷台"
+      description: "白烛祷台强化本房：治疗、净化与祷文，强度 2。"
       rooms: ["SHRINE"]
       family: SHRINE
       power: 2
       min-floor: 20
       weight: 16
     shrine_affix_03:
-      name: "§d神龛异象03"
-      description: "强化神龛房：治疗、净化与祷文，强度 3。"
+      name: "§d无垢泉眼"
+      description: "无垢泉眼强化本房：治疗、净化与祷文，强度 3。"
       rooms: ["SHRINE"]
       family: SHRINE
       power: 3
       min-floor: 29
       weight: 15
     shrine_affix_04:
-      name: "§d神龛异象04"
-      description: "强化神龛房：治疗、净化与祷文，强度 4。"
+      name: "§d金辉圣龛"
+      description: "金辉圣龛强化本房：治疗、净化与祷文，强度 4。"
       rooms: ["SHRINE"]
       family: SHRINE
       power: 4
       min-floor: 38
       weight: 14
     shrine_affix_05:
-      name: "§d神龛异象05"
-      description: "强化神龛房：治疗、净化与祷文，强度 5。"
+      name: "§d净罪钟楼"
+      description: "净罪钟楼强化本房：治疗、净化与祷文，强度 5。"
       rooms: ["SHRINE"]
       family: SHRINE
       power: 5
       min-floor: 47
       weight: 13
     shrine_affix_06:
-      name: "§d神龛异象06"
-      description: "强化神龛房：治疗、净化与祷文，强度 6。"
+      name: "§d晨星供桌"
+      description: "晨星供桌强化本房：治疗、净化与祷文，强度 6。"
       rooms: ["SHRINE"]
       family: SHRINE
       power: 6
       min-floor: 56
       weight: 12
     shrine_affix_07:
-      name: "§d神龛异象07"
-      description: "强化神龛房：治疗、净化与祷文，强度 7。"
+      name: "§d破晓圣印"
+      description: "破晓圣印强化本房：治疗、净化与祷文，强度 7。"
       rooms: ["SHRINE"]
       family: SHRINE
       power: 7
       min-floor: 65
       weight: 11
     shrine_affix_08:
-      name: "§d神龛异象08"
-      description: "强化神龛房：治疗、净化与祷文，强度 8。"
+      name: "§d群光回廊"
+      description: "群光回廊强化本房：治疗、净化与祷文，强度 8。"
       rooms: ["SHRINE"]
       family: SHRINE
       power: 8
       min-floor: 74
       weight: 10
     shrine_affix_09:
-      name: "§d神龛异象09"
-      description: "强化神龛房：治疗、净化与祷文，强度 9。"
+      name: "§d赦罪花园"
+      description: "赦罪花园强化本房：治疗、净化与祷文，强度 9。"
       rooms: ["SHRINE"]
       family: SHRINE
       power: 9
       min-floor: 83
       weight: 9
     shrine_affix_10:
-      name: "§d神龛异象10"
-      description: "强化神龛房：治疗、净化与祷文，强度 10。"
+      name: "§d日冕圣座"
+      description: "日冕圣座强化本房：治疗、净化与祷文，强度 10。"
       rooms: ["SHRINE"]
       family: SHRINE
       power: 10

@@ -132,7 +132,7 @@ object IdentifyUI {
                         add("§7剩余: §e${IdentificationTaskManager.formatDuration(task.remainingMillis())}")
                         if (IdentificationTaskManager.isAccelerationEnabled()) {
                             add("§7右键加速: §e-${IdentificationTaskManager.formatDuration(IdentificationTaskManager.getAccelerationReduceMillis(task))}")
-                            add("§7消耗: §6${IdentificationTaskManager.getAccelerationSoulShards()} §7灵魂碎片")
+                            add("§7消耗: §6${IdentificationTaskManager.getAccelerationSoulShards(player)} §7灵魂碎片")
                             add("§7材料: ${PermanentMaterialManager.formatCost(IdentificationTaskManager.getAccelerationMaterials())}")
                         }
                         add("§8离线期间也会继续倒计时")

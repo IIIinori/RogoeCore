@@ -146,7 +146,7 @@ object ForgeBookUI {
                         add("§7剩余: §e${ForgeBookTaskManager.formatDuration(task.remainingMillis())}")
                         if (ForgeBookTaskManager.isAccelerationEnabled()) {
                             add("§7右键加速: §e-${ForgeBookTaskManager.formatDuration(ForgeBookTaskManager.getAccelerationReduceMillis(task))}")
-                            add("§7消耗: §6${ForgeBookTaskManager.getAccelerationSoulShards()} §7灵魂碎片")
+                            add("§7消耗: §6${ForgeBookTaskManager.getAccelerationSoulShards(player)} §7灵魂碎片")
                             add("§7材料: ${PermanentMaterialManager.formatCost(ForgeBookTaskManager.getAccelerationMaterials())}")
                         }
                         add("§8离线期间也会继续锻造")

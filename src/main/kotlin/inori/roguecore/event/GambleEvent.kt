@@ -117,7 +117,7 @@ object GambleEvent {
         val safePower = EventAffixManager.getFamilyPower(instance, RoomType.GAMBLE, "GAMBLE_SAFE")
         val highPower = EventAffixManager.getFamilyPower(instance, RoomType.GAMBLE, "GAMBLE_HIGH")
         val gearPower = EventAffixManager.getFamilyPower(instance, RoomType.GAMBLE, "GAMBLE_GEAR")
-        val insurance = RelicEffectHandler.getGambleInsurancePercent(player) / 100.0
+        val insurance = ((RelicEffectHandler.getGambleInsurancePercent(player) + RelicEffectHandler.getGambleFailProtectionPercent(player)) / 100.0).coerceIn(0.0, 0.9)
         val existingStake = RunModifierManager.consumeGambleMultiplier(player)
         if (existingStake > 1.0) {
             player.sendMessage("§6已有赌局加注生效: 本次基础倍率 x${String.format("%.1f", existingStake)}。")

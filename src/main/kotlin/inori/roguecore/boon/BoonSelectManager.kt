@@ -1,5 +1,7 @@
 package inori.roguecore.boon
 
+import inori.roguecore.accessory.AccessoryEffectHandler
+import inori.roguecore.modifier.RunModifierManager
 import inori.roguecore.relic.RelicEffectHandler
 import inori.roguecore.talent.TalentManager
 import org.bukkit.entity.Player
@@ -14,7 +16,7 @@ object BoonSelectManager {
      * 房间通关后触发 Boon 选择
      */
     fun offerBoonSelection(player: Player, count: Int = 3) {
-        val effectiveCount = (count + RelicEffectHandler.getBoonOfferBonus(player)).coerceIn(1, 4)
+        val effectiveCount = (count + RelicEffectHandler.getBoonOfferBonus(player) + RunModifierManager.getBoonOfferExtra(player) + AccessoryEffectHandler.getBoonOfferBonus(player)).coerceIn(1, 4)
         val candidates = rollBoons(effectiveCount, player)
 
         if (candidates.isEmpty()) {

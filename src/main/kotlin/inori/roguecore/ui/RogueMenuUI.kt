@@ -1,5 +1,9 @@
 package inori.roguecore.ui
 
+import inori.roguecore.accessory.AccessoryIdentificationTaskManager
+import inori.roguecore.accessory.AccessoryInscriptionTaskManager
+import inori.roguecore.accessory.PlayerAccessoryData
+import inori.roguecore.collection.CollectionManager
 import inori.roguecore.data.PermanentMaterialManager
 import inori.roguecore.data.PlayerDataManager
 import inori.roguecore.data.ShardRewardManager
@@ -31,6 +35,8 @@ object RogueMenuUI {
         val modifierCount = RunModifierManager.getModifiers(player.uniqueId).size
         val completedIdentify = IdentificationTaskManager.getCompletedCount(player.uniqueId)
         val completedForge = ForgeBookTaskManager.getCompletedCount(player.uniqueId)
+        val completedAccessoryIdentify = AccessoryIdentificationTaskManager.getCompletedCount(player.uniqueId)
+        val completedAccessoryInscribe = AccessoryInscriptionTaskManager.getCompletedCount(player.uniqueId)
         val hasSummary = RunSummaryManager.getDisplaySummary(player) != null
         val canRoute = dungeon?.completed == true
 
@@ -42,7 +48,7 @@ object RogueMenuUI {
                 4,
                 10, 11, 12, 13, 14, 15, 16,
                 19, 20, 21, 22, 23, 24, 25,
-                28, 29, 30, 32, 34,
+                28, 29, 30, 31, 32, 33, 34, 37, 38, 39,
                 49
             )
             val glass = XMaterial.GRAY_STAINED_GLASS_PANE.parseItem()!!.apply {
@@ -225,7 +231,33 @@ object RogueMenuUI {
                 )
             ))
 
+            val accessoryCount = PlayerAccessoryData.getEquipped(player).size
+            set(31, button(
+                XMaterial.AMETHYST_SHARD,
+                "§d饰品匣",
+                listOf(
+                    "§7管理项链、戒指、印记、护符和战利品",
+                    "§7已装备: §d$accessoryCount§7/§f5",
+                    "§7饰品放入 GUI 后才会生效",
+                    "",
+                    "§e点击打开"
+                )
+            ))
+
+            val accessoryWorkshopDone = completedAccessoryIdentify + completedAccessoryInscribe
             set(32, button(
+                XMaterial.CRAFTING_TABLE,
+                if (accessoryWorkshopDone > 0) "§a饰品工坊 §7($accessoryWorkshopDone)" else "§d饰品工坊",
+                listOf(
+                    "§7鉴定密封饰品并刻印饰品刻印书",
+                    "§7饰品鉴定完成: §a$completedAccessoryIdentify",
+                    "§7饰品刻印完成: §a$completedAccessoryInscribe",
+                    "",
+                    "§e点击打开"
+                )
+            ))
+
+            set(33, button(
                 XMaterial.PLAYER_HEAD,
                 "§e队伍指令",
                 listOf("§7/create 创建队伍", "§7/invite 邀请玩家", "§7/accept 接受邀请", "§7/list 查看队伍", "", "§e点击查看队伍命令")
@@ -235,6 +267,42 @@ object RogueMenuUI {
                 XMaterial.COMPASS,
                 "§e命令帮助",
                 listOf("§7查看常用玩家命令", "", "§e点击执行 /rogue help")
+            ))
+
+            set(37, button(
+                XMaterial.HOPPER,
+                "§6回收工坊",
+                listOf(
+                    "§7分解没用的装备、饰品和书类",
+                    "§7获得本局碎片、灵魂碎片和局外材料",
+                    "",
+                    "§e点击打开"
+                )
+            ))
+
+            val collection = CollectionManager.getProgress(player)
+            set(38, button(
+                XMaterial.LECTERN,
+                "§5收藏馆",
+                listOf(
+                    "§7提交高品质装备和饰品点亮长期收藏",
+                    "§7装备主题: §e${collection.gearCollected}§7/§f${collection.gearTotal}",
+                    "§7饰品槽位: §d${collection.accessoryCollected}§7/§f${collection.accessoryTotal}",
+                    "§7Boss 首杀: §5${collection.bossCollected}§7/§f${collection.bossTotal}",
+                    "",
+                    "§e点击打开"
+                )
+            ))
+
+            set(39, button(
+                XMaterial.KNOWLEDGE_BOOK,
+                "§e引导手册",
+                listOf(
+                    "§7不知道下一步做什么？",
+                    "§7查看冒险、装备、饰品、回收和收藏说明",
+                    "",
+                    "§e点击打开"
+                )
             ))
 
             set(49, button(XMaterial.BARRIER, "§c关闭菜单", listOf("§7关闭 RogueCore 主菜单")))
@@ -276,8 +344,13 @@ object RogueMenuUI {
                     28 -> player.performCommand("rogue materials")
                     29 -> WorkshopUI.open(player)
                     30 -> player.performCommand("rogue stats")
-                    32 -> showPartyHelp(player)
+                    31 -> AccessoryUI.open(player)
+                    32 -> AccessoryWorkshopUI.open(player)
+                    33 -> showPartyHelp(player)
                     34 -> player.performCommand("rogue help")
+                    37 -> SalvageUI.open(player)
+                    38 -> CollectionUI.open(player)
+                    39 -> GuideUI.open(player)
                     49 -> player.closeInventory()
                 }
             }

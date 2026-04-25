@@ -3,9 +3,11 @@ package inori.roguecore.item
 import inori.roguecore.data.DatabaseManager
 import inori.roguecore.data.PermanentMaterialManager
 import inori.roguecore.data.PlayerDataManager
+import inori.roguecore.relic.RelicEffectHandler
 import inori.roguecore.unlock.UnlockManager
 import org.bukkit.entity.Player
 import java.util.UUID
+import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 
 /**
@@ -72,6 +74,11 @@ object IdentificationTaskManager {
 
     fun getAccelerationSoulShards(): Int {
         return DungeonLootManager.config.getInt("identification.acceleration.soul-shards", 45).coerceAtLeast(0)
+    }
+
+    fun getAccelerationSoulShards(player: Player): Int {
+        val discount = (RelicEffectHandler.getIdentifyAccelerationDiscountPercent(player) / 100.0).coerceIn(0.0, 0.9)
+        return (getAccelerationSoulShards() * (1.0 - discount)).roundToInt().coerceAtLeast(0)
     }
 
     fun getAccelerationMaterials(): Map<PermanentMaterialManager.MaterialType, Int> {
@@ -141,7 +148,7 @@ object IdentificationTaskManager {
             return DungeonLootManager.LootActionResult(false, "§a该鉴定已经完成，可直接领取。")
         }
         val materials = getAccelerationMaterials()
-        val shards = getAccelerationSoulShards()
+        val shards = getAccelerationSoulShards(player)
         if (!PermanentMaterialManager.takeCost(player, materials)) {
             return DungeonLootManager.LootActionResult(false, "§c材料不足，加速鉴定需要 ${PermanentMaterialManager.formatCost(materials)}")
         }

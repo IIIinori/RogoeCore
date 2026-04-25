@@ -74,6 +74,14 @@ event-affixes:
       power: 4
       min-floor: 18
       weight: 14
+    soul_lender:
+      name: "§d灵魂贷柜"
+      description: "商店灵魂借据额度提高，但到期债务也更沉重"
+      rooms: ["SHOP"]
+      family: SHOP_DEBT
+      power: 4
+      min-floor: 14
+      weight: 15
     star_box:
       name: "§d星砂箱底"
       description: "宝箱碎片奖励提高"
@@ -443,6 +451,327 @@ event-affixes:
       power: 3
       min-floor: 14
       weight: 14
+
+    exp2_event_01:
+      name: "§d微光折券"
+      description: "微光折券会让本层SHOP事件更偏向SHOP_DISCOUNT变体"
+      rooms: ["SHOP"]
+      family: SHOP_DISCOUNT
+      power: 1
+      min-floor: 5
+      weight: 18
+    exp2_event_02:
+      name: "§d遗柜巡商"
+      description: "遗柜巡商会让本层SHOP事件更偏向SHOP_RELIC变体"
+      rooms: ["SHOP"]
+      family: SHOP_RELIC
+      power: 2
+      min-floor: 6
+      weight: 18
+    exp2_event_03:
+      name: "§d矿车账本"
+      description: "矿车账本会让本层SHOP事件更偏向SHOP_MATERIAL变体"
+      rooms: ["SHOP"]
+      family: SHOP_MATERIAL
+      power: 3
+      min-floor: 7
+      weight: 18
+    exp2_event_04:
+      name: "§d黑债暗号"
+      description: "黑债暗号会让本层SHOP事件更偏向SHOP_BLACK变体"
+      rooms: ["SHOP"]
+      family: SHOP_BLACK
+      power: 4
+      min-floor: 8
+      weight: 18
+    exp2_event_05:
+      name: "§d银箱夹层"
+      description: "银箱夹层会让本层CHEST事件更偏向CHEST_SHARD变体"
+      rooms: ["CHEST"]
+      family: CHEST_SHARD
+      power: 1
+      min-floor: 9
+      weight: 17
+    exp2_event_06:
+      name: "§d祷印箱锁"
+      description: "祷印箱锁会让本层CHEST事件更偏向CHEST_BOON变体"
+      rooms: ["CHEST"]
+      family: CHEST_BOON
+      power: 2
+      min-floor: 10
+      weight: 17
+    exp2_event_07:
+      name: "§d锻包封条"
+      description: "锻包封条会让本层CHEST事件更偏向CHEST_FORGE变体"
+      rooms: ["CHEST"]
+      family: CHEST_FORGE
+      power: 3
+      min-floor: 11
+      weight: 17
+    exp2_event_08:
+      name: "§d兵架暗轨"
+      description: "兵架暗轨会让本层CHEST事件更偏向CHEST_GEAR变体"
+      rooms: ["CHEST"]
+      family: CHEST_GEAR
+      power: 4
+      min-floor: 12
+      weight: 17
+    exp2_event_09:
+      name: "§d温光圣灯"
+      description: "温光圣灯会让本层SHRINE事件更偏向SHRINE_HEAL变体"
+      rooms: ["SHRINE"]
+      family: SHRINE_HEAL
+      power: 1
+      min-floor: 13
+      weight: 16
+    exp2_event_10:
+      name: "§d洁盐长盘"
+      description: "洁盐长盘会让本层SHRINE事件更偏向SHRINE_PURIFY变体"
+      rooms: ["SHRINE"]
+      family: SHRINE_PURIFY
+      power: 2
+      min-floor: 14
+      weight: 16
+    exp2_event_11:
+      name: "§d遗泉耳语"
+      description: "遗泉耳语会让本层SHRINE事件更偏向SHRINE_RELIC变体"
+      rooms: ["SHRINE"]
+      family: SHRINE_RELIC
+      power: 3
+      min-floor: 15
+      weight: 16
+    exp2_event_12:
+      name: "§d晨祷帷幕"
+      description: "晨祷帷幕会让本层SHRINE事件更偏向SHRINE变体"
+      rooms: ["SHRINE"]
+      family: SHRINE
+      power: 4
+      min-floor: 16
+      weight: 16
+    exp2_event_13:
+      name: "§d勇者门槛"
+      description: "勇者门槛会让本层TRIAL事件更偏向TRIAL变体"
+      rooms: ["TRIAL"]
+      family: TRIAL
+      power: 1
+      min-floor: 17
+      weight: 15
+    exp2_event_14:
+      name: "§d血铁地契"
+      description: "血铁地契会让本层TRIAL事件更偏向TRIAL_FORGE变体"
+      rooms: ["TRIAL"]
+      family: TRIAL_FORGE
+      power: 2
+      min-floor: 18
+      weight: 15
+    exp2_event_15:
+      name: "§d谕者裁定"
+      description: "谕者裁定会让本层TRIAL事件更偏向TRIAL_RELIC变体"
+      rooms: ["TRIAL"]
+      family: TRIAL_RELIC
+      power: 3
+      min-floor: 19
+      weight: 15
+    exp2_event_16:
+      name: "§d稳手绒布"
+      description: "稳手绒布会让本层GAMBLE事件更偏向GAMBLE_SAFE变体"
+      rooms: ["GAMBLE"]
+      family: GAMBLE_SAFE
+      power: 4
+      min-floor: 20
+      weight: 15
+    exp2_event_17:
+      name: "§d赤注封蜡"
+      description: "赤注封蜡会让本层GAMBLE事件更偏向GAMBLE_HIGH变体"
+      rooms: ["GAMBLE"]
+      family: GAMBLE_HIGH
+      power: 1
+      min-floor: 21
+      weight: 14
+    exp2_event_18:
+      name: "§d武库鬼牌"
+      description: "武库鬼牌会让本层GAMBLE事件更偏向GAMBLE_GEAR变体"
+      rooms: ["GAMBLE"]
+      family: GAMBLE_GEAR
+      power: 2
+      min-floor: 22
+      weight: 14
+    exp2_event_19:
+      name: "§d回旋赌桌"
+      description: "回旋赌桌会让本层GAMBLE事件更偏向GAMBLE变体"
+      rooms: ["GAMBLE"]
+      family: GAMBLE
+      power: 3
+      min-floor: 23
+      weight: 14
+    exp2_event_20:
+      name: "§d旧王夹柜"
+      description: "旧王夹柜会让本层HIDDEN事件更偏向HIDDEN变体"
+      rooms: ["HIDDEN"]
+      family: HIDDEN
+      power: 4
+      min-floor: 24
+      weight: 14
+    exp2_event_21:
+      name: "§d遗龛烛台"
+      description: "遗龛烛台会让本层HIDDEN事件更偏向HIDDEN_RELIC变体"
+      rooms: ["HIDDEN"]
+      family: HIDDEN_RELIC
+      power: 1
+      min-floor: 25
+      weight: 13
+    exp2_event_22:
+      name: "§d锻架暗层"
+      description: "锻架暗层会让本层HIDDEN事件更偏向HIDDEN_FORGE变体"
+      rooms: ["HIDDEN"]
+      family: HIDDEN_FORGE
+      power: 2
+      min-floor: 26
+      weight: 13
+    exp2_event_23:
+      name: "§d兵匣夹墙"
+      description: "兵匣夹墙会让本层HIDDEN事件更偏向HIDDEN_GEAR变体"
+      rooms: ["HIDDEN"]
+      family: HIDDEN_GEAR
+      power: 3
+      min-floor: 27
+      weight: 13
+    exp2_event_24:
+      name: "§d柔羽长榻"
+      description: "柔羽长榻会让本层REST事件更偏向REST_RECOVERY变体"
+      rooms: ["REST"]
+      family: REST_RECOVERY
+      power: 4
+      min-floor: 28
+      weight: 13
+    exp2_event_25:
+      name: "§d静修圆盘"
+      description: "静修圆盘会让本层REST事件更偏向REST_TRAINING变体"
+      rooms: ["REST"]
+      family: REST_TRAINING
+      power: 1
+      min-floor: 29
+      weight: 12
+    exp2_event_26:
+      name: "§d安眠火盆"
+      description: "安眠火盆会让本层REST事件更偏向REST变体"
+      rooms: ["REST"]
+      family: REST
+      power: 2
+      min-floor: 30
+      weight: 12
+    exp2_event_27:
+      name: "§d王印契笔"
+      description: "王印契笔会让本层CONTRACT事件更偏向CONTRACT变体"
+      rooms: ["CONTRACT"]
+      family: CONTRACT
+      power: 3
+      min-floor: 31
+      weight: 12
+    exp2_event_28:
+      name: "§d撤离税牌"
+      description: "撤离税牌会让本层EXTRACTION事件更偏向EXTRACTION变体"
+      rooms: ["EXTRACTION"]
+      family: EXTRACTION
+      power: 4
+      min-floor: 32
+      weight: 12
+    exp2_event_29:
+      name: "§d余烬锻票"
+      description: "余烬锻票会让本层FORGE事件更偏向FORGE变体"
+      rooms: ["FORGE"]
+      family: FORGE
+      power: 1
+      min-floor: 33
+      weight: 11
+    exp2_event_30:
+      name: "§d赊账月台"
+      description: "商店更偏向赊账与黑市货柜，适合提前启动构筑"
+      rooms: ["SHOP"]
+      family: SHOP_BLACK
+      power: 4
+      min-floor: 20
+      weight: 14
+    exp2_event_31:
+      name: "§d神恩橱窗"
+      description: "商店神恩候选更丰富，适合补齐流派共鸣"
+      rooms: ["SHOP"]
+      family: SHOP_RELIC
+      power: 3
+      min-floor: 18
+      weight: 14
+    exp2_event_32:
+      name: "§d封印宝库"
+      description: "宝箱更适合封印开启，后续战斗回响收益提高"
+      rooms: ["CHEST"]
+      family: CHEST_SHARD
+      power: 4
+      min-floor: 22
+      weight: 13
+    exp2_event_33:
+      name: "§d净祷盐环"
+      description: "神龛净化与长效祝福更强，适合携带诅咒时选择"
+      rooms: ["SHRINE"]
+      family: SHRINE_PURIFY
+      power: 4
+      min-floor: 24
+      weight: 13
+    exp2_event_34:
+      name: "§d血铁返炉"
+      description: "试炼更偏向锻造材料返还，生命代价更容易转资源"
+      rooms: ["TRIAL"]
+      family: TRIAL_FORGE
+      power: 4
+      min-floor: 24
+      weight: 13
+    exp2_event_35:
+      name: "§d稳胜绒牌"
+      description: "赌局稳健下注更强，失败惩罚更低"
+      rooms: ["GAMBLE"]
+      family: GAMBLE_SAFE
+      power: 4
+      min-floor: 16
+      weight: 15
+    exp2_event_36:
+      name: "§d炉核布袋"
+      description: "炉核布袋会让本层CHEST事件更偏向CHEST_FORGE变体"
+      rooms: ["CHEST"]
+      family: CHEST_FORGE
+      power: 4
+      min-floor: 40
+      weight: 10
+    exp2_event_37:
+      name: "§d佣兵武架"
+      description: "佣兵武架会让本层CHEST事件更偏向CHEST_GEAR变体"
+      rooms: ["CHEST"]
+      family: CHEST_GEAR
+      power: 1
+      min-floor: 41
+      weight: 9
+    exp2_event_38:
+      name: "§d长明灯油"
+      description: "长明灯油会让本层SHRINE事件更偏向SHRINE_HEAL变体"
+      rooms: ["SHRINE"]
+      family: SHRINE_HEAL
+      power: 2
+      min-floor: 42
+      weight: 9
+    exp2_event_39:
+      name: "§d净化圣盐"
+      description: "净化圣盐会让本层SHRINE事件更偏向SHRINE_PURIFY变体"
+      rooms: ["SHRINE"]
+      family: SHRINE_PURIFY
+      power: 3
+      min-floor: 43
+      weight: 9
+    exp2_event_40:
+      name: "§d圣泉回响"
+      description: "圣泉回响会让本层SHRINE事件更偏向SHRINE_RELIC变体"
+      rooms: ["SHRINE"]
+      family: SHRINE_RELIC
+      power: 4
+      min-floor: 44
+      weight: 9
 
 shop:
   boon-price-min: 20

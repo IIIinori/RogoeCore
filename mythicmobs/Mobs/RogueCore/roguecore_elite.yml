@@ -1,0 +1,3316 @@
+# RogueCore generated MythicMobs config
+# 部署说明:
+# 1. 复制 mythicmobs/Mobs/RogueCore 到 plugins/MythicMobs/Mobs/RogueCore
+# 2. 执行 /mm reload
+# 3. 执行 /rogue admin check 检查缺失怪物 ID
+# 注意: 本配置使用 AttributePlus: 节点写怪物属性，如你的 AP/MM Hook 节点不同，请统一替换该块名称。
+# AP monster attributes are written in the AttributePlus block.
+# If your AttributePlus-MythicMobs hook uses another node name, only this block needs format conversion.
+
+rogue_crypt_elite_vanguard:
+  Type: WOLF
+  Display: '&c墓窟精英先锋 &8[Lv.3]'
+  Health: 42925
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  AttributePlus:
+    生命上限: 42925
+    物理攻击: 901
+    物理防御: 164
+    暴击几率: 5
+    暴击伤害: 66
+    命中几率: 114
+    闪避几率: 1
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_crypt_elite_arcanist:
+  Type: ZOMBIE
+  Display: '&c墓窟精英秘法师 &8[Lv.4]'
+  Health: 57525
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 57525
+    物理攻击: 1705
+    物理防御: 164
+    暴击几率: 7
+    暴击伤害: 70
+    命中几率: 114
+    闪避几率: 1
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_crypt_elite_executioner:
+  Type: SPIDER
+  Display: '&c墓窟精英处刑者 &8[Lv.5]'
+  Health: 100097
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  AttributePlus:
+    生命上限: 100097
+    物理攻击: 2616
+    物理防御: 241
+    暴击几率: 9
+    暴击伤害: 74
+    命中几率: 114
+    闪避几率: 1
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_crypt_elite_overseer:
+  Type: HUSK
+  Display: '&c墓窟精英先锋 &8[Lv.5]'
+  Health: 117505
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 117505
+    物理攻击: 1711
+    物理防御: 287
+    暴击几率: 6
+    暴击伤害: 74
+    命中几率: 114
+    闪避几率: 1
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_crypt_elite_reaper:
+  Type: SKELETON
+  Display: '&c墓窟精英秘法师 &8[Lv.5]'
+  Health: 91393
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 91393
+    物理攻击: 2314
+    物理防御: 213
+    暴击几率: 8
+    暴击伤害: 74
+    命中几率: 114
+    闪避几率: 1
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_crypt_elite_colossus:
+  Type: WOLF
+  Display: '&c墓窟精英处刑者 &8[Lv.5]'
+  Health: 100097
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  AttributePlus:
+    生命上限: 100097
+    物理攻击: 2616
+    物理防御: 241
+    暴击几率: 9
+    暴击伤害: 74
+    命中几率: 114
+    闪避几率: 1
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_nether_elite_vanguard:
+  Type: PIGLIN
+  Display: '&c熔狱精英先锋 &8[Lv.8]'
+  Health: 332809
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - DIAMOND_HELMET HEAD
+    - DIAMOND_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 332809
+    物理攻击: 3589
+    物理防御: 529
+    暴击几率: 8
+    暴击伤害: 86
+    命中几率: 115
+    闪避几率: 2
+  Skills:
+    - effect:particles{p=FLAME;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_nether_elite_arcanist:
+  Type: WITHER_SKELETON
+  Display: '&c熔狱精英秘法师 &8[Lv.9]'
+  Health: 338718
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - DIAMOND_HELMET HEAD
+    - DIAMOND_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 338718
+    物理攻击: 5936
+    物理防御: 462
+    暴击几率: 11
+    暴击伤害: 90
+    命中几率: 115
+    闪避几率: 2
+  Skills:
+    - effect:particles{p=FLAME;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_nether_elite_executioner:
+  Type: MAGMA_CUBE
+  Display: '&c熔狱精英处刑者 &8[Lv.10]'
+  Health: 472615
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  AttributePlus:
+    生命上限: 472615
+    物理攻击: 8059
+    物理防御: 606
+    暴击几率: 14
+    暴击伤害: 94
+    命中几率: 116
+    闪避几率: 3
+  Skills:
+    - effect:particles{p=FLAME;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_nether_elite_overseer:
+  Type: SKELETON
+  Display: '&c熔狱精英先锋 &8[Lv.10]'
+  Health: 554809
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - DIAMOND_HELMET HEAD
+    - DIAMOND_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 554809
+    物理攻击: 5269
+    物理防御: 722
+    暴击几率: 9
+    暴击伤害: 94
+    命中几率: 116
+    闪避几率: 2
+  Skills:
+    - effect:particles{p=FLAME;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_nether_elite_reaper:
+  Type: BLAZE
+  Display: '&c熔狱精英秘法师 &8[Lv.10]'
+  Health: 431518
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - DIAMOND_HELMET HEAD
+    - DIAMOND_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 431518
+    物理攻击: 7129
+    物理防御: 536
+    暴击几率: 12
+    暴击伤害: 94
+    命中几率: 116
+    闪避几率: 2
+  Skills:
+    - effect:particles{p=FLAME;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_nether_elite_colossus:
+  Type: PIGLIN
+  Display: '&c熔狱精英处刑者 &8[Lv.10]'
+  Health: 472615
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - DIAMOND_HELMET HEAD
+    - DIAMOND_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 472615
+    物理攻击: 8059
+    物理防御: 606
+    暴击几率: 14
+    暴击伤害: 94
+    命中几率: 116
+    闪避几率: 3
+  Skills:
+    - effect:particles{p=FLAME;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_end_elite_vanguard:
+  Type: SHULKER
+  Display: '&c逐界精英先锋 &8[Lv.13]'
+  Health: 1018597
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  AttributePlus:
+    生命上限: 1018597
+    物理攻击: 8411
+    物理防御: 1053
+    暴击几率: 11
+    暴击伤害: 105
+    命中几率: 116
+    闪避几率: 3
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_end_elite_arcanist:
+  Type: PHANTOM
+  Display: '&c逐界精英秘法师 &8[Lv.14]'
+  Health: 941359
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  AttributePlus:
+    生命上限: 941359
+    物理攻击: 13016
+    物理防御: 871
+    暴击几率: 15
+    暴击伤害: 109
+    命中几率: 117
+    闪避几率: 3
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_end_elite_executioner:
+  Type: ENDERMITE
+  Display: '&c逐界精英处刑者 &8[Lv.15]'
+  Health: 1210869
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - DIAMOND_HELMET HEAD
+    - DIAMOND_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 1210869
+    物理攻击: 16688
+    物理防御: 1090
+    暴击几率: 18
+    暴击伤害: 113
+    命中几率: 117
+    闪避几率: 4
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_end_elite_overseer:
+  Type: SKELETON
+  Display: '&c逐界精英先锋 &8[Lv.15]'
+  Health: 1421455
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - DIAMOND_HELMET HEAD
+    - DIAMOND_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 1421455
+    物理攻击: 10911
+    物理防御: 1299
+    暴击几率: 13
+    暴击伤害: 113
+    命中几率: 117
+    闪避几率: 3
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_end_elite_reaper:
+  Type: ENDERMAN
+  Display: '&c逐界精英秘法师 &8[Lv.15]'
+  Health: 1105576
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - DIAMOND_HELMET HEAD
+    - DIAMOND_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 1105576
+    物理攻击: 14762
+    物理防御: 964
+    暴击几率: 16
+    暴击伤害: 113
+    命中几率: 117
+    闪避几率: 3
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_end_elite_colossus:
+  Type: SHULKER
+  Display: '&c逐界精英处刑者 &8[Lv.15]'
+  Health: 1210869
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  AttributePlus:
+    生命上限: 1210869
+    物理攻击: 16688
+    物理防御: 1090
+    暴击几率: 18
+    暴击伤害: 113
+    命中几率: 117
+    闪避几率: 4
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_frost_elite_vanguard:
+  Type: POLAR_BEAR
+  Display: '&c冰封深窟精英先锋 &8[Lv.18]'
+  Health: 2175993
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  AttributePlus:
+    生命上限: 2175993
+    物理攻击: 15259
+    物理防御: 1703
+    暴击几率: 15
+    暴击伤害: 125
+    命中几率: 118
+    闪避几率: 4
+  Skills:
+    - effect:particles{p=SNOWFLAKE;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_frost_elite_arcanist:
+  Type: WITCH
+  Display: '&c冰封深窟精英秘法师 &8[Lv.19]'
+  Health: 1920598
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 1920598
+    物理攻击: 22819
+    物理防御: 1370
+    暴击几率: 19
+    暴击伤害: 129
+    命中几率: 118
+    闪避几率: 4
+  Skills:
+    - effect:particles{p=SNOWFLAKE;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_frost_elite_executioner:
+  Type: SKELETON
+  Display: '&c冰封深窟精英处刑者 &8[Lv.20]'
+  Health: 2371803
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 2371803
+    物理攻击: 28372
+    物理防御: 1673
+    暴击几率: 23
+    暴击伤害: 133
+    命中几率: 118
+    闪避几率: 5
+  Skills:
+    - effect:particles{p=SNOWFLAKE;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_frost_elite_overseer:
+  Type: SPIDER
+  Display: '&c冰封深窟精英先锋 &8[Lv.20]'
+  Health: 2784291
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  AttributePlus:
+    生命上限: 2784291
+    物理攻击: 18551
+    物理防御: 1994
+    暴击几率: 16
+    暴击伤害: 133
+    命中几率: 118
+    闪避几率: 4
+  Skills:
+    - effect:particles{p=SNOWFLAKE;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_frost_elite_reaper:
+  Type: STRAY
+  Display: '&c冰封深窟精英秘法师 &8[Lv.20]'
+  Health: 2165560
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 2165560
+    物理攻击: 25098
+    物理防御: 1480
+    暴击几率: 20
+    暴击伤害: 133
+    命中几率: 118
+    闪避几率: 5
+  Skills:
+    - effect:particles{p=SNOWFLAKE;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_frost_elite_colossus:
+  Type: POLAR_BEAR
+  Display: '&c冰封深窟精英处刑者 &8[Lv.20]'
+  Health: 2371803
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  AttributePlus:
+    生命上限: 2371803
+    物理攻击: 28372
+    物理防御: 1673
+    暴击几率: 23
+    暴击伤害: 133
+    命中几率: 118
+    闪避几率: 5
+  Skills:
+    - effect:particles{p=SNOWFLAKE;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_forge_elite_vanguard:
+  Type: BLAZE
+  Display: '&c黑曜熔炉精英先锋 &8[Lv.23]'
+  Health: 3862626
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - IRON_HELMET HEAD
+    - IRON_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 3862626
+    物理攻击: 24069
+    物理防御: 2462
+    暴击几率: 18
+    暴击伤害: 145
+    命中几率: 119
+    闪避几率: 5
+  Skills:
+    - effect:particles{p=FLAME;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_forge_elite_arcanist:
+  Type: PIGLIN_BRUTE
+  Display: '&c黑曜熔炉精英秘法师 &8[Lv.24]'
+  Health: 3319393
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - IRON_HELMET HEAD
+    - IRON_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 3319393
+    物理攻击: 35260
+    物理防御: 1948
+    暴击几率: 23
+    暴击伤害: 149
+    命中几率: 119
+    闪避几率: 5
+  Skills:
+    - effect:particles{p=FLAME;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_forge_elite_executioner:
+  Type: WITHER_SKELETON
+  Display: '&c黑曜熔炉精英处刑者 &8[Lv.25]'
+  Health: 4000638
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - IRON_HELMET HEAD
+    - IRON_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 4000638
+    物理攻击: 43024
+    物理防御: 2343
+    暴击几率: 28
+    暴击伤害: 153
+    命中几率: 119
+    闪避几率: 7
+  Skills:
+    - effect:particles{p=FLAME;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_forge_elite_overseer:
+  Type: SKELETON
+  Display: '&c黑曜熔炉精英先锋 &8[Lv.25]'
+  Health: 4696401
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - IRON_HELMET HEAD
+    - IRON_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 4696401
+    物理攻击: 28131
+    物理防御: 2793
+    暴击几率: 19
+    暴击伤害: 153
+    命中几率: 119
+    闪避几率: 5
+  Skills:
+    - effect:particles{p=FLAME;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_forge_elite_reaper:
+  Type: IRON_GOLEM
+  Display: '&c黑曜熔炉精英秘法师 &8[Lv.25]'
+  Health: 3652756
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  AttributePlus:
+    生命上限: 3652756
+    物理攻击: 38059
+    物理防御: 2072
+    暴击几率: 24
+    暴击伤害: 153
+    命中几率: 119
+    闪避几率: 6
+  Skills:
+    - effect:particles{p=FLAME;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_forge_elite_colossus:
+  Type: BLAZE
+  Display: '&c黑曜熔炉精英处刑者 &8[Lv.25]'
+  Health: 4000638
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - IRON_HELMET HEAD
+    - IRON_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 4000638
+    物理攻击: 43024
+    物理防御: 2343
+    暴击几率: 28
+    暴击伤害: 153
+    命中几率: 119
+    闪避几率: 7
+  Skills:
+    - effect:particles{p=FLAME;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_astral_elite_vanguard:
+  Type: PHANTOM
+  Display: '&c星界残垣精英先锋 &8[Lv.28]'
+  Health: 6126239
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  AttributePlus:
+    生命上限: 6126239
+    物理攻击: 34792
+    物理防御: 3317
+    暴击几率: 21
+    暴击伤害: 165
+    命中几率: 120
+    闪避几率: 6
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_astral_elite_arcanist:
+  Type: SHULKER
+  Display: '&c星界残垣精英秘法师 &8[Lv.29]'
+  Health: 5173718
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  AttributePlus:
+    生命上限: 5173718
+    物理攻击: 50278
+    物理防御: 2596
+    暴击几率: 27
+    暴击伤害: 169
+    命中几率: 120
+    闪避几率: 7
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_astral_elite_executioner:
+  Type: ENDERMITE
+  Display: '&c星界残垣精英处刑者 &8[Lv.30]'
+  Health: 6135599
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - DIAMOND_HELMET HEAD
+    - DIAMOND_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 6135599
+    物理攻击: 60576
+    物理防御: 3091
+    暴击几率: 33
+    暴击伤害: 173
+    命中几率: 121
+    闪避几率: 8
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_astral_elite_overseer:
+  Type: SKELETON
+  Display: '&c星界残垣精英先锋 &8[Lv.30]'
+  Health: 7202660
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - DIAMOND_HELMET HEAD
+    - DIAMOND_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 7202660
+    物理攻击: 39608
+    物理防御: 3685
+    暴击几率: 22
+    暴击伤害: 173
+    命中几率: 121
+    闪避几率: 6
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_astral_elite_reaper:
+  Type: ENDERMAN
+  Display: '&c星界残垣精英秘法师 &8[Lv.30]'
+  Health: 5602069
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - DIAMOND_HELMET HEAD
+    - DIAMOND_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 5602069
+    物理攻击: 53587
+    物理防御: 2734
+    暴击几率: 28
+    暴击伤害: 173
+    命中几率: 121
+    闪避几率: 7
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_astral_elite_colossus:
+  Type: PHANTOM
+  Display: '&c星界残垣精英处刑者 &8[Lv.30]'
+  Health: 6135599
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  AttributePlus:
+    生命上限: 6135599
+    物理攻击: 60576
+    物理防御: 3091
+    暴击几率: 33
+    暴击伤害: 173
+    命中几率: 121
+    闪避几率: 8
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_crimson_elite_vanguard:
+  Type: EVOKER
+  Display: '&c猩红王庭精英先锋 &8[Lv.33]'
+  Health: 9008138
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 9008138
+    物理攻击: 47390
+    物理防御: 4262
+    暴击几率: 24
+    暴击伤害: 185
+    命中几率: 121
+    闪避几率: 7
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_crimson_elite_arcanist:
+  Type: WITCH
+  Display: '&c猩红王庭精英秘法师 &8[Lv.34]'
+  Health: 7514896
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 7514896
+    物理攻击: 67825
+    物理防御: 3309
+    暴击几率: 31
+    暴击伤害: 189
+    命中几率: 122
+    闪避几率: 8
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_crimson_elite_executioner:
+  Type: ZOMBIE
+  Display: '&c猩红王庭精英处刑者 &8[Lv.35]'
+  Health: 8810164
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 8810164
+    物理攻击: 80978
+    物理防御: 3911
+    暴击几率: 37
+    暴击伤害: 193
+    命中几率: 122
+    闪避几率: 9
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_crimson_elite_overseer:
+  Type: SPIDER
+  Display: '&c猩红王庭精英先锋 &8[Lv.35]'
+  Health: 10342367
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  AttributePlus:
+    生命上限: 10342367
+    物理攻击: 52947
+    物理防御: 4663
+    暴击几率: 26
+    暴击伤害: 193
+    命中几率: 122
+    闪避几率: 7
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_crimson_elite_reaper:
+  Type: VINDICATOR
+  Display: '&c猩红王庭精英秘法师 &8[Lv.35]'
+  Health: 8044063
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 8044063
+    物理攻击: 71634
+    物理防御: 3459
+    暴击几率: 32
+    暴击伤害: 193
+    命中几率: 122
+    闪避几率: 8
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_crimson_elite_colossus:
+  Type: EVOKER
+  Display: '&c猩红王庭精英处刑者 &8[Lv.35]'
+  Health: 8810164
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 8810164
+    物理攻击: 80978
+    物理防御: 3911
+    暴击几率: 37
+    暴击伤害: 193
+    命中几率: 122
+    闪避几率: 9
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_core_elite_vanguard:
+  Type: ENDERMAN
+  Display: '&c永夜核心精英先锋 &8[Lv.38]'
+  Health: 12545032
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 12545032
+    物理攻击: 61832
+    物理防御: 5288
+    暴击几率: 28
+    暴击伤害: 204
+    命中几率: 123
+    闪避几率: 8
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_core_elite_arcanist:
+  Type: VINDICATOR
+  Display: '&c永夜核心精英秘法师 &8[Lv.39]'
+  Health: 10370878
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 10370878
+    物理攻击: 87860
+    物理防御: 4083
+    暴击几率: 35
+    暴击伤害: 208
+    命中几率: 123
+    闪避几率: 9
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_core_elite_executioner:
+  Type: WITCH
+  Display: '&c永夜核心精英处刑者 &8[Lv.40]'
+  Health: 12054325
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 12054325
+    物理攻击: 104183
+    物理防御: 4798
+    暴击几率: 42
+    暴击伤害: 212
+    命中几率: 123
+    闪避几率: 11
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_core_elite_overseer:
+  Type: SKELETON
+  Display: '&c永夜核心精英先锋 &8[Lv.40]'
+  Health: 14150730
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 14150730
+    物理攻击: 68120
+    物理防御: 5721
+    暴击几率: 29
+    暴击伤害: 212
+    命中几率: 123
+    闪避几率: 8
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_core_elite_reaper:
+  Type: RAVAGER
+  Display: '&c永夜核心精英秘法师 &8[Lv.40]'
+  Health: 11006123
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  AttributePlus:
+    生命上限: 11006123
+    物理攻击: 92162
+    物理防御: 4244
+    暴击几率: 36
+    暴击伤害: 212
+    命中几率: 123
+    闪避几率: 9
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_core_elite_colossus:
+  Type: ENDERMAN
+  Display: '&c永夜核心精英处刑者 &8[Lv.40]'
+  Health: 12054325
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 12054325
+    物理攻击: 104183
+    物理防御: 4798
+    暴击几率: 42
+    暴击伤害: 212
+    命中几率: 123
+    闪避几率: 11
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_rotwood_elite_vanguard:
+  Type: SPIDER
+  Display: '&c腐化林海精英先锋 &8[Lv.43]'
+  Health: 16770149
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  AttributePlus:
+    生命上限: 16770149
+    物理攻击: 78094
+    物理防御: 6392
+    暴击几率: 31
+    暴击伤害: 224
+    命中几率: 124
+    闪避几率: 9
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_rotwood_elite_arcanist:
+  Type: WITCH
+  Display: '&c腐化林海精英秘法师 &8[Lv.44]'
+  Health: 13767043
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 13767043
+    物理攻击: 110349
+    物理防御: 4913
+    暴击几率: 39
+    暴击伤害: 228
+    命中几率: 124
+    闪避几率: 10
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_rotwood_elite_executioner:
+  Type: SLIME
+  Display: '&c腐化林海精英处刑者 &8[Lv.45]'
+  Health: 15895390
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  AttributePlus:
+    生命上限: 15895390
+    物理攻击: 130157
+    物理防御: 5748
+    暴击几率: 47
+    暴击伤害: 232
+    命中几率: 124
+    闪避几率: 12
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_rotwood_elite_overseer:
+  Type: HUSK
+  Display: '&c腐化林海精英先锋 &8[Lv.45]'
+  Health: 18659806
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 18659806
+    物理攻击: 85102
+    物理防御: 6854
+    暴击几率: 32
+    暴击伤害: 232
+    命中几率: 124
+    闪避几率: 9
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_rotwood_elite_reaper:
+  Type: ZOMBIE
+  Display: '&c腐化林海精英秘法师 &8[Lv.45]'
+  Health: 14513182
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 14513182
+    物理攻击: 115139
+    物理防御: 5085
+    暴击几率: 40
+    暴击伤害: 232
+    命中几率: 124
+    闪避几率: 10
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_rotwood_elite_colossus:
+  Type: SPIDER
+  Display: '&c腐化林海精英处刑者 &8[Lv.45]'
+  Health: 15895390
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  AttributePlus:
+    生命上限: 15895390
+    物理攻击: 130157
+    物理防御: 5748
+    暴击几率: 47
+    暴击伤害: 232
+    命中几率: 124
+    闪避几率: 12
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_stormspire_elite_vanguard:
+  Type: VEX
+  Display: '&c雷鸣高塔精英先锋 &8[Lv.48]'
+  Health: 21713970
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  AttributePlus:
+    生命上限: 21713970
+    物理攻击: 96152
+    物理防御: 7568
+    暴击几率: 34
+    暴击伤害: 244
+    命中几率: 125
+    闪避几率: 10
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_stormspire_elite_arcanist:
+  Type: IRON_GOLEM
+  Display: '&c雷鸣高塔精英秘法师 &8[Lv.49]'
+  Health: 17726722
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  AttributePlus:
+    生命上限: 17726722
+    物理攻击: 135263
+    物理防御: 5796
+    暴击几率: 43
+    暴击伤害: 248
+    命中几率: 125
+    闪避几率: 11
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_stormspire_elite_executioner:
+  Type: SKELETON
+  Display: '&c雷鸣高塔精英处刑者 &8[Lv.50]'
+  Health: 20358518
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 20358518
+    物理攻击: 158865
+    物理防御: 6759
+    暴击几率: 51
+    暴击伤害: 252
+    命中几率: 126
+    闪避几率: 14
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_stormspire_elite_overseer:
+  Type: WITCH
+  Display: '&c雷鸣高塔精英先锋 &8[Lv.50]'
+  Health: 23899130
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 23899130
+    物理攻击: 103873
+    物理防御: 8059
+    暴击几率: 36
+    暴击伤害: 252
+    命中几率: 126
+    闪避几率: 10
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_stormspire_elite_reaper:
+  Type: PILLAGER
+  Display: '&c雷鸣高塔精英秘法师 &8[Lv.50]'
+  Health: 18588212
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 18588212
+    物理攻击: 140534
+    物理防御: 5979
+    暴击几率: 44
+    暴击伤害: 252
+    命中几率: 126
+    闪避几率: 11
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_stormspire_elite_colossus:
+  Type: VEX
+  Display: '&c雷鸣高塔精英处刑者 &8[Lv.50]'
+  Health: 20358518
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  AttributePlus:
+    生命上限: 20358518
+    物理攻击: 158865
+    物理防御: 6759
+    暴击几率: 51
+    暴击伤害: 252
+    命中几率: 126
+    闪避几率: 14
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_sunken_elite_vanguard:
+  Type: GUARDIAN
+  Display: '&c沉没神殿精英先锋 &8[Lv.53]'
+  Health: 27404744
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  AttributePlus:
+    生命上限: 27404744
+    物理攻击: 115986
+    物理防御: 8815
+    暴击几率: 37
+    暴击伤害: 264
+    命中几率: 126
+    闪避几率: 10
+  Skills:
+    - effect:particles{p=BUBBLE;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_sunken_elite_arcanist:
+  Type: ELDER_GUARDIAN
+  Display: '&c沉没神殿精英秘法师 &8[Lv.54]'
+  Health: 22271577
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  AttributePlus:
+    生命上限: 22271577
+    物理攻击: 162576
+    物理防御: 6731
+    暴击几率: 47
+    暴击伤害: 268
+    命中几率: 127
+    闪避几率: 12
+  Skills:
+    - effect:particles{p=BUBBLE;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_sunken_elite_executioner:
+  Type: DROWNED
+  Display: '&c沉没神殿精英处刑者 &8[Lv.55]'
+  Health: 25467105
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 25467105
+    物理攻击: 190279
+    物理防御: 7827
+    暴击几率: 56
+    暴击伤害: 272
+    命中几率: 127
+    闪避几率: 15
+  Skills:
+    - effect:particles{p=BUBBLE;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_sunken_elite_overseer:
+  Type: SQUID
+  Display: '&c沉没神殿精英先锋 &8[Lv.55]'
+  Health: 29896167
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  AttributePlus:
+    生命上限: 29896167
+    物理攻击: 124413
+    物理防御: 9332
+    暴击几率: 39
+    暴击伤害: 272
+    命中几率: 127
+    闪避几率: 11
+  Skills:
+    - effect:particles{p=BUBBLE;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_sunken_elite_reaper:
+  Type: DROWNED
+  Display: '&c沉没神殿精英秘法师 &8[Lv.55]'
+  Health: 23252574
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 23252574
+    物理攻击: 168324
+    物理防御: 6924
+    暴击几率: 48
+    暴击伤害: 272
+    命中几率: 127
+    闪避几率: 12
+  Skills:
+    - effect:particles{p=BUBBLE;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_sunken_elite_colossus:
+  Type: GUARDIAN
+  Display: '&c沉没神殿精英处刑者 &8[Lv.55]'
+  Health: 25467105
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  AttributePlus:
+    生命上限: 25467105
+    物理攻击: 190279
+    物理防御: 7827
+    暴击几率: 56
+    暴击伤害: 272
+    命中几率: 127
+    闪避几率: 15
+  Skills:
+    - effect:particles{p=BUBBLE;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_bonewaste_elite_vanguard:
+  Type: WITHER_SKELETON
+  Display: '&c白骨荒原精英先锋 &8[Lv.58]'
+  Health: 33868859
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 33868859
+    物理攻击: 137580
+    物理防御: 10127
+    暴击几率: 41
+    暴击伤害: 284
+    命中几率: 128
+    闪避几率: 11
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_bonewaste_elite_arcanist:
+  Type: STRAY
+  Display: '&c白骨荒原精英秘法师 &8[Lv.59]'
+  Health: 27421871
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 27421871
+    物理攻击: 192264
+    物理防御: 7714
+    暴击几率: 51
+    暴击伤害: 288
+    命中几率: 128
+    闪避几率: 13
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_bonewaste_elite_executioner:
+  Type: ZOMBIE
+  Display: '&c白骨荒原精英处刑者 &8[Lv.60]'
+  Health: 31243069
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 31243069
+    物理攻击: 224374
+    物理防御: 8949
+    暴击几率: 61
+    暴击伤害: 292
+    命中几率: 128
+    闪避几率: 16
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_bonewaste_elite_overseer:
+  Type: SPIDER
+  Display: '&c白骨荒原精英先锋 &8[Lv.60]'
+  Health: 36676646
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  AttributePlus:
+    生命上限: 36676646
+    物理攻击: 146706
+    物理防御: 10670
+    暴击几率: 42
+    暴击伤害: 292
+    命中几率: 128
+    闪避几率: 12
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_bonewaste_elite_reaper:
+  Type: SKELETON
+  Display: '&c白骨荒原精英秘法师 &8[Lv.60]'
+  Health: 28526280
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 28526280
+    物理攻击: 198485
+    物理防御: 7917
+    暴击几率: 52
+    暴击伤害: 292
+    命中几率: 128
+    闪避几率: 13
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_bonewaste_elite_colossus:
+  Type: WITHER_SKELETON
+  Display: '&c白骨荒原精英处刑者 &8[Lv.60]'
+  Health: 31243069
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 31243069
+    物理攻击: 224374
+    物理防御: 8949
+    暴击几率: 61
+    暴击伤害: 292
+    命中几率: 128
+    闪避几率: 16
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_mirror_elite_vanguard:
+  Type: VEX
+  Display: '&c镜影迷宫精英先锋 &8[Lv.63]'
+  Health: 41131127
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  AttributePlus:
+    生命上限: 41131127
+    物理攻击: 160917
+    物理防御: 11504
+    暴击几率: 44
+    暴击伤害: 303
+    命中几率: 129
+    闪避几率: 12
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_mirror_elite_arcanist:
+  Type: VINDICATOR
+  Display: '&c镜影迷宫精英秘法师 &8[Lv.64]'
+  Health: 33196680
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 33196680
+    物理攻击: 224307
+    物理防御: 8745
+    暴击几率: 55
+    暴击伤害: 307
+    命中几率: 129
+    闪避几率: 14
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_mirror_elite_executioner:
+  Type: SKELETON
+  Display: '&c镜影迷宫精英处刑者 &8[Lv.65]'
+  Health: 37707063
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 37707063
+    物理攻击: 261126
+    物理防御: 10125
+    暴击几率: 66
+    暴击伤害: 311
+    命中几率: 129
+    闪避几率: 18
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_mirror_elite_overseer:
+  Type: WITCH
+  Display: '&c镜影迷宫精英先锋 &8[Lv.65]'
+  Health: 44264813
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 44264813
+    物理攻击: 170736
+    物理防御: 12072
+    暴击几率: 45
+    暴击伤害: 311
+    命中几率: 129
+    闪避几率: 13
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_mirror_elite_reaper:
+  Type: ENDERMAN
+  Display: '&c镜影迷宫精英秘法师 &8[Lv.65]'
+  Health: 34428188
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 34428188
+    物理攻击: 230996
+    物理防御: 8956
+    暴击几率: 56
+    暴击伤害: 311
+    命中几率: 129
+    闪避几率: 15
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_mirror_elite_colossus:
+  Type: VEX
+  Display: '&c镜影迷宫精英处刑者 &8[Lv.65]'
+  Health: 37707063
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  AttributePlus:
+    生命上限: 37707063
+    物理攻击: 261126
+    物理防御: 10125
+    暴击几率: 66
+    暴击伤害: 311
+    命中几率: 129
+    闪避几率: 18
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_mire_elite_vanguard:
+  Type: ZOMBIE
+  Display: '&c毒雾沼泽精英先锋 &8[Lv.68]'
+  Health: 49215005
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 49215005
+    物理攻击: 185983
+    物理防御: 12942
+    暴击几率: 47
+    暴击伤害: 323
+    命中几率: 130
+    闪避几率: 13
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_mire_elite_arcanist:
+  Type: WITCH
+  Display: '&c毒雾沼泽精英秘法师 &8[Lv.69]'
+  Health: 39614052
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 39614052
+    物理攻击: 258685
+    物理防御: 9821
+    暴击几率: 59
+    暴击伤害: 327
+    命中几率: 130
+    闪避几率: 16
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_mire_elite_executioner:
+  Type: CAVE_SPIDER
+  Display: '&c毒雾沼泽精英处刑者 &8[Lv.70]'
+  Health: 44878649
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  AttributePlus:
+    生命上限: 44878649
+    物理攻击: 300514
+    物理防御: 11351
+    暴击几率: 70
+    暴击伤害: 331
+    命中几率: 131
+    闪避几率: 19
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_mire_elite_overseer:
+  Type: HUSK
+  Display: '&c毒雾沼泽精英先锋 &8[Lv.70]'
+  Health: 52683632
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 52683632
+    物理攻击: 196490
+    物理防御: 13533
+    暴击几率: 49
+    暴击伤害: 331
+    命中几率: 131
+    闪避几率: 14
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_mire_elite_reaper:
+  Type: SLIME
+  Display: '&c毒雾沼泽精英秘法师 &8[Lv.70]'
+  Health: 40976158
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  AttributePlus:
+    生命上限: 40976158
+    物理攻击: 265839
+    物理防御: 10041
+    暴击几率: 60
+    暴击伤害: 331
+    命中几率: 131
+    闪避几率: 16
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_mire_elite_colossus:
+  Type: ZOMBIE
+  Display: '&c毒雾沼泽精英处刑者 &8[Lv.70]'
+  Health: 44878649
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 44878649
+    物理攻击: 300514
+    物理防御: 11351
+    暴击几率: 70
+    暴击伤害: 331
+    命中几率: 131
+    闪避几率: 19
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_dune_elite_vanguard:
+  Type: SPIDER
+  Display: '&c黄金沙丘精英先锋 &8[Lv.73]'
+  Health: 58142764
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  AttributePlus:
+    生命上限: 58142764
+    物理攻击: 212764
+    物理防御: 14439
+    暴击几率: 51
+    暴击伤害: 343
+    命中几率: 131
+    闪避几率: 14
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_dune_elite_arcanist:
+  Type: VINDICATOR
+  Display: '&c黄金沙丘精英秘法师 &8[Lv.74]'
+  Health: 46691141
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 46691141
+    物理攻击: 295381
+    物理防御: 10940
+    暴击几率: 64
+    暴击伤害: 347
+    命中几率: 132
+    闪避几率: 17
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_dune_elite_executioner:
+  Type: SKELETON
+  Display: '&c黄金沙丘精英处刑者 &8[Lv.75]'
+  Health: 52776432
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 52776432
+    物理攻击: 342519
+    物理防御: 12626
+    暴击几率: 75
+    暴击伤害: 351
+    命中几率: 132
+    闪避几率: 20
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_dune_elite_overseer:
+  Type: WITCH
+  Display: '&c黄金沙丘精英先锋 &8[Lv.75]'
+  Health: 61954942
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 61954942
+    物理攻击: 223954
+    物理防御: 15054
+    暴击几率: 52
+    暴击伤害: 351
+    命中几率: 132
+    闪避几率: 15
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_dune_elite_reaper:
+  Type: HUSK
+  Display: '&c黄金沙丘精英秘法师 &8[Lv.75]'
+  Health: 48187177
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 48187177
+    物理攻击: 302997
+    物理防御: 11169
+    暴击几率: 64
+    暴击伤害: 351
+    命中几率: 132
+    闪避几率: 17
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_dune_elite_colossus:
+  Type: SPIDER
+  Display: '&c黄金沙丘精英处刑者 &8[Lv.75]'
+  Health: 52776432
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  AttributePlus:
+    生命上限: 52776432
+    物理攻击: 342519
+    物理防御: 12626
+    暴击几率: 75
+    暴击伤害: 351
+    命中几率: 132
+    闪避几率: 20
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_theater_elite_vanguard:
+  Type: VEX
+  Display: '&c灵魂剧场精英先锋 &8[Lv.78]'
+  Health: 67935635
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  AttributePlus:
+    生命上限: 67935635
+    物理攻击: 241249
+    物理防御: 15994
+    暴击几率: 54
+    暴击伤害: 363
+    命中几率: 133
+    闪避几率: 15
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_theater_elite_arcanist:
+  Type: SKELETON
+  Display: '&c灵魂剧场精英秘法师 &8[Lv.79]'
+  Health: 54444308
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 54444308
+    物理攻击: 334379
+    物理防御: 12102
+    暴击几率: 68
+    暴击伤害: 367
+    命中几率: 133
+    闪避几率: 18
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_theater_elite_executioner:
+  Type: ZOMBIE
+  Display: '&c灵魂剧场精英处刑者 &8[Lv.80]'
+  Health: 61418170
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 61418170
+    物理攻击: 387122
+    物理防御: 13949
+    暴击几率: 80
+    暴击伤害: 371
+    命中几率: 133
+    闪避几率: 22
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_theater_elite_overseer:
+  Type: WITCH
+  Display: '&c灵魂剧场精英先锋 &8[Lv.80]'
+  Health: 72099591
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 72099591
+    物理攻击: 253118
+    物理防御: 16631
+    暴击几率: 55
+    暴击伤害: 371
+    命中几率: 133
+    闪避几率: 16
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_theater_elite_reaper:
+  Type: PHANTOM
+  Display: '&c灵魂剧场精英秘法师 &8[Lv.80]'
+  Health: 56077460
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  AttributePlus:
+    生命上限: 56077460
+    物理攻击: 342454
+    物理防御: 12339
+    暴击几率: 68
+    暴击伤害: 371
+    命中几率: 133
+    闪避几率: 18
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_theater_elite_colossus:
+  Type: VEX
+  Display: '&c灵魂剧场精英处刑者 &8[Lv.80]'
+  Health: 61418170
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  AttributePlus:
+    生命上限: 61418170
+    物理攻击: 387122
+    物理防御: 13949
+    暴击几率: 80
+    暴击伤害: 371
+    命中几率: 133
+    闪避几率: 22
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_machine_elite_vanguard:
+  Type: PILLAGER
+  Display: '&c机械圣所精英先锋 &8[Lv.83]'
+  Health: 78613921
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - IRON_HELMET HEAD
+    - IRON_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 78613921
+    物理攻击: 271427
+    物理防御: 17604
+    暴击几率: 57
+    暴击伤害: 383
+    命中几率: 134
+    闪避几率: 16
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_machine_elite_arcanist:
+  Type: VINDICATOR
+  Display: '&c机械圣所精英秘法师 &8[Lv.84]'
+  Health: 62889210
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - IRON_HELMET HEAD
+    - IRON_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 62889210
+    物理攻击: 375664
+    物理防御: 13305
+    暴击几率: 72
+    暴击伤害: 387
+    命中几率: 134
+    闪避几率: 19
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_machine_elite_executioner:
+  Type: SKELETON
+  Display: '&c机械圣所精英处刑者 &8[Lv.85]'
+  Health: 70820867
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - IRON_HELMET HEAD
+    - IRON_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 70820867
+    物理攻击: 434306
+    物理防御: 15318
+    暴击几率: 85
+    暴击伤害: 391
+    命中几率: 134
+    闪避几率: 23
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_machine_elite_overseer:
+  Type: BLAZE
+  Display: '&c机械圣所精英先锋 &8[Lv.85]'
+  Health: 83137540
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - IRON_HELMET HEAD
+    - IRON_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 83137540
+    物理攻击: 283970
+    物理防御: 18264
+    暴击几率: 58
+    暴击伤害: 391
+    命中几率: 134
+    闪避几率: 17
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_machine_elite_reaper:
+  Type: IRON_GOLEM
+  Display: '&c机械圣所精英秘法师 &8[Lv.85]'
+  Health: 64662531
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  AttributePlus:
+    生命上限: 64662531
+    物理攻击: 384194
+    物理防御: 13550
+    暴击几率: 72
+    暴击伤害: 391
+    命中几率: 134
+    闪避几率: 19
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_machine_elite_colossus:
+  Type: PILLAGER
+  Display: '&c机械圣所精英处刑者 &8[Lv.85]'
+  Health: 70820867
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - IRON_HELMET HEAD
+    - IRON_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 70820867
+    物理攻击: 434306
+    物理防御: 15318
+    暴击几率: 85
+    暴击伤害: 391
+    命中几率: 134
+    闪避几率: 23
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_eclipse_elite_vanguard:
+  Type: ENDERMAN
+  Display: '&c月蚀庭院精英先锋 &8[Lv.88]'
+  Health: 90197097
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 90197097
+    物理攻击: 303287
+    物理防御: 19269
+    暴击几率: 60
+    暴击伤害: 402
+    命中几率: 135
+    闪避几率: 17
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_eclipse_elite_arcanist:
+  Type: WITCH
+  Display: '&c月蚀庭院精英秘法师 &8[Lv.89]'
+  Health: 72040872
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 72040872
+    物理攻击: 419222
+    物理防御: 14548
+    暴击几率: 76
+    暴击伤害: 406
+    命中几率: 135
+    闪避几率: 20
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_eclipse_elite_executioner:
+  Type: SKELETON
+  Display: '&c月蚀庭院精英处刑者 &8[Lv.90]'
+  Health: 81000849
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 81000849
+    物理攻击: 484057
+    物理防御: 16732
+    暴击几率: 89
+    暴击伤害: 410
+    命中几率: 136
+    闪避几率: 24
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_eclipse_elite_overseer:
+  Type: VINDICATOR
+  Display: '&c月蚀庭院精英先锋 &8[Lv.90]'
+  Health: 95087953
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 95087953
+    物理攻击: 316499
+    物理防御: 19950
+    暴击几率: 62
+    暴击伤害: 410
+    命中几率: 136
+    闪避几率: 18
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_eclipse_elite_reaper:
+  Type: PHANTOM
+  Display: '&c月蚀庭院精英秘法师 &8[Lv.90]'
+  Health: 73957297
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  AttributePlus:
+    生命上限: 73957297
+    物理攻击: 428205
+    物理防御: 14802
+    暴击几率: 77
+    暴击伤害: 410
+    命中几率: 136
+    闪避几率: 20
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_eclipse_elite_colossus:
+  Type: ENDERMAN
+  Display: '&c月蚀庭院精英处刑者 &8[Lv.90]'
+  Health: 81000849
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - CHAINMAIL_HELMET HEAD
+    - CHAINMAIL_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 81000849
+    物理攻击: 484057
+    物理防御: 16732
+    暴击几率: 89
+    暴击伤害: 410
+    命中几率: 136
+    闪避几率: 24
+  Skills:
+    - effect:particles{p=SOUL;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_chaos_elite_vanguard:
+  Type: VEX
+  Display: '&c混沌裂隙精英先锋 &8[Lv.93]'
+  Health: 102703885
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  AttributePlus:
+    生命上限: 102703885
+    物理攻击: 336818
+    物理防御: 20987
+    暴击几率: 64
+    暴击伤害: 422
+    命中几率: 136
+    闪避几率: 18
+  Skills:
+    - effect:particles{p=DRAGON_BREATH;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_chaos_elite_arcanist:
+  Type: SHULKER
+  Display: '&c混沌裂隙精英秘法师 &8[Lv.94]'
+  Health: 81913748
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  AttributePlus:
+    生命上限: 81913748
+    物理攻击: 465039
+    物理防御: 15830
+    暴击几率: 80
+    暴击伤害: 426
+    命中几率: 137
+    闪避几率: 21
+  Skills:
+    - effect:particles{p=DRAGON_BREATH;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_chaos_elite_executioner:
+  Type: WITHER_SKELETON
+  Display: '&c混沌裂隙精英处刑者 &8[Lv.95]'
+  Health: 91973828
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - NETHERITE_HELMET HEAD
+    - NETHERITE_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 91973828
+    物理攻击: 536360
+    物理防御: 18190
+    暴击几率: 94
+    暴击伤害: 430
+    命中几率: 137
+    闪避几率: 26
+  Skills:
+    - effect:particles{p=DRAGON_BREATH;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_chaos_elite_overseer:
+  Type: PHANTOM
+  Display: '&c混沌裂隙精英先锋 &8[Lv.95]'
+  Health: 107969276
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  AttributePlus:
+    生命上限: 107969276
+    物理攻击: 350697
+    物理防御: 21688
+    暴击几率: 65
+    暴击伤害: 430
+    命中几率: 137
+    闪避几率: 19
+  Skills:
+    - effect:particles{p=DRAGON_BREATH;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_chaos_elite_reaper:
+  Type: ENDERMAN
+  Display: '&c混沌裂隙精英秘法师 &8[Lv.95]'
+  Health: 83976104
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - NETHERITE_HELMET HEAD
+    - NETHERITE_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 83976104
+    物理攻击: 474472
+    物理防御: 16091
+    暴击几率: 81
+    暴击伤害: 430
+    命中几率: 137
+    闪避几率: 21
+  Skills:
+    - effect:particles{p=DRAGON_BREATH;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_chaos_elite_colossus:
+  Type: VEX
+  Display: '&c混沌裂隙精英处刑者 &8[Lv.95]'
+  Health: 91973828
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  AttributePlus:
+    生命上限: 91973828
+    物理攻击: 536360
+    物理防御: 18190
+    暴击几率: 94
+    暴击伤害: 430
+    命中几率: 137
+    闪避几率: 26
+  Skills:
+    - effect:particles{p=DRAGON_BREATH;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_throne_elite_vanguard:
+  Type: EVOKER
+  Display: '&c终焉王座精英先锋 &8[Lv.98]'
+  Health: 116152332
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - NETHERITE_HELMET HEAD
+    - NETHERITE_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 116152332
+    物理攻击: 372013
+    物理防御: 22756
+    暴击几率: 67
+    暴击伤害: 442
+    命中几率: 138
+    闪避几率: 19
+  Skills:
+    - effect:particles{p=DRAGON_BREATH;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_throne_elite_arcanist:
+  Type: RAVAGER
+  Display: '&c终焉王座精英秘法师 &8[Lv.99]'
+  Health: 92521772
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  AttributePlus:
+    生命上限: 92521772
+    物理攻击: 513103
+    物理防御: 17151
+    暴击几率: 84
+    暴击伤害: 446
+    命中几率: 138
+    闪避几率: 22
+  Skills:
+    - effect:particles{p=DRAGON_BREATH;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_throne_elite_executioner:
+  Type: ENDERMAN
+  Display: '&c终焉王座精英处刑者 &8[Lv.100]'
+  Health: 103754957
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - NETHERITE_HELMET HEAD
+    - NETHERITE_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 103754957
+    物理攻击: 591200
+    物理防御: 19691
+    暴击几率: 99
+    暴击伤害: 450
+    命中几率: 138
+    闪避几率: 27
+  Skills:
+    - effect:particles{p=DRAGON_BREATH;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_throne_elite_overseer:
+  Type: VINDICATOR
+  Display: '&c终焉王座精英先锋 &8[Lv.100]'
+  Health: 121799298
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 44
+    MovementSpeed: 0.25
+    KnockbackResistance: 0.65
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - NETHERITE_HELMET HEAD
+    - NETHERITE_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 121799298
+    物理攻击: 386554
+    物理防御: 23478
+    暴击几率: 68
+    暴击伤害: 450
+    命中几率: 138
+    闪避几率: 20
+  Skills:
+    - effect:particles{p=DRAGON_BREATH;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=SLOW;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_throne_elite_reaper:
+  Type: WITHER_SKELETON
+  Display: '&c终焉王座精英秘法师 &8[Lv.100]'
+  Health: 94732787
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 48
+    MovementSpeed: 0.24
+    KnockbackResistance: 0.45
+  Equipment:
+    - BLAZE_ROD HAND
+    - NETHERITE_HELMET HEAD
+    - NETHERITE_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 94732787
+    物理攻击: 522985
+    物理防御: 17419
+    暴击几率: 85
+    暴击伤害: 450
+    命中几率: 138
+    闪避几率: 23
+  Skills:
+    - effect:particles{p=DRAGON_BREATH;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=CONFUSION;duration=50;level=1} @target ~onAttack 0.22
+
+rogue_throne_elite_colossus:
+  Type: EVOKER
+  Display: '&c终焉王座精英处刑者 &8[Lv.100]'
+  Health: 103754957
+  Damage: 1
+  Faction: RogueCore
+  Options:
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    FollowRange: 46
+    MovementSpeed: 0.29
+    KnockbackResistance: 0.50
+  Equipment:
+    - DIAMOND_SWORD HAND
+    - NETHERITE_HELMET HEAD
+    - NETHERITE_CHESTPLATE CHEST
+  AttributePlus:
+    生命上限: 103754957
+    物理攻击: 591200
+    物理防御: 19691
+    暴击几率: 99
+    暴击伤害: 450
+    命中几率: 138
+    闪避几率: 27
+  Skills:
+    - effect:particles{p=DRAGON_BREATH;amount=24;speed=0.04} @self ~onSpawn
+    - potion{type=WEAKNESS;duration=50;level=1} @target ~onAttack 0.22

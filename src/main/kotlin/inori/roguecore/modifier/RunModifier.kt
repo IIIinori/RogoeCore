@@ -7,6 +7,7 @@ data class RunModifier(
     val type: RunModifierType,
     var remainingRooms: Int,
     var charges: Int,
-    val value: Double,
-    val source: String
+    var value: Double,
+    val source: String,
+    var payload: String = ""
 )

@@ -1,9 +1,11 @@
 package inori.roguecore.combat
 
+import inori.roguecore.accessory.AccessoryDropManager
 import inori.roguecore.affix.AffixManager
 import inori.roguecore.affix.AffixType
 import inori.roguecore.boon.BoonEffectHandler
 import inori.roguecore.boon.BoonSelectManager
+import inori.roguecore.collection.CollectionManager
 import inori.roguecore.data.PlayerDataManager
 import inori.roguecore.data.ForgeMaterialManager
 import inori.roguecore.data.ForgeMaterialType
@@ -144,7 +146,7 @@ object RoomCombatManager {
      * 玩家进入房间时的处理
      */
     private fun onPlayerEnterRoom(player: Player, instance: DungeonInstance, room: Room) {
-        // 非战斗房间交给事件管理器处理
+        // 非战斗房间交给事件管理器处理；只在事件真正触发时推进局内修正，避免重复进出已清理房间消耗预言/路线。
         if (!room.isCombatRoom) {
             RoomEventManager.onEnterRoom(player, instance, room)
             return
@@ -152,6 +154,10 @@ object RoomCombatManager {
 
         // 战斗房间：只有 IDLE 状态才触发
         if (room.state != RoomState.IDLE) return
+
+        for (member in instance.getOnlinePlayers()) {
+            RunModifierManager.onRoomEntered(member, room.type)
+        }
 
         room.state = RoomState.ACTIVE
         RunPersistenceManager.markDirty()
@@ -378,6 +384,11 @@ object RoomCombatManager {
             player.sendMessage("§a✔ ${room.type.displayName}房间已通关!")
             DungeonHudManager.pushActionBar(player, "§a${room.type.displayName}已通关")
             ShardRewardManager.onRoomClear(uuid, instance.config.floorNumber, AffixManager.getShardMultiplier(instance))
+            val relicRoomBonus = RelicEffectHandler.getRoomClearShardBonus(player)
+            if (relicRoomBonus > 0) {
+                ShardRewardManager.addRunShards(uuid, relicRoomBonus)
+                player.sendMessage("§6遗物清房奖励 §e$relicRoomBonus §6本局碎片。")
+            }
             val affixShardBonus = AffixManager.getCombatShardFlat(instance)
             if (affixShardBonus > 0) {
                 ShardRewardManager.addRunShards(uuid, affixShardBonus)
@@ -388,16 +399,22 @@ object RoomCombatManager {
                 ForgeMaterialManager.add(uuid, ForgeMaterialType.BOSS_EMBER, affixEmberBonus)
                 player.sendMessage("§6战斗余烬凝成 ${ForgeMaterialType.BOSS_EMBER.coloredName()} §ex$affixEmberBonus")
             }
-            BoonEffectHandler.onRoomCleared(player)
+            BoonEffectHandler.onRoomCleared(player, room.type)
             RelicEffectHandler.onRoomCleared(player)
             RunMilestoneManager.onRoomCleared(player, room.type)
             RunSummaryManager.onRoomCleared(player, room.type)
-            RunModifierManager.onRoomCleared(player, room.type)
+            RunModifierManager.onRoomCleared(player, room.type, instance)
             when (room.type) {
                 RoomType.ELITE -> {
+                    val eliteShardBonus = RelicEffectHandler.getEliteShardBonus(player) + AffixManager.getEliteShardFlat(instance)
+                    if (eliteShardBonus > 0) {
+                        ShardRewardManager.addRunShards(uuid, eliteShardBonus)
+                        player.sendMessage("§6精英战利品额外奖励 §e$eliteShardBonus §6本局碎片。")
+                    }
                     if (DungeonLootManager.grantEliteLoot(player, instance)) {
                         player.sendMessage("§6精英倒下后留下了一件临时装备。")
                     }
+                    AccessoryDropManager.tryGrantElite(player, instance)
                     val eliteLootChance = RelicEffectHandler.getEliteLootChance(player) + AffixManager.getHiddenLootChance(instance) * 100.0
                     if (Random.nextDouble() * 100.0 < eliteLootChance && DungeonLootManager.grantEliteLoot(player, instance)) {
                         player.sendMessage("§d额外战利品共鸣让精英掉落了一件装备。")
@@ -408,9 +425,16 @@ object RoomCombatManager {
                     }
                 }
                 RoomType.BOSS -> {
+                    CollectionManager.recordBossKill(player, instance.config.floorNumber)
+                    val bossShardBonus = RelicEffectHandler.getBossShardBonus(player) + AffixManager.getBossShardFlat(instance)
+                    if (bossShardBonus > 0) {
+                        ShardRewardManager.addRunShards(uuid, bossShardBonus)
+                        player.sendMessage("§6Boss 战利品额外奖励 §e$bossShardBonus §6本局碎片。")
+                    }
                     if (DungeonLootManager.grantBossLoot(player, instance)) {
                         player.sendMessage("§6Boss 战利品中包含临时装备。")
                     }
+                    AccessoryDropManager.grantBoss(player, instance)
                     val bossExtraLootChance = RelicEffectHandler.getBossLootChance(player) + AffixManager.getHiddenLootChance(instance) * 100.0
                     if (Random.nextDouble() * 100.0 < bossExtraLootChance && DungeonLootManager.grantBossLoot(player, instance)) {
                         player.sendMessage("§d额外战利品共鸣让 Boss 多掉落了一件装备。")

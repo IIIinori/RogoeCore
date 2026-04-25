@@ -4,6 +4,7 @@ import inori.roguecore.boon.BoonResonanceManager
 import inori.roguecore.boon.PlayerBoonData
 import inori.roguecore.curse.RunCurseManager
 import inori.roguecore.dungeon.DungeonInstance
+import inori.roguecore.data.PermanentMaterialManager
 import inori.roguecore.dungeon.RunPersistenceManager
 import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.dungeon.route.NextFloorRoute
@@ -83,6 +84,38 @@ object RunSummaryManager {
         RunPersistenceManager.markDirty()
     }
 
+    fun onLootGained(uuid: UUID, category: String, amount: Int = 1) {
+        if (amount <= 0 || category.isBlank()) return
+        val progress = current[uuid] ?: return
+        progress.lootCounts[category] = (progress.lootCounts[category] ?: 0) + amount
+        RunPersistenceManager.markDirty()
+    }
+
+    fun onSalvaged(uuid: UUID, count: Int, runShards: Int, soulShards: Int, materials: Map<PermanentMaterialManager.MaterialType, Int>) {
+        if (count <= 0) return
+        val progress = current[uuid] ?: return
+        progress.salvagedCount += count
+        progress.salvagedRunShards += runShards.coerceAtLeast(0)
+        progress.salvagedSoulShards += soulShards.coerceAtLeast(0)
+        for ((type, amount) in materials) {
+            if (amount > 0) progress.salvagedMaterials[type.id] = (progress.salvagedMaterials[type.id] ?: 0) + amount
+        }
+        RunPersistenceManager.markDirty()
+    }
+
+    fun onCollectionUnlocked(uuid: UUID, name: String) {
+        val progress = current[uuid] ?: return
+        if (name.isNotBlank()) progress.collectionUnlocks += name
+        RunPersistenceManager.markDirty()
+    }
+
+    fun onBossFirstKill(uuid: UUID, floor: Int) {
+        val progress = current[uuid] ?: return
+        progress.bossFirstKills += 1
+        progress.collectionUnlocks += "第 ${floor.coerceIn(1, 100)} 层 Boss 首杀"
+        RunPersistenceManager.markDirty()
+    }
+
     fun markEndReason(uuid: UUID, reason: RunEndReason) {
         pendingEndReasons[uuid] = reason
     }
@@ -118,6 +151,13 @@ object RunSummaryManager {
             modifierCounts = progress.modifierCounts.entries
                 .sortedBy { it.key.ordinal }
                 .associate { it.key.displayName to it.value },
+            lootCounts = progress.lootCounts.toMap(),
+            salvagedCount = progress.salvagedCount,
+            salvagedRunShards = progress.salvagedRunShards,
+            salvagedSoulShards = progress.salvagedSoulShards,
+            salvagedMaterials = progress.salvagedMaterials.toMap(),
+            collectionUnlocks = progress.collectionUnlocks.toList(),
+            bossFirstKills = progress.bossFirstKills,
             durationSeconds = ((System.currentTimeMillis() - progress.startedAt) / 1000L).coerceAtLeast(0L)
         )
         last[uuid] = summary
@@ -144,6 +184,13 @@ object RunSummaryManager {
                 routeHistory = progress.routeHistory.toList(),
                 milestoneNames = progress.milestones.sortedBy { it.ordinal }.map { it.displayName },
                 modifierCounts = progress.modifierCounts.entries.sortedBy { it.key.ordinal }.associate { it.key.displayName to it.value },
+                lootCounts = progress.lootCounts.toMap(),
+                salvagedCount = progress.salvagedCount,
+                salvagedRunShards = progress.salvagedRunShards,
+                salvagedSoulShards = progress.salvagedSoulShards,
+                salvagedMaterials = progress.salvagedMaterials.toMap(),
+                collectionUnlocks = progress.collectionUnlocks.toList(),
+                bossFirstKills = progress.bossFirstKills,
                 durationSeconds = ((System.currentTimeMillis() - progress.startedAt) / 1000L).coerceAtLeast(0L)
             )
         }
@@ -169,7 +216,14 @@ object RunSummaryManager {
             "peak-run-shards" to progress.peakRunShards,
             "routes" to progress.routeHistory,
             "milestones" to progress.milestones.map(RunMilestoneType::name),
-            "modifiers" to progress.modifierCounts.mapKeys { it.key.name }
+            "modifiers" to progress.modifierCounts.mapKeys { it.key.name },
+            "loot-counts" to progress.lootCounts,
+            "salvaged-count" to progress.salvagedCount,
+            "salvaged-run-shards" to progress.salvagedRunShards,
+            "salvaged-soul-shards" to progress.salvagedSoulShards,
+            "salvaged-materials" to progress.salvagedMaterials,
+            "collection-unlocks" to progress.collectionUnlocks,
+            "boss-first-kills" to progress.bossFirstKills
         )
     }
 
@@ -187,7 +241,11 @@ object RunSummaryManager {
             eliteRoomsCleared = raw["elite-rooms-cleared"]?.toString()?.toIntOrNull() ?: 0,
             bossRoomsCleared = raw["boss-rooms-cleared"]?.toString()?.toIntOrNull() ?: 0,
             settledSoulShards = raw["settled-soul-shards"]?.toString()?.toIntOrNull() ?: 0,
-            peakRunShards = raw["peak-run-shards"]?.toString()?.toIntOrNull() ?: 0
+            peakRunShards = raw["peak-run-shards"]?.toString()?.toIntOrNull() ?: 0,
+            salvagedCount = raw["salvaged-count"]?.toString()?.toIntOrNull() ?: 0,
+            salvagedRunShards = raw["salvaged-run-shards"]?.toString()?.toIntOrNull() ?: 0,
+            salvagedSoulShards = raw["salvaged-soul-shards"]?.toString()?.toIntOrNull() ?: 0,
+            bossFirstKills = raw["boss-first-kills"]?.toString()?.toIntOrNull() ?: 0
         )
         (raw["routes"] as? List<*>)?.mapNotNull { it?.toString() }?.let { progress.routeHistory += it }
         (raw["milestones"] as? List<*>)?.mapNotNull { id ->
@@ -198,6 +256,15 @@ object RunSummaryManager {
             val count = value?.toString()?.toIntOrNull() ?: return@forEach
             if (count > 0) progress.modifierCounts[type] = count
         }
+        (raw["loot-counts"] as? Map<*, *>)?.forEach { (key, value) ->
+            val count = value?.toString()?.toIntOrNull() ?: return@forEach
+            if (count > 0) progress.lootCounts[key.toString()] = count
+        }
+        (raw["salvaged-materials"] as? Map<*, *>)?.forEach { (key, value) ->
+            val count = value?.toString()?.toIntOrNull() ?: return@forEach
+            if (count > 0) progress.salvagedMaterials[key.toString()] = count
+        }
+        (raw["collection-unlocks"] as? List<*>)?.mapNotNull { it?.toString() }?.let { progress.collectionUnlocks += it }
         current[uuid] = progress
         RunPersistenceManager.markDirty()
     }

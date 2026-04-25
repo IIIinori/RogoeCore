@@ -403,3 +403,351 @@ relics:
     icon: MAP
     effect-type: GAMBLE_INSURANCE
     value: 55
+
+  exp2_relic_01:
+    name: "首购月契"
+    description: "商店价格额外降低，适合第一波商店抢关键神恩或材料"
+    rarity: RARE
+    icon: EMERALD
+    effect-type: SHOP_FIRST_DISCOUNT
+    value: 12
+  exp2_relic_02:
+    name: "败者护符"
+    description: "赌局失败惩罚进一步降低，让高风险赌局更可控"
+    rarity: RARE
+    icon: IRON_NUGGET
+    effect-type: GAMBLE_FAIL_PROTECTION
+    value: 35
+  exp2_relic_03:
+    name: "封印回声匣"
+    description: "封印宝箱的后续战斗奖励提高，适合藏宝路线规划"
+    rarity: EPIC
+    icon: ENDER_CHEST
+    effect-type: SEALED_CHEST_BONUS
+    value: 18
+  exp2_relic_04:
+    name: "净盐圣盏"
+    description: "神龛成功净化诅咒时返还本局碎片"
+    rarity: EPIC
+    icon: WHITE_DYE
+    effect-type: SHRINE_PURIFY_REWARD
+    value: 45
+  exp2_relic_05:
+    name: "试炼炉渣袋"
+    description: "完成试炼后返还炉核余烬，降低生命代价的资源压力"
+    rarity: RARE
+    icon: BLAZE_POWDER
+    effect-type: TRIAL_REFUND_MATERIAL
+    value: 1
+  exp2_relic_06:
+    name: "巡路罗盘"
+    description: "每次选择下一层路线时，根据路线收益等级获得本局碎片"
+    rarity: EPIC
+    icon: COMPASS
+    effect-type: ROUTE_STREAK_REWARD
+    value: 7
+  exp2_relic_07:
+    name: "鉴定沙漏"
+    description: "鉴定任务加速所需灵魂碎片降低"
+    rarity: RARE
+    icon: CLOCK
+    effect-type: IDENTIFY_ACCELERATION_DISCOUNT
+    value: 20
+  exp2_relic_08:
+    name: "炉火短签"
+    description: "锻造书加速所需灵魂碎片降低"
+    rarity: RARE
+    icon: ANVIL
+    effect-type: FORGE_ACCELERATION_DISCOUNT
+    value: 18
+  exp2_relic_09:
+    name: "清场铜章"
+    description: "每次清理战斗房都会额外获得本局碎片"
+    rarity: COMMON
+    icon: COPPER_INGOT
+    effect-type: ROOM_CLEAR_SHARD_BONUS
+    value: 5
+  exp2_relic_10:
+    name: "精英悬赏令"
+    description: "清理精英房时额外获得本局碎片"
+    rarity: RARE
+    icon: CROSSBOW
+    effect-type: ELITE_SHARD_BONUS
+    value: 24
+  exp2_relic_11:
+    name: "破冠赏金袋"
+    description: "击败 Boss 后额外获得本局碎片"
+    rarity: EPIC
+    icon: GOLDEN_HELMET
+    effect-type: BOSS_SHARD_BONUS
+    value: 42
+  exp2_relic_12:
+    name: "暗室钱匣"
+    description: "开启隐藏房时额外获得本局碎片"
+    rarity: RARE
+    icon: ENDER_CHEST
+    effect-type: HIDDEN_SHARD_BONUS
+    value: 30
+  exp2_relic_13:
+    name: "箱底银票"
+    description: "开启宝箱时额外获得本局碎片"
+    rarity: COMMON
+    icon: CHEST
+    effect-type: CHEST_SHARD_BONUS
+    value: 18
+  exp2_relic_14:
+    name: "濒危撤离证"
+    description: "低血时撤离收益更高，给危险撤离一个补偿窗口"
+    rarity: EPIC
+    icon: ENDER_PEARL
+    effect-type: LOW_HEALTH_CASHOUT_BONUS
+    value: 12
+  exp2_relic_15:
+    name: "工坊议价锤"
+    description: "材料工坊灵魂碎片购买价格降低"
+    rarity: RARE
+    icon: ANVIL
+    effect-type: MATERIAL_WORKSHOP_DISCOUNT
+    value: 15
+  exp2_relic_16:
+    name: "收藏回收针"
+    description: "永久装备分解时额外返还材料"
+    rarity: EPIC
+    icon: IRON_NUGGET
+    effect-type: SALVAGE_MATERIAL_BONUS
+    value: 1
+  exp2_relic_17:
+    name: "王庭邮戳"
+    description: "王庭邮戳会改变本局资源节奏，提供BOON_OFFER_BONUS相关收益"
+    rarity: EPIC
+    icon: AMETHYST_SHARD
+    effect-type: BOON_OFFER_BONUS
+    value: 26.6
+  exp2_relic_18:
+    name: "蓝焰火漆"
+    description: "蓝焰火漆会改变本局资源节奏，提供ROOM_UPGRADE_CHANCE相关收益"
+    rarity: COMMON
+    icon: GOLD_NUGGET
+    effect-type: ROOM_UPGRADE_CHANCE
+    value: 28
+  exp2_relic_19:
+    name: "古井铜镜"
+    description: "古井铜镜会改变本局资源节奏，提供BOON_RARITY_LUCK相关收益"
+    rarity: RARE
+    icon: EMERALD
+    effect-type: BOON_RARITY_LUCK
+    value: 29.3
+  exp2_relic_20:
+    name: "长夜斗篷"
+    description: "长夜斗篷会改变本局资源节奏，提供BOSS_LOOT_CHANCE相关收益"
+    rarity: COMMON
+    icon: CLOCK
+    effect-type: BOSS_LOOT_CHANCE
+    value: 30.7
+  exp2_relic_21:
+    name: "琥珀箭羽"
+    description: "琥珀箭羽会改变本局资源节奏，提供HIDDEN_RELIC_BOOST相关收益"
+    rarity: EPIC
+    icon: PAPER
+    effect-type: HIDDEN_RELIC_BOOST
+    value: 9
+  exp2_relic_22:
+    name: "磨损桂冠"
+    description: "磨损桂冠会改变本局资源节奏，提供ELITE_RELIC_CHANCE相关收益"
+    rarity: RARE
+    icon: BLAZE_POWDER
+    effect-type: ELITE_RELIC_CHANCE
+    value: 33.4
+  exp2_relic_23:
+    name: "藏金鱼钩"
+    description: "藏金鱼钩会改变本局资源节奏，提供BLACK_MARKET_DISCOUNT相关收益"
+    rarity: LEGENDARY
+    icon: TRIPWIRE_HOOK
+    effect-type: BLACK_MARKET_DISCOUNT
+    value: 34.7
+  exp2_relic_24:
+    name: "薄暮胸针"
+    description: "薄暮胸针会改变本局资源节奏，提供CHEST_EXTRA_LOOT_CHANCE相关收益"
+    rarity: COMMON
+    icon: SHIELD
+    effect-type: CHEST_EXTRA_LOOT_CHANCE
+    value: 36
+  exp2_relic_25:
+    name: "赤潮骨牌"
+    description: "赤潮骨牌会改变本局资源节奏，提供KILL_SHARD相关收益"
+    rarity: EPIC
+    icon: AMETHYST_SHARD
+    effect-type: KILL_SHARD
+    value: 6
+  exp2_relic_26:
+    name: "虚界航标"
+    description: "虚界航标会改变本局资源节奏，提供ROOM_HEAL相关收益"
+    rarity: COMMON
+    icon: GOLD_NUGGET
+    effect-type: ROOM_HEAL
+    value: 7
+  exp2_relic_27:
+    name: "祝圣蜡封"
+    description: "祝圣蜡封会改变本局资源节奏，提供LOW_HEALTH_DAMAGE相关收益"
+    rarity: COMMON
+    icon: EMERALD
+    effect-type: LOW_HEALTH_DAMAGE
+    value: 35
+    threshold: 40
+  exp2_relic_28:
+    name: "赌徒短绳"
+    description: "赌徒短绳会改变本局资源节奏，提供BONUS_LOOT_CHANCE相关收益"
+    rarity: RARE
+    icon: CLOCK
+    effect-type: BONUS_LOOT_CHANCE
+    value: 41.5
+  exp2_relic_29:
+    name: "密教齿轮"
+    description: "密教齿轮会改变本局资源节奏，提供SHOP_DISCOUNT相关收益"
+    rarity: EPIC
+    icon: PAPER
+    effect-type: SHOP_DISCOUNT
+    value: 42.8
+  exp2_relic_30:
+    name: "精英猎牌"
+    description: "精英猎牌会改变本局资源节奏，提供BOSS_EMBER_BONUS相关收益"
+    rarity: COMMON
+    icon: BLAZE_POWDER
+    effect-type: BOSS_EMBER_BONUS
+    value: 44.2
+  exp2_relic_31:
+    name: "符文酒杯"
+    description: "符文酒杯会改变本局资源节奏，提供HIDDEN_KEY_CHANCE相关收益"
+    rarity: RARE
+    icon: TRIPWIRE_HOOK
+    effect-type: HIDDEN_KEY_CHANCE
+    value: 45.5
+  exp2_relic_32:
+    name: "冷铁马刺"
+    description: "冷铁马刺会改变本局资源节奏，提供COMBAT_START_SHIELD相关收益"
+    rarity: COMMON
+    icon: SHIELD
+    effect-type: COMBAT_START_SHIELD
+    value: 7
+  exp2_relic_33:
+    name: "群星罗盘"
+    description: "群星罗盘会改变本局资源节奏，提供ELITE_LOOT_CHANCE相关收益"
+    rarity: EPIC
+    icon: AMETHYST_SHARD
+    effect-type: ELITE_LOOT_CHANCE
+    value: 48.2
+  exp2_relic_34:
+    name: "破晓缎带"
+    description: "破晓缎带会改变本局资源节奏，提供SHOP_HEAL_DISCOUNT相关收益"
+    rarity: LEGENDARY
+    icon: GOLD_NUGGET
+    effect-type: SHOP_HEAL_DISCOUNT
+    value: 49.6
+  exp2_relic_35:
+    name: "银鸦铃片"
+    description: "银鸦铃片会改变本局资源节奏，提供SHOP_MATERIAL_BONUS相关收益"
+    rarity: COMMON
+    icon: EMERALD
+    effect-type: SHOP_MATERIAL_BONUS
+    value: 50.9
+  exp2_relic_36:
+    name: "王座旧钉"
+    description: "王座旧钉会改变本局资源节奏，提供SHRINE_RELIC_BOOST相关收益"
+    rarity: COMMON
+    icon: CLOCK
+    effect-type: SHRINE_RELIC_BOOST
+    value: 4
+  exp2_relic_37:
+    name: "焦痕卷轴"
+    description: "焦痕卷轴会改变本局资源节奏，提供GAMBLE_INSURANCE相关收益"
+    rarity: EPIC
+    icon: PAPER
+    effect-type: GAMBLE_INSURANCE
+    value: 53.6
+  exp2_relic_38:
+    name: "灵魂纺锤"
+    description: "灵魂纺锤会改变本局资源节奏，提供TRIAL_FORGE_BONUS相关收益"
+    rarity: COMMON
+    icon: BLAZE_POWDER
+    effect-type: TRIAL_FORGE_BONUS
+    value: 55
+  exp2_relic_39:
+    name: "古堡白钥"
+    description: "古堡白钥会改变本局资源节奏，提供CHEST_MATERIAL_BONUS相关收益"
+    rarity: COMMON
+    icon: TRIPWIRE_HOOK
+    effect-type: CHEST_MATERIAL_BONUS
+    value: 56.3
+  exp2_relic_40:
+    name: "祈愿烟斗"
+    description: "祈愿烟斗会改变本局资源节奏，提供HIDDEN_LOOT_BONUS相关收益"
+    rarity: RARE
+    icon: SHIELD
+    effect-type: HIDDEN_LOOT_BONUS
+    value: 57.7
+  exp2_relic_41:
+    name: "月井币模"
+    description: "月井币模会改变本局资源节奏，提供BOON_OFFER_BONUS相关收益"
+    rarity: EPIC
+    icon: AMETHYST_SHARD
+    effect-type: BOON_OFFER_BONUS
+    value: 59
+  exp2_relic_42:
+    name: "余烬砂漏"
+    description: "余烬砂漏会改变本局资源节奏，提供ROOM_UPGRADE_CHANCE相关收益"
+    rarity: COMMON
+    icon: GOLD_NUGGET
+    effect-type: ROOM_UPGRADE_CHANCE
+    value: 60.4
+  exp2_relic_43:
+    name: "猎团残旗"
+    description: "猎团残旗会改变本局资源节奏，提供BOON_RARITY_LUCK相关收益"
+    rarity: RARE
+    icon: EMERALD
+    effect-type: BOON_RARITY_LUCK
+    value: 61.7
+  exp2_relic_44:
+    name: "黑市火柴"
+    description: "黑市火柴会改变本局资源节奏，提供BOSS_LOOT_CHANCE相关收益"
+    rarity: COMMON
+    icon: CLOCK
+    effect-type: BOSS_LOOT_CHANCE
+    value: 63.1
+
+  echo_capacitor:
+    name: "回响电容器"
+    description: "每清理 3 个房间充满一次，使下一次神恩选择产生回响"
+    rarity: RARE
+    icon: AMETHYST_CLUSTER
+    effect-type: RELIC_CHARGE_ON_ROOM
+    value: 3
+  event_prism:
+    name: "事件棱镜"
+    description: "每经历 3 个事件房充满一次，使下一次神恩选择出现变质候选"
+    rarity: RARE
+    icon: PRISMARINE_CRYSTALS
+    effect-type: RELIC_CHARGE_ON_EVENT
+    value: 3
+  tithe_battery:
+    name: "什一税电池"
+    description: "每清理 4 个房间充能兑现一笔本局碎片，用于平滑债务与锻造节奏"
+    rarity: COMMON
+    icon: REDSTONE_TORCH
+    effect-type: RELIC_SPEND_CHARGE_FOR_REWARD
+    value: 18
+    threshold: 4
+  guarantor_seal:
+    name: "担保人火漆"
+    description: "保留 2 层充能时可抵消一次灵魂债务逾期惩罚"
+    rarity: EPIC
+    icon: SOUL_LANTERN
+    effect-type: RELIC_PAY_DEBT_WITH_CHARGE
+    value: 0
+    threshold: 2
+  oath_fuse:
+    name: "誓约熔丝"
+    description: "每清理 2 个房间充满一次，让下一次神恩复制，适合路线连锁爆发"
+    rarity: LEGENDARY
+    icon: END_CRYSTAL
+    effect-type: RELIC_CHARGE_ON_ROOM
+    value: 2

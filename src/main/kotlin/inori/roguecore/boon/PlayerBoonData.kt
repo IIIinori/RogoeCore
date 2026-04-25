@@ -1,8 +1,10 @@
 package inori.roguecore.boon
 
+import inori.roguecore.accessory.AccessoryEffectHandler
 import inori.roguecore.dependency.DependencySelfCheckManager
 import inori.roguecore.dungeon.RunPersistenceManager
 import inori.roguecore.milestone.RunMilestoneManager
+import inori.roguecore.modifier.RunModifierManager
 import inori.roguecore.stats.BalanceStatsManager
 import org.bukkit.entity.Player
 import org.serverct.ersha.api.AttributeAPI
@@ -43,7 +45,7 @@ object PlayerBoonData {
     /**
      * 添加 Boon（已有同 ID 则升级）
      */
-    fun addBoon(player: Player, boon: Boon) {
+    fun addBoon(player: Player, boon: Boon, triggerOnAcquire: Boolean = true) {
         val boons = playerBoons.getOrPut(player.uniqueId) { mutableListOf() }
 
         val existing = boons.firstOrNull { it.boon.id == boon.id }
@@ -54,6 +56,10 @@ object PlayerBoonData {
             RunPersistenceManager.markDirty()
             BalanceStatsManager.recordBoonUpgraded(boon)
             player.sendMessage("§6${boon.rarity.color}${boon.name} §e升级到 Lv.${existing.level}!")
+            if (triggerOnAcquire) {
+                BoonEffectHandler.onBoonAcquired(player, boon, existing.level)
+                applyAccessoryBoonHooks(player)
+            }
         } else {
             // 新增
             val instance = BoonInstance(boon)
@@ -62,8 +68,21 @@ object PlayerBoonData {
             RunPersistenceManager.markDirty()
             BalanceStatsManager.recordBoonAcquired(boon)
             player.sendMessage("§a获得 ${boon.rarity.color}${boon.name} §aLv.1!")
+            if (triggerOnAcquire) {
+                BoonEffectHandler.onBoonAcquired(player, boon, instance.level)
+                applyAccessoryBoonHooks(player)
+            }
         }
         RunMilestoneManager.onBoonChanged(player)
+    }
+
+    private fun applyAccessoryBoonHooks(player: Player) {
+        if (AccessoryEffectHandler.rollBoonEcho(player)) {
+            RunModifierManager.addBoonEcho(player, 1, "饰品回响")
+        }
+        if (AccessoryEffectHandler.rollBoonMutation(player)) {
+            RunModifierManager.addBoonMutation(player, 1, "饰品变质")
+        }
     }
 
     /**

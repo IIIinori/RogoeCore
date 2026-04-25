@@ -4,7 +4,9 @@ import inori.roguecore.affix.AffixManager
 import inori.roguecore.data.PermanentMaterialManager
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.DungeonManager
+import inori.roguecore.guide.GuideManager
 import inori.roguecore.relic.RelicEffectHandler
+import inori.roguecore.summary.RunSummaryManager
 import inori.roguecore.unlock.UnlockManager
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
@@ -433,11 +435,29 @@ object DungeonLootManager {
                 buildRolledLoot(definition, source, source.displayName(), instance.config.floorNumber, 0, 0, 0, 0.0)?.item
             } ?: return@repeat
             give(player, item)
+            if (isUnidentifiedLoot(item)) {
+                RunSummaryManager.onLootGained(player.uniqueId, "unidentified_gear")
+                GuideManager.showOnce(player, GuideManager.UNIDENTIFIED_LOOT, listOf(
+                    "§e你获得了未鉴定装备。",
+                    "§7在 §6/rogue identify §7中鉴定后会变成绑定你的永久装备。"
+                ))
+            } else {
+                RunSummaryManager.onLootGained(player.uniqueId, "temporary_gear")
+            }
+            GuideManager.showOnce(player, GuideManager.SALVAGE, listOf(
+                "§e不需要的装备、饰品和书类可以回收。",
+                "§7打开 §6/rogue salvage §7可分解低价值物品换材料。"
+            ))
             if (shouldDropForgeBook(player, source)) {
                 val quality = rollForgeBookQuality(player)
                 val book = quality?.let { buildForgeBook(definition, source, instance.config.floorNumber, it) }
                 if (book != null) {
                     give(player, book)
+                    RunSummaryManager.onLootGained(player.uniqueId, "forge_book")
+                    GuideManager.showOnce(player, GuideManager.FORGE_BOOK, listOf(
+                        "§e你获得了锻造书。",
+                        "§7在 §6/rogue craft §7中消耗材料和时间打造永久装备。"
+                    ))
                 }
             }
             granted = true
@@ -666,7 +686,7 @@ object DungeonLootManager {
         return true
     }
 
-    private fun getDefinition(item: ItemStack?): DungeonLootDefinition? {
+    fun getDefinition(item: ItemStack?): DungeonLootDefinition? {
         if (item == null || item.type == Material.AIR) {
             return null
         }
@@ -1291,6 +1311,37 @@ object DungeonLootManager {
         return getDefinition(item)?.equipmentSlot
     }
 
+    fun isLootItem(item: ItemStack?): Boolean {
+        return getDefinition(item) != null
+    }
+
+    fun isTemporaryLoot(item: ItemStack?): Boolean {
+        return isLootItem(item) && DungeonBoundItem.hasTag(item) && !isPermanentLoot(item)
+    }
+
+    fun getLootFloor(item: ItemStack?): Int {
+        return getDefinition(item)?.minFloor ?: getUnidentifiedLootInfo(item)?.floor ?: getForgeBookInfo(item)?.floor ?: 1
+    }
+
+    fun getLootRarityId(item: ItemStack?): String? {
+        return getRarity(item)?.id
+    }
+
+    fun getLootRarityName(item: ItemStack?): String? {
+        return getRarity(item)?.displayName
+    }
+
+    fun getLootTheme(item: ItemStack?): String? {
+        return getDefinition(item)?.theme
+    }
+
+    fun isAtLeastRarity(item: ItemStack?, rarityId: String): Boolean {
+        val rarity = getRarity(item) ?: return false
+        val currentIndex = rarities.indexOfFirst { it.id.equals(rarity.id, ignoreCase = true) }
+        val requiredIndex = rarities.indexOfFirst { it.id.equals(rarityId, ignoreCase = true) }
+        return currentIndex >= 0 && requiredIndex >= 0 && currentIndex >= requiredIndex
+    }
+
     fun isFavorite(item: ItemStack?): Boolean {
         if (!isPermanentLoot(item)) {
             return false
@@ -1832,7 +1883,7 @@ object DungeonLootManager {
             (1.0 + forgeLevel * attributeBonusPerLevel)
     }
 
-    private fun getScore(item: ItemStack?): Double {
+    fun getScore(item: ItemStack?): Double {
         if (item == null || item.type == Material.AIR) {
             return 0.0
         }
@@ -1840,7 +1891,7 @@ object DungeonLootManager {
         return meta.persistentDataContainer.get(scoreKey, PersistentDataType.DOUBLE) ?: 0.0
     }
 
-    private fun getRarity(item: ItemStack?): DungeonLootRarity? {
+    fun getRarity(item: ItemStack?): DungeonLootRarity? {
         if (item == null || item.type == Material.AIR) {
             return null
         }

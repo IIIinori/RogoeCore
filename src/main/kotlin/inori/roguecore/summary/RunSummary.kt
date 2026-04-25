@@ -21,5 +21,12 @@ data class RunSummary(
     val routeHistory: List<String>,
     val milestoneNames: List<String>,
     val modifierCounts: Map<String, Int>,
+    val lootCounts: Map<String, Int> = emptyMap(),
+    val salvagedCount: Int = 0,
+    val salvagedRunShards: Int = 0,
+    val salvagedSoulShards: Int = 0,
+    val salvagedMaterials: Map<String, Int> = emptyMap(),
+    val collectionUnlocks: List<String> = emptyList(),
+    val bossFirstKills: Int = 0,
     val durationSeconds: Long
 )

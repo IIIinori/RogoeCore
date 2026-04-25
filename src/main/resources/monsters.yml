@@ -3,6 +3,16 @@
 # ================================
 # 1-100 层怪物池。MythicMobs 侧需要提供对应 ID，RogueCore 自检会列出缺失项。
 
+wave-rules:
+  normal-types-min: 3
+  normal-types-max: 5
+  elite-adds-enabled: true
+  elite-adds-types: 3
+  elite-adds-total: 6
+  boss-adds-enabled: true
+  boss-adds-types: 4
+  boss-adds-total: 12
+
 floors:
   crypt:
     range: "1-5"
@@ -13,6 +23,11 @@ floors:
         - "rogue_crypt_dust_acolyte"
         - "rogue_crypt_crypt_lurker"
         - "rogue_crypt_tomb_guard"
+        - "rogue_crypt_reaver"
+        - "rogue_crypt_bulwark"
+        - "rogue_crypt_hexer"
+        - "rogue_crypt_skirmisher"
+        - "rogue_crypt_warden"
       base-count: 3
       count-per-floors: 3
       max-count: 6
@@ -21,6 +36,9 @@ floors:
         - "rogue_crypt_elite_vanguard"
         - "rogue_crypt_elite_arcanist"
         - "rogue_crypt_elite_executioner"
+        - "rogue_crypt_elite_overseer"
+        - "rogue_crypt_elite_reaper"
+        - "rogue_crypt_elite_colossus"
       count: 1
     boss:
       mob-id: "rogue_crypt_boss_floor{floor}"
@@ -34,6 +52,11 @@ floors:
         - "rogue_nether_blaze_cultist"
         - "rogue_nether_magma_hound"
         - "rogue_nether_wither_scout"
+        - "rogue_nether_reaver"
+        - "rogue_nether_bulwark"
+        - "rogue_nether_hexer"
+        - "rogue_nether_skirmisher"
+        - "rogue_nether_warden"
       base-count: 3
       count-per-floors: 3
       max-count: 6
@@ -42,6 +65,9 @@ floors:
         - "rogue_nether_elite_vanguard"
         - "rogue_nether_elite_arcanist"
         - "rogue_nether_elite_executioner"
+        - "rogue_nether_elite_overseer"
+        - "rogue_nether_elite_reaper"
+        - "rogue_nether_elite_colossus"
       count: 1
     boss:
       mob-id: "rogue_nether_boss_floor{floor}"
@@ -55,6 +81,11 @@ floors:
         - "rogue_end_shulker_wisp"
         - "rogue_end_chorus_stalker"
         - "rogue_end_pearl_hunter"
+        - "rogue_end_reaver"
+        - "rogue_end_bulwark"
+        - "rogue_end_hexer"
+        - "rogue_end_skirmisher"
+        - "rogue_end_warden"
       base-count: 3
       count-per-floors: 3
       max-count: 6
@@ -63,6 +94,9 @@ floors:
         - "rogue_end_elite_vanguard"
         - "rogue_end_elite_arcanist"
         - "rogue_end_elite_executioner"
+        - "rogue_end_elite_overseer"
+        - "rogue_end_elite_reaper"
+        - "rogue_end_elite_colossus"
       count: 1
     boss:
       mob-id: "rogue_end_boss_floor{floor}"
@@ -76,6 +110,11 @@ floors:
         - "rogue_frost_glacier_witch"
         - "rogue_frost_snowbound_guard"
         - "rogue_frost_rime_spider"
+        - "rogue_frost_reaver"
+        - "rogue_frost_bulwark"
+        - "rogue_frost_hexer"
+        - "rogue_frost_skirmisher"
+        - "rogue_frost_warden"
       base-count: 3
       count-per-floors: 3
       max-count: 7
@@ -84,6 +123,9 @@ floors:
         - "rogue_frost_elite_vanguard"
         - "rogue_frost_elite_arcanist"
         - "rogue_frost_elite_executioner"
+        - "rogue_frost_elite_overseer"
+        - "rogue_frost_elite_reaper"
+        - "rogue_frost_elite_colossus"
       count: 1
     boss:
       mob-id: "rogue_frost_boss_floor{floor}"
@@ -97,6 +139,11 @@ floors:
         - "rogue_forge_obsidian_hound"
         - "rogue_forge_anvil_thrall"
         - "rogue_forge_blast_mage"
+        - "rogue_forge_reaver"
+        - "rogue_forge_bulwark"
+        - "rogue_forge_hexer"
+        - "rogue_forge_skirmisher"
+        - "rogue_forge_warden"
       base-count: 4
       count-per-floors: 3
       max-count: 7
@@ -105,6 +152,9 @@ floors:
         - "rogue_forge_elite_vanguard"
         - "rogue_forge_elite_arcanist"
         - "rogue_forge_elite_executioner"
+        - "rogue_forge_elite_overseer"
+        - "rogue_forge_elite_reaper"
+        - "rogue_forge_elite_colossus"
       count: 1
     boss:
       mob-id: "rogue_forge_boss_floor{floor}"
@@ -118,6 +168,11 @@ floors:
         - "rogue_astral_nebula_eye"
         - "rogue_astral_comet_shard"
         - "rogue_astral_lunar_adept"
+        - "rogue_astral_reaver"
+        - "rogue_astral_bulwark"
+        - "rogue_astral_hexer"
+        - "rogue_astral_skirmisher"
+        - "rogue_astral_warden"
       base-count: 4
       count-per-floors: 3
       max-count: 7
@@ -126,6 +181,9 @@ floors:
         - "rogue_astral_elite_vanguard"
         - "rogue_astral_elite_arcanist"
         - "rogue_astral_elite_executioner"
+        - "rogue_astral_elite_overseer"
+        - "rogue_astral_elite_reaper"
+        - "rogue_astral_elite_colossus"
       count: 1
     boss:
       mob-id: "rogue_astral_boss_floor{floor}"
@@ -139,6 +197,11 @@ floors:
         - "rogue_crimson_crimson_hound"
         - "rogue_crimson_vessel_monk"
         - "rogue_crimson_vein_walker"
+        - "rogue_crimson_reaver"
+        - "rogue_crimson_bulwark"
+        - "rogue_crimson_hexer"
+        - "rogue_crimson_skirmisher"
+        - "rogue_crimson_warden"
       base-count: 4
       count-per-floors: 3
       max-count: 8
@@ -147,6 +210,9 @@ floors:
         - "rogue_crimson_elite_vanguard"
         - "rogue_crimson_elite_arcanist"
         - "rogue_crimson_elite_executioner"
+        - "rogue_crimson_elite_overseer"
+        - "rogue_crimson_elite_reaper"
+        - "rogue_crimson_elite_colossus"
       count: 1
     boss:
       mob-id: "rogue_crimson_boss_floor{floor}"
@@ -160,6 +226,11 @@ floors:
         - "rogue_core_deep_echo"
         - "rogue_core_sculk_wardenling"
         - "rogue_core_gloom_priest"
+        - "rogue_core_reaver"
+        - "rogue_core_bulwark"
+        - "rogue_core_hexer"
+        - "rogue_core_skirmisher"
+        - "rogue_core_warden"
       base-count: 4
       count-per-floors: 3
       max-count: 8
@@ -168,6 +239,9 @@ floors:
         - "rogue_core_elite_vanguard"
         - "rogue_core_elite_arcanist"
         - "rogue_core_elite_executioner"
+        - "rogue_core_elite_overseer"
+        - "rogue_core_elite_reaper"
+        - "rogue_core_elite_colossus"
       count: 2
     boss:
       mob-id: "rogue_core_boss_floor{floor}"
@@ -181,6 +255,11 @@ floors:
         - "rogue_rotwood_thorn_beast"
         - "rogue_rotwood_fungal_mage"
         - "rogue_rotwood_bog_wolf"
+        - "rogue_rotwood_reaver"
+        - "rogue_rotwood_bulwark"
+        - "rogue_rotwood_hexer"
+        - "rogue_rotwood_skirmisher"
+        - "rogue_rotwood_warden"
       base-count: 5
       count-per-floors: 3
       max-count: 8
@@ -189,6 +268,9 @@ floors:
         - "rogue_rotwood_elite_vanguard"
         - "rogue_rotwood_elite_arcanist"
         - "rogue_rotwood_elite_executioner"
+        - "rogue_rotwood_elite_overseer"
+        - "rogue_rotwood_elite_reaper"
+        - "rogue_rotwood_elite_colossus"
       count: 2
     boss:
       mob-id: "rogue_rotwood_boss_floor{floor}"
@@ -202,6 +284,11 @@ floors:
         - "rogue_stormspire_storm_archer"
         - "rogue_stormspire_thunder_monk"
         - "rogue_stormspire_coil_construct"
+        - "rogue_stormspire_reaver"
+        - "rogue_stormspire_bulwark"
+        - "rogue_stormspire_hexer"
+        - "rogue_stormspire_skirmisher"
+        - "rogue_stormspire_warden"
       base-count: 5
       count-per-floors: 3
       max-count: 9
@@ -210,6 +297,9 @@ floors:
         - "rogue_stormspire_elite_vanguard"
         - "rogue_stormspire_elite_arcanist"
         - "rogue_stormspire_elite_executioner"
+        - "rogue_stormspire_elite_overseer"
+        - "rogue_stormspire_elite_reaper"
+        - "rogue_stormspire_elite_colossus"
       count: 2
     boss:
       mob-id: "rogue_stormspire_boss_floor{floor}"
@@ -223,6 +313,11 @@ floors:
         - "rogue_sunken_prismarine_witch"
         - "rogue_sunken_tide_hunter"
         - "rogue_sunken_abyss_fishman"
+        - "rogue_sunken_reaver"
+        - "rogue_sunken_bulwark"
+        - "rogue_sunken_hexer"
+        - "rogue_sunken_skirmisher"
+        - "rogue_sunken_warden"
       base-count: 5
       count-per-floors: 3
       max-count: 9
@@ -231,6 +326,9 @@ floors:
         - "rogue_sunken_elite_vanguard"
         - "rogue_sunken_elite_arcanist"
         - "rogue_sunken_elite_executioner"
+        - "rogue_sunken_elite_overseer"
+        - "rogue_sunken_elite_reaper"
+        - "rogue_sunken_elite_colossus"
       count: 2
     boss:
       mob-id: "rogue_sunken_boss_floor{floor}"
@@ -244,6 +342,11 @@ floors:
         - "rogue_bonewaste_dust_knight"
         - "rogue_bonewaste_skull_oracle"
         - "rogue_bonewaste_rib_golem"
+        - "rogue_bonewaste_reaver"
+        - "rogue_bonewaste_bulwark"
+        - "rogue_bonewaste_hexer"
+        - "rogue_bonewaste_skirmisher"
+        - "rogue_bonewaste_warden"
       base-count: 5
       count-per-floors: 3
       max-count: 9
@@ -252,6 +355,9 @@ floors:
         - "rogue_bonewaste_elite_vanguard"
         - "rogue_bonewaste_elite_arcanist"
         - "rogue_bonewaste_elite_executioner"
+        - "rogue_bonewaste_elite_overseer"
+        - "rogue_bonewaste_elite_reaper"
+        - "rogue_bonewaste_elite_colossus"
       count: 2
     boss:
       mob-id: "rogue_bonewaste_boss_floor{floor}"
@@ -265,6 +371,11 @@ floors:
         - "rogue_mirror_quartz_phantom"
         - "rogue_mirror_split_soul"
         - "rogue_mirror_silver_acolyte"
+        - "rogue_mirror_reaver"
+        - "rogue_mirror_bulwark"
+        - "rogue_mirror_hexer"
+        - "rogue_mirror_skirmisher"
+        - "rogue_mirror_warden"
       base-count: 6
       count-per-floors: 3
       max-count: 10
@@ -273,6 +384,9 @@ floors:
         - "rogue_mirror_elite_vanguard"
         - "rogue_mirror_elite_arcanist"
         - "rogue_mirror_elite_executioner"
+        - "rogue_mirror_elite_overseer"
+        - "rogue_mirror_elite_reaper"
+        - "rogue_mirror_elite_colossus"
       count: 2
     boss:
       mob-id: "rogue_mirror_boss_floor{floor}"
@@ -286,6 +400,11 @@ floors:
         - "rogue_mire_venom_witch"
         - "rogue_mire_bog_stalker"
         - "rogue_mire_spore_knight"
+        - "rogue_mire_reaver"
+        - "rogue_mire_bulwark"
+        - "rogue_mire_hexer"
+        - "rogue_mire_skirmisher"
+        - "rogue_mire_warden"
       base-count: 6
       count-per-floors: 3
       max-count: 10
@@ -294,6 +413,9 @@ floors:
         - "rogue_mire_elite_vanguard"
         - "rogue_mire_elite_arcanist"
         - "rogue_mire_elite_executioner"
+        - "rogue_mire_elite_overseer"
+        - "rogue_mire_elite_reaper"
+        - "rogue_mire_elite_colossus"
       count: 2
     boss:
       mob-id: "rogue_mire_boss_floor{floor}"
@@ -307,6 +429,11 @@ floors:
         - "rogue_dune_sun_adept"
         - "rogue_dune_dune_guard"
         - "rogue_dune_mirage_stalker"
+        - "rogue_dune_reaver"
+        - "rogue_dune_bulwark"
+        - "rogue_dune_hexer"
+        - "rogue_dune_skirmisher"
+        - "rogue_dune_warden"
       base-count: 6
       count-per-floors: 3
       max-count: 10
@@ -315,6 +442,9 @@ floors:
         - "rogue_dune_elite_vanguard"
         - "rogue_dune_elite_arcanist"
         - "rogue_dune_elite_executioner"
+        - "rogue_dune_elite_overseer"
+        - "rogue_dune_elite_reaper"
+        - "rogue_dune_elite_colossus"
       count: 3
     boss:
       mob-id: "rogue_dune_boss_floor{floor}"
@@ -328,6 +458,11 @@ floors:
         - "rogue_theater_stage_knight"
         - "rogue_theater_curtain_wraith"
         - "rogue_theater_opera_mage"
+        - "rogue_theater_reaver"
+        - "rogue_theater_bulwark"
+        - "rogue_theater_hexer"
+        - "rogue_theater_skirmisher"
+        - "rogue_theater_warden"
       base-count: 6
       count-per-floors: 3
       max-count: 11
@@ -336,6 +471,9 @@ floors:
         - "rogue_theater_elite_vanguard"
         - "rogue_theater_elite_arcanist"
         - "rogue_theater_elite_executioner"
+        - "rogue_theater_elite_overseer"
+        - "rogue_theater_elite_reaper"
+        - "rogue_theater_elite_colossus"
       count: 3
     boss:
       mob-id: "rogue_theater_boss_floor{floor}"
@@ -349,6 +487,11 @@ floors:
         - "rogue_machine_redstone_sapper"
         - "rogue_machine_servo_guard"
         - "rogue_machine_clockwork_mage"
+        - "rogue_machine_reaver"
+        - "rogue_machine_bulwark"
+        - "rogue_machine_hexer"
+        - "rogue_machine_skirmisher"
+        - "rogue_machine_warden"
       base-count: 7
       count-per-floors: 3
       max-count: 11
@@ -357,6 +500,9 @@ floors:
         - "rogue_machine_elite_vanguard"
         - "rogue_machine_elite_arcanist"
         - "rogue_machine_elite_executioner"
+        - "rogue_machine_elite_overseer"
+        - "rogue_machine_elite_reaper"
+        - "rogue_machine_elite_colossus"
       count: 3
     boss:
       mob-id: "rogue_machine_boss_floor{floor}"
@@ -370,6 +516,11 @@ floors:
         - "rogue_eclipse_night_bloom"
         - "rogue_eclipse_lunar_witch"
         - "rogue_eclipse_umbra_guard"
+        - "rogue_eclipse_reaver"
+        - "rogue_eclipse_bulwark"
+        - "rogue_eclipse_hexer"
+        - "rogue_eclipse_skirmisher"
+        - "rogue_eclipse_warden"
       base-count: 7
       count-per-floors: 3
       max-count: 11
@@ -378,6 +529,9 @@ floors:
         - "rogue_eclipse_elite_vanguard"
         - "rogue_eclipse_elite_arcanist"
         - "rogue_eclipse_elite_executioner"
+        - "rogue_eclipse_elite_overseer"
+        - "rogue_eclipse_elite_reaper"
+        - "rogue_eclipse_elite_colossus"
       count: 3
     boss:
       mob-id: "rogue_eclipse_boss_floor{floor}"
@@ -391,6 +545,11 @@ floors:
         - "rogue_chaos_warped_cultist"
         - "rogue_chaos_unstable_eye"
         - "rogue_chaos_fracture_knight"
+        - "rogue_chaos_reaver"
+        - "rogue_chaos_bulwark"
+        - "rogue_chaos_hexer"
+        - "rogue_chaos_skirmisher"
+        - "rogue_chaos_warden"
       base-count: 7
       count-per-floors: 3
       max-count: 12
@@ -399,6 +558,9 @@ floors:
         - "rogue_chaos_elite_vanguard"
         - "rogue_chaos_elite_arcanist"
         - "rogue_chaos_elite_executioner"
+        - "rogue_chaos_elite_overseer"
+        - "rogue_chaos_elite_reaper"
+        - "rogue_chaos_elite_colossus"
       count: 3
     boss:
       mob-id: "rogue_chaos_boss_floor{floor}"
@@ -412,6 +574,11 @@ floors:
         - "rogue_throne_void_champion"
         - "rogue_throne_apex_priest"
         - "rogue_throne_throne_wraith"
+        - "rogue_throne_reaver"
+        - "rogue_throne_bulwark"
+        - "rogue_throne_hexer"
+        - "rogue_throne_skirmisher"
+        - "rogue_throne_warden"
       base-count: 7
       count-per-floors: 3
       max-count: 12
@@ -420,6 +587,9 @@ floors:
         - "rogue_throne_elite_vanguard"
         - "rogue_throne_elite_arcanist"
         - "rogue_throne_elite_executioner"
+        - "rogue_throne_elite_overseer"
+        - "rogue_throne_elite_reaper"
+        - "rogue_throne_elite_colossus"
       count: 3
     boss:
       mob-id: "rogue_throne_boss_floor{floor}"

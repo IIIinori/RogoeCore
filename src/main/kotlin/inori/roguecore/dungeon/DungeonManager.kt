@@ -1,6 +1,10 @@
 package inori.roguecore.dungeon
 
+import inori.roguecore.accessory.PlayerAccessoryData
 import inori.roguecore.affix.AffixManager
+import inori.roguecore.affix.AffixType
+import inori.roguecore.affix.DungeonAffix
+import inori.roguecore.boon.BoonEffectHandler
 import inori.roguecore.boon.PlayerBoonData
 import inori.roguecore.combat.RoomCombatManager
 import inori.roguecore.curse.RunCurseManager
@@ -19,6 +23,7 @@ import inori.roguecore.stats.BalanceStatsManager
 import inori.roguecore.summary.RunEndReason
 import inori.roguecore.summary.RunSummaryManager
 import inori.roguecore.relic.PlayerRelicData
+import inori.roguecore.relic.RelicEffectHandler
 import inori.roguecore.ui.DungeonGuiGuard
 import inori.roguecore.ui.DungeonHudManager
 import inori.roguecore.ui.DungeonSceneCueManager
@@ -72,7 +77,8 @@ object DungeonManager {
         val origin = Location(world, 0.0, config.floorLevel.toDouble(), 0.0)
         val affixes = AffixManager.rollAffixes(config.floorNumber, config.route)
         val eventAffixes = EventAffixManager.rollAffixes(config.floorNumber, config.route)
-        val generator = DungeonGenerator(world, origin, config)
+        val adjustedConfig = applyGenerationAffixes(config, affixes)
+        val generator = DungeonGenerator(world, origin, adjustedConfig)
         val instance = generator.generate(instanceId, affixes, eventAffixes)
 
         instances[instance.id] = instance
@@ -81,6 +87,35 @@ object DungeonManager {
         val eventAffixNames = if (eventAffixes.isNotEmpty()) eventAffixes.joinToString(", ") { it.name } else "无"
         info("[RogueCore] 副本 ${instance.id} 已创建 (${instance.rooms.size}个房间, 战斗词缀: $affixNames, 事件词缀: $eventAffixNames)")
         return instance
+    }
+
+    private fun applyGenerationAffixes(config: DungeonConfig, affixes: List<DungeonAffix>): DungeonConfig {
+        if (affixes.isEmpty()) return config
+        val roomWeights = config.roomWeightModifiers.toMutableMap()
+        fun add(type: inori.roguecore.dungeon.room.RoomType, value: Int) {
+            if (value != 0) roomWeights[type] = (roomWeights[type] ?: 0) + value
+        }
+        val eventWeight = affixes.filter { it.type == AffixType.EXTRA_EVENT_ROOM_WEIGHT }.sumOf { it.value.toInt().coerceAtLeast(0) }
+        if (eventWeight > 0) {
+            listOf(
+                inori.roguecore.dungeon.room.RoomType.SHOP,
+                inori.roguecore.dungeon.room.RoomType.CHEST,
+                inori.roguecore.dungeon.room.RoomType.SHRINE,
+                inori.roguecore.dungeon.room.RoomType.FORGE,
+                inori.roguecore.dungeon.room.RoomType.TRIAL,
+                inori.roguecore.dungeon.room.RoomType.GAMBLE,
+                inori.roguecore.dungeon.room.RoomType.REST,
+                inori.roguecore.dungeon.room.RoomType.CONTRACT
+            ).forEach { add(it, eventWeight) }
+        }
+        add(inori.roguecore.dungeon.room.RoomType.CHEST, affixes.filter { it.type == AffixType.EXTRA_CHEST_WEIGHT }.sumOf { it.value.toInt().coerceAtLeast(0) })
+        add(inori.roguecore.dungeon.room.RoomType.SHRINE, affixes.filter { it.type == AffixType.EXTRA_SHRINE_WEIGHT }.sumOf { it.value.toInt().coerceAtLeast(0) })
+        add(inori.roguecore.dungeon.room.RoomType.FORGE, affixes.filter { it.type == AffixType.EXTRA_FORGE_WEIGHT }.sumOf { it.value.toInt().coerceAtLeast(0) })
+        val hiddenBonus = affixes.filter { it.type == AffixType.EXTRA_HIDDEN_CHANCE }.sumOf { it.value }.coerceAtLeast(0.0)
+        return config.copy(
+            hiddenRoomChance = (config.hiddenRoomChance + hiddenBonus).coerceAtMost(1.0),
+            roomWeightModifiers = roomWeights
+        )
     }
 
     private fun notifyAffixes(player: Player, instance: DungeonInstance) {
@@ -135,10 +170,14 @@ object DungeonManager {
             PlayerDataManager.recordRunStart(player.uniqueId)
             BalanceStatsManager.recordFloorEntered(instance.config.floorNumber)
             RunSummaryManager.startRun(player, instance.config.floorNumber)
+            PlayerAccessoryData.clear(player)
             TalentManager.applyTalents(player)
         }
 
         notifyAffixes(player, instance)
+        if (startRun) {
+            RunModifierManager.applyFloorProphecyAffix(player, instance)
+        }
         DungeonLootManager.refreshEquippedSetBonuses(player)
         DungeonHudManager.attach(player)
         DungeonSceneCueManager.showDungeonEntry(player, instance)
@@ -179,9 +218,12 @@ object DungeonManager {
         PlayerBoonData.clearBoons(player)
         RunCurseManager.clear(player)
         PlayerRelicData.clearRelics(player)
+        PlayerAccessoryData.clear(player)
         RunMilestoneManager.clear(player.uniqueId)
         RunModifierManager.clear(player.uniqueId)
+        TalentManager.removeTalents(player)
         DungeonBoundItem.clearFromPlayer(player)
+        ForgeMaterialManager.clear(player.uniqueId)
         DungeonGuiGuard.unlock(player)
         DungeonHudManager.detach(player)
         player.sendMessage("§e你离线期间本次冒险已经结束，临时状态已自动结算并清理。")
@@ -199,13 +241,14 @@ object DungeonManager {
 
         returnLocations.putIfAbsent(player.uniqueId, player.location.clone())
         instance.players.add(player.uniqueId)
-        playerDungeonMap[player.uniqueId] = dungeonId
+        playerDungeonMap[player.uniqueId] = instance.id
         PartyManager.clearDungeonReconnect(player.uniqueId)
         PartyManager.onPlayerJoin(player)
         player.teleport(instance.getSpawnLocation())
         TalentManager.applyTalents(player)
         PlayerBoonData.reapply(player)
         RunCurseManager.reapply(player)
+        PlayerAccessoryData.reapply(player)
         notifyAffixes(player, instance)
         DungeonLootManager.refreshEquippedSetBonuses(player)
         DungeonHudManager.attach(player)
@@ -254,17 +297,32 @@ object DungeonManager {
 
         if (route != null) {
             for (uuid in current.players) {
-                Bukkit.getPlayer(uuid)?.let { RunMilestoneManager.onRouteSelected(it, route) }
+                Bukkit.getPlayer(uuid)?.let { player ->
+                    RunMilestoneManager.onRouteSelected(player, route)
+                    BoonEffectHandler.onRouteSelected(player, route)
+                    val relicReward = RelicEffectHandler.getRouteStreakReward(player) * route.rewardLevel
+                    if (relicReward > 0) {
+                        ShardRewardManager.addRunShards(player.uniqueId, relicReward)
+                        player.sendMessage("§d路线遗物因 §f${route.displayName} §d获得 §e$relicReward §d本局碎片。")
+                    }
+                }
                 RunSummaryManager.onRouteSelected(uuid, route)
                 BalanceStatsManager.recordRouteSelected(route)
             }
         }
 
         val nextFloor = current.config.floorNumber + 1
-        val routeWeightBonus = if (requestedBy != null && route != null) {
+        val unlockRouteWeightBonus = if (requestedBy != null && route != null) {
             UnlockManager.getRouteWeightBonus(requestedBy, route)
         } else {
             emptyMap()
+        }
+        val modifierRouteWeightBonus = requestedBy
+            ?.let(Bukkit::getPlayer)
+            ?.let(RunModifierManager::getRoomWeightBonus)
+            ?: emptyMap()
+        val routeWeightBonus = (unlockRouteWeightBonus.keys + modifierRouteWeightBonus.keys).associateWith { type ->
+            (unlockRouteWeightBonus[type] ?: 0) + (modifierRouteWeightBonus[type] ?: 0)
         }
         val routeHiddenBonus = if (requestedBy != null && route != null) {
             UnlockManager.getRouteHiddenBonus(requestedBy, route)
@@ -290,6 +348,8 @@ object DungeonManager {
             RunSummaryManager.onFloorEntered(uuid, nextConfig.floorNumber)
             player.teleport(nextInstance.getSpawnLocation())
             notifyAffixes(player, nextInstance)
+            RunModifierManager.applyFloorProphecyAffix(player, nextInstance)
+            PlayerAccessoryData.reapply(player)
             DungeonLootManager.refreshEquippedSetBonuses(player)
             DungeonHudManager.attach(player)
             val routeText = route?.let { " §7(${it.displayName})" } ?: ""
@@ -345,7 +405,7 @@ object DungeonManager {
         PartyManager.onDungeonMemberRemoved(player.uniqueId, dungeonId)
         RoomCombatManager.onPlayerLeave(player)
 
-        // 结算碎片（如果死亡时已结算过，这里 settle 返回 0）
+        RunModifierManager.onRunEnding(player, instance, death = false)
         val shards = ShardRewardManager.settle(player.uniqueId)
         RunSummaryManager.finish(player, instance)
         if (shards > 0) {
@@ -356,6 +416,7 @@ object DungeonManager {
         PlayerBoonData.clearBoons(player)
         RunCurseManager.clear(player)
         PlayerRelicData.clearRelics(player)
+        PlayerAccessoryData.clear(player)
         RunMilestoneManager.clear(player.uniqueId)
         RunModifierManager.clear(player.uniqueId)
         TalentManager.removeTalents(player)
@@ -365,7 +426,6 @@ object DungeonManager {
         DungeonGuiGuard.unlock(player)
         DungeonHudManager.detach(player)
 
-        // 传送回原位
         val returnLoc = returnLocations.remove(player.uniqueId)
         if (returnLoc != null) {
             player.teleport(returnLoc)
@@ -374,7 +434,6 @@ object DungeonManager {
             player.teleport(mainWorld.spawnLocation)
         }
 
-        // 副本没人了就销毁
         if (instance != null && instance.players.isEmpty()) {
             destroyDungeon(dungeonId)
         }
@@ -431,6 +490,7 @@ object DungeonManager {
                 PlayerBoonData.clearBoons(player)
                 RunCurseManager.clear(player)
                 PlayerRelicData.clearRelics(player)
+                PlayerAccessoryData.clear(player)
                 RunMilestoneManager.clear(uuid)
                 RunModifierManager.clear(uuid)
                 TalentManager.removeTalents(player)

@@ -239,6 +239,15 @@ affixes:
     min-floor: 48
     weight: 10
     advanced: true
+  oracle_corridor:
+    name: "§d预言回廊"
+    description: "进入本层时生成一个房间预言，完成目标房间后获得额外收益"
+    type: FLOOR_PROPHECY
+    value: 1
+    difficulty: false
+    min-floor: 12
+    weight: 14
+    advanced: true
 
   exp_lean_blood:
     name: "§c稀血薄雾"
@@ -405,7 +414,7 @@ affixes:
     weight: 13
     advanced: true
   exp_thirst_fangs:
-    name: "§c饥渴獠牙"
+    name: "§c渴血獠痕"
     description: "怪物攻击吸血 6%"
     type: MOB_LIFESTEAL
     value: 0.06
@@ -430,4 +439,293 @@ affixes:
     difficulty: false
     min-floor: 18
     weight: 15
+    advanced: true
+
+  exp2_affix_01:
+    name: "§6折价巡商"
+    description: "本层商店价格降低"
+    type: SHOP_PRICE_MODIFY
+    value: 0.08
+    difficulty: false
+    min-floor: 12
+    weight: 16
+    advanced: true
+  exp2_affix_02:
+    name: "§5封印回廊"
+    description: "封印宝箱的后续战斗奖励提高"
+    type: SEALED_CHEST_REWARD_MODIFY
+    value: 16
+    difficulty: false
+    min-floor: 16
+    weight: 15
+    advanced: true
+  exp2_affix_03:
+    name: "§6精英赏格"
+    description: "精英房通关时额外获得本局碎片"
+    type: ELITE_SHARD_FLAT
+    value: 28
+    difficulty: false
+    min-floor: 18
+    weight: 14
+    advanced: true
+  exp2_affix_04:
+    name: "§6王冠悬赏"
+    description: "Boss 房通关时额外获得本局碎片"
+    type: BOSS_SHARD_FLAT
+    value: 46
+    difficulty: false
+    min-floor: 24
+    weight: 13
+    advanced: true
+  exp2_affix_05:
+    name: "§9暗门财脉"
+    description: "隐藏房额外获得本局碎片"
+    type: HIDDEN_SHARD_FLAT
+    value: 36
+    difficulty: false
+    min-floor: 20
+    weight: 13
+    advanced: true
+  exp2_affix_06:
+    name: "§6箱中兵影"
+    description: "宝箱额外吐出装备的概率提高"
+    type: CHEST_GEAR_CHANCE
+    value: 0.16
+    difficulty: false
+    min-floor: 16
+    weight: 14
+    advanced: true
+  exp2_affix_07:
+    name: "§d遗物回声"
+    description: "遗物选择候选数量提高"
+    type: RELIC_OFFER_BONUS
+    value: 1
+    difficulty: false
+    min-floor: 26
+    weight: 12
+    advanced: true
+  exp2_affix_08:
+    name: "§d神恩回响"
+    description: "神恩选择候选数量提高"
+    type: BOON_OFFER_BONUS
+    value: 1
+    difficulty: false
+    min-floor: 18
+    weight: 13
+    advanced: true
+  exp2_affix_09:
+    name: "§c骨鼓压阵"
+    description: "骨鼓压阵会改变本层规则，触发MOB_DAMAGE_MULTIPLY相关影响"
+    type: MOB_DAMAGE_MULTIPLY
+    value: 1.206
+    difficulty: true
+    min-floor: 19
+    weight: 20
+    advanced: true
+  exp2_affix_10:
+    name: "§6清场献税"
+    description: "清场献税会改变本层规则，触发COMBAT_SHARD_FLAT相关影响"
+    type: COMBAT_SHARD_FLAT
+    value: 11
+    difficulty: false
+    min-floor: 21
+    weight: 20
+    advanced: true
+  exp2_affix_11:
+    name: "§6精英暗匙"
+    description: "精英暗匙会改变本层规则，触发ELITE_KEY_CHANCE相关影响"
+    type: ELITE_KEY_CHANCE
+    value: 0.105
+    difficulty: false
+    min-floor: 23
+    weight: 19
+    advanced: true
+  exp2_affix_12:
+    name: "§6王冠炉核"
+    description: "王冠炉核会改变本层规则，触发BOSS_EMBER_BONUS相关影响"
+    type: BOSS_EMBER_BONUS
+    value: 13
+    difficulty: false
+    min-floor: 25
+    weight: 19
+    advanced: true
+  exp2_affix_13:
+    name: "§c濒危回廊"
+    description: "濒危回廊会改变本层规则，触发LOW_HEALTH_PRESSURE相关影响"
+    type: LOW_HEALTH_PRESSURE
+    value: 0.117
+    difficulty: true
+    min-floor: 27
+    weight: 18
+    advanced: true
+  exp2_affix_14:
+    name: "§c活髓墙根"
+    description: "活髓墙根会改变本层规则，触发MOB_REGEN相关影响"
+    type: MOB_REGEN
+    value: 0.123
+    difficulty: true
+    min-floor: 29
+    weight: 18
+    advanced: true
+  exp2_affix_15:
+    name: "§c壳生怪潮"
+    description: "壳生怪潮会改变本层规则，触发MOB_SPAWN_SHIELD相关影响"
+    type: MOB_SPAWN_SHIELD
+    value: 16
+    difficulty: true
+    min-floor: 31
+    weight: 17
+    advanced: true
+  exp2_affix_16:
+    name: "§c断命狂鼓"
+    description: "断命狂鼓会改变本层规则，触发MOB_LOW_HEALTH_RAGE相关影响"
+    type: MOB_LOW_HEALTH_RAGE
+    value: 0.135
+    difficulty: true
+    min-floor: 33
+    weight: 17
+    advanced: true
+  exp2_affix_17:
+    name: "§c燃爪残痕"
+    description: "燃爪残痕会改变本层规则，触发MOB_FIRE_ATTACK相关影响"
+    type: MOB_FIRE_ATTACK
+    value: 18
+    difficulty: true
+    min-floor: 35
+    weight: 16
+    advanced: true
+  exp2_affix_18:
+    name: "§c虚界潮汐"
+    description: "虚界潮汐会改变本层规则，触发VOID_FIELD相关影响"
+    type: VOID_FIELD
+    value: 19
+    difficulty: true
+    min-floor: 37
+    weight: 16
+    advanced: true
+  exp2_affix_19:
+    name: "§c折疗盐雾"
+    description: "折疗盐雾会改变本层规则，触发HEALING_REDUCE相关影响"
+    type: HEALING_REDUCE
+    value: 0.153
+    difficulty: true
+    min-floor: 39
+    weight: 15
+    advanced: true
+  exp2_affix_20:
+    name: "§c饥牙走廊"
+    description: "饥牙走廊会改变本层规则，触发MOB_LIFESTEAL相关影响"
+    type: MOB_LIFESTEAL
+    value: 0.159
+    difficulty: true
+    min-floor: 41
+    weight: 15
+    advanced: true
+  exp2_affix_21:
+    name: "§c王座震怒"
+    description: "王座震怒会改变本层规则，触发BOSS_DAMAGE_MULTIPLY相关影响"
+    type: BOSS_DAMAGE_MULTIPLY
+    value: 1.41
+    difficulty: true
+    min-floor: 43
+    weight: 14
+    advanced: true
+  exp2_affix_22:
+    name: "§6余烬清算"
+    description: "余烬清算会改变本层规则，触发COMBAT_EMBER_FLAT相关影响"
+    type: COMBAT_EMBER_FLAT
+    value: 23
+    difficulty: false
+    min-floor: 45
+    weight: 14
+    advanced: true
+  exp2_affix_23:
+    name: "§6暗影夹层"
+    description: "暗影夹层会改变本层规则，触发HIDDEN_LOOT_CHANCE相关影响"
+    type: HIDDEN_LOOT_CHANCE
+    value: 0.177
+    difficulty: false
+    min-floor: 47
+    weight: 13
+    advanced: true
+  exp2_affix_24:
+    name: "§6神恩顺风"
+    description: "神恩顺风会改变本层规则，触发BOON_LUCK相关影响"
+    type: BOON_LUCK
+    value: 25
+    difficulty: false
+    min-floor: 49
+    weight: 13
+    advanced: true
+  exp2_affix_25:
+    name: "§6星界邀函"
+    description: "星界邀函会改变本层规则，触发BOSS_RELIC_CHANCE相关影响"
+    type: BOSS_RELIC_CHANCE
+    value: 0.189
+    difficulty: false
+    min-floor: 51
+    weight: 12
+    advanced: true
+  exp2_affix_26:
+    name: "§6宝箱银矿"
+    description: "宝箱银矿会改变本层规则，触发CHEST_SHARD_BONUS相关影响"
+    type: CHEST_SHARD_BONUS
+    value: 27
+    difficulty: false
+    min-floor: 53
+    weight: 12
+    advanced: true
+  exp2_affix_27:
+    name: "§d事件潮汐"
+    description: "本层事件类房间整体权重提高"
+    type: EXTRA_EVENT_ROOM_WEIGHT
+    value: 4
+    difficulty: false
+    min-floor: 18
+    weight: 15
+    advanced: true
+  exp2_affix_28:
+    name: "§6宝库牵引"
+    description: "本层宝箱房权重提高"
+    type: EXTRA_CHEST_WEIGHT
+    value: 7
+    difficulty: false
+    min-floor: 20
+    weight: 15
+    advanced: true
+  exp2_affix_29:
+    name: "§f圣像巡游"
+    description: "本层神龛房权重提高"
+    type: EXTRA_SHRINE_WEIGHT
+    value: 6
+    difficulty: false
+    min-floor: 22
+    weight: 14
+    advanced: true
+  exp2_affix_30:
+    name: "§6炉火航线"
+    description: "本层铁匠房权重提高"
+    type: EXTRA_FORGE_WEIGHT
+    value: 6
+    difficulty: false
+    min-floor: 24
+    weight: 14
+    advanced: true
+  exp2_affix_31:
+    name: "§5暗门低语"
+    description: "本层隐藏房生成概率提高"
+    type: EXTRA_HIDDEN_CHANCE
+    value: 0.12
+    difficulty: false
+    min-floor: 26
+    weight: 13
+    advanced: true
+  exp2_affix_32:
+    name: "§3撤离金线"
+    description: "撤离提现比例提高"
+    type: EXTRACTION_RATIO_MODIFY
+    value: 0.12
+    difficulty: false
+    min-floor: 28
+    weight: 13
     advanced: true

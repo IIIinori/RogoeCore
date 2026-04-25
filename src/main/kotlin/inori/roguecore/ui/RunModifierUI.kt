@@ -80,6 +80,7 @@ object RunModifierUI {
                     add("§7数值: §e${formatValue(modifier.value)}")
                     if (modifier.remainingRooms > 0) add("§7剩余房间: §b${modifier.remainingRooms}")
                     if (modifier.charges > 0) add("§7剩余触发: §d${modifier.charges}")
+                    addAll(RunModifierManager.describePayload(modifier))
                 }
             }
         }

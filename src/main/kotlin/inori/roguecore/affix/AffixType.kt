@@ -55,5 +55,35 @@ enum class AffixType {
     /** Boss 房额外遗物祈愿概率 */
     BOSS_RELIC_CHANCE,
     /** 宝箱房额外碎片 */
-    CHEST_SHARD_BONUS
+    CHEST_SHARD_BONUS,
+    /** 本层事件房权重提高 */
+    EXTRA_EVENT_ROOM_WEIGHT,
+    /** 本层宝箱房权重提高 */
+    EXTRA_CHEST_WEIGHT,
+    /** 本层神龛房权重提高 */
+    EXTRA_SHRINE_WEIGHT,
+    /** 本层铁匠房权重提高 */
+    EXTRA_FORGE_WEIGHT,
+    /** 本层隐藏房概率提高 */
+    EXTRA_HIDDEN_CHANCE,
+    /** 撤离/结算收益修正 */
+    EXTRACTION_RATIO_MODIFY,
+    /** 商店价格修正 */
+    SHOP_PRICE_MODIFY,
+    /** 封印宝箱后续奖励修正 */
+    SEALED_CHEST_REWARD_MODIFY,
+    /** 精英房额外碎片 */
+    ELITE_SHARD_FLAT,
+    /** Boss 房额外碎片 */
+    BOSS_SHARD_FLAT,
+    /** 隐藏房额外碎片 */
+    HIDDEN_SHARD_FLAT,
+    /** 宝箱额外装备概率 */
+    CHEST_GEAR_CHANCE,
+    /** 遗物候选加成 */
+    RELIC_OFFER_BONUS,
+    /** 神恩候选加成 */
+    BOON_OFFER_BONUS,
+    /** 进入本层时生成房间预言 */
+    FLOOR_PROPHECY
 }

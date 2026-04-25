@@ -174,6 +174,36 @@ object AffixManager {
 
     fun getChestShardBonus(instance: DungeonInstance): Int = intSum(AffixType.CHEST_SHARD_BONUS, instance)
 
+    fun getExtraEventRoomWeight(instance: DungeonInstance): Int = intSum(AffixType.EXTRA_EVENT_ROOM_WEIGHT, instance)
+
+    fun getExtraChestWeight(instance: DungeonInstance): Int = intSum(AffixType.EXTRA_CHEST_WEIGHT, instance)
+
+    fun getExtraShrineWeight(instance: DungeonInstance): Int = intSum(AffixType.EXTRA_SHRINE_WEIGHT, instance)
+
+    fun getExtraForgeWeight(instance: DungeonInstance): Int = intSum(AffixType.EXTRA_FORGE_WEIGHT, instance)
+
+    fun getExtraHiddenChance(instance: DungeonInstance): Double = sum(AffixType.EXTRA_HIDDEN_CHANCE, instance)
+
+    fun getExtractionRatioModifier(instance: DungeonInstance): Double = sum(AffixType.EXTRACTION_RATIO_MODIFY, instance)
+
+    fun getShopPriceModifier(instance: DungeonInstance): Double = sum(AffixType.SHOP_PRICE_MODIFY, instance)
+
+    fun getSealedChestRewardModifier(instance: DungeonInstance): Int = intSum(AffixType.SEALED_CHEST_REWARD_MODIFY, instance)
+
+    fun getEliteShardFlat(instance: DungeonInstance): Int = intSum(AffixType.ELITE_SHARD_FLAT, instance)
+
+    fun getBossShardFlat(instance: DungeonInstance): Int = intSum(AffixType.BOSS_SHARD_FLAT, instance)
+
+    fun getHiddenShardFlat(instance: DungeonInstance): Int = intSum(AffixType.HIDDEN_SHARD_FLAT, instance)
+
+    fun getChestGearChance(instance: DungeonInstance): Double = sum(AffixType.CHEST_GEAR_CHANCE, instance)
+
+    fun getRelicOfferBonus(instance: DungeonInstance): Int = intSum(AffixType.RELIC_OFFER_BONUS, instance)
+
+    fun getBoonOfferBonus(instance: DungeonInstance): Int = intSum(AffixType.BOON_OFFER_BONUS, instance)
+
+    fun getFloorProphecyPower(instance: DungeonInstance): Int = intSum(AffixType.FLOOR_PROPHECY, instance)
+
     fun getHealingMultiplier(instance: DungeonInstance): Double {
         val reduction = sum(AffixType.HEALING_REDUCE, instance).coerceIn(0.0, 0.9)
         return 1.0 - reduction

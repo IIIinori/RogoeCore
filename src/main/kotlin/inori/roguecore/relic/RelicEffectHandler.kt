@@ -3,6 +3,8 @@ package inori.roguecore.relic
 import inori.roguecore.boon.PlayerBoonData
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonManager
+import inori.roguecore.dungeon.room.RoomType
+import inori.roguecore.modifier.RunModifierManager
 import org.bukkit.attribute.Attribute
 import org.bukkit.entity.Entity
 import org.bukkit.entity.LivingEntity
@@ -76,6 +78,24 @@ object RelicEffectHandler {
                         }
                     }
                 }
+                RelicEffectType.RELIC_CHARGE_ON_ROOM -> {
+                    RunModifierManager.chargeRelicRule(
+                        player,
+                        relic.id,
+                        relic.name,
+                        relic.value.toInt().coerceAtLeast(1),
+                        "boon_echo",
+                        1
+                    )
+                }
+                RelicEffectType.RELIC_SPEND_CHARGE_FOR_REWARD -> {
+                    val max = relic.threshold.toInt().coerceAtLeast(3)
+                    RunModifierManager.chargeRelicRule(player, relic.id, relic.name, max, "shards", relic.value.toInt().coerceAtLeast(1))
+                }
+                RelicEffectType.RELIC_PAY_DEBT_WITH_CHARGE -> {
+                    val max = relic.threshold.toInt().coerceAtLeast(2)
+                    RunModifierManager.chargeRelicRule(player, relic.id, relic.name, max, "charge_only", 1)
+                }
                 else -> Unit
             }
         }
@@ -90,6 +110,21 @@ object RelicEffectHandler {
         }
         val amplifier = (shield / 4.0).toInt().coerceIn(0, 9)
         player.addPotionEffect(PotionEffect(PotionEffectType.ABSORPTION, 20 * 18, amplifier, true, true, true))
+    }
+
+    fun onEventRoomEntered(player: Player, roomType: RoomType) {
+        if (roomType.isCombatRoomLike()) return
+        for (relic in PlayerRelicData.getRelics(player)) {
+            if (relic.effectType != RelicEffectType.RELIC_CHARGE_ON_EVENT) continue
+            RunModifierManager.chargeRelicRule(
+                player,
+                relic.id,
+                relic.name,
+                relic.value.toInt().coerceAtLeast(1),
+                "boon_mutation",
+                1
+            )
+        }
     }
 
     fun getBonusLootChance(player: Player): Double {
@@ -204,6 +239,50 @@ object RelicEffectHandler {
         return PlayerRelicData.getRelics(player)
             .filter { it.effectType == RelicEffectType.CHEST_EXTRA_LOOT_CHANCE }
             .sumOf { it.value }
+    }
+
+    fun getShopFirstDiscountPercent(player: Player): Double = sumValue(player, RelicEffectType.SHOP_FIRST_DISCOUNT)
+
+    fun getGambleFailProtectionPercent(player: Player): Double = sumValue(player, RelicEffectType.GAMBLE_FAIL_PROTECTION)
+
+    fun getSealedChestBonus(player: Player): Int = intValue(player, RelicEffectType.SEALED_CHEST_BONUS)
+
+    fun getShrinePurifyReward(player: Player): Int = intValue(player, RelicEffectType.SHRINE_PURIFY_REWARD)
+
+    fun getTrialRefundMaterial(player: Player): Int = intValue(player, RelicEffectType.TRIAL_REFUND_MATERIAL)
+
+    fun getRouteStreakReward(player: Player): Int = intValue(player, RelicEffectType.ROUTE_STREAK_REWARD)
+
+    fun getForgeAccelerationDiscountPercent(player: Player): Double = sumValue(player, RelicEffectType.FORGE_ACCELERATION_DISCOUNT)
+
+    fun getIdentifyAccelerationDiscountPercent(player: Player): Double = sumValue(player, RelicEffectType.IDENTIFY_ACCELERATION_DISCOUNT)
+
+    fun getRoomClearShardBonus(player: Player): Int = intValue(player, RelicEffectType.ROOM_CLEAR_SHARD_BONUS)
+
+    fun getEliteShardBonus(player: Player): Int = intValue(player, RelicEffectType.ELITE_SHARD_BONUS)
+
+    fun getBossShardBonus(player: Player): Int = intValue(player, RelicEffectType.BOSS_SHARD_BONUS)
+
+    fun getHiddenShardBonus(player: Player): Int = intValue(player, RelicEffectType.HIDDEN_SHARD_BONUS)
+
+    fun getChestShardBonus(player: Player): Int = intValue(player, RelicEffectType.CHEST_SHARD_BONUS)
+
+    fun getLowHealthCashoutBonus(player: Player): Double = sumValue(player, RelicEffectType.LOW_HEALTH_CASHOUT_BONUS)
+
+    fun getMaterialWorkshopDiscount(player: Player): Double = sumValue(player, RelicEffectType.MATERIAL_WORKSHOP_DISCOUNT)
+
+    fun getSalvageMaterialBonus(player: Player): Int = intValue(player, RelicEffectType.SALVAGE_MATERIAL_BONUS)
+
+    private fun sumValue(player: Player, type: RelicEffectType): Double {
+        return PlayerRelicData.getRelics(player).filter { it.effectType == type }.sumOf { it.value }
+    }
+
+    private fun intValue(player: Player, type: RelicEffectType): Int {
+        return PlayerRelicData.getRelics(player).filter { it.effectType == type }.sumOf { it.value.toInt().coerceAtLeast(0) }
+    }
+
+    private fun RoomType.isCombatRoomLike(): Boolean {
+        return this == RoomType.COMBAT || this == RoomType.ELITE || this == RoomType.BOSS
     }
 
     private fun resolvePlayerDamager(entity: Entity): Player? {

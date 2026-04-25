@@ -10,18 +10,18 @@
 #   暴击几率: +3~5 (%)
 
 rules:
-  chest-chance: 0.45
+  chest-chance: 0.55
   elite-count: 1
-  boss-count: 1
+  boss-count: 2
   ap-percentage-mark: "(%)"
   drop-protection:
     enabled: true
-    empty-slot-weight: 2.1
-    duplicate-slot-penalty: 0.72
-    upgrade-score-scale: 0.02
-    max-upgrade-bonus: 0.75
-    downgrade-penalty-scale: 0.012
-    min-weight-factor: 0.25
+    empty-slot-weight: 3.0
+    duplicate-slot-penalty: 0.55
+    upgrade-score-scale: 0.08
+    max-upgrade-bonus: 2.4
+    downgrade-penalty-scale: 0.04
+    min-weight-factor: 0.08
   source-bonus:
     BOSS:
       extra-affixes: 1
@@ -159,36 +159,36 @@ rarities:
     name: "普通"
     color: "§f"
     weight: 58
-    multiplier: 1.0
+    multiplier: 0.60
     max-affixes: 0
 
   magic:
     name: "精制"
     color: "§b"
     weight: 28
-    multiplier: 1.12
-    max-affixes: 1
+    multiplier: 1.45
+    max-affixes: 2
 
   rare:
     name: "稀有"
     color: "§d"
     weight: 11
-    multiplier: 1.25
-    max-affixes: 2
+    multiplier: 2.50
+    max-affixes: 4
 
   epic:
     name: "史诗"
     color: "§6"
     weight: 3
-    multiplier: 1.42
-    max-affixes: 2
+    multiplier: 4.20
+    max-affixes: 6
 
   legendary:
     name: "传说"
     color: "§e"
     weight: 1
-    multiplier: 1.65
-    max-affixes: 3
+    multiplier: 7.00
+    max-affixes: 8
 
 sets:
   crypt:
@@ -295,7 +295,7 @@ affixes:
     lore:
       - "§8偏向更猛烈的进攻面板。"
     attributes:
-      物理攻击: [3, 6]
+      物理攻击: [4, 48]
 
   swift:
     name: "迅击"
@@ -311,7 +311,7 @@ affixes:
     lore:
       - "§8挥砍节奏被进一步拉快。"
     attributes:
-      攻击速度%: [4, 8]
+      攻击速度%: [5, 45]
 
   precise:
     name: "锐眼"
@@ -330,7 +330,7 @@ affixes:
     lore:
       - "§8更容易打出关键一击。"
     attributes:
-      暴击几率%: [3, 6]
+      暴击几率%: [4, 34]
 
   warded:
     name: "壁守"
@@ -347,8 +347,8 @@ affixes:
     lore:
       - "§8更偏向稳健承伤的部位专精。"
     attributes:
-      生命上限: [18, 30]
-      物理防御: [2, 4]
+      生命上限: [27, 237]
+      物理防御: [3, 31]
 
   rooted:
     name: "定界"
@@ -366,8 +366,8 @@ affixes:
     lore:
       - "§8让下盘更稳定，也更难被击穿。"
     attributes:
-      物理防御: [3, 6]
-      闪避几率%: [1, 3]
+      物理防御: [4, 48]
+      闪避几率%: [1, 17]
 
   fortified:
     name: "壁垒"
@@ -384,7 +384,7 @@ affixes:
     lore:
       - "§8更适合硬扛正面战斗。"
     attributes:
-      物理防御: [4, 8]
+      物理防御: [7, 64]
 
   vigorous:
     name: "旺盛"
@@ -400,7 +400,7 @@ affixes:
     lore:
       - "§8提供更稳定的生存空间。"
     attributes:
-      生命上限: [20, 40]
+      生命上限: [30, 316]
 
   evasive:
     name: "幻步"
@@ -418,7 +418,7 @@ affixes:
     lore:
       - "§8让致命攻击有机会擦身而过。"
     attributes:
-      闪避几率%: [2, 5]
+      闪避几率%: [2, 28]
 
   hunter:
     name: "猎手"
@@ -436,7 +436,7 @@ affixes:
     lore:
       - "§8强化收割和暴击节奏。"
     attributes:
-      暴击几率%: [2, 5]
+      暴击几率%: [2, 28]
 
   leech:
     name: "嗜血"
@@ -454,7 +454,7 @@ affixes:
     lore:
       - "§8让进攻带回一部分续航。"
     attributes:
-      生命偷取%: [2, 4]
+      生命偷取%: [2, 22]
 
   cruel:
     name: "残酷"
@@ -469,7 +469,7 @@ affixes:
     lore:
       - "§8将暴击转化为更夸张的爆发。"
     attributes:
-      暴击伤害%: [6, 12]
+      暴击伤害%: [8, 67]
 
   gale:
     name: "疾行"
@@ -487,7 +487,7 @@ affixes:
     lore:
       - "§8更适合走位与拉扯。"
     attributes:
-      移动速度%: [3, 6]
+      移动速度%: [4, 34]
 
   thorned:
     name: "荆棘"
@@ -502,7 +502,7 @@ affixes:
     lore:
       - "§8挨打时也会让敌人付出代价。"
     attributes:
-      反伤比例%: [3, 6]
+      反伤比例%: [4, 34]
 
   guardian:
     name: "守誓"
@@ -521,8 +521,8 @@ affixes:
     lore:
       - "§8在长线推进中提供更扎实的防线。"
     attributes:
-      生命上限: [16, 30]
-      物理防御: [2, 5]
+      生命上限: [23, 237]
+      物理防御: [3, 41]
 
   shadow:
     name: "影行"
@@ -541,8 +541,8 @@ affixes:
     lore:
       - "§8虚空回响让攻防节奏更飘忽。"
     attributes:
-      移动速度%: [4, 7]
-      闪避几率%: [2, 4]
+      移动速度%: [5, 39]
+      闪避几率%: [2, 22]
 
   executioner:
     name: "行刑"
@@ -558,8 +558,8 @@ affixes:
     lore:
       - "§8更适合收尾与终局斩杀。"
     attributes:
-      物理攻击: [4, 7]
-      暴击伤害%: [8, 14]
+      物理攻击: [7, 56]
+      暴击伤害%: [11, 77]
 
   tomb_king:
     name: "葬王"
@@ -579,8 +579,8 @@ affixes:
     lore:
       - "§8只会出现在墓穴深处的重宝上。"
     attributes:
-      生命上限: [24, 40]
-      反伤比例%: [4, 7]
+      生命上限: [36, 316]
+      反伤比例%: [5, 39]
 
   hellforged:
     name: "狱铸"
@@ -599,8 +599,8 @@ affixes:
     lore:
       - "§8炉心压出的装备才会留下这种烙印。"
     attributes:
-      物理攻击: [5, 9]
-      生命偷取%: [2, 5]
+      物理攻击: [8, 71]
+      生命偷取%: [2, 28]
 
   abyssal:
     name: "深渊"
@@ -621,8 +621,8 @@ affixes:
     lore:
       - "§8只会在高层重宝中回响的虚空词条。"
     attributes:
-      物理攻击: [6, 10]
-      闪避几率%: [2, 4]
+      物理攻击: [9, 79]
+      闪避几率%: [2, 22]
 
   sealed:
     name: "封印"
@@ -642,8 +642,8 @@ affixes:
     lore:
       - "§8来自秘库暗格的残留印记。"
     attributes:
-      生命上限: [18, 34]
-      暴击几率%: [2, 4]
+      生命上限: [27, 268]
+      暴击几率%: [2, 22]
 
   starfall:
     name: "坠星"
@@ -664,8 +664,204 @@ affixes:
     lore:
       - "§8终层珍品才可能染上的星坠碎辉。"
     attributes:
-      暴击几率%: [4, 7]
-      暴击伤害%: [10, 16]
+      暴击几率%: [5, 39]
+      暴击伤害%: [13, 90]
+
+  glacial:
+    name: "霜封"
+    type: PREFIX
+    group: guard_core
+    weight: 7
+    range: "16-30"
+    slots: [HEAD, CHEST, LEGS, FEET, OFF_HAND]
+    source-weight:
+      ELITE: 1.2
+      HIDDEN: 1.15
+    excludes: [mobility_guard]
+    lore:
+      - "§8冰层把冲击拆成迟缓的裂纹。"
+    attributes:
+      生命上限: [64, 611]
+      物理防御: [12, 109]
+
+  frostbite:
+    name: "霜咬"
+    type: SUFFIX
+    group: execution_core
+    weight: 6
+    range: "16-30"
+    slots: [HAND, OFF_HAND]
+    source-weight:
+      ELITE: 1.25
+      BOSS: 1.25
+    excludes: [tempo_core]
+    lore:
+      - "§8每次命中都像在裂缝里补上一层寒意。"
+    attributes:
+      物理攻击: [15, 142]
+      暴击伤害%: [16, 137]
+
+  molten:
+    name: "熔印"
+    type: PREFIX
+    group: power_core
+    weight: 7
+    range: "21-40"
+    slots: [HAND, CHEST, OFF_HAND]
+    sources: [ELITE, BOSS, HIDDEN]
+    slot-weight:
+      HAND: 1.35
+      CHEST: 1.15
+    source-weight:
+      BOSS: 1.35
+    excludes: [precision_core]
+    lore:
+      - "§8黑曜炉火把装备的轮廓重新烧定。"
+    attributes:
+      物理攻击: [26, 258]
+      生命偷取%: [6, 61]
+
+  astral:
+    name: "星轨"
+    type: SUFFIX
+    group: precision_core
+    weight: 6
+    range: "26-45"
+    slots: [HAND, HEAD, OFF_HAND]
+    sources: [ELITE, BOSS, HIDDEN]
+    excludes: [power_core]
+    lore:
+      - "§8星轨在下一次破绽前提前亮起。"
+    attributes:
+      暴击几率%: [11, 99]
+      攻击速度%: [10, 88]
+
+  royal:
+    name: "王庭"
+    type: PREFIX
+    group: relic_core
+    weight: 5
+    range: "31-55"
+    slots: [HEAD, CHEST, OFF_HAND]
+    sources: [BOSS, HIDDEN]
+    source-weight:
+      BOSS: 1.45
+      HIDDEN: 1.25
+    lore:
+      - "§8旧王庭的权柄仍压在装备边缘。"
+    attributes:
+      生命上限: [137, 1368]
+      暴击几率%: [9, 105]
+
+  sculked:
+    name: "永夜"
+    type: SUFFIX
+    group: sustain_core
+    weight: 5
+    range: "36-60"
+    slots: [HAND, CHEST, LEGS, OFF_HAND]
+    sources: [ELITE, BOSS, HIDDEN]
+    lore:
+      - "§8永夜核心会把受伤和反击都藏进黑暗。"
+    attributes:
+      生命偷取%: [9, 105]
+      反伤比例%: [9, 105]
+
+  stormbound:
+    name: "雷缚"
+    type: PREFIX
+    group: tempo_core
+    weight: 6
+    range: "46-70"
+    slots: [HAND, FEET, OFF_HAND]
+    sources: [CHEST, ELITE, BOSS]
+    source-weight:
+      ELITE: 1.3
+    excludes: [execution_core]
+    lore:
+      - "§8雷声被压进关节，推动下一次动作。"
+    attributes:
+      攻击速度%: [22, 231]
+      移动速度%: [17, 183]
+
+  drowned:
+    name: "沉潮"
+    type: SUFFIX
+    group: vitality_core
+    weight: 6
+    range: "51-75"
+    slots: [HEAD, CHEST, LEGS, FEET, OFF_HAND]
+    source-weight:
+      HIDDEN: 1.2
+      BOSS: 1.2
+    lore:
+      - "§8海底神殿的重压让防线更加绵长。"
+    attributes:
+      生命上限: [214, 2323]
+      物理防御: [34, 378]
+
+  mirrored:
+    name: "镜折"
+    type: PREFIX
+    group: mobility_guard
+    weight: 5
+    range: "61-85"
+    slots: [HEAD, CHEST, LEGS, FEET]
+    sources: [ELITE, BOSS, HIDDEN]
+    excludes: [guard_core]
+    lore:
+      - "§8攻击会先撞见一个慢半拍的镜影。"
+    attributes:
+      闪避几率%: [20, 235]
+      移动速度%: [24, 254]
+
+  gilded:
+    name: "金沙"
+    type: SUFFIX
+    group: crit_core
+    weight: 5
+    range: "71-90"
+    slots: [HAND, HEAD, OFF_HAND]
+    sources: [BOSS, HIDDEN]
+    excludes: [power_core]
+    lore:
+      - "§8金砂沿着弱点聚拢，像在标记收割时机。"
+    attributes:
+      暴击几率%: [26, 277]
+      暴击伤害%: [59, 635]
+
+  mechanized:
+    name: "机心"
+    type: PREFIX
+    group: tempo_core
+    weight: 5
+    range: "81-100"
+    slots: [HAND, CHEST, OFF_HAND]
+    sources: [ELITE, BOSS, HIDDEN]
+    source-weight:
+      BOSS: 1.3
+    lore:
+      - "§8齿轮咬合声让每一次进攻都更加精确。"
+    attributes:
+      物理攻击: [115, 1537]
+      攻击速度%: [41, 454]
+
+  apocalyptic:
+    name: "终焉"
+    type: SUFFIX
+    group: relic_core
+    weight: 4
+    range: "91-100"
+    slots: [HAND, HEAD, CHEST, LEGS, FEET, OFF_HAND]
+    sources: [BOSS, HIDDEN]
+    source-weight:
+      BOSS: 1.6
+      HIDDEN: 1.35
+    lore:
+      - "§8终焉王座的碎片仍在拒绝被任何规则束缚。"
+    attributes:
+      物理攻击: [138, 1810]
+      生命上限: [403, 4976]
 
 loot:
   crypt_blade:
@@ -680,8 +876,8 @@ loot:
     lore:
       - "§7轻便的短刃，适合快速收割残血敌人。"
     attributes:
-      物理攻击: [4, 6]
-      攻击速度%: [4, 6]
+      物理攻击: [5, 37]
+      攻击速度%: [5, 27]
 
   crypt_guard:
     name: "墓穴壁垒"
@@ -695,8 +891,8 @@ loot:
     lore:
       - "§7厚重但可靠的铠甲。"
     attributes:
-      生命上限: [20, 30]
-      物理防御: [3, 5]
+      生命上限: [28, 185]
+      物理防御: [4, 31]
 
   crypt_crown:
     name: "守灵头冠"
@@ -710,7 +906,7 @@ loot:
     lore:
       - "§7陪葬王者的冠饰，能强化冒险者的续航。"
     attributes:
-      生命上限: [26, 40]
+      生命上限: [36, 246]
 
   crypt_greaves:
     name: "守墓胫甲"
@@ -724,8 +920,8 @@ loot:
     lore:
       - "§7墓卫留下的旧甲片，仍能挡下不少伤害。"
     attributes:
-      物理防御: [3, 5]
-      生命上限: [12, 22]
+      物理防御: [4, 31]
+      生命上限: [16, 136]
 
   crypt_lantern:
     name: "幽光提灯"
@@ -739,8 +935,8 @@ loot:
     lore:
       - "§7灯火会在黑暗里牵引你的下一次机会。"
     attributes:
-      暴击几率%: [2, 4]
-      生命上限: [10, 20]
+      暴击几率%: [2, 20]
+      生命上限: [14, 123]
 
   nether_halberd:
     name: "深渊长戟"
@@ -754,7 +950,7 @@ loot:
     lore:
       - "§7专为重击打造的炽热兵器。"
     attributes:
-      物理攻击: [8, 11]
+      物理攻击: [11, 68]
 
   nether_boots:
     name: "熔火行者"
@@ -768,8 +964,8 @@ loot:
     lore:
       - "§7让你在战场上保持推进节奏。"
     attributes:
-      移动速度%: [4, 6]
-      物理防御: [3, 4]
+      移动速度%: [5, 27]
+      物理防御: [4, 24]
 
   nether_heart:
     name: "熔核护符"
@@ -783,8 +979,8 @@ loot:
     lore:
       - "§7高温熔核凝成的战场护符。"
     attributes:
-      生命上限: [35, 50]
-      物理攻击: [3, 5]
+      生命上限: [49, 308]
+      物理攻击: [4, 31]
 
   nether_mask:
     name: "焦骨战面"
@@ -798,8 +994,8 @@ loot:
     lore:
       - "§7戴上后能听见熔岩下的战鼓声。"
     attributes:
-      暴击几率%: [3, 5]
-      生命上限: [24, 36]
+      暴击几率%: [4, 23]
+      生命上限: [33, 222]
 
   nether_plate:
     name: "赤炉重甲"
@@ -813,8 +1009,8 @@ loot:
     lore:
       - "§7由冷却岩浆层层锻压而成。"
     attributes:
-      物理防御: [6, 9]
-      生命上限: [30, 44]
+      物理防御: [9, 55]
+      生命上限: [41, 271]
 
   nether_slicer:
     name: "熔牙弯刃"
@@ -828,8 +1024,8 @@ loot:
     lore:
       - "§7刀锋像仍在流动的熔浆。"
     attributes:
-      物理攻击: [7, 10]
-      生命偷取%: [2, 4]
+      物理攻击: [10, 62]
+      生命偷取%: [2, 20]
 
   end_spear:
     name: "虚空裂枪"
@@ -843,8 +1039,8 @@ loot:
     lore:
       - "§7来自虚空尽头的锋刃。"
     attributes:
-      物理攻击: [10, 14]
-      攻击速度%: [6, 9]
+      物理攻击: [14, 86]
+      攻击速度%: [7, 43]
 
   end_cloak:
     name: "逐界者披风"
@@ -858,8 +1054,8 @@ loot:
     lore:
       - "§7披上后仿佛能撕开空间。"
     attributes:
-      移动速度%: [5, 8]
-      生命上限: [24, 36]
+      移动速度%: [6, 37]
+      生命上限: [33, 222]
 
   hidden_relic:
     name: "秘库古戒"
@@ -873,8 +1069,8 @@ loot:
     lore:
       - "§7从无人知晓的暗室中找到的古旧戒印。"
     attributes:
-      生命上限: [20, 32]
-      移动速度%: [2, 4]
+      生命上限: [28, 198]
+      移动速度%: [2, 20]
 
   end_visor:
     name: "凝星面罩"
@@ -888,8 +1084,8 @@ loot:
     lore:
       - "§7星光被凝成狭窄视野，只留下杀意。"
     attributes:
-      暴击几率%: [5, 8]
-      闪避几率%: [2, 4]
+      暴击几率%: [6, 37]
+      闪避几率%: [2, 20]
 
   end_anchor:
     name: "界锚护手"
@@ -903,8 +1099,8 @@ loot:
     lore:
       - "§7将漂移的虚空力量短暂固定在掌心。"
     attributes:
-      物理攻击: [5, 8]
-      生命上限: [30, 45]
+      物理攻击: [8, 48]
+      生命上限: [41, 277]
 
   end_stride:
     name: "折界长靴"
@@ -918,5 +1114,1895 @@ loot:
     lore:
       - "§7每一步都像踏过一条细小裂隙。"
     attributes:
-      移动速度%: [7, 10]
-      闪避几率%: [3, 5]
+      移动速度%: [8, 47]
+      闪避几率%: [4, 23]
+
+  crypt_mace:
+    name: "守墓钉锤"
+    material: IRON_AXE
+    theme: crypt
+    tags: [assault, bulwark]
+    sources: [CHEST, ELITE]
+    range: "1-5"
+    weight: 15
+    equipment-slot: HAND
+    lore:
+      - "§7锤头上还残留着墓卫巡夜时敲击石门的凹痕。"
+    attributes:
+      物理攻击: [8, 48]
+      暴击伤害%: [5, 33]
+
+  crypt_hood:
+    name: "守夜兜帽"
+    material: CHAINMAIL_HELMET
+    theme: crypt
+    tags: [mobility, relic]
+    sources: [CHEST, HIDDEN]
+    range: "1-5"
+    weight: 13
+    equipment-slot: HEAD
+    lore:
+      - "§7兜帽内侧缝着一圈驱散低语的细小银线。"
+    attributes:
+      闪避几率%: [2, 20]
+      生命上限: [16, 136]
+
+  crypt_sabatons:
+    name: "墓径重靴"
+    material: CHAINMAIL_BOOTS
+    theme: crypt
+    tags: [bulwark]
+    sources: [CHEST, ELITE]
+    range: "1-5"
+    weight: 14
+    equipment-slot: FEET
+    lore:
+      - "§7厚重靴底能踩稳潮湿墓砖，不易被冲散阵脚。"
+    attributes:
+      物理防御: [3, 31]
+      移动速度%: [1, 14]
+
+  crypt_ossuary:
+    name: "藏骨护符"
+    material: BONE
+    theme: crypt
+    tags: [relic, bulwark]
+    sources: [HIDDEN, BOSS]
+    range: "1-5"
+    weight: 8
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7护符里封着无名守墓人的最后一次誓言。"
+    attributes:
+      生命上限: [30, 222]
+      反伤比例%: [2, 23]
+
+  crypt_hauberk:
+    name: "冷铁环甲"
+    material: CHAINMAIL_CHESTPLATE
+    theme: crypt
+    tags: [bulwark]
+    sources: [CHEST, ELITE]
+    range: "1-5"
+    weight: 13
+    equipment-slot: CHEST
+    lore:
+      - "§7密集铁环互相咬合，能把突袭的力道层层卸掉。"
+    attributes:
+      物理防御: [5, 44]
+      生命上限: [23, 172]
+
+  crypt_walker_legs:
+    name: "巡墓腿甲"
+    material: CHAINMAIL_LEGGINGS
+    theme: crypt
+    tags: [mobility, bulwark]
+    sources: [CHEST, ELITE]
+    range: "1-5"
+    weight: 12
+    equipment-slot: LEGS
+    lore:
+      - "§7腿甲轻到足以长巡，又硬到能挡下擦身一击。"
+    attributes:
+      移动速度%: [2, 20]
+      物理防御: [3, 24]
+
+  nether_cleaver:
+    name: "焦铁裂斧"
+    material: DIAMOND_AXE
+    theme: nether
+    tags: [assault]
+    sources: [ELITE, BOSS]
+    range: "6-10"
+    weight: 14
+    equipment-slot: HAND
+    lore:
+      - "§7斧刃像刚从炉膛里抽出，劈砍时会拖出暗红火线。"
+    attributes:
+      物理攻击: [13, 79]
+      暴击伤害%: [7, 47]
+
+  nether_leggings:
+    name: "渣铁腿铠"
+    material: DIAMOND_LEGGINGS
+    theme: nether
+    tags: [bulwark]
+    sources: [CHEST, ELITE]
+    range: "6-10"
+    weight: 14
+    equipment-slot: LEGS
+    lore:
+      - "§7凝固炉渣覆盖在腿甲外侧，走动时沙沙作响。"
+    attributes:
+      物理防御: [8, 48]
+      生命上限: [33, 233]
+
+  nether_furnace_core:
+    name: "炉心副核"
+    material: MAGMA_CREAM
+    theme: nether
+    tags: [relic, assault]
+    sources: [BOSS, HIDDEN]
+    range: "6-10"
+    weight: 9
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7副核仍在缓慢搏动，像把战意压成了余温。"
+    attributes:
+      生命偷取%: [4, 23]
+      物理攻击: [5, 44]
+
+  nether_scorch_mail:
+    name: "灼纹锁甲"
+    material: DIAMOND_CHESTPLATE
+    theme: nether
+    tags: [bulwark, assault]
+    sources: [ELITE, BOSS]
+    range: "6-10"
+    weight: 11
+    equipment-slot: CHEST
+    lore:
+      - "§7甲片上的灼纹会随心跳忽明忽暗。"
+    attributes:
+      物理防御: [8, 48]
+      反伤比例%: [4, 27]
+
+  nether_ember_band:
+    name: "余烬臂环"
+    material: BLAZE_ROD
+    theme: nether
+    tags: [relic, mobility]
+    sources: [CHEST, HIDDEN]
+    range: "6-10"
+    weight: 10
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7臂环里封着一段快要熄灭的火脉。"
+    attributes:
+      攻击速度%: [6, 37]
+      移动速度%: [2, 20]
+
+  nether_ashen_crown:
+    name: "灰烬战冠"
+    material: DIAMOND_HELMET
+    theme: nether
+    tags: [assault, relic]
+    sources: [BOSS, HIDDEN]
+    range: "6-10"
+    weight: 9
+    equipment-slot: HEAD
+    lore:
+      - "§7战冠的裂缝里堆着永远不会完全冷却的灰烬。"
+    attributes:
+      暴击几率%: [5, 27]
+      生命偷取%: [2, 20]
+
+  nether_glass_step:
+    name: "黑玻踏靴"
+    material: DIAMOND_BOOTS
+    theme: nether
+    tags: [mobility]
+    sources: [CHEST, ELITE, HIDDEN]
+    range: "6-10"
+    weight: 12
+    equipment-slot: FEET
+    lore:
+      - "§7靴底是冷却后的黑玻璃，轻而锋利。"
+    attributes:
+      移动速度%: [6, 37]
+      闪避几率%: [2, 20]
+
+  end_void_edge:
+    name: "虚线切刃"
+    material: NETHERITE_AXE
+    theme: end
+    tags: [assault]
+    sources: [ELITE, BOSS]
+    range: "11-15"
+    weight: 13
+    equipment-slot: HAND
+    lore:
+      - "§7刀口边缘像缺了一段现实，挥动时没有声音。"
+    attributes:
+      物理攻击: [16, 99]
+      暴击几率%: [5, 33]
+
+  end_phase_legs:
+    name: "相位腿甲"
+    material: NETHERITE_LEGGINGS
+    theme: end
+    tags: [mobility, bulwark]
+    sources: [CHEST, ELITE, BOSS]
+    range: "11-15"
+    weight: 12
+    equipment-slot: LEGS
+    lore:
+      - "§7腿甲会在移动时错开半拍，像不愿完全停留在此界。"
+    attributes:
+      移动速度%: [6, 37]
+      物理防御: [9, 55]
+
+  end_eventide_plate:
+    name: "暮星胸甲"
+    material: NETHERITE_CHESTPLATE
+    theme: end
+    tags: [bulwark, relic]
+    sources: [BOSS, HIDDEN]
+    range: "11-15"
+    weight: 10
+    equipment-slot: CHEST
+    lore:
+      - "§7胸甲表面映着不属于当前天空的星点。"
+    attributes:
+      生命上限: [53, 356]
+      闪避几率%: [2, 23]
+
+  end_orbit_crown:
+    name: "环星冠"
+    material: NETHERITE_HELMET
+    theme: end
+    tags: [relic, assault]
+    sources: [BOSS, HIDDEN]
+    range: "11-15"
+    weight: 10
+    equipment-slot: HEAD
+    lore:
+      - "§7几枚碎星围着冠沿缓慢旋转，指向下一次破绽。"
+    attributes:
+      暴击几率%: [6, 37]
+      暴击伤害%: [9, 66]
+
+  end_rift_talisman:
+    name: "裂隙符标"
+    material: ENDER_EYE
+    theme: end
+    tags: [relic, mobility]
+    sources: [HIDDEN, BOSS]
+    range: "11-15"
+    weight: 9
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7符标会把视线牵向空间最薄的位置。"
+    attributes:
+      移动速度%: [6, 37]
+      暴击几率%: [4, 27]
+
+  end_gravity_boots:
+    name: "反重力长靴"
+    material: NETHERITE_BOOTS
+    theme: end
+    tags: [mobility]
+    sources: [CHEST, ELITE, HIDDEN]
+    range: "11-15"
+    weight: 11
+    equipment-slot: FEET
+    lore:
+      - "§7迈步时脚下会短暂失去重量，像踩在裂隙边缘。"
+    attributes:
+      移动速度%: [9, 57]
+      闪避几率%: [4, 27]
+
+  hidden_pact_blade:
+    name: "秘契折刃"
+    material: GOLDEN_SWORD
+    theme: hidden
+    tags: [assault, relic]
+    sources: [HIDDEN]
+    range: "1-15"
+    weight: 8
+    equipment-slot: HAND
+    lore:
+      - "§7刀身被折断又重新封蜡，似乎只认危险的交易。"
+    attributes:
+      物理攻击: [10, 79]
+      生命偷取%: [4, 27]
+
+  hidden_oath_shield:
+    name: "封誓圆盾"
+    material: SHIELD
+    theme: hidden
+    tags: [bulwark, relic]
+    sources: [HIDDEN]
+    range: "1-15"
+    weight: 8
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7盾面被无数细小契约文字覆盖，摸上去像温热皮革。"
+    attributes:
+      物理防御: [8, 62]
+      反伤比例%: [4, 33]
+
+  hidden_silk_mask:
+    name: "暗缎面具"
+    material: GOLDEN_HELMET
+    theme: hidden
+    tags: [mobility, relic]
+    sources: [HIDDEN]
+    range: "1-15"
+    weight: 8
+    equipment-slot: HEAD
+    lore:
+      - "§7面具会吞掉一部分呼吸声，只留下心跳。"
+    attributes:
+      闪避几率%: [4, 33]
+      暴击几率%: [2, 23]
+
+  hidden_vault_coat:
+    name: "秘库长衣"
+    material: LEATHER_CHESTPLATE
+    theme: hidden
+    tags: [mobility, relic]
+    sources: [HIDDEN]
+    range: "1-15"
+    weight: 8
+    equipment-slot: CHEST
+    lore:
+      - "§7长衣内袋多到数不清，像专为偷走命运准备。"
+    attributes:
+      移动速度%: [5, 37]
+      生命上限: [30, 260]
+
+  hidden_thief_steps:
+    name: "无声踏靴"
+    material: LEATHER_BOOTS
+    theme: hidden
+    tags: [mobility]
+    sources: [HIDDEN]
+    range: "1-15"
+    weight: 8
+    equipment-slot: FEET
+    lore:
+      - "§7鞋底压过尘土后，连脚印都会慢慢合拢。"
+    attributes:
+      移动速度%: [6, 47]
+      闪避几率%: [4, 27]
+
+  hidden_luck_leggings:
+    name: "暗袋腿束"
+    material: LEATHER_LEGGINGS
+    theme: hidden
+    tags: [mobility, relic]
+    sources: [HIDDEN, CHEST]
+    range: "1-15"
+    weight: 7
+    equipment-slot: LEGS
+    lore:
+      - "§7腿束上的暗袋总会在关键时刻摸出一点余裕。"
+    attributes:
+      移动速度%: [4, 33]
+      暴击几率%: [2, 23]
+
+  slayer_crossbow:
+    name: "猎杀号弩"
+    material: CROSSBOW
+    theme: nether
+    tags: [assault]
+    sources: [ELITE, BOSS]
+    range: "6-15"
+    weight: 11
+    equipment-slot: HAND
+    lore:
+      - "§7弩机被调得极紧，只等待一次精准收尾。"
+    attributes:
+      暴击几率%: [5, 33]
+      暴击伤害%: [9, 60]
+
+  vanguard_tower_shield:
+    name: "先锋塔盾"
+    material: SHIELD
+    theme: crypt
+    tags: [bulwark]
+    sources: [CHEST, ELITE, BOSS]
+    range: "1-10"
+    weight: 11
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7宽大的盾面适合顶住第一波冲击。"
+    attributes:
+      生命上限: [33, 260]
+      物理防御: [5, 48]
+
+  slayer_knife_pair:
+    name: "双牙猎刀"
+    material: IRON_SWORD
+    theme: hidden
+    tags: [assault, mobility]
+    sources: [CHEST, ELITE, HIDDEN]
+    range: "1-10"
+    weight: 12
+    equipment-slot: HAND
+    lore:
+      - "§7一长一短两把刀，适合在缝隙里连出第二击。"
+    attributes:
+      攻击速度%: [7, 47]
+      暴击几率%: [2, 23]
+
+  frost_splinter_sabre:
+    name: "冰裂军刀"
+    material: DIAMOND_SWORD
+    theme: frost
+    tags: [assault]
+    sources: [CHEST, ELITE, BOSS]
+    range: "16-30"
+    weight: 15
+    equipment-slot: HAND
+    lore:
+      - "§7刀身里封着一条未完全冻死的裂纹。"
+    attributes:
+      物理攻击: [26, 194]
+      攻击速度%: [10, 67]
+
+  frost_sentinel_helm:
+    name: "冰哨重盔"
+    material: DIAMOND_HELMET
+    theme: frost
+    tags: [bulwark]
+    sources: [CHEST, ELITE]
+    range: "16-30"
+    weight: 13
+    equipment-slot: HEAD
+    lore:
+      - "§7盔沿结霜，呼吸会在视野边缘凝成白雾。"
+    attributes:
+      生命上限: [68, 517]
+      物理防御: [11, 88]
+
+  frost_glacier_plate:
+    name: "冰川胸甲"
+    material: DIAMOND_CHESTPLATE
+    theme: frost
+    tags: [bulwark]
+    sources: [ELITE, BOSS]
+    range: "16-30"
+    weight: 12
+    equipment-slot: CHEST
+    lore:
+      - "§7甲面像压缩过的蓝冰，沉重但可靠。"
+    attributes:
+      生命上限: [88, 630]
+      物理防御: [15, 113]
+
+  frost_runed_greaves:
+    name: "冻符腿铠"
+    material: DIAMOND_LEGGINGS
+    theme: frost
+    tags: [bulwark, relic]
+    sources: [CHEST, ELITE, HIDDEN]
+    range: "16-30"
+    weight: 12
+    equipment-slot: LEGS
+    lore:
+      - "§7腿甲内侧刻着一排防止关节冻死的符号。"
+    attributes:
+      物理防御: [14, 98]
+      闪避几率%: [4, 37]
+
+  frost_skater_boots:
+    name: "霜滑战靴"
+    material: DIAMOND_BOOTS
+    theme: frost
+    tags: [mobility]
+    sources: [CHEST, ELITE]
+    range: "16-30"
+    weight: 13
+    equipment-slot: FEET
+    lore:
+      - "§7靴底能在粗糙地面上滑出一道短促冰痕。"
+    attributes:
+      移动速度%: [10, 73]
+      闪避几率%: [4, 37]
+
+  frost_mirror_charm:
+    name: "霜镜护符"
+    material: PRISMARINE_CRYSTALS
+    theme: frost
+    tags: [relic, mobility]
+    sources: [BOSS, HIDDEN]
+    range: "16-30"
+    weight: 9
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7护符折射出的影子总会比你慢半拍。"
+    attributes:
+      暴击几率%: [8, 54]
+      生命上限: [58, 468]
+
+  crimson_duelist_rapier:
+    name: "王庭决斗刺剑"
+    material: NETHERITE_SWORD
+    theme: crimson
+    tags: [assault, mobility]
+    sources: [ELITE, BOSS]
+    range: "31-45"
+    weight: 14
+    equipment-slot: HAND
+    lore:
+      - "§7细长剑身只为在礼仪结束后刺向要害。"
+    attributes:
+      物理攻击: [45, 366]
+      暴击几率%: [12, 82]
+
+  crimson_court_crown:
+    name: "猩红王冠"
+    material: NETHERITE_HELMET
+    theme: crimson
+    tags: [relic, assault]
+    sources: [BOSS, HIDDEN]
+    range: "31-45"
+    weight: 10
+    equipment-slot: HEAD
+    lore:
+      - "§7冠齿上干涸的红痕像旧王庭最后的签名。"
+    attributes:
+      暴击伤害%: [24, 165]
+      生命上限: [99, 836]
+
+  crimson_lord_plate:
+    name: "赤王礼甲"
+    material: NETHERITE_CHESTPLATE
+    theme: crimson
+    tags: [bulwark, relic]
+    sources: [ELITE, BOSS]
+    range: "31-45"
+    weight: 12
+    equipment-slot: CHEST
+    lore:
+      - "§7礼甲比战甲更华丽，也更懂得如何让敌人犹豫。"
+    attributes:
+      生命上限: [128, 1051]
+      物理防御: [23, 193]
+
+  core_sculk_leggings:
+    name: "永夜潜行腿甲"
+    material: NETHERITE_LEGGINGS
+    theme: core
+    tags: [mobility, relic]
+    sources: [CHEST, ELITE, HIDDEN]
+    range: "31-45"
+    weight: 12
+    equipment-slot: LEGS
+    lore:
+      - "§7腿甲会吞掉一部分脚步声，只留下低沉脉动。"
+    attributes:
+      移动速度%: [13, 99]
+      闪避几率%: [8, 61]
+
+  rotwood_root_boots:
+    name: "腐根缠靴"
+    material: NETHERITE_BOOTS
+    theme: rotwood
+    tags: [bulwark]
+    sources: [CHEST, ELITE]
+    range: "31-45"
+    weight: 12
+    equipment-slot: FEET
+    lore:
+      - "§7腐根会在站稳时抓住地面，在冲刺时突然松开。"
+    attributes:
+      物理防御: [19, 162]
+      移动速度%: [11, 75]
+
+  core_night_totem:
+    name: "永夜图腾"
+    material: TOTEM_OF_UNDYING
+    theme: core
+    tags: [relic, bulwark]
+    sources: [BOSS, HIDDEN]
+    range: "31-45"
+    weight: 9
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7图腾上的暗纹会在受击前短暂睁开。"
+    attributes:
+      生命上限: [109, 943]
+      反伤比例%: [11, 75]
+
+  stormspire_thunder_axe:
+    name: "雷塔断斧"
+    material: NETHERITE_AXE
+    theme: stormspire
+    tags: [assault]
+    sources: [ELITE, BOSS]
+    range: "46-60"
+    weight: 14
+    equipment-slot: HAND
+    lore:
+      - "§7斧背装着一截导雷铜杆，挥动时噼啪作响。"
+    attributes:
+      物理攻击: [77, 659]
+      攻击速度%: [17, 135]
+
+  stormspire_conductor_helm:
+    name: "导雷面盔"
+    material: NETHERITE_HELMET
+    theme: stormspire
+    tags: [assault, relic]
+    sources: [CHEST, ELITE, BOSS]
+    range: "46-60"
+    weight: 12
+    equipment-slot: HEAD
+    lore:
+      - "§7面盔会把远处雷声压成一条清晰节拍。"
+    attributes:
+      暴击几率%: [17, 135]
+      生命上限: [147, 1290]
+
+  sunken_warden_shell:
+    name: "沉殿守卫壳甲"
+    material: NETHERITE_CHESTPLATE
+    theme: sunken
+    tags: [bulwark]
+    sources: [ELITE, BOSS, HIDDEN]
+    range: "46-60"
+    weight: 12
+    equipment-slot: CHEST
+    lore:
+      - "§7甲片间夹着海盐与古老祷词。"
+    attributes:
+      生命上限: [193, 1647]
+      物理防御: [35, 302]
+
+  bonewaste_marrow_greaves:
+    name: "骨髓腿铠"
+    material: NETHERITE_LEGGINGS
+    theme: bonewaste
+    tags: [bulwark, relic]
+    sources: [CHEST, ELITE]
+    range: "46-60"
+    weight: 11
+    equipment-slot: LEGS
+    lore:
+      - "§7白骨粉末填在关节处，让腿甲诡异地轻。"
+    attributes:
+      物理防御: [30, 262]
+      生命偷取%: [10, 78]
+
+  stormspire_arc_boots:
+    name: "弧光疾靴"
+    material: NETHERITE_BOOTS
+    theme: stormspire
+    tags: [mobility]
+    sources: [CHEST, ELITE, HIDDEN]
+    range: "46-60"
+    weight: 12
+    equipment-slot: FEET
+    lore:
+      - "§7每一次踏步都会在靴跟后拉出细小电弧。"
+    attributes:
+      移动速度%: [22, 174]
+      闪避几率%: [11, 96]
+
+  sunken_pearl_aegis:
+    name: "沉珠圣盾"
+    material: SHIELD
+    theme: sunken
+    tags: [relic, bulwark]
+    sources: [BOSS, HIDDEN]
+    range: "46-60"
+    weight: 9
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7盾心镶着一枚不会映出倒影的深海珍珠。"
+    attributes:
+      生命上限: [161, 1455]
+      物理防御: [27, 247]
+
+  mirror_refraction_blade:
+    name: "折光镜刃"
+    material: NETHERITE_SWORD
+    theme: mirror
+    tags: [assault, mobility]
+    sources: [ELITE, BOSS, HIDDEN]
+    range: "61-75"
+    weight: 13
+    equipment-slot: HAND
+    lore:
+      - "§7剑刃会把目标的轮廓折成数个相互错开的影子。"
+    attributes:
+      物理攻击: [127, 1095]
+      暴击几率%: [26, 202]
+
+  dune_sun_visor:
+    name: "日砂面罩"
+    material: NETHERITE_HELMET
+    theme: dune
+    tags: [assault, relic]
+    sources: [CHEST, ELITE, BOSS]
+    range: "61-75"
+    weight: 12
+    equipment-slot: HEAD
+    lore:
+      - "§7面罩内侧永远有一线金色晨光。"
+    attributes:
+      暴击伤害%: [48, 408]
+      暴击几率%: [20, 168]
+
+  mire_plague_plate:
+    name: "毒雾沼铠"
+    material: NETHERITE_CHESTPLATE
+    theme: mire
+    tags: [bulwark]
+    sources: [CHEST, ELITE]
+    range: "61-75"
+    weight: 12
+    equipment-slot: CHEST
+    lore:
+      - "§7胸甲缝隙里渗出绿色雾气，闻起来像雨后的泥。"
+    attributes:
+      生命上限: [298, 2652]
+      反伤比例%: [18, 168]
+
+  mirror_step_leggings:
+    name: "镜步腿甲"
+    material: NETHERITE_LEGGINGS
+    theme: mirror
+    tags: [mobility]
+    sources: [ELITE, BOSS, HIDDEN]
+    range: "61-75"
+    weight: 11
+    equipment-slot: LEGS
+    lore:
+      - "§7迈步时，镜中的你似乎已经先一步抵达。"
+    attributes:
+      移动速度%: [29, 239]
+      闪避几率%: [18, 157]
+
+  dune_goldspur_boots:
+    name: "金沙马刺靴"
+    material: NETHERITE_BOOTS
+    theme: dune
+    tags: [mobility, assault]
+    sources: [CHEST, ELITE]
+    range: "61-75"
+    weight: 11
+    equipment-slot: FEET
+    lore:
+      - "§7靴后金刺会在转身时划出明亮弧线。"
+    attributes:
+      攻击速度%: [23, 191]
+      移动速度%: [24, 202]
+
+  mire_glass_vial:
+    name: "沼镜毒瓶"
+    material: DRAGON_BREATH
+    theme: mire
+    tags: [relic, assault]
+    sources: [BOSS, HIDDEN]
+    range: "61-75"
+    weight: 8
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7瓶中毒雾偶尔会拼出一张和你相似的脸。"
+    attributes:
+      生命偷取%: [15, 131]
+      暴击几率%: [18, 157]
+
+  theater_finale_scimitar:
+    name: "谢幕弯刀"
+    material: NETHERITE_SWORD
+    theme: theater
+    tags: [assault]
+    sources: [ELITE, BOSS]
+    range: "76-90"
+    weight: 13
+    equipment-slot: HAND
+    lore:
+      - "§7刀锋像舞台上的最后一道灯，只照亮终结。"
+    attributes:
+      物理攻击: [197, 1824]
+      暴击伤害%: [70, 636]
+
+  machine_clockwork_helm:
+    name: "机芯冠盔"
+    material: NETHERITE_HELMET
+    theme: machine
+    tags: [relic, assault]
+    sources: [CHEST, ELITE, BOSS]
+    range: "76-90"
+    weight: 12
+    equipment-slot: HEAD
+    lore:
+      - "§7盔内齿轮会替你数清每一次破绽。"
+    attributes:
+      暴击几率%: [32, 287]
+      攻击速度%: [26, 243]
+
+  eclipse_umbral_plate:
+    name: "月蚀影甲"
+    material: NETHERITE_CHESTPLATE
+    theme: eclipse
+    tags: [bulwark, mobility]
+    sources: [ELITE, BOSS, HIDDEN]
+    range: "76-90"
+    weight: 11
+    equipment-slot: CHEST
+    lore:
+      - "§7胸甲表面像被月蚀啃掉了一部分光。"
+    attributes:
+      生命上限: [434, 4195]
+      闪避几率%: [19, 195]
+
+  machine_piston_greaves:
+    name: "活塞腿甲"
+    material: NETHERITE_LEGGINGS
+    theme: machine
+    tags: [bulwark]
+    sources: [CHEST, ELITE]
+    range: "76-90"
+    weight: 11
+    equipment-slot: LEGS
+    lore:
+      - "§7关节处的微型活塞会在受击时反向顶住力道。"
+    attributes:
+      物理防御: [66, 684]
+      反伤比例%: [23, 227]
+
+  theater_soulstep_boots:
+    name: "魂幕舞靴"
+    material: NETHERITE_BOOTS
+    theme: theater
+    tags: [mobility, relic]
+    sources: [CHEST, HIDDEN]
+    range: "76-90"
+    weight: 11
+    equipment-slot: FEET
+    lore:
+      - "§7舞靴踩过的地方会短暂浮现观众席的低语。"
+    attributes:
+      移动速度%: [41, 362]
+      闪避几率%: [26, 227]
+
+  eclipse_moon_reactor:
+    name: "月蚀反应核"
+    material: NETHER_STAR
+    theme: eclipse
+    tags: [relic, assault]
+    sources: [BOSS, HIDDEN]
+    range: "76-90"
+    weight: 8
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7反应核只在你准备冒险时发出冷光。"
+    attributes:
+      物理攻击: [79, 866]
+      生命偷取%: [19, 195]
+
+  chaos_rift_cleaver:
+    name: "混沌裂界斧"
+    material: NETHERITE_AXE
+    theme: chaos
+    tags: [assault, relic]
+    sources: [ELITE, BOSS, HIDDEN]
+    range: "91-100"
+    weight: 12
+    equipment-slot: HAND
+    lore:
+      - "§7斧刃每次抬起都像要把房间边界劈开。"
+    attributes:
+      物理攻击: [328, 3167]
+      暴击几率%: [48, 469]
+
+  throne_worldend_crown:
+    name: "终焉王座冠"
+    material: NETHERITE_HELMET
+    theme: throne
+    tags: [relic, assault]
+    sources: [BOSS, HIDDEN]
+    range: "91-100"
+    weight: 8
+    equipment-slot: HEAD
+    lore:
+      - "§7它不像冠冕，更像一条允许你继续前进的命令。"
+    attributes:
+      暴击伤害%: [109, 1093]
+      生命上限: [630, 6699]
+
+  throne_last_plate:
+    name: "终座遗甲"
+    material: NETHERITE_CHESTPLATE
+    theme: throne
+    tags: [bulwark, relic]
+    sources: [BOSS, HIDDEN]
+    range: "91-100"
+    weight: 8
+    equipment-slot: CHEST
+    lore:
+      - "§7甲面没有任何装饰，只有沉默得近乎傲慢的重量。"
+    attributes:
+      生命上限: [756, 7917]
+      物理防御: [118, 1279]
+
+  chaos_fracture_legs:
+    name: "裂隙行者腿甲"
+    material: NETHERITE_LEGGINGS
+    theme: chaos
+    tags: [mobility, bulwark]
+    sources: [ELITE, BOSS, HIDDEN]
+    range: "91-100"
+    weight: 9
+    equipment-slot: LEGS
+    lore:
+      - "§7腿甲会在你停下时仍向前错出一道虚影。"
+    attributes:
+      移动速度%: [55, 547]
+      物理防御: [101, 1096]
+
+  chaos_unbound_boots:
+    name: "无界踏靴"
+    material: NETHERITE_BOOTS
+    theme: chaos
+    tags: [mobility]
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    range: "91-100"
+    weight: 10
+    equipment-slot: FEET
+    lore:
+      - "§7靴底没有真正踩在地上，而是踩在即将发生的位置。"
+    attributes:
+      移动速度%: [66, 625]
+      闪避几率%: [36, 351]
+
+  throne_oath_beacon:
+    name: "王座誓光"
+    material: BEACON
+    theme: throne
+    tags: [relic, bulwark]
+    sources: [BOSS, HIDDEN]
+    range: "91-100"
+    weight: 7
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7掌心里的光不像希望，更像最后一份债务。"
+    attributes:
+      生命上限: [588, 6394]
+      反伤比例%: [36, 391]
+
+  frost_hailbow:
+    name: "霜雹机弩"
+    material: CROSSBOW
+    theme: frost
+    tags: [assault]
+    sources: [CHEST, ELITE, BOSS]
+    range: "16-30"
+    weight: 12
+    equipment-slot: HAND
+    lore:
+      - "§7弩臂每次上弦都会落下一层细碎冰晶。"
+    attributes:
+      物理攻击: [24, 186]
+      暴击几率%: [9, 60]
+
+  forge_blacksteel_gauntlet:
+    name: "黑钢副手甲"
+    material: IRON_INGOT
+    theme: forge
+    tags: [relic, bulwark]
+    sources: [ELITE, BOSS, HIDDEN]
+    range: "21-35"
+    weight: 10
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7指节处嵌着黑曜钢片，能硬接一次失误。"
+    attributes:
+      物理防御: [15, 140]
+      生命上限: [87, 751]
+
+  astral_splinter_circlet:
+    name: "星屑额环"
+    material: DIAMOND_HELMET
+    theme: astral
+    tags: [relic, mobility]
+    sources: [BOSS, HIDDEN]
+    range: "26-40"
+    weight: 9
+    equipment-slot: HEAD
+    lore:
+      - "§7额环上微小星屑排列成一条不稳定轨道。"
+    attributes:
+      暴击几率%: [12, 82]
+      闪避几率%: [7, 52]
+
+  frost_shatter_boots:
+    name: "碎冰踏靴"
+    material: DIAMOND_BOOTS
+    theme: frost
+    tags: [mobility]
+    sources: [CHEST, ELITE]
+    range: "16-30"
+    weight: 12
+    equipment-slot: FEET
+    lore:
+      - "§7急停时靴底会崩出一圈薄冰碎片。"
+    attributes:
+      移动速度%: [11, 77]
+      攻击速度%: [8, 47]
+
+  forge_obsidian_plate:
+    name: "黑曜炉甲"
+    material: NETHERITE_CHESTPLATE
+    theme: forge
+    tags: [bulwark]
+    sources: [ELITE, BOSS]
+    range: "21-40"
+    weight: 10
+    equipment-slot: CHEST
+    lore:
+      - "§7胸甲像从炉口直接剥下的黑曜壳层。"
+    attributes:
+      生命上限: [117, 987]
+      物理防御: [20, 171]
+
+  crimson_executioner_edge:
+    name: "赤刑长刃"
+    material: NETHERITE_SWORD
+    theme: crimson
+    tags: [assault]
+    sources: [ELITE, BOSS]
+    range: "31-45"
+    weight: 13
+    equipment-slot: HAND
+    lore:
+      - "§7它曾属于王庭处刑官，刀尖总会指向脖颈。"
+    attributes:
+      物理攻击: [52, 429]
+      暴击伤害%: [26, 195]
+
+  core_sculk_cowl:
+    name: "幽匿兜冠"
+    material: NETHERITE_HELMET
+    theme: core
+    tags: [relic, mobility]
+    sources: [CHEST, ELITE, HIDDEN]
+    range: "31-45"
+    weight: 11
+    equipment-slot: HEAD
+    lore:
+      - "§7兜冠内侧会把远处动静放大成心跳。"
+    attributes:
+      闪避几率%: [11, 68]
+      暴击几率%: [11, 75]
+
+  rotwood_barkmail:
+    name: "腐木皮甲"
+    material: LEATHER_CHESTPLATE
+    theme: rotwood
+    tags: [bulwark, mobility]
+    sources: [CHEST, ELITE, HIDDEN]
+    range: "31-45"
+    weight: 11
+    equipment-slot: CHEST
+    lore:
+      - "§7厚树皮仍在缓慢生长，替你合拢被击穿的缝隙。"
+    attributes:
+      生命上限: [132, 1117]
+      移动速度%: [11, 75]
+
+  crimson_duelist_boots:
+    name: "血礼决斗靴"
+    material: NETHERITE_BOOTS
+    theme: crimson
+    tags: [mobility, assault]
+    sources: [CHEST, ELITE]
+    range: "31-45"
+    weight: 11
+    equipment-slot: FEET
+    lore:
+      - "§7靴跟会在地面敲出决斗开始的节拍。"
+    attributes:
+      攻击速度%: [13, 99]
+      移动速度%: [13, 89]
+
+  core_echo_lantern:
+    name: "回音魂灯"
+    material: SOUL_LANTERN
+    theme: core
+    tags: [relic, bulwark]
+    sources: [BOSS, HIDDEN]
+    range: "31-45"
+    weight: 8
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7灯芯里传出的不是火声，而是下一间房的回响。"
+    attributes:
+      生命上限: [120, 1029]
+      反伤比例%: [11, 82]
+
+  stormspire_ion_trident:
+    name: "离子雷叉"
+    material: TRIDENT
+    theme: stormspire
+    tags: [assault]
+    sources: [ELITE, BOSS]
+    range: "46-60"
+    weight: 12
+    equipment-slot: HAND
+    lore:
+      - "§7叉尖之间跳动着短促而暴躁的蓝白电弧。"
+    attributes:
+      物理攻击: [87, 741]
+      暴击几率%: [20, 146]
+
+  sunken_tide_crown:
+    name: "潮汐祭冠"
+    material: DIAMOND_HELMET
+    theme: sunken
+    tags: [relic, bulwark]
+    sources: [BOSS, HIDDEN]
+    range: "46-60"
+    weight: 9
+    equipment-slot: HEAD
+    lore:
+      - "§7冠上珍珠会随着你的呼吸涨落微光。"
+    attributes:
+      生命上限: [174, 1537]
+      生命偷取%: [11, 86]
+
+  bonewaste_ribcage:
+    name: "白骨胸笼"
+    material: NETHERITE_CHESTPLATE
+    theme: bonewaste
+    tags: [bulwark]
+    sources: [CHEST, ELITE, BOSS]
+    range: "46-60"
+    weight: 11
+    equipment-slot: CHEST
+    lore:
+      - "§7肋骨状护片层层交错，像一具不会倒下的遗骸。"
+    attributes:
+      物理防御: [36, 329]
+      反伤比例%: [13, 114]
+
+  stormspire_copperstride:
+    name: "铜塔疾靴"
+    material: NETHERITE_BOOTS
+    theme: stormspire
+    tags: [mobility]
+    sources: [CHEST, ELITE]
+    range: "46-60"
+    weight: 11
+    equipment-slot: FEET
+    lore:
+      - "§7靴面覆着氧化铜纹，越奔跑越像一道避雷线。"
+    attributes:
+      移动速度%: [25, 182]
+      攻击速度%: [15, 114]
+
+  sunken_heart_relic:
+    name: "深海之心"
+    material: HEART_OF_THE_SEA
+    theme: sunken
+    tags: [relic]
+    sources: [BOSS, HIDDEN]
+    range: "46-60"
+    weight: 8
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7握住它时，耳边会响起极深海沟里的心跳。"
+    attributes:
+      生命上限: [188, 1674]
+      物理防御: [27, 247]
+
+  mirror_prism_dagger:
+    name: "棱镜短刃"
+    material: NETHERITE_SWORD
+    theme: mirror
+    tags: [assault, mobility]
+    sources: [CHEST, ELITE, HIDDEN]
+    range: "61-75"
+    weight: 12
+    equipment-slot: HAND
+    lore:
+      - "§7短刃反射出的握持姿势总是多出一个。"
+    attributes:
+      物理攻击: [138, 1204]
+      攻击速度%: [26, 217]
+
+  dune_royal_veil:
+    name: "金沙王纱"
+    material: GOLDEN_HELMET
+    theme: dune
+    tags: [relic, mobility]
+    sources: [CHEST, HIDDEN]
+    range: "61-75"
+    weight: 10
+    equipment-slot: HEAD
+    lore:
+      - "§7薄纱会把烈日切成无数细小金线。"
+    attributes:
+      闪避几率%: [20, 168]
+      暴击几率%: [18, 157]
+
+  mire_fenward_legs:
+    name: "雾沼护腿"
+    material: NETHERITE_LEGGINGS
+    theme: mire
+    tags: [bulwark]
+    sources: [CHEST, ELITE]
+    range: "61-75"
+    weight: 11
+    equipment-slot: LEGS
+    lore:
+      - "§7护腿上的泥纹会在受击时短暂硬化。"
+    attributes:
+      生命上限: [253, 2404]
+      物理防御: [46, 442]
+
+  mirror_reflective_mail:
+    name: "返照镜甲"
+    material: NETHERITE_CHESTPLATE
+    theme: mirror
+    tags: [bulwark, relic]
+    sources: [ELITE, BOSS, HIDDEN]
+    range: "61-75"
+    weight: 10
+    equipment-slot: CHEST
+    lore:
+      - "§7镜甲不会反射你的脸，只反射即将落下的攻击。"
+    attributes:
+      反伤比例%: [20, 180]
+      闪避几率%: [15, 143]
+
+  dune_sun_coin:
+    name: "日轮金币"
+    material: SUNFLOWER
+    theme: dune
+    tags: [relic, assault]
+    sources: [BOSS, HIDDEN]
+    range: "61-75"
+    weight: 8
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7金币边缘滚烫，像把一小片正午握在掌心。"
+    attributes:
+      暴击伤害%: [53, 456]
+      生命偷取%: [15, 131]
+
+  theater_curtain_saber:
+    name: "幕布割刀"
+    material: NETHERITE_SWORD
+    theme: theater
+    tags: [assault]
+    sources: [ELITE, BOSS]
+    range: "76-90"
+    weight: 12
+    equipment-slot: HAND
+    lore:
+      - "§7它能切开幕布，也能切开敌人最后的退路。"
+    attributes:
+      物理攻击: [218, 2006]
+      攻击速度%: [32, 302]
+
+  machine_logic_core:
+    name: "逻辑核心"
+    material: REDSTONE_BLOCK
+    theme: machine
+    tags: [relic, assault]
+    sources: [BOSS, HIDDEN]
+    range: "76-90"
+    weight: 8
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7核心不断计算你下一次出手的最短路径。"
+    attributes:
+      暴击几率%: [36, 302]
+      攻击速度%: [31, 271]
+
+  eclipse_nocturne_mask:
+    name: "夜曲面罩"
+    material: NETHERITE_HELMET
+    theme: eclipse
+    tags: [mobility, relic]
+    sources: [CHEST, ELITE, HIDDEN]
+    range: "76-90"
+    weight: 10
+    equipment-slot: HEAD
+    lore:
+      - "§7面罩里的黑暗像一首只剩低音的曲子。"
+    attributes:
+      闪避几率%: [28, 243]
+      生命偷取%: [19, 183]
+
+  theater_velvet_plate:
+    name: "绛幕礼甲"
+    material: NETHERITE_CHESTPLATE
+    theme: theater
+    tags: [bulwark, relic]
+    sources: [ELITE, BOSS]
+    range: "76-90"
+    weight: 10
+    equipment-slot: CHEST
+    lore:
+      - "§7厚重礼甲像剧场幕布般吞下每一次冲击。"
+    attributes:
+      生命上限: [474, 4514]
+      物理防御: [73, 730]
+
+  machine_servo_boots:
+    name: "伺服行军靴"
+    material: NETHERITE_BOOTS
+    theme: machine
+    tags: [mobility]
+    sources: [CHEST, ELITE]
+    range: "76-90"
+    weight: 11
+    equipment-slot: FEET
+    lore:
+      - "§7每一步都有细小齿轮替你补足力量。"
+    attributes:
+      移动速度%: [42, 378]
+      攻击速度%: [28, 258]
+
+  chaos_unmaking_blade:
+    name: "解构之刃"
+    material: NETHERITE_SWORD
+    theme: chaos
+    tags: [assault, relic]
+    sources: [ELITE, BOSS, HIDDEN]
+    range: "91-100"
+    weight: 10
+    equipment-slot: HAND
+    lore:
+      - "§7被它划过的东西会短暂忘记自己原本的形状。"
+    attributes:
+      物理攻击: [353, 3410]
+      暴击伤害%: [116, 1132]
+
+  throne_void_diadem:
+    name: "虚冕星环"
+    material: NETHERITE_HELMET
+    theme: throne
+    tags: [relic, mobility]
+    sources: [BOSS, HIDDEN]
+    range: "91-100"
+    weight: 7
+    equipment-slot: HEAD
+    lore:
+      - "§7星环悬在头盔边缘，像一圈拒绝闭合的命运。"
+    attributes:
+      暴击几率%: [52, 490]
+      闪避几率%: [39, 373]
+
+  chaos_paradox_mail:
+    name: "悖论锁甲"
+    material: NETHERITE_CHESTPLATE
+    theme: chaos
+    tags: [bulwark, relic]
+    sources: [BOSS, HIDDEN]
+    range: "91-100"
+    weight: 8
+    equipment-slot: CHEST
+    lore:
+      - "§7它在攻击落下前已经被击中过一次，因此懂得如何承受。"
+    attributes:
+      生命上限: [798, 8526]
+      反伤比例%: [39, 430]
+
+  throne_gravity_greaves:
+    name: "王座引力腿甲"
+    material: NETHERITE_LEGGINGS
+    theme: throne
+    tags: [bulwark, mobility]
+    sources: [ELITE, BOSS]
+    range: "91-100"
+    weight: 8
+    equipment-slot: LEGS
+    lore:
+      - "§7腿甲让每一步都像在命令地面靠近你。"
+    attributes:
+      物理防御: [118, 1218]
+      移动速度%: [55, 508]
+
+  chaos_last_step:
+    name: "末步长靴"
+    material: NETHERITE_BOOTS
+    theme: chaos
+    tags: [mobility]
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    range: "91-100"
+    weight: 9
+    equipment-slot: FEET
+    lore:
+      - "§7每一步都像当前房间允许你迈出的最后一步。"
+    attributes:
+      移动速度%: [73, 664]
+      攻击速度%: [43, 430]
+
+  throne_ending_relic:
+    name: "终幕星核"
+    material: NETHER_STAR
+    theme: throne
+    tags: [relic, assault]
+    sources: [BOSS, HIDDEN]
+    range: "91-100"
+    weight: 6
+    equipment-slot: OFF_HAND
+    lore:
+      - "§7星核里压着一个还没有发生的结局。"
+    attributes:
+      物理攻击: [143, 1583]
+      暴击几率%: [48, 469]
+
+  frost_whiteout_leggings:
+    name: "白灾腿甲"
+    material: DIAMOND_LEGGINGS
+    theme: frost
+    tags: [bulwark, mobility]
+    sources: [CHEST, ELITE]
+    range: "16-30"
+    weight: 12
+    equipment-slot: LEGS
+    lore:
+      - "§7白霜会在腿甲边缘翻涌，遮住后撤时的脚步。"
+    attributes:
+      物理防御: [15, 113]
+      闪避几率%: [6, 43]
+
+  frost_rime_spurs:
+    name: "霜刺马刺靴"
+    material: DIAMOND_BOOTS
+    theme: frost
+    tags: [mobility, assault]
+    sources: [CHEST, ELITE]
+    range: "16-30"
+    weight: 12
+    equipment-slot: FEET
+    lore:
+      - "§7每次转身都会有短暂冰刺沿靴跟炸开。"
+    attributes:
+      移动速度%: [13, 84]
+      暴击几率%: [6, 43]
+
+  forge_cinder_treads:
+    name: "余炭踏靴"
+    material: NETHERITE_BOOTS
+    theme: forge
+    tags: [mobility]
+    sources: [CHEST, ELITE, BOSS]
+    range: "21-35"
+    weight: 11
+    equipment-slot: FEET
+    lore:
+      - "§7靴底压着没熄灭的炭火，越靠近危险越亮。"
+    attributes:
+      移动速度%: [13, 99]
+      生命偷取%: [5, 38]
+
+  astral_orbit_greaves:
+    name: "环轨胫甲"
+    material: DIAMOND_LEGGINGS
+    theme: astral
+    tags: [mobility, relic]
+    sources: [ELITE, BOSS, HIDDEN]
+    range: "26-40"
+    weight: 10
+    equipment-slot: LEGS
+    lore:
+      - "§7胫甲外侧的星线会绕着膝甲缓慢公转。"
+    attributes:
+      移动速度%: [13, 99]
+      暴击几率%: [8, 68]
+
+  hidden_frozen_vault_steps:
+    name: "冰库无声靴"
+    material: LEATHER_BOOTS
+    theme: hidden
+    tags: [mobility, relic]
+    sources: [HIDDEN]
+    range: "16-30"
+    weight: 8
+    equipment-slot: FEET
+    lore:
+      - "§7鞋底冻结了脚步声，连回音都被留在门外。"
+    attributes:
+      移动速度%: [15, 97]
+      闪避几率%: [8, 54]
+
+  hidden_starlock_greaves:
+    name: "星锁腿束"
+    material: LEATHER_LEGGINGS
+    theme: hidden
+    tags: [mobility, relic]
+    sources: [HIDDEN]
+    range: "26-40"
+    weight: 7
+    equipment-slot: LEGS
+    lore:
+      - "§7腿束上的暗扣像一串被藏起来的小星门。"
+    attributes:
+      移动速度%: [15, 113]
+      暴击伤害%: [20, 150]
+
+  crimson_bloodscribe_leggings:
+    name: "血书礼裤"
+    material: NETHERITE_LEGGINGS
+    theme: crimson
+    tags: [assault, relic]
+    sources: [CHEST, ELITE, BOSS]
+    range: "31-45"
+    weight: 12
+    equipment-slot: LEGS
+    lore:
+      - "§7猩红文字沿着腿甲内侧排列，像一份未完成的判决。"
+    attributes:
+      暴击伤害%: [26, 195]
+      移动速度%: [13, 89]
+
+  rotwood_mirewalker_boots:
+    name: "腐沼行靴"
+    material: NETHERITE_BOOTS
+    theme: rotwood
+    tags: [bulwark, mobility]
+    sources: [CHEST, ELITE]
+    range: "31-45"
+    weight: 12
+    equipment-slot: FEET
+    lore:
+      - "§7靴底挂着活根，能从泥沼里借来下一步力量。"
+    attributes:
+      物理防御: [19, 171]
+      移动速度%: [12, 89]
+
+  core_darkstep_boots:
+    name: "永夜暗步靴"
+    material: NETHERITE_BOOTS
+    theme: core
+    tags: [mobility, relic]
+    sources: [ELITE, BOSS, HIDDEN]
+    range: "31-45"
+    weight: 10
+    equipment-slot: FEET
+    lore:
+      - "§7当你停步时，靴影仍会向前探出一小段黑暗。"
+    attributes:
+      闪避几率%: [12, 82]
+      移动速度%: [15, 106]
+
+  hidden_court_shadow_greaves:
+    name: "影廷腿甲"
+    material: LEATHER_LEGGINGS
+    theme: hidden
+    tags: [mobility, assault]
+    sources: [HIDDEN]
+    range: "31-45"
+    weight: 8
+    equipment-slot: LEGS
+    lore:
+      - "§7腿甲像从王庭柱影中裁下，轻得不合常理。"
+    attributes:
+      移动速度%: [17, 120]
+      暴击几率%: [12, 82]
+
+  hidden_sculkstep_boots:
+    name: "幽匿藏步靴"
+    material: LEATHER_BOOTS
+    theme: hidden
+    tags: [mobility, relic]
+    sources: [HIDDEN]
+    range: "36-50"
+    weight: 7
+    equipment-slot: FEET
+    lore:
+      - "§7靴面会在听见怪物声响时微微收缩。"
+    attributes:
+      闪避几率%: [15, 125]
+      生命偷取%: [10, 78]
+
+  stormspire_livewire_greaves:
+    name: "活线腿甲"
+    material: NETHERITE_LEGGINGS
+    theme: stormspire
+    tags: [mobility, assault]
+    sources: [CHEST, ELITE, BOSS]
+    range: "46-60"
+    weight: 12
+    equipment-slot: LEGS
+    lore:
+      - "§7铜线沿腿甲延伸，像一条被驯服的闪电。"
+    attributes:
+      攻击速度%: [20, 146]
+      移动速度%: [21, 164]
+
+  bonewaste_sandbone_boots:
+    name: "沙骨重靴"
+    material: NETHERITE_BOOTS
+    theme: bonewaste
+    tags: [bulwark]
+    sources: [CHEST, ELITE]
+    range: "46-60"
+    weight: 11
+    equipment-slot: FEET
+    lore:
+      - "§7靴底碾过地面时会留下细碎骨砂。"
+    attributes:
+      物理防御: [32, 290]
+      生命上限: [164, 1482]
+
+  sunken_undertow_leggings:
+    name: "暗潮腿铠"
+    material: NETHERITE_LEGGINGS
+    theme: sunken
+    tags: [bulwark, mobility]
+    sources: [ELITE, BOSS]
+    range: "46-60"
+    weight: 11
+    equipment-slot: LEGS
+    lore:
+      - "§7暗潮在腿甲缝隙里回旋，替你卸开重击。"
+    attributes:
+      生命上限: [198, 1729]
+      闪避几率%: [11, 96]
+
+  hidden_tidevault_boots:
+    name: "潮库密靴"
+    material: LEATHER_BOOTS
+    theme: hidden
+    tags: [mobility, relic]
+    sources: [HIDDEN]
+    range: "46-60"
+    weight: 8
+    equipment-slot: FEET
+    lore:
+      - "§7靴内藏着一枚微小珍珠，会在危险前轻轻震动。"
+    attributes:
+      移动速度%: [27, 192]
+      暴击几率%: [15, 114]
+
+  hidden_thunder_cache_legs:
+    name: "雷库腿束"
+    material: LEATHER_LEGGINGS
+    theme: hidden
+    tags: [assault, mobility]
+    sources: [HIDDEN]
+    range: "46-60"
+    weight: 7
+    equipment-slot: LEGS
+    lore:
+      - "§7腿束扣环内藏着一缕被偷走的塔顶雷声。"
+    attributes:
+      攻击速度%: [21, 164]
+      移动速度%: [20, 153]
+
+  mirror_doublewalk_greaves:
+    name: "双影腿甲"
+    material: NETHERITE_LEGGINGS
+    theme: mirror
+    tags: [mobility]
+    sources: [CHEST, ELITE, HIDDEN]
+    range: "61-75"
+    weight: 11
+    equipment-slot: LEGS
+    lore:
+      - "§7你迈出一步，镜影会替你试探第二个落点。"
+    attributes:
+      闪避几率%: [20, 168]
+      移动速度%: [30, 251]
+
+  dune_mirage_boots:
+    name: "蜃景行靴"
+    material: GOLDEN_BOOTS
+    theme: dune
+    tags: [mobility, relic]
+    sources: [CHEST, ELITE, HIDDEN]
+    range: "61-75"
+    weight: 11
+    equipment-slot: FEET
+    lore:
+      - "§7靴影会在身后拖成三道几乎重叠的假步。"
+    attributes:
+      移动速度%: [33, 262]
+      闪避几率%: [18, 157]
+
+  mire_sinking_greaves:
+    name: "沉沼腿甲"
+    material: NETHERITE_LEGGINGS
+    theme: mire
+    tags: [bulwark]
+    sources: [CHEST, ELITE]
+    range: "61-75"
+    weight: 11
+    equipment-slot: LEGS
+    lore:
+      - "§7腿甲像深陷泥沼，却总能在最后一刻拔出来。"
+    attributes:
+      生命上限: [286, 2652]
+      物理防御: [50, 476]
+
+  hidden_glass_sandals:
+    name: "镜砂软靴"
+    material: LEATHER_BOOTS
+    theme: hidden
+    tags: [mobility, relic]
+    sources: [HIDDEN]
+    range: "61-75"
+    weight: 8
+    equipment-slot: FEET
+    lore:
+      - "§7软靴踩过金砂时，脚印会反射出另一个方向。"
+    attributes:
+      闪避几率%: [23, 191]
+      暴击几率%: [20, 168]
+
+  hidden_plague_pocket_greaves:
+    name: "毒袋腿束"
+    material: LEATHER_LEGGINGS
+    theme: hidden
+    tags: [relic, assault]
+    sources: [HIDDEN]
+    range: "61-75"
+    weight: 7
+    equipment-slot: LEGS
+    lore:
+      - "§7暗袋里装着不会洒出的绿雾，只在你受伤时渗出。"
+    attributes:
+      生命偷取%: [18, 143]
+      暴击伤害%: [48, 408]
+
+  theater_puppetstring_leggings:
+    name: "傀线腿甲"
+    material: NETHERITE_LEGGINGS
+    theme: theater
+    tags: [mobility, relic]
+    sources: [CHEST, ELITE, HIDDEN]
+    range: "76-90"
+    weight: 11
+    equipment-slot: LEGS
+    lore:
+      - "§7细线从膝甲后方垂落，像舞台仍在牵引你。"
+    attributes:
+      攻击速度%: [31, 271]
+      闪避几率%: [26, 227]
+
+  machine_gearstride_boots:
+    name: "齿轮步靴"
+    material: NETHERITE_BOOTS
+    theme: machine
+    tags: [mobility]
+    sources: [CHEST, ELITE]
+    range: "76-90"
+    weight: 11
+    equipment-slot: FEET
+    lore:
+      - "§7靴跟里的齿轮会把慌乱步伐修正成最短路线。"
+    attributes:
+      移动速度%: [45, 394]
+      攻击速度%: [31, 271]
+
+  eclipse_umbra_greaves:
+    name: "蚀影腿铠"
+    material: NETHERITE_LEGGINGS
+    theme: eclipse
+    tags: [bulwark, mobility]
+    sources: [ELITE, BOSS]
+    range: "76-90"
+    weight: 10
+    equipment-slot: LEGS
+    lore:
+      - "§7腿铠上有一片永远无法被光照完整的阴影。"
+    attributes:
+      生命上限: [429, 4332]
+      闪避几率%: [26, 243]
+
+  hidden_backstage_slippers:
+    name: "后台软靴"
+    material: LEATHER_BOOTS
+    theme: hidden
+    tags: [mobility, relic]
+    sources: [HIDDEN]
+    range: "76-90"
+    weight: 8
+    equipment-slot: FEET
+    lore:
+      - "§7软靴只适合走在幕后，却总能绕到敌人身后。"
+    attributes:
+      移动速度%: [47, 422]
+      暴击几率%: [31, 271]
+
+  hidden_eclipse_cache_legs:
+    name: "蚀藏腿束"
+    material: LEATHER_LEGGINGS
+    theme: hidden
+    tags: [mobility, relic]
+    sources: [HIDDEN]
+    range: "76-90"
+    weight: 7
+    equipment-slot: LEGS
+    lore:
+      - "§7腿束会在月光缺口里短暂消失，仿佛从未被看见。"
+    attributes:
+      闪避几率%: [31, 271]
+      生命偷取%: [23, 211]
+
+  chaos_nonstep_greaves:
+    name: "非步腿甲"
+    material: NETHERITE_LEGGINGS
+    theme: chaos
+    tags: [mobility, relic]
+    sources: [ELITE, BOSS, HIDDEN]
+    range: "91-100"
+    weight: 9
+    equipment-slot: LEGS
+    lore:
+      - "§7腿甲记录的不是你走过的路，而是你没有选择的路。"
+    attributes:
+      移动速度%: [61, 586]
+      闪避几率%: [39, 391]
+
+  throne_nullstride_boots:
+    name: "虚座长靴"
+    material: NETHERITE_BOOTS
+    theme: throne
+    tags: [mobility, bulwark]
+    sources: [BOSS, HIDDEN]
+    range: "91-100"
+    weight: 8
+    equipment-slot: FEET
+    lore:
+      - "§7长靴踏下时，脚边空间会短暂塌陷成王座阶梯。"
+    attributes:
+      移动速度%: [73, 664]
+      物理防御: [109, 1157]
+
+  chaos_answerless_leggings:
+    name: "无解腿甲"
+    material: NETHERITE_LEGGINGS
+    theme: chaos
+    tags: [bulwark, relic]
+    sources: [ELITE, BOSS]
+    range: "91-100"
+    weight: 8
+    equipment-slot: LEGS
+    lore:
+      - "§7每一道裂缝都通向另一个同样危险的答案。"
+    attributes:
+      生命上限: [714, 7612]
+      反伤比例%: [39, 412]
+
+  hidden_last_door_boots:
+    name: "末门暗靴"
+    material: LEATHER_BOOTS
+    theme: hidden
+    tags: [mobility, relic]
+    sources: [HIDDEN]
+    range: "91-100"
+    weight: 7
+    equipment-slot: FEET
+    lore:
+      - "§7靴底刻着一扇不该存在的门，门后只有下一步。"
+    attributes:
+      移动速度%: [78, 703]
+      暴击几率%: [46, 451]
+
+  hidden_endvault_greaves:
+    name: "终库腿束"
+    material: LEATHER_LEGGINGS
+    theme: hidden
+    tags: [relic, assault]
+    sources: [HIDDEN]
+    range: "91-100"
+    weight: 6
+    equipment-slot: LEGS
+    lore:
+      - "§7腿束中的暗格像一个微缩终局，打开时能听见远处王座声。"
+    attributes:
+      暴击伤害%: [109, 1093]
+      闪避几率%: [36, 351]

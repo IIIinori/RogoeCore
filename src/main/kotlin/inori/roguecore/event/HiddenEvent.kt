@@ -1,6 +1,9 @@
 package inori.roguecore.event
 
+import inori.roguecore.accessory.AccessoryDropManager
+import inori.roguecore.boon.BoonEffectHandler
 import inori.roguecore.boon.BoonSelectManager
+
 import inori.roguecore.data.ForgeMaterialManager
 import inori.roguecore.data.ForgeMaterialType
 import inori.roguecore.data.ShardRewardManager
@@ -8,6 +11,7 @@ import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.item.DungeonLootManager
 import inori.roguecore.milestone.RunMilestoneManager
+import inori.roguecore.modifier.RunModifierManager
 import inori.roguecore.relic.RelicEffectHandler
 import inori.roguecore.relic.RelicSelectManager
 import inori.roguecore.unlock.UnlockManager
@@ -43,8 +47,11 @@ object HiddenEvent {
 
         player.sendMessage("§9§l✦ 你开启了隐藏宝藏!")
         RunMilestoneManager.onHiddenRoomOpened(player)
+        BoonEffectHandler.onHiddenRoomOpened(player)
+        RunModifierManager.onRoomCleared(player, RoomType.HIDDEN, instance)
 
-        val shards = Random.nextInt(shardMin, shardMax + 1)
+        val hiddenBonus = RelicEffectHandler.getHiddenShardBonus(player) + inori.roguecore.affix.AffixManager.getHiddenShardFlat(instance)
+        val shards = Random.nextInt(shardMin, shardMax + 1) + hiddenBonus
         ShardRewardManager.addRunShards(player.uniqueId, shards)
         player.sendMessage("§e  获得 §6$shards §e本局碎片")
 
@@ -59,6 +66,7 @@ object HiddenEvent {
         if (DungeonLootManager.grantHiddenLoot(player, instance)) {
             player.sendMessage("§6  你从暗格中取出了一件临时装备。")
         }
+        AccessoryDropManager.grantHidden(player, instance)
 
         val extraHiddenRolls = (((hiddenPower + gearPower) / 3) + hiddenLootBonus).coerceAtMost(5)
         repeat(extraHiddenRolls) {
@@ -72,7 +80,7 @@ object HiddenEvent {
         }
 
         val giveRelic = config.getBoolean("hidden.give-relic", true)
-        val relicOfferCount = EventScaling.relicOfferCount(instance, 3, UnlockManager.getRelicOfferBonus(player) + relicPower.coerceAtMost(3) + relicBoost)
+        val relicOfferCount = EventScaling.relicOfferCount(instance, 3, UnlockManager.getRelicOfferBonus(player) + relicPower.coerceAtMost(3) + relicBoost + inori.roguecore.affix.AffixManager.getRelicOfferBonus(instance))
         val relicOffered = giveRelic && RelicSelectManager.offerRelicSelection(player, relicOfferCount)
 
         if (giveBoon && !relicOffered) {

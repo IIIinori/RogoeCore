@@ -7,6 +7,8 @@ import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.item.DungeonLootManager
+import inori.roguecore.modifier.RunModifierManager
+import inori.roguecore.modifier.RunModifierType
 import inori.roguecore.relic.RelicSelectManager
 import inori.roguecore.ui.DungeonGuiGuard
 import inori.roguecore.unlock.UnlockManager
@@ -41,22 +43,27 @@ object ContractEvent {
         val hasAbyssalBargain = UnlockManager.hasAbyssalBargain(player)
         val relicOfferCount = EventScaling.relicOfferCount(instance, 3, UnlockManager.getRelicOfferBonus(player) + contractPower.coerceAtMost(4))
         val crownReward = EventScaling.reward(instance, config.getInt("contract.crown-shard-reward", 44).coerceAtLeast(1)) + contractPower * 8
+        val debtGrant = RunModifierManager.soulDebtGrant(instance, contractPower + 2)
+        val debtPrincipal = RunModifierManager.soulDebtPrincipal(debtGrant + contractPower * 6)
+        val debtInterest = RunModifierManager.soulDebtInterest(instance, contractPower + 2)
+        val debtRooms = RunModifierManager.soulDebtDeadlineRooms()
 
         DungeonGuiGuard.lock(player, title) { target -> trigger(target, instance) }
 
         player.openMenu<Chest>(title) {
-            rows(3)
+            rows(4)
             handLocked(true)
 
+            val debtSlot = 31
             val optionSlots = when {
-                hasAbyssalBargain -> setOf(9, 11, 13, 15, 17)
-                hasVoidContract -> setOf(10, 12, 14, 16)
-                else -> setOf(10, 13, 16)
+                hasAbyssalBargain -> setOf(9, 11, 13, 15, 17, debtSlot)
+                hasVoidContract -> setOf(10, 12, 14, 16, debtSlot)
+                else -> setOf(10, 13, 16, debtSlot)
             }
             val glass = XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()!!.apply {
                 itemMeta = itemMeta?.also { it.setDisplayName(" ") }
             }
-            for (slot in 0 until 27) {
+            for (slot in 0 until 36) {
                 if (slot !in optionSlots) {
                     set(slot, glass)
                 }
@@ -158,6 +165,25 @@ object ContractEvent {
                 })
             }
 
+            set(debtSlot, XMaterial.SOUL_LANTERN.parseItem()!!.apply {
+                itemMeta = itemMeta?.also { meta ->
+                    meta.setDisplayName(if (RunModifierManager.isEnabled(RunModifierType.SOUL_DEBT)) "§5深渊债契" else "§8深渊债契")
+                    meta.lore = if (RunModifierManager.isEnabled(RunModifierType.SOUL_DEBT)) {
+                        listOf(
+                            "",
+                            "§7立刻获得 §6$debtGrant §7本局碎片",
+                            "§7并获得一次 §d神恩选择",
+                            "§7生成 §c灵魂债务 §e$debtPrincipal",
+                            "§7每房计息 §c+$debtInterest §7，到期 §b$debtRooms §7房",
+                            "",
+                            if (RunModifierManager.hasModifier(player, RunModifierType.SOUL_DEBT)) "§c你已背负灵魂债务" else "§e点击签订"
+                        )
+                    } else {
+                        listOf("", "§8当前服务器未启用灵魂债务")
+                    }
+                }
+            })
+
             onClick { event ->
                 event.isCancelled = true
                 when (event.rawSlot) {
@@ -233,6 +259,23 @@ object ContractEvent {
                             player.sendMessage("§5虚空契约为你献上了一件深层战利品。")
                         }
                         RelicSelectManager.offerRelicSelection(player, relicOfferCount)
+                    }
+
+                    debtSlot -> {
+                        if (!RunModifierManager.isEnabled(RunModifierType.SOUL_DEBT)) {
+                            player.sendMessage("§c当前服务器未启用灵魂债务。")
+                            return@onClick
+                        }
+                        if (RunModifierManager.hasModifier(player, RunModifierType.SOUL_DEBT)) {
+                            player.sendMessage("§c你已经背负灵魂债务，先偿还再签新的债契。")
+                            return@onClick
+                        }
+                        DungeonGuiGuard.unlock(player)
+                        player.closeInventory()
+                        ShardRewardManager.addRunShards(player.uniqueId, debtGrant)
+                        RunModifierManager.addSoulDebt(player, debtPrincipal, debtInterest, debtRooms, "深渊债契", RunCurseType.HOLLOW.name)
+                        player.sendMessage("§5深渊债契完成，你获得 §e$debtGrant §5本局碎片与一次神恩选择。")
+                        BoonSelectManager.offerBoonSelection(player, EventScaling.boonOfferCount(instance))
                     }
                 }
             }

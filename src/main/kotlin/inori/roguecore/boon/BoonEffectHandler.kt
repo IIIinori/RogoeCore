@@ -2,6 +2,10 @@ package inori.roguecore.boon
 
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonManager
+import inori.roguecore.dungeon.route.NextFloorRoute
+import inori.roguecore.dungeon.room.RoomType
+import inori.roguecore.modifier.RunModifierManager
+import inori.roguecore.relic.PlayerRelicData
 import org.bukkit.Particle
 import org.bukkit.Sound
 import org.bukkit.attribute.Attribute
@@ -25,6 +29,8 @@ object BoonEffectHandler {
 
     private val cooldowns = ConcurrentHashMap<String, Long>()
     private val chainProcessing = ConcurrentHashMap.newKeySet<UUID>()
+    private val firstKillClaimed = ConcurrentHashMap<UUID, Boolean>()
+    private val roomClearStreak = ConcurrentHashMap<UUID, Int>()
 
     @SubscribeEvent(ignoreCancelled = true)
     fun onEntityDamage(event: EntityDamageByEntityEvent) {
@@ -53,20 +59,28 @@ object BoonEffectHandler {
         if (!DungeonManager.isInDungeon(killer)) {
             return
         }
+        val firstKill = firstKillClaimed.put(killer.uniqueId, true) != true
         for (instance in PlayerBoonData.getBoons(killer)) {
             for (effect in instance.boon.effects) {
                 when (effect.type) {
                     BoonEffectType.KILL_HEAL -> {
-                        val amount = effect.valueAt(instance.level) + effect.scaleAt(PlayerBoonData.getTagCount(killer.uniqueId, effect.tag))
+                        val amount = effectValue(killer, instance, effect)
                         heal(killer, amount)
                     }
                     BoonEffectType.KILL_SHARD -> {
-                        val amount = effect.valueAt(instance.level) + effect.scaleAt(PlayerBoonData.getTagCount(killer.uniqueId, effect.tag))
+                        val amount = effectValue(killer, instance, effect)
                         ShardRewardManager.addRunShards(killer.uniqueId, amount.toInt().coerceAtLeast(1))
+                    }
+                    BoonEffectType.FIRST_KILL_SHARD -> {
+                        if (firstKill) {
+                            val amount = effectValue(killer, instance, effect)
+                            ShardRewardManager.addRunShards(killer.uniqueId, amount.toInt().coerceAtLeast(1))
+                            killer.sendMessage("§6首杀神恩触发，获得 §e${amount.toInt().coerceAtLeast(1)} §6本局碎片。")
+                        }
                     }
                     BoonEffectType.KILL_SPEED -> {
                         if (roll(effect) && isReady(killer.uniqueId, instance.boon.id, effect)) {
-                            val bonus = effect.valueAt(instance.level) + effect.scaleAt(PlayerBoonData.getTagCount(killer.uniqueId, effect.tag))
+                            val bonus = effectValue(killer, instance, effect)
                             applySpeed(killer, bonus, effect.durationSeconds)
                         }
                     }
@@ -76,21 +90,82 @@ object BoonEffectHandler {
         }
     }
 
-    fun onRoomCleared(player: Player) {
+    fun onRoomCleared(player: Player, roomType: RoomType? = null) {
         if (!DungeonManager.isInDungeon(player)) {
             return
         }
+        val streak = roomClearStreak.merge(player.uniqueId, 1) { old, _ -> (old + 1).coerceAtMost(999) } ?: 1
         for (instance in PlayerBoonData.getBoons(player)) {
             for (effect in instance.boon.effects) {
                 when (effect.type) {
                     BoonEffectType.ROOM_HEAL -> {
-                        val percent = effect.valueAt(instance.level) + effect.scaleAt(PlayerBoonData.getTagCount(player.uniqueId, effect.tag))
+                        val percent = effectValue(player, instance, effect)
                         val maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH)?.value ?: 20.0
                         heal(player, maxHealth * percent / 100.0)
                     }
+                    BoonEffectType.OVERHEAL_SHIELD -> {
+                        val percent = effectValue(player, instance, effect)
+                        val maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH)?.value ?: 20.0
+                        val healAmount = maxHealth * percent / 100.0
+                        val missing = (maxHealth - player.health).coerceAtLeast(0.0)
+                        val overheal = (healAmount - missing).coerceAtLeast(0.0)
+                        heal(player, healAmount)
+                        if (overheal > 0.0) {
+                            applyAbsorption(player, overheal + percent, effect.durationSeconds.coerceAtLeast(8.0))
+                        }
+                    }
                     BoonEffectType.ROOM_SHARD -> {
-                        val amount = effect.valueAt(instance.level) + effect.scaleAt(PlayerBoonData.getTagCount(player.uniqueId, effect.tag))
+                        val amount = effectValue(player, instance, effect)
                         ShardRewardManager.addRunShards(player.uniqueId, amount.toInt().coerceAtLeast(1))
+                    }
+                    BoonEffectType.ROOM_STREAK_SHARD -> {
+                        val amount = effectValue(player, instance, effect) * streak.coerceAtMost(8)
+                        ShardRewardManager.addRunShards(player.uniqueId, amount.toInt().coerceAtLeast(1))
+                    }
+                    BoonEffectType.ELITE_ROOM_SHARD -> {
+                        if (roomType == RoomType.ELITE) {
+                            val amount = effectValue(player, instance, effect).toInt().coerceAtLeast(1)
+                            ShardRewardManager.addRunShards(player.uniqueId, amount)
+                        }
+                    }
+                    BoonEffectType.BOSS_ROOM_SHARD -> {
+                        if (roomType == RoomType.BOSS) {
+                            val amount = effectValue(player, instance, effect).toInt().coerceAtLeast(1)
+                            ShardRewardManager.addRunShards(player.uniqueId, amount)
+                        }
+                    }
+                    BoonEffectType.SHARD_HELD_SCALING -> {
+                        val percent = effectValue(player, instance, effect).coerceAtLeast(0.0)
+                        val amount = (ShardRewardManager.getRunShards(player.uniqueId) * percent / 100.0).toInt().coerceAtLeast(0)
+                        if (amount > 0) ShardRewardManager.addRunShards(player.uniqueId, amount)
+                    }
+                    BoonEffectType.RELIC_COUNT_SHARD -> {
+                        val amount = (effectValue(player, instance, effect) * PlayerRelicData.getRelics(player).size).toInt().coerceAtLeast(0)
+                        if (amount > 0) ShardRewardManager.addRunShards(player.uniqueId, amount)
+                    }
+                    BoonEffectType.BOON_COUNT_SHARD -> {
+                        val amount = (effectValue(player, instance, effect) * PlayerBoonData.getBoons(player).size).toInt().coerceAtLeast(0)
+                        if (amount > 0) ShardRewardManager.addRunShards(player.uniqueId, amount)
+                    }
+                    BoonEffectType.LOW_HEALTH_ROOM_SHARD -> {
+                        val maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH)?.value ?: 20.0
+                        val healthRate = if (maxHealth > 0.0) player.health / maxHealth else 1.0
+                        if (healthRate <= (effect.threshold / 100.0).coerceIn(0.0, 1.0)) {
+                            val amount = effectValue(player, instance, effect).toInt().coerceAtLeast(1)
+                            ShardRewardManager.addRunShards(player.uniqueId, amount)
+                        }
+                    }
+                    BoonEffectType.SOUL_DEBT_RELIEF -> {
+                        val amount = effectValue(player, instance, effect).toInt().coerceAtLeast(1)
+                        RunModifierManager.reduceSoulDebt(player, amount)
+                    }
+                    BoonEffectType.SHIELD_TO_SHARD -> {
+                        val cap = effectValue(player, instance, effect).toInt().coerceAtLeast(1)
+                        val amount = absorptionValue(player).toInt().coerceIn(0, cap)
+                        if (amount > 0) {
+                            ShardRewardManager.addRunShards(player.uniqueId, amount)
+                            player.sendMessage("§6剩余护盾被转化为 §e$amount §6本局碎片。")
+                        }
                     }
                     BoonEffectType.ROOM_UPGRADE_RANDOM -> {
                         if (roll(effect) && isReady(player.uniqueId, instance.boon.id, effect)) {
@@ -105,7 +180,100 @@ object BoonEffectHandler {
                 }
             }
         }
+        firstKillClaimed[player.uniqueId] = false
         BoonResonanceManager.onRoomCleared(player)
+    }
+
+    fun onShopPurchase(player: Player, spent: Int) {
+        if (spent <= 0 || !DungeonManager.isInDungeon(player)) return
+        for (instance in PlayerBoonData.getBoons(player)) {
+            for (effect in instance.boon.effects) {
+                if (effect.type != BoonEffectType.SHOP_SPEND_REFUND) continue
+                val percent = effectValue(player, instance, effect).coerceAtLeast(0.0)
+                val refund = (spent * percent / 100.0).toInt().coerceAtLeast(0)
+                if (refund > 0) {
+                    ShardRewardManager.addRunShards(player.uniqueId, refund)
+                    player.sendMessage("§6商店返利神恩返还 §e$refund §6本局碎片。")
+                }
+            }
+        }
+    }
+
+    fun onChestOpened(player: Player) {
+        if (!DungeonManager.isInDungeon(player)) return
+        for (instance in PlayerBoonData.getBoons(player)) {
+            for (effect in instance.boon.effects) {
+                if (effect.type != BoonEffectType.CHEST_OPEN_BONUS) continue
+                val amount = effectValue(player, instance, effect).toInt().coerceAtLeast(1)
+                ShardRewardManager.addRunShards(player.uniqueId, amount)
+                player.sendMessage("§6开箱神恩额外获得 §e$amount §6本局碎片。")
+            }
+        }
+    }
+
+    fun onHiddenRoomOpened(player: Player) {
+        if (!DungeonManager.isInDungeon(player)) return
+        for (instance in PlayerBoonData.getBoons(player)) {
+            for (effect in instance.boon.effects) {
+                if (effect.type != BoonEffectType.HIDDEN_ROOM_SHARD) continue
+                val amount = effectValue(player, instance, effect).toInt().coerceAtLeast(1)
+                ShardRewardManager.addRunShards(player.uniqueId, amount)
+                player.sendMessage("§9隐藏房神恩额外获得 §e$amount §9本局碎片。")
+            }
+        }
+    }
+
+    fun onRouteSelected(player: Player, route: NextFloorRoute) {
+        if (!DungeonManager.isInDungeon(player)) return
+        for (instance in PlayerBoonData.getBoons(player)) {
+            for (effect in instance.boon.effects) {
+                if (effect.type != BoonEffectType.ROUTE_PICK_BONUS) continue
+                val amount = (effectValue(player, instance, effect) * route.rewardLevel).toInt().coerceAtLeast(1)
+                ShardRewardManager.addRunShards(player.uniqueId, amount)
+                player.sendMessage("§d路线规划神恩因 §f${route.displayName} §d获得 §e$amount §d本局碎片。")
+            }
+        }
+    }
+
+    fun onBoonAcquired(player: Player, boon: Boon, level: Int) {
+        if (!DungeonManager.isInDungeon(player)) return
+        val instance = DungeonManager.getPlayerDungeon(player)
+        for (effect in boon.effects) {
+            when (effect.type) {
+                BoonEffectType.NEXT_BOON_ECHO -> {
+                    val charges = effect.valueAt(level).toInt().coerceAtLeast(1)
+                    RunModifierManager.addBoonEcho(player, charges, boon.name)
+                }
+                BoonEffectType.NEXT_BOON_MUTATION -> {
+                    val extra = effect.valueAt(level).toInt().coerceAtLeast(1)
+                    RunModifierManager.addBoonMutation(player, extra, boon.name)
+                }
+                BoonEffectType.ROOM_PROPHECY -> {
+                    val target = parseRoomType(effect.tag) ?: listOf(RoomType.CHEST, RoomType.ELITE, RoomType.SHRINE, RoomType.FORGE).random()
+                    val within = effect.threshold.toInt().coerceAtLeast(RunModifierManager.prophecyWithinRooms())
+                    val amount = effect.valueAt(level).toInt().coerceAtLeast(instance?.let { RunModifierManager.prophecyReward(it) } ?: 24)
+                    RunModifierManager.addRoomProphecy(player, target, within, "shards", amount, boon.name)
+                }
+                BoonEffectType.ROUTE_CHAIN -> {
+                    val sequence = effect.tag.split(">").mapNotNull(::parseRoomType)
+                    if (sequence.isNotEmpty()) {
+                        RunModifierManager.addRouteChain(
+                            player,
+                            sequence,
+                            boon.name,
+                            rewardKind = "boon_echo",
+                            rewardAmount = effect.valueAt(level).toInt().coerceAtLeast(1)
+                        )
+                    }
+                }
+                BoonEffectType.DELAYED_REWARD_SHARD -> {
+                    val rooms = effect.threshold.toInt().coerceAtLeast(RunModifierManager.delayedRewardRooms())
+                    val amount = effect.valueAt(level).toInt().coerceAtLeast(1)
+                    RunModifierManager.addDelayedReward(player, "shards", amount, rooms, boon.name)
+                }
+                else -> Unit
+            }
+        }
     }
 
     private fun handleAttackBoons(player: Player, target: LivingEntity, event: EntityDamageByEntityEvent) {
@@ -224,6 +392,19 @@ object BoonEffectHandler {
             is Projectile -> entity.shooter as? Player
             else -> null
         }
+    }
+
+    private fun effectValue(player: Player, instance: BoonInstance, effect: BoonEffect): Double {
+        return effect.valueAt(instance.level) + effect.scaleAt(PlayerBoonData.getTagCount(player.uniqueId, effect.tag))
+    }
+
+    private fun parseRoomType(value: String): RoomType? {
+        return runCatching { RoomType.valueOf(value.trim().uppercase()) }.getOrNull()
+    }
+
+    private fun absorptionValue(player: Player): Double {
+        val effect = player.getPotionEffect(PotionEffectType.ABSORPTION) ?: return 0.0
+        return (effect.amplifier + 1) * 4.0
     }
 
     private fun heal(player: Player, amount: Double) {

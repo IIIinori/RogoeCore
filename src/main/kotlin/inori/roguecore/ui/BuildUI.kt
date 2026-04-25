@@ -1,5 +1,6 @@
 package inori.roguecore.ui
 
+import inori.roguecore.accessory.PlayerAccessoryData
 import inori.roguecore.affix.DungeonAffix
 import inori.roguecore.boon.BoonInstance
 import inori.roguecore.boon.BoonResonanceManager
@@ -11,6 +12,7 @@ import inori.roguecore.dungeon.DungeonManager
 import inori.roguecore.event.DungeonEventAffix
 import inori.roguecore.item.DungeonLootManager
 import inori.roguecore.modifier.RunModifierManager
+import inori.roguecore.modifier.RunModifierType
 import inori.roguecore.relic.PlayerRelicData
 import inori.roguecore.relic.Relic
 import org.bukkit.entity.Player
@@ -100,6 +102,7 @@ object BuildUI {
                 add("§7遗物: §d${relics.size} §7| 诅咒: §c${curses.size}")
                 add("§7临时修正: §b${modifiers.size}")
                 add("§7临时装备: §b${DungeonLootManager.getEquippedLoot(player).size}/6")
+                add("§7饰品: §d${PlayerAccessoryData.getEquipped(player).size}/5")
             }
         }
     }
@@ -337,6 +340,10 @@ object BuildUI {
                 add("")
                 add("§7本局碎片: §6${ShardRewardManager.getRunShards(player.uniqueId)}")
                 add("§7结算预览: §e${ShardRewardManager.getSettlementPreview(player.uniqueId)} 灵魂碎片")
+                val debt = RunModifierManager.getSoulDebtTotal(player)
+                if (debt > 0) add("§7灵魂债务: §c$debt")
+                val delayed = RunModifierManager.getModifiers(player).count { it.type == RunModifierType.DELAYED_REWARD }
+                if (delayed > 0) add("§7托管奖励: §d$delayed 项等待兑现")
                 if (instance != null) {
                     add("§7隐藏钥匙: §b${instance.getHiddenKeys()}")
                     add("§7当前楼层: §f${instance.config.floorNumber}")
@@ -373,7 +380,11 @@ object BuildUI {
                     danger.take(5).forEach { add("§c${stripColor(it.name)} §7- ${it.description}") }
                 }
                 add("§7契约诅咒: §c${curses.size}")
-                if (curses.isEmpty()) add("§a当前风险较低")
+                val debt = RunModifierManager.getSoulDebtTotal(player)
+                if (debt > 0) add("§7未偿灵魂债务: §c$debt")
+                val prophecy = RunModifierManager.getModifiers(player).firstOrNull { it.type == RunModifierType.ROOM_PROPHECY }
+                if (prophecy != null) add("§7进行中的预言: §d${RunModifierManager.payloadString(prophecy, "target", "未知")}")
+                if (curses.isEmpty() && debt <= 0) add("§a当前风险较低")
             }
         }
     }

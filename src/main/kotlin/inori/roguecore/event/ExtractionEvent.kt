@@ -1,5 +1,6 @@
 package inori.roguecore.event
 
+import inori.roguecore.affix.AffixManager
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.DungeonManager
@@ -29,7 +30,7 @@ object ExtractionEvent {
         val extractionPower = EventAffixManager.getFamilyPower(instance, RoomType.EXTRACTION, "EXTRACTION")
         val goldenWaypoint = extractionPower > 0
         val ratio = config.getDouble("extraction.cashout-ratio", 0.5).coerceIn(0.0, 1.0)
-        val effectiveRatio = (ratio + extractionPower * 0.04).coerceIn(0.0, 1.0)
+        val effectiveRatio = (ratio + extractionPower * 0.04 + AffixManager.getExtractionRatioModifier(instance)).coerceIn(0.0, 1.0)
         val minCashOut = config.getInt("extraction.min-cashout-run-shards", 20).coerceAtLeast(0)
         val effectiveMinCashOut = (minCashOut - extractionPower * 3).coerceAtLeast(0)
         val runShards = ShardRewardManager.getRunShards(player.uniqueId)

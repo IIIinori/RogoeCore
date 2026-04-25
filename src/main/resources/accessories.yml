@@ -1,0 +1,1397 @@
+# ================================
+# RogueCore 饰品配置
+# 饰品本体在背包中，装备后进入 /rogue accessory 虚拟槽生效。
+# ================================
+
+rules:
+  chest-chance: 0.18
+  elite-chance: 0.34
+  boss-count: 1
+  hidden-count: 1
+  rarity-upgrade:
+    BOSS: 0.35
+    HIDDEN: 0.28
+
+identification:
+  enabled: true
+  queue-size: 3
+  base-price: 70
+  floor-price: 5
+  boss-extra-price: 100
+  hidden-extra-price: 70
+  drop-as-sealed-chance:
+    CHEST: 0.25
+    ELITE: 0.4
+    BOSS: 0.65
+    HIDDEN: 0.55
+  time-by-source:
+    CHEST: 12
+    ELITE: 24
+    BOSS: 50
+    HIDDEN: 36
+  acceleration:
+    enabled: true
+    soul-shards: 55
+    reduce-percent-of-remaining: 0.35
+    min-reduce-seconds: 5
+    materials:
+      inscription_dust: 2
+
+inscription-books:
+  enabled: true
+  queue-size: 2
+  drop-chance:
+    CHEST: 0.08
+    ELITE: 0.16
+    BOSS: 0.35
+    HIDDEN: 0.28
+  acceleration:
+    enabled: true
+    soul-shards: 130
+    reduce-percent-of-remaining: 0.25
+    min-reduce-seconds: 30
+    materials:
+      inscription_dust: 4
+      soul_iron: 2
+  qualities:
+    rough:
+      name: "粗糙"
+      color: "§f"
+      weight: 55
+      time-seconds: 45
+      soul-shards: 120
+      rarity-luck: 0
+      value-multiplier: 0.9
+      materials:
+        inscription_dust: 4
+    refined:
+      name: "精制"
+      color: "§d"
+      weight: 28
+      time-seconds: 90
+      soul-shards: 220
+      rarity-luck: 90
+      value-multiplier: 2.3
+      materials:
+        inscription_dust: 8
+        soul_iron: 3
+    rare:
+      name: "秘银"
+      color: "§6"
+      weight: 12
+      time-seconds: 150
+      soul-shards: 360
+      rarity-luck: 220
+      value-multiplier: 4.25
+      materials:
+        inscription_dust: 12
+        relic_fragment: 2
+    epic:
+      name: "星辉"
+      color: "§b"
+      weight: 4
+      time-seconds: 240
+      soul-shards: 560
+      rarity-luck: 420
+      value-multiplier: 7
+      materials:
+        inscription_dust: 18
+        relic_fragment: 4
+        crown_shard: 1
+    legendary:
+      name: "终焉"
+      color: "§e"
+      weight: 1
+      time-seconds: 360
+      soul-shards: 900
+      rarity-luck: 800
+      value-multiplier: 12
+      materials:
+        inscription_dust: 28
+        relic_fragment: 6
+        crown_shard: 2
+        astral_core: 1
+
+rarities:
+  common:
+    name: "普通"
+    color: "§f"
+    weight: 58
+    multiplier: 0.55
+  rare:
+    name: "稀有"
+    color: "§d"
+    weight: 28
+    multiplier: 2.20
+  epic:
+    name: "史诗"
+    color: "§6"
+    weight: 11
+    multiplier: 4.20
+  legendary:
+    name: "传说"
+    color: "§e"
+    weight: 3
+    multiplier: 7.50
+
+accessories:
+  crypt_necklace_1:
+    name: "墓誓项链"
+    material: AMETHYST_SHARD
+    slot: NECKLACE
+    range: "1-15"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [crypt, necklace, run]
+    weight: 12
+    lore:
+      - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      生命上限: [31, 313]
+      物理防御: [4, 54]
+    effects:
+      effect_1:
+        type: PROPHECY_REWARD_BONUS_PERCENT
+        value: 45
+
+  crypt_necklace_2:
+    name: "墓誓项链·秘"
+    material: HEART_OF_THE_SEA
+    slot: NECKLACE
+    range: "1-15"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [crypt, necklace, run]
+    weight: 12
+    lore:
+      - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      生命上限: [31, 313]
+      物理防御: [4, 54]
+    effects:
+      effect_1:
+        type: BOON_ECHO_CHANCE
+        value: 64
+
+  crypt_ring_a_1:
+    name: "墓誓戒指"
+    material: EMERALD
+    slot: RING
+    range: "1-15"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [crypt, ring, run]
+    weight: 12
+    lore:
+      - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [7, 73]
+      暴击几率%: [2, 32]
+    effects:
+      effect_1:
+        type: BOON_ECHO_CHANCE
+        value: 42
+
+  crypt_ring_a_2:
+    name: "墓誓戒指·秘"
+    material: HONEYCOMB
+    slot: RING
+    range: "1-15"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [crypt, ring, run]
+    weight: 12
+    lore:
+      - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [7, 73]
+      暴击几率%: [2, 32]
+    effects:
+      effect_1:
+        type: ACCESSORY_RARITY_LUCK
+        value: 81
+
+  crypt_ring_b_1:
+    name: "墓誓指环"
+    material: DIAMOND
+    slot: RING
+    range: "1-15"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [crypt, ring, run]
+    weight: 12
+    lore:
+      - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [7, 73]
+      暴击几率%: [2, 32]
+    effects:
+      effect_1:
+        type: ACCESSORY_RARITY_LUCK
+        value: 53
+
+  crypt_ring_b_2:
+    name: "墓誓指环·秘"
+    material: CLOCK
+    slot: RING
+    range: "1-15"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [crypt, ring, run]
+    weight: 12
+    lore:
+      - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [7, 73]
+      暴击几率%: [2, 32]
+    effects:
+      effect_1:
+        type: DELAYED_REWARD_ROOM_REDUCTION
+        value: 6
+
+  crypt_charm_1:
+    name: "墓誓护符"
+    material: RABBIT_FOOT
+    slot: CHARM
+    range: "1-15"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [crypt, charm, run]
+    weight: 12
+    lore:
+      - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      移动速度%: [2, 32]
+      闪避几率%: [2, 25]
+    effects:
+      effect_1:
+        type: DELAYED_REWARD_ROOM_REDUCTION
+        value: 4
+
+  crypt_charm_2:
+    name: "墓誓护符·秘"
+    material: ENDER_EYE
+    slot: CHARM
+    range: "1-15"
+    sources: [HIDDEN]
+    tags: [crypt, charm, hidden]
+    weight: 7
+    lore:
+      - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      移动速度%: [2, 32]
+      闪避几率%: [2, 25]
+    effects:
+      effect_1:
+        type: SOUL_DEBT_INTEREST_REDUCTION
+        value: 7
+
+  crypt_trophy_1:
+    name: "墓誓战利品"
+    material: NETHER_STAR
+    slot: TROPHY
+    range: "1-15"
+    sources: [ELITE, BOSS, HIDDEN]
+    tags: [crypt, trophy, run]
+    weight: 12
+    lore:
+      - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      暴击伤害%: [9, 77]
+      生命偷取%: [2, 25]
+    effects:
+      effect_1:
+        type: SOUL_DEBT_INTEREST_REDUCTION
+        value: 5
+
+  crypt_trophy_2:
+    name: "墓誓战利品·秘"
+    material: PRISMARINE_CRYSTALS
+    slot: TROPHY
+    range: "1-15"
+    sources: [HIDDEN]
+    tags: [crypt, trophy, hidden]
+    weight: 7
+    lore:
+      - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      暴击伤害%: [9, 77]
+      生命偷取%: [2, 25]
+    effects:
+      effect_1:
+        type: PROPHECY_REWARD_BONUS_PERCENT
+        value: 67
+
+  frost_necklace_1:
+    name: "霜契项链"
+    material: AMETHYST_SHARD
+    slot: NECKLACE
+    range: "16-30"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [frost, necklace, run]
+    weight: 12
+    lore:
+      - "§7霜契遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      生命上限: [60, 657]
+      物理防御: [11, 112]
+    effects:
+      effect_1:
+        type: PROPHECY_REWARD_BONUS_PERCENT
+        value: 45
+
+  frost_necklace_2:
+    name: "霜契项链·秘"
+    material: LAPIS_LAZULI
+    slot: NECKLACE
+    range: "16-30"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [frost, necklace, run]
+    weight: 12
+    lore:
+      - "§7霜契遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      生命上限: [60, 657]
+      物理防御: [11, 112]
+    effects:
+      effect_1:
+        type: BOON_ECHO_CHANCE
+        value: 64
+
+  frost_ring_a_1:
+    name: "霜契戒指"
+    material: EMERALD
+    slot: RING
+    range: "16-30"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [frost, ring, run]
+    weight: 12
+    lore:
+      - "§7霜契遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [12, 149]
+      暴击几率%: [5, 66]
+    effects:
+      effect_1:
+        type: BOON_ECHO_CHANCE
+        value: 42
+
+  frost_ring_a_2:
+    name: "霜契戒指·秘"
+    material: TOTEM_OF_UNDYING
+    slot: RING
+    range: "16-30"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [frost, ring, run]
+    weight: 12
+    lore:
+      - "§7霜契遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [12, 149]
+      暴击几率%: [5, 66]
+    effects:
+      effect_1:
+        type: ACCESSORY_RARITY_LUCK
+        value: 81
+
+  frost_ring_b_1:
+    name: "霜契指环"
+    material: DIAMOND
+    slot: RING
+    range: "16-30"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [frost, ring, run]
+    weight: 12
+    lore:
+      - "§7霜契遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [12, 149]
+      暴击几率%: [5, 66]
+    effects:
+      effect_1:
+        type: ACCESSORY_RARITY_LUCK
+        value: 53
+
+  frost_ring_b_2:
+    name: "霜契指环·秘"
+    material: DIAMOND
+    slot: RING
+    range: "16-30"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [frost, ring, run]
+    weight: 12
+    lore:
+      - "§7霜契遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [12, 149]
+      暴击几率%: [5, 66]
+    effects:
+      effect_1:
+        type: DELAYED_REWARD_ROOM_REDUCTION
+        value: 6
+
+  frost_charm_1:
+    name: "霜契护符"
+    material: RABBIT_FOOT
+    slot: CHARM
+    range: "16-30"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [frost, charm, run]
+    weight: 12
+    lore:
+      - "§7霜契遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      移动速度%: [5, 66]
+      闪避几率%: [5, 51]
+    effects:
+      effect_1:
+        type: DELAYED_REWARD_ROOM_REDUCTION
+        value: 4
+
+  frost_charm_2:
+    name: "霜契护符·秘"
+    material: MAGMA_CREAM
+    slot: CHARM
+    range: "16-30"
+    sources: [HIDDEN]
+    tags: [frost, charm, hidden]
+    weight: 7
+    lore:
+      - "§7霜契遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      移动速度%: [5, 66]
+      闪避几率%: [5, 51]
+    effects:
+      effect_1:
+        type: SOUL_DEBT_INTEREST_REDUCTION
+        value: 7
+
+  frost_trophy_1:
+    name: "霜契战利品"
+    material: NETHER_STAR
+    slot: TROPHY
+    range: "16-30"
+    sources: [ELITE, BOSS, HIDDEN]
+    tags: [frost, trophy, run]
+    weight: 12
+    lore:
+      - "§7霜契遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      暴击伤害%: [15, 161]
+      生命偷取%: [5, 51]
+    effects:
+      effect_1:
+        type: SOUL_DEBT_INTEREST_REDUCTION
+        value: 5
+
+  frost_trophy_2:
+    name: "霜契战利品·秘"
+    material: GOLD_NUGGET
+    slot: TROPHY
+    range: "16-30"
+    sources: [HIDDEN]
+    tags: [frost, trophy, hidden]
+    weight: 7
+    lore:
+      - "§7霜契遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      暴击伤害%: [15, 161]
+      生命偷取%: [5, 51]
+    effects:
+      effect_1:
+        type: PROPHECY_REWARD_BONUS_PERCENT
+        value: 67
+
+  crimson_necklace_1:
+    name: "王庭项链"
+    material: AMETHYST_SHARD
+    slot: NECKLACE
+    range: "31-45"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [crimson, necklace, run]
+    weight: 12
+    lore:
+      - "§7王庭遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      生命上限: [102, 1186]
+      物理防御: [15, 217]
+    effects:
+      effect_1:
+        type: PROPHECY_REWARD_BONUS_PERCENT
+        value: 45
+
+  crimson_necklace_2:
+    name: "王庭项链·秘"
+    material: AMETHYST_SHARD
+    slot: NECKLACE
+    range: "31-45"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [crimson, necklace, run]
+    weight: 12
+    lore:
+      - "§7王庭遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      生命上限: [102, 1186]
+      物理防御: [15, 217]
+    effects:
+      effect_1:
+        type: BOON_ECHO_CHANCE
+        value: 64
+
+  crimson_ring_a_1:
+    name: "王庭戒指"
+    material: EMERALD
+    slot: RING
+    range: "31-45"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [crimson, ring, run]
+    weight: 12
+    lore:
+      - "§7王庭遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [20, 284]
+      暴击几率%: [8, 125]
+    effects:
+      effect_1:
+        type: BOON_ECHO_CHANCE
+        value: 42
+
+  crimson_ring_a_2:
+    name: "王庭戒指·秘"
+    material: HEART_OF_THE_SEA
+    slot: RING
+    range: "31-45"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [crimson, ring, run]
+    weight: 12
+    lore:
+      - "§7王庭遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [20, 284]
+      暴击几率%: [8, 125]
+    effects:
+      effect_1:
+        type: ACCESSORY_RARITY_LUCK
+        value: 81
+
+  crimson_ring_b_1:
+    name: "王庭指环"
+    material: DIAMOND
+    slot: RING
+    range: "31-45"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [crimson, ring, run]
+    weight: 12
+    lore:
+      - "§7王庭遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [20, 284]
+      暴击几率%: [8, 125]
+    effects:
+      effect_1:
+        type: ACCESSORY_RARITY_LUCK
+        value: 53
+
+  crimson_ring_b_2:
+    name: "王庭指环·秘"
+    material: HONEYCOMB
+    slot: RING
+    range: "31-45"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [crimson, ring, run]
+    weight: 12
+    lore:
+      - "§7王庭遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [20, 284]
+      暴击几率%: [8, 125]
+    effects:
+      effect_1:
+        type: DELAYED_REWARD_ROOM_REDUCTION
+        value: 6
+
+  crimson_charm_1:
+    name: "王庭护符"
+    material: RABBIT_FOOT
+    slot: CHARM
+    range: "31-45"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [crimson, charm, run]
+    weight: 12
+    lore:
+      - "§7王庭遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      移动速度%: [8, 125]
+      闪避几率%: [8, 90]
+    effects:
+      effect_1:
+        type: DELAYED_REWARD_ROOM_REDUCTION
+        value: 4
+
+  crimson_charm_2:
+    name: "王庭护符·秘"
+    material: CLOCK
+    slot: CHARM
+    range: "31-45"
+    sources: [HIDDEN]
+    tags: [crimson, charm, hidden]
+    weight: 7
+    lore:
+      - "§7王庭遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      移动速度%: [8, 125]
+      闪避几率%: [8, 90]
+    effects:
+      effect_1:
+        type: SOUL_DEBT_INTEREST_REDUCTION
+        value: 7
+
+  crimson_trophy_1:
+    name: "王庭战利品"
+    material: NETHER_STAR
+    slot: TROPHY
+    range: "31-45"
+    sources: [ELITE, BOSS, HIDDEN]
+    tags: [crimson, trophy, run]
+    weight: 12
+    lore:
+      - "§7王庭遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      暴击伤害%: [26, 284]
+      生命偷取%: [8, 90]
+    effects:
+      effect_1:
+        type: SOUL_DEBT_INTEREST_REDUCTION
+        value: 5
+
+  crimson_trophy_2:
+    name: "王庭战利品·秘"
+    material: ENDER_EYE
+    slot: TROPHY
+    range: "31-45"
+    sources: [HIDDEN]
+    tags: [crimson, trophy, hidden]
+    weight: 7
+    lore:
+      - "§7王庭遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      暴击伤害%: [26, 284]
+      生命偷取%: [8, 90]
+    effects:
+      effect_1:
+        type: PROPHECY_REWARD_BONUS_PERCENT
+        value: 67
+
+  storm_necklace_1:
+    name: "雷塔项链"
+    material: AMETHYST_SHARD
+    slot: NECKLACE
+    range: "46-60"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [storm, necklace, run]
+    weight: 12
+    lore:
+      - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      生命上限: [160, 1993]
+      物理防御: [24, 353]
+    effects:
+      effect_1:
+        type: PROPHECY_REWARD_BONUS_PERCENT
+        value: 45
+
+  storm_necklace_2:
+    name: "雷塔项链·秘"
+    material: PRISMARINE_CRYSTALS
+    slot: NECKLACE
+    range: "46-60"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [storm, necklace, run]
+    weight: 12
+    lore:
+      - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      生命上限: [160, 1993]
+      物理防御: [24, 353]
+    effects:
+      effect_1:
+        type: BOON_ECHO_CHANCE
+        value: 64
+
+  storm_ring_a_1:
+    name: "雷塔戒指"
+    material: EMERALD
+    slot: RING
+    range: "46-60"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [storm, ring, run]
+    weight: 12
+    lore:
+      - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [34, 463]
+      暴击几率%: [12, 195]
+    effects:
+      effect_1:
+        type: BOON_ECHO_CHANCE
+        value: 42
+
+  storm_ring_a_2:
+    name: "雷塔戒指·秘"
+    material: LAPIS_LAZULI
+    slot: RING
+    range: "46-60"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [storm, ring, run]
+    weight: 12
+    lore:
+      - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [34, 463]
+      暴击几率%: [12, 195]
+    effects:
+      effect_1:
+        type: ACCESSORY_RARITY_LUCK
+        value: 81
+
+  storm_ring_b_1:
+    name: "雷塔指环"
+    material: DIAMOND
+    slot: RING
+    range: "46-60"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [storm, ring, run]
+    weight: 12
+    lore:
+      - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [34, 463]
+      暴击几率%: [12, 195]
+    effects:
+      effect_1:
+        type: ACCESSORY_RARITY_LUCK
+        value: 53
+
+  storm_ring_b_2:
+    name: "雷塔指环·秘"
+    material: TOTEM_OF_UNDYING
+    slot: RING
+    range: "46-60"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [storm, ring, run]
+    weight: 12
+    lore:
+      - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [34, 463]
+      暴击几率%: [12, 195]
+    effects:
+      effect_1:
+        type: DELAYED_REWARD_ROOM_REDUCTION
+        value: 6
+
+  storm_charm_1:
+    name: "雷塔护符"
+    material: RABBIT_FOOT
+    slot: CHARM
+    range: "46-60"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [storm, charm, run]
+    weight: 12
+    lore:
+      - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      移动速度%: [12, 195]
+      闪避几率%: [12, 165]
+    effects:
+      effect_1:
+        type: DELAYED_REWARD_ROOM_REDUCTION
+        value: 4
+
+  storm_charm_2:
+    name: "雷塔护符·秘"
+    material: DIAMOND
+    slot: CHARM
+    range: "46-60"
+    sources: [HIDDEN]
+    tags: [storm, charm, hidden]
+    weight: 7
+    lore:
+      - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      移动速度%: [12, 195]
+      闪避几率%: [12, 165]
+    effects:
+      effect_1:
+        type: SOUL_DEBT_INTEREST_REDUCTION
+        value: 7
+
+  storm_trophy_1:
+    name: "雷塔战利品"
+    material: NETHER_STAR
+    slot: TROPHY
+    range: "46-60"
+    sources: [ELITE, BOSS, HIDDEN]
+    tags: [storm, trophy, run]
+    weight: 12
+    lore:
+      - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      暴击伤害%: [38, 475]
+      生命偷取%: [12, 165]
+    effects:
+      effect_1:
+        type: SOUL_DEBT_INTEREST_REDUCTION
+        value: 5
+
+  storm_trophy_2:
+    name: "雷塔战利品·秘"
+    material: MAGMA_CREAM
+    slot: TROPHY
+    range: "46-60"
+    sources: [HIDDEN]
+    tags: [storm, trophy, hidden]
+    weight: 7
+    lore:
+      - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      暴击伤害%: [38, 475]
+      生命偷取%: [12, 165]
+    effects:
+      effect_1:
+        type: PROPHECY_REWARD_BONUS_PERCENT
+        value: 67
+
+  mirror_necklace_1:
+    name: "镜砂项链"
+    material: AMETHYST_SHARD
+    slot: NECKLACE
+    range: "61-75"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [mirror, necklace, run]
+    weight: 12
+    lore:
+      - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      生命上限: [242, 3211]
+      物理防御: [38, 561]
+    effects:
+      effect_1:
+        type: PROPHECY_REWARD_BONUS_PERCENT
+        value: 45
+
+  mirror_necklace_2:
+    name: "镜砂项链·秘"
+    material: GOLD_NUGGET
+    slot: NECKLACE
+    range: "61-75"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [mirror, necklace, run]
+    weight: 12
+    lore:
+      - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      生命上限: [242, 3211]
+      物理防御: [38, 561]
+    effects:
+      effect_1:
+        type: BOON_ECHO_CHANCE
+        value: 64
+
+  mirror_ring_a_1:
+    name: "镜砂戒指"
+    material: EMERALD
+    slot: RING
+    range: "61-75"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [mirror, ring, run]
+    weight: 12
+    lore:
+      - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [48, 765]
+      暴击几率%: [18, 308]
+    effects:
+      effect_1:
+        type: BOON_ECHO_CHANCE
+        value: 42
+
+  mirror_ring_a_2:
+    name: "镜砂戒指·秘"
+    material: AMETHYST_SHARD
+    slot: RING
+    range: "61-75"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [mirror, ring, run]
+    weight: 12
+    lore:
+      - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [48, 765]
+      暴击几率%: [18, 308]
+    effects:
+      effect_1:
+        type: ACCESSORY_RARITY_LUCK
+        value: 81
+
+  mirror_ring_b_1:
+    name: "镜砂指环"
+    material: DIAMOND
+    slot: RING
+    range: "61-75"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [mirror, ring, run]
+    weight: 12
+    lore:
+      - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [48, 765]
+      暴击几率%: [18, 308]
+    effects:
+      effect_1:
+        type: ACCESSORY_RARITY_LUCK
+        value: 53
+
+  mirror_ring_b_2:
+    name: "镜砂指环·秘"
+    material: HEART_OF_THE_SEA
+    slot: RING
+    range: "61-75"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [mirror, ring, run]
+    weight: 12
+    lore:
+      - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [48, 765]
+      暴击几率%: [18, 308]
+    effects:
+      effect_1:
+        type: DELAYED_REWARD_ROOM_REDUCTION
+        value: 6
+
+  mirror_charm_1:
+    name: "镜砂护符"
+    material: RABBIT_FOOT
+    slot: CHARM
+    range: "61-75"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [mirror, charm, run]
+    weight: 12
+    lore:
+      - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      移动速度%: [18, 308]
+      闪避几率%: [18, 248]
+    effects:
+      effect_1:
+        type: DELAYED_REWARD_ROOM_REDUCTION
+        value: 4
+
+  mirror_charm_2:
+    name: "镜砂护符·秘"
+    material: HONEYCOMB
+    slot: CHARM
+    range: "61-75"
+    sources: [HIDDEN]
+    tags: [mirror, charm, hidden]
+    weight: 7
+    lore:
+      - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      移动速度%: [18, 308]
+      闪避几率%: [18, 248]
+    effects:
+      effect_1:
+        type: SOUL_DEBT_INTEREST_REDUCTION
+        value: 7
+
+  mirror_trophy_1:
+    name: "镜砂战利品"
+    material: NETHER_STAR
+    slot: TROPHY
+    range: "61-75"
+    sources: [ELITE, BOSS, HIDDEN]
+    tags: [mirror, trophy, run]
+    weight: 12
+    lore:
+      - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      暴击伤害%: [55, 728]
+      生命偷取%: [18, 248]
+    effects:
+      effect_1:
+        type: SOUL_DEBT_INTEREST_REDUCTION
+        value: 5
+
+  mirror_trophy_2:
+    name: "镜砂战利品·秘"
+    material: CLOCK
+    slot: TROPHY
+    range: "61-75"
+    sources: [HIDDEN]
+    tags: [mirror, trophy, hidden]
+    weight: 7
+    lore:
+      - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      暴击伤害%: [55, 728]
+      生命偷取%: [18, 248]
+    effects:
+      effect_1:
+        type: PROPHECY_REWARD_BONUS_PERCENT
+        value: 67
+
+  eclipse_necklace_1:
+    name: "月蚀项链"
+    material: AMETHYST_SHARD
+    slot: NECKLACE
+    range: "76-90"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [eclipse, necklace, run]
+    weight: 12
+    lore:
+      - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      生命上限: [353, 4954]
+      物理防御: [52, 888]
+    effects:
+      effect_1:
+        type: PROPHECY_REWARD_BONUS_PERCENT
+        value: 45
+
+  eclipse_necklace_2:
+    name: "月蚀项链·秘"
+    material: ENDER_EYE
+    slot: NECKLACE
+    range: "76-90"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [eclipse, necklace, run]
+    weight: 12
+    lore:
+      - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      生命上限: [353, 4954]
+      物理防御: [52, 888]
+    effects:
+      effect_1:
+        type: BOON_ECHO_CHANCE
+        value: 64
+
+  eclipse_ring_a_1:
+    name: "月蚀戒指"
+    material: EMERALD
+    slot: RING
+    range: "76-90"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [eclipse, ring, run]
+    weight: 12
+    lore:
+      - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [71, 1161]
+      暴击几率%: [28, 468]
+    effects:
+      effect_1:
+        type: BOON_ECHO_CHANCE
+        value: 42
+
+  eclipse_ring_a_2:
+    name: "月蚀戒指·秘"
+    material: PRISMARINE_CRYSTALS
+    slot: RING
+    range: "76-90"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [eclipse, ring, run]
+    weight: 12
+    lore:
+      - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [71, 1161]
+      暴击几率%: [28, 468]
+    effects:
+      effect_1:
+        type: ACCESSORY_RARITY_LUCK
+        value: 81
+
+  eclipse_ring_b_1:
+    name: "月蚀指环"
+    material: DIAMOND
+    slot: RING
+    range: "76-90"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [eclipse, ring, run]
+    weight: 12
+    lore:
+      - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [71, 1161]
+      暴击几率%: [28, 468]
+    effects:
+      effect_1:
+        type: ACCESSORY_RARITY_LUCK
+        value: 53
+
+  eclipse_ring_b_2:
+    name: "月蚀指环·秘"
+    material: LAPIS_LAZULI
+    slot: RING
+    range: "76-90"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [eclipse, ring, run]
+    weight: 12
+    lore:
+      - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [71, 1161]
+      暴击几率%: [28, 468]
+    effects:
+      effect_1:
+        type: DELAYED_REWARD_ROOM_REDUCTION
+        value: 6
+
+  eclipse_charm_1:
+    name: "月蚀护符"
+    material: RABBIT_FOOT
+    slot: CHARM
+    range: "76-90"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [eclipse, charm, run]
+    weight: 12
+    lore:
+      - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      移动速度%: [28, 468]
+      闪避几率%: [28, 370]
+    effects:
+      effect_1:
+        type: DELAYED_REWARD_ROOM_REDUCTION
+        value: 4
+
+  eclipse_charm_2:
+    name: "月蚀护符·秘"
+    material: TOTEM_OF_UNDYING
+    slot: CHARM
+    range: "76-90"
+    sources: [HIDDEN]
+    tags: [eclipse, charm, hidden]
+    weight: 7
+    lore:
+      - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      移动速度%: [28, 468]
+      闪避几率%: [28, 370]
+    effects:
+      effect_1:
+        type: SOUL_DEBT_INTEREST_REDUCTION
+        value: 7
+
+  eclipse_trophy_1:
+    name: "月蚀战利品"
+    material: NETHER_STAR
+    slot: TROPHY
+    range: "76-90"
+    sources: [ELITE, BOSS, HIDDEN]
+    tags: [eclipse, trophy, run]
+    weight: 12
+    lore:
+      - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      暴击伤害%: [80, 1109]
+      生命偷取%: [28, 370]
+    effects:
+      effect_1:
+        type: SOUL_DEBT_INTEREST_REDUCTION
+        value: 5
+
+  eclipse_trophy_2:
+    name: "月蚀战利品·秘"
+    material: DIAMOND
+    slot: TROPHY
+    range: "76-90"
+    sources: [HIDDEN]
+    tags: [eclipse, trophy, hidden]
+    weight: 7
+    lore:
+      - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      暴击伤害%: [80, 1109]
+      生命偷取%: [28, 370]
+    effects:
+      effect_1:
+        type: PROPHECY_REWARD_BONUS_PERCENT
+        value: 67
+
+  throne_necklace_1:
+    name: "终座项链"
+    material: AMETHYST_SHARD
+    slot: NECKLACE
+    range: "91-100"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [throne, necklace, run]
+    weight: 12
+    lore:
+      - "§7终座遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      生命上限: [524, 7636]
+      物理防御: [78, 1361]
+    effects:
+      effect_1:
+        type: PROPHECY_REWARD_BONUS_PERCENT
+        value: 45
+
+  throne_necklace_2:
+    name: "终座项链·秘"
+    material: MAGMA_CREAM
+    slot: NECKLACE
+    range: "91-100"
+    sources: [HIDDEN]
+    tags: [throne, necklace, hidden]
+    weight: 7
+    lore:
+      - "§7终座遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      生命上限: [524, 7636]
+      物理防御: [78, 1361]
+    effects:
+      effect_1:
+        type: BOON_ECHO_CHANCE
+        value: 64
+
+  throne_ring_a_1:
+    name: "终座戒指"
+    material: EMERALD
+    slot: RING
+    range: "91-100"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [throne, ring, run]
+    weight: 12
+    lore:
+      - "§7终座遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [103, 1777]
+      暴击几率%: [41, 720]
+    effects:
+      effect_1:
+        type: BOON_ECHO_CHANCE
+        value: 42
+
+  throne_ring_a_2:
+    name: "终座戒指·秘"
+    material: GOLD_NUGGET
+    slot: RING
+    range: "91-100"
+    sources: [HIDDEN]
+    tags: [throne, ring, hidden]
+    weight: 7
+    lore:
+      - "§7终座遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [103, 1777]
+      暴击几率%: [41, 720]
+    effects:
+      effect_1:
+        type: ACCESSORY_RARITY_LUCK
+        value: 81
+
+  throne_ring_b_1:
+    name: "终座指环"
+    material: DIAMOND
+    slot: RING
+    range: "91-100"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [throne, ring, run]
+    weight: 12
+    lore:
+      - "§7终座遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [103, 1777]
+      暴击几率%: [41, 720]
+    effects:
+      effect_1:
+        type: ACCESSORY_RARITY_LUCK
+        value: 53
+
+  throne_ring_b_2:
+    name: "终座指环·秘"
+    material: AMETHYST_SHARD
+    slot: RING
+    range: "91-100"
+    sources: [HIDDEN]
+    tags: [throne, ring, hidden]
+    weight: 7
+    lore:
+      - "§7终座遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      物理攻击: [103, 1777]
+      暴击几率%: [41, 720]
+    effects:
+      effect_1:
+        type: DELAYED_REWARD_ROOM_REDUCTION
+        value: 6
+
+  throne_charm_1:
+    name: "终座护符"
+    material: RABBIT_FOOT
+    slot: CHARM
+    range: "91-100"
+    sources: [CHEST, ELITE, BOSS, HIDDEN]
+    tags: [throne, charm, run]
+    weight: 12
+    lore:
+      - "§7终座遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      移动速度%: [41, 720]
+      闪避几率%: [41, 559]
+    effects:
+      effect_1:
+        type: DELAYED_REWARD_ROOM_REDUCTION
+        value: 4
+
+  throne_charm_2:
+    name: "终座护符·秘"
+    material: HEART_OF_THE_SEA
+    slot: CHARM
+    range: "91-100"
+    sources: [HIDDEN]
+    tags: [throne, charm, hidden]
+    weight: 7
+    lore:
+      - "§7终座遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      移动速度%: [41, 720]
+      闪避几率%: [41, 559]
+    effects:
+      effect_1:
+        type: SOUL_DEBT_INTEREST_REDUCTION
+        value: 7
+
+  throne_trophy_1:
+    name: "终座战利品"
+    material: NETHER_STAR
+    slot: TROPHY
+    range: "91-100"
+    sources: [ELITE, BOSS, HIDDEN]
+    tags: [throne, trophy, run]
+    weight: 12
+    lore:
+      - "§7终座遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      暴击伤害%: [115, 1705]
+      生命偷取%: [41, 559]
+    effects:
+      effect_1:
+        type: SOUL_DEBT_INTEREST_REDUCTION
+        value: 5
+
+  throne_trophy_2:
+    name: "终座战利品·秘"
+    material: HONEYCOMB
+    slot: TROPHY
+    range: "91-100"
+    sources: [HIDDEN]
+    tags: [throne, trophy, hidden]
+    weight: 7
+    lore:
+      - "§7终座遗留的小型饰物，会在关键选择时回应。"
+    attributes:
+      暴击伤害%: [115, 1705]
+      生命偷取%: [41, 559]
+    effects:
+      effect_1:
+        type: PROPHECY_REWARD_BONUS_PERCENT
+        value: 67
+

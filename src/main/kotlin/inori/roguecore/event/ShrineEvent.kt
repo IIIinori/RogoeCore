@@ -127,6 +127,7 @@ object ShrineEvent {
                         "",
                         "§7失去 §c${(sacrificePercent * 100).toInt()}% §7当前生命",
                         "§7获得 §6$shardReward §7本局碎片",
+                        "§7并预言一间 §d精英房 §7，完成后获得额外碎片",
                         "",
                         "§e点击接受代价"
                     )
@@ -213,41 +214,16 @@ object ShrineEvent {
                         val maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH)?.value ?: 20.0
                         player.health = (player.health + maxHealth * effectiveHealPercent).coerceAtMost(maxHealth)
                         val removed = RunCurseManager.getCurses(player).randomOrNull()?.let { RunCurseManager.removeCurse(player, it) } == true
-                        if (!removed) {
-                            player.sendMessage("§7你身上没有可净化的诅咒，神龛赐下了一次遗物选择。")
-                            if (!RelicSelectManager.offerRelicSelection(player, EventScaling.relicOfferCount(instance, 3, UnlockManager.getRelicOfferBonus(player) + relicPower.coerceAtMost(3) + relicBoost))) {
-                                BoonSelectManager.offerBoonSelection(player, EventScaling.boonOfferCount(instance))
+                        if (removed) {
+                            val reward = RelicEffectHandler.getShrinePurifyReward(player)
+                            if (reward > 0) {
+                                ShardRewardManager.addRunShards(player.uniqueId, reward)
+                                player.sendMessage("§a净化遗物奖励 §e$reward §a本局碎片。")
                             }
                         }
-                    }
-
-                    twinSlot -> {
-                        DungeonGuiGuard.unlock(player)
-                        player.closeInventory()
-                        if (!ShardRewardManager.takeRunShards(player.uniqueId, twinPrice)) {
-                            player.sendMessage("§c你的本局碎片不足，无法完成双生祷文。")
-                            return@onClick
-                        }
-                        val maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH)?.value ?: 20.0
-                        player.health = (player.health + maxHealth * twinHealPercent).coerceAtMost(maxHealth)
-                        if (RunModifierManager.isEnabled(RunModifierType.SHRINE_BLESSING)) {
-                            val duration = RunModifierManager.shrineBlessingDuration(twin = true)
-                            RunModifierManager.addModifier(
-                                player,
-                                RunModifierType.SHRINE_BLESSING,
-                                duration,
-                                duration,
-                                RunModifierManager.shrineBlessingReward(instance, shrinePower + healPower, twin = true, relicPower = relicPower).toDouble(),
-                                "双生祷文"
-                            )
-                        }
-                        val boon = BoonSelectManager.rollBoons(1, player).firstOrNull()
-                        if (boon != null) {
-                            PlayerBoonData.addBoon(player, boon)
-                            player.sendMessage("§d神龛额外赐下了 ${boon.rarity.color}${boon.name}")
-                        }
-                        val removed = RunCurseManager.getCurses(player).randomOrNull()?.let { RunCurseManager.removeCurse(player, it) } == true
                         if (!removed) {
+
+
                             player.sendMessage("§7没有可净化的诅咒，双生祷文转化为一次遗物选择。")
                             if (!RelicSelectManager.offerRelicSelection(player, EventScaling.relicOfferCount(instance, 3, UnlockManager.getRelicOfferBonus(player) + relicPower.coerceAtMost(3) + relicBoost))) {
                                 BoonSelectManager.offerBoonSelection(player, EventScaling.boonOfferCount(instance))
@@ -265,7 +241,15 @@ object ShrineEvent {
                         }
                         player.damage(damage)
                         ShardRewardManager.addRunShards(player.uniqueId, shardReward)
-                        player.sendMessage("§6你以痛苦换来了 §e$shardReward §6本局碎片。")
+                        RunModifierManager.addRoomProphecy(
+                            player,
+                            RoomType.ELITE,
+                            RunModifierManager.prophecyWithinRooms(),
+                            "shards",
+                            RunModifierManager.prophecyReward(instance, shrinePower),
+                            "痛苦献祭"
+                        )
+                        player.sendMessage("§6你以痛苦换来了 §e$shardReward §6本局碎片，并听见了精英房的预言。")
                     }
                 }
             }

@@ -5,6 +5,7 @@ import inori.roguecore.boon.BoonResonanceManager
 import inori.roguecore.boon.PlayerBoonData
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonManager
+import inori.roguecore.modifier.RunModifierManager
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import taboolib.library.xseries.XMaterial
@@ -68,9 +69,20 @@ object BoonSelectUI {
                 if (boonIndex < 0 || boonIndex >= boons.size) return@onClick
 
                 val selectedBoon = boons[boonIndex]
+                val echoCopies = RunModifierManager.consumeBoonEcho(player)
+                val mutated = RunModifierManager.consumeBoonMutation(player)
                 DungeonGuiGuard.unlock(player)
                 player.closeInventory()
                 PlayerBoonData.addBoon(player, selectedBoon)
+                if (echoCopies > 0) {
+                    repeat(echoCopies) {
+                        PlayerBoonData.addBoon(player, selectedBoon, triggerOnAcquire = false)
+                    }
+                    player.sendMessage("§d神恩回响复制了本次选择。")
+                }
+                if (mutated) {
+                    player.sendMessage("§5神恩变质已经消散。")
+                }
             }
         }
     }
@@ -127,6 +139,10 @@ object BoonSelectUI {
                     } else {
                         add("§7本轮更偏向补全新构筑")
                     }
+                    val mutationExtra = RunModifierManager.getBoonOfferExtra(player)
+                    if (mutationExtra > 0) {
+                        add("§5神恩变质: §d+$mutationExtra §5候选，选择后消耗")
+                    }
                     add("")
                     add("§e建议优先选能补主流派的项")
                 }
@@ -181,6 +197,10 @@ object BoonSelectUI {
                     else -> "§8未激活"
                 }
                 add("§7当前流派共鸣: §a${bestSynergy.key} x${bestSynergy.value} §7→ x$afterPick $levelHint")
+            }
+            val echo = RunModifierManager.getModifiers(player).firstOrNull { it.type == inori.roguecore.modifier.RunModifierType.BOON_ECHO }
+            if (echo != null) {
+                add("§d神恩回响: §7选择后额外复制一次")
             }
             add("")
             add(if (currentLevel > 0) "§e点击升级" else "§e点击选择")

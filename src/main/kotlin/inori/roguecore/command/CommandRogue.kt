@@ -1,5 +1,6 @@
 package inori.roguecore.command
 
+import inori.roguecore.accessory.AccessoryRegistry
 import inori.roguecore.affix.AffixRegistry
 import inori.roguecore.audit.ContentAuditManager
 import inori.roguecore.boon.BoonRegistry
@@ -31,11 +32,17 @@ import inori.roguecore.relic.PlayerRelicData
 import inori.roguecore.stats.BalanceStatsManager
 import inori.roguecore.talent.TalentManager
 import inori.roguecore.talent.TalentRegistry
+import inori.roguecore.ui.AccessoryIdentifyUI
+import inori.roguecore.ui.AccessoryInscriptionUI
+import inori.roguecore.ui.AccessoryUI
+import inori.roguecore.ui.AccessoryWorkshopUI
 import inori.roguecore.ui.TalentUI
 import inori.roguecore.ui.BuildUI
 import inori.roguecore.ui.CodexUI
+import inori.roguecore.ui.CollectionUI
 import inori.roguecore.ui.ForgeBookUI
 import inori.roguecore.ui.GearStorageUI
+import inori.roguecore.ui.GuideUI
 import inori.roguecore.ui.IdentifyUI
 import inori.roguecore.ui.PermanentForgeUI
 import inori.roguecore.ui.RogueMenuUI
@@ -43,6 +50,7 @@ import inori.roguecore.ui.RunCompleteUI
 import inori.roguecore.ui.RunMilestoneUI
 import inori.roguecore.ui.RunModifierUI
 import inori.roguecore.ui.RunSummaryUI
+import inori.roguecore.ui.SalvageUI
 import inori.roguecore.ui.UnlockUI
 import inori.roguecore.ui.WorkshopUI
 import inori.roguecore.unlock.UnlockManager
@@ -87,6 +95,7 @@ object CommandRogue {
             sender.sendMessage("§6===== RogueCore 玩家命令 =====")
             sender.sendMessage("§e/rogue §7- 打开主菜单")
             sender.sendMessage("§e/rogue menu §7- 打开主菜单")
+            sender.sendMessage("§e/rogue guide §7- 打开引导手册")
             sender.sendMessage("§e/rogue enter [floor] §7- 开始冒险")
             sender.sendMessage("§e/rogue leave §7- 离开当前副本")
             sender.sendMessage("§e/rogue rejoin §7- 重连未结束的副本")
@@ -97,6 +106,11 @@ object CommandRogue {
             sender.sendMessage("§e/rogue identify §7- 打开装备鉴定")
             sender.sendMessage("§e/rogue craft §7- 打开锻造书打造")
             sender.sendMessage("§e/rogue gear §7- 打开装备仓库")
+            sender.sendMessage("§e/rogue salvage §7- 打开回收工坊")
+            sender.sendMessage("§e/rogue accessory §7- 打开饰品匣")
+            sender.sendMessage("§e/rogue aworkshop §7- 打开饰品工坊")
+            sender.sendMessage("§e/rogue aid §7- 打开饰品鉴定")
+            sender.sendMessage("§e/rogue inscribe §7- 打开饰品刻印")
             sender.sendMessage("§e/rogue materials §7- 查看局外锻造材料")
             sender.sendMessage("§e/rogue workshop §7- 打开材料工坊")
             sender.sendMessage("§e/rogue build §7- 打开当前构筑面板")
@@ -105,14 +119,22 @@ object CommandRogue {
             sender.sendMessage("§e/rogue summary §7- 查看最近一次冒险报告")
             sender.sendMessage("§e/rogue route §7- 通关后重新打开路线选择")
             sender.sendMessage("§e/rogue codex §7- 打开冒险图鉴")
+            sender.sendMessage("§e/rogue collection §7- 打开收藏馆")
             sender.sendMessage("§e/rogue stats §7- 查看个人统计")
+        }
+    }
+
+    @CommandBody(description = "打开引导手册")
+    val guide = subCommand {
+        execute<Player> { sender, _, _ ->
+            GuideUI.open(sender)
         }
     }
 
     @CommandBody(description = "进入地牢(有队伍则全队进入)")
     val enter = subCommand {
         dynamic("floor", optional = true) {
-            suggestion<Player> { _, _ -> (1..15).map { it.toString() } }
+            suggestion<Player> { _, _ -> (1..100).map { it.toString() } }
             execute<Player> { sender, _, argument ->
                 val floor = argument.toIntOrNull() ?: 1
                 enterDungeon(sender, floor)
@@ -171,6 +193,48 @@ object CommandRogue {
             }
             DungeonManager.joinDungeon(player, instance.id)
             player.sendMessage("§a已进入地牢 §f${instance.id} §a(${config.theme.name} - ${instance.rooms.size}个房间)")
+        }
+    }
+
+    @CommandBody(description = "打开饰品匣")
+    val accessory = subCommand {
+        execute<Player> { sender, _, _ ->
+            AccessoryUI.open(sender)
+        }
+    }
+
+    @CommandBody(description = "打开回收工坊")
+    val salvage = subCommand {
+        execute<Player> { sender, _, _ ->
+            SalvageUI.open(sender)
+        }
+    }
+
+    @CommandBody(description = "打开收藏馆")
+    val collection = subCommand {
+        execute<Player> { sender, _, _ ->
+            CollectionUI.open(sender)
+        }
+    }
+
+    @CommandBody(description = "打开饰品工坊")
+    val aworkshop = subCommand {
+        execute<Player> { sender, _, _ ->
+            AccessoryWorkshopUI.open(sender)
+        }
+    }
+
+    @CommandBody(description = "打开饰品鉴定")
+    val aid = subCommand {
+        execute<Player> { sender, _, _ ->
+            AccessoryIdentifyUI.open(sender)
+        }
+    }
+
+    @CommandBody(description = "打开饰品刻印")
+    val inscribe = subCommand {
+        execute<Player> { sender, _, _ ->
+            AccessoryInscriptionUI.open(sender)
         }
     }
 
@@ -762,6 +826,8 @@ object CommandRogue {
             ShardRewardManager.load()
             DungeonLootManager.config.reload()
             DungeonLootManager.load()
+            AccessoryRegistry.config.reload()
+            AccessoryRegistry.load()
             ChestEvent.config.reload()
             RestEvent.config.reload()
             ShopEvent.config.reload()

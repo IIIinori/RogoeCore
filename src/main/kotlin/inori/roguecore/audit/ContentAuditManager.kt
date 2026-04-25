@@ -1,13 +1,21 @@
 package inori.roguecore.audit
 
+import inori.roguecore.accessory.AccessoryDefinition
+import inori.roguecore.accessory.AccessoryEffectType
+import inori.roguecore.accessory.AccessoryRegistry
+import inori.roguecore.accessory.AccessorySlot
 import inori.roguecore.affix.AffixRegistry
+import inori.roguecore.balance.BalanceConfigManager
 import inori.roguecore.affix.AffixType
 import inori.roguecore.boon.Boon
 import inori.roguecore.boon.BoonEffect
 import inori.roguecore.boon.BoonEffectType
 import inori.roguecore.boon.BoonRegistry
 import inori.roguecore.boon.BoonRarity
+import inori.roguecore.combat.MonsterConfig
+import inori.roguecore.data.PermanentMaterialManager
 import inori.roguecore.dungeon.room.RoomType
+import inori.roguecore.item.DungeonLootSource
 import inori.roguecore.event.EventAffixManager
 import inori.roguecore.modifier.RunModifierManager
 import inori.roguecore.relic.Relic
@@ -17,6 +25,7 @@ import inori.roguecore.relic.RelicRarity
 import inori.roguecore.unlock.UnlockRegistry
 import taboolib.library.configuration.ConfigurationSection
 import taboolib.library.xseries.XMaterial
+import java.io.File
 
 /**
  * 配置内容自检。
@@ -30,11 +39,26 @@ object ContentAuditManager {
         val relicCount: Int,
         val affixCount: Int,
         val eventAffixCount: Int,
+        val accessoryCount: Int,
+        val mythicConfiguredCount: Int,
+        val mythicDefinedCount: Int,
+        val mythicApAttributedCount: Int,
         val errors: List<String>,
         val warnings: List<String>
     ) {
         val issueCount: Int get() = errors.size + warnings.size
     }
+
+    private data class MythicAuditStats(
+        val configuredCount: Int = 0,
+        val definedCount: Int = 0,
+        val apAttributedCount: Int = 0
+    )
+
+    private data class MythicMobDefinition(
+        val id: String,
+        val lines: List<String>
+    )
 
     fun run(): Result {
         val errors = mutableListOf<String>()
@@ -45,12 +69,20 @@ object ContentAuditManager {
         auditAffixes(errors, warnings)
         auditEventAffixes(errors, warnings)
         auditModifiers(errors, warnings)
+        auditAccessories(errors, warnings)
+        auditBalance(errors, warnings)
+        val mythicStats = auditMythicMobs(errors, warnings)
+        auditQualityMarkers(warnings)
 
         return Result(
             boonCount = BoonRegistry.getAll().size,
             relicCount = RelicRegistry.getAll().size,
             affixCount = AffixRegistry.getAll().size,
             eventAffixCount = EventAffixManager.getAll().size,
+            accessoryCount = AccessoryRegistry.getAll().size,
+            mythicConfiguredCount = mythicStats.configuredCount,
+            mythicDefinedCount = mythicStats.definedCount,
+            mythicApAttributedCount = mythicStats.apAttributedCount,
             errors = errors,
             warnings = warnings
         )
@@ -59,12 +91,13 @@ object ContentAuditManager {
     fun format(result: Result, verbose: Boolean = true): List<String> {
         return buildList {
             add("§6===== RogueCore 内容自检 =====")
-            add("§e神恩: §f${result.boonCount} §7| 遗物: §f${result.relicCount} §7| 副本词缀: §f${result.affixCount} §7| 事件词缀: §f${result.eventAffixCount}")
+            add("§e内容: §7神恩 §f${result.boonCount} §7| 遗物 §f${result.relicCount} §7| 副本词缀 §f${result.affixCount} §7| 事件词缀 §f${result.eventAffixCount} §7| 饰品 §f${result.accessoryCount}")
+            add("§e部署: §7MythicMobs §f${result.mythicDefinedCount}/${result.mythicConfiguredCount} §7| AP怪物属性 §f${result.mythicApAttributedCount}/${result.mythicDefinedCount}")
             val status = if (result.issueCount == 0) "§a通过" else "§c发现 ${result.issueCount} 个问题"
             add("§e结果: $status §7(错误 ${result.errors.size}, 警告 ${result.warnings.size})")
             if (!verbose || result.issueCount == 0) {
                 if (result.issueCount == 0) {
-                    add("§a没有发现重复效果或配置异常。")
+                    add("§a没有发现重复效果、配置异常或部署缺口。")
                 }
                 return@buildList
             }
@@ -117,8 +150,136 @@ object ContentAuditManager {
         auditEventRawConfig(errors, warnings)
     }
 
+    private fun auditAccessories(errors: MutableList<String>, warnings: MutableList<String>) {
+        val section = AccessoryRegistry.config.getConfigurationSection("accessories") ?: run {
+            errors += "accessories.yml 缺少 accessories 节点"
+            return
+        }
+        val definitions = AccessoryRegistry.getAll().toList()
+        duplicateBy(definitions, { it.name }, "饰品名称", warnings)
+        auditAccessoryCoverage(definitions, errors, warnings)
+        auditAccessoryBalanceLinks(warnings)
+        AccessoryRegistry.config.getConfigurationSection("identification")?.let { identify ->
+            checkNonNegative(identify, "queue-size", "accessories.identification", errors)
+            checkNonNegative(identify, "base-price", "accessories.identification", errors)
+            checkNonNegative(identify, "floor-price", "accessories.identification", errors)
+            identify.getConfigurationSection("drop-as-sealed-chance")?.let { chance ->
+                for (source in chance.getKeys(false)) {
+                    if (!enumExists<inori.roguecore.item.DungeonLootSource>(source)) errors += "饰品鉴定使用未知来源: $source"
+                    val value = chance.getDouble(source, 0.0)
+                    if (value !in 0.0..1.0) errors += "饰品鉴定密封概率 $source 超出 0-1: $value"
+                }
+            }
+        } ?: warnings.add("accessories.yml 缺少 identification 节点，饰品鉴定将使用默认值")
+        AccessoryRegistry.config.getConfigurationSection("inscription-books")?.let { inscription ->
+            checkNonNegative(inscription, "queue-size", "accessories.inscription-books", errors)
+            inscription.getConfigurationSection("drop-chance")?.let { chance ->
+                for (source in chance.getKeys(false)) {
+                    if (!enumExists<inori.roguecore.item.DungeonLootSource>(source)) errors += "饰品刻印书使用未知来源: $source"
+                    val value = chance.getDouble(source, 0.0)
+                    if (value !in 0.0..1.0) errors += "饰品刻印书掉落概率 $source 超出 0-1: $value"
+                }
+            }
+            val qualities = inscription.getConfigurationSection("qualities")
+            if (qualities == null || qualities.getKeys(false).isEmpty()) {
+                errors += "accessories.yml 饰品刻印缺少 qualities 节点"
+            } else {
+                for (qualityId in qualities.getKeys(false)) {
+                    val quality = qualities.getConfigurationSection(qualityId) ?: continue
+                    checkNonNegative(quality, "weight", "饰品刻印品质 $qualityId", errors)
+                    checkNonNegative(quality, "time-seconds", "饰品刻印品质 $qualityId", errors)
+                    checkNonNegative(quality, "soul-shards", "饰品刻印品质 $qualityId", errors)
+                }
+            }
+        } ?: warnings.add("accessories.yml 缺少 inscription-books 节点，饰品刻印将使用默认值")
+        for (id in section.getKeys(false)) {
+            val node = section.getConfigurationSection(id) ?: continue
+            val material = node.getString("material") ?: "AMETHYST_SHARD"
+            if (!XMaterial.matchXMaterial(material).isPresent) {
+                warnings += "饰品 $id 使用无效材质: $material"
+            }
+            val slot = node.getString("slot")
+            if (AccessorySlot.parse(slot) == null) {
+                errors += "饰品 $id 使用未知槽位: $slot"
+            }
+            for (source in node.getStringList("sources")) {
+                if (!enumExists<inori.roguecore.item.DungeonLootSource>(source)) {
+                    errors += "饰品 $id 使用未知掉落来源: $source"
+                }
+            }
+            node.getConfigurationSection("attributes")?.let { attr ->
+                for (attrName in attr.getKeys(false)) {
+                    val values = attr.getDoubleList(attrName)
+                    if (values.size < 2) errors += "饰品 $id 属性 $attrName 至少需要 [min,max] 两个数值"
+                    if (values.any { it < 0.0 }) warnings += "饰品 $id 属性 $attrName 存在负数: $values"
+                }
+            }
+            node.getConfigurationSection("effects")?.let { effects ->
+                for (effectKey in effects.getKeys(false)) {
+                    val type = effects.getConfigurationSection(effectKey)?.getString("type") ?: ""
+                    if (!enumExists<AccessoryEffectType>(type)) {
+                        errors += "饰品 $id 效果 $effectKey 使用未知类型: $type"
+                    }
+                }
+            }
+        }
+    }
+
+    private fun auditAccessoryCoverage(definitions: List<AccessoryDefinition>, errors: MutableList<String>, warnings: MutableList<String>) {
+        val slots = definitions.map { it.slot }.toSet()
+        val hasRing = AccessorySlot.RING in slots || AccessorySlot.RING_1 in slots
+        val requiredSlots = listOf(AccessorySlot.NECKLACE, AccessorySlot.CHARM, AccessorySlot.TROPHY)
+        for (slot in requiredSlots) {
+            if (slot !in slots) warnings += "饰品池缺少槽位覆盖: ${slot.name}"
+        }
+        if (!hasRing) warnings += "饰品池缺少戒指槽位覆盖: RING/RING_1"
+        if (AccessorySlot.RING_2 !in slots) warnings += "饰品池缺少印记槽位覆盖: RING_2"
+
+        val hiddenCount = definitions.count { DungeonLootSource.HIDDEN in it.sources }
+        if (hiddenCount < 10) warnings += "HIDDEN 来源饰品数量偏少: $hiddenCount/10"
+
+        val uncovered = mutableListOf<Int>()
+        val lowCoverage = mutableListOf<String>()
+        for (floor in 1..100) {
+            val count = definitions.count { floor in it.minFloor..it.maxFloor }
+            if (count == 0) uncovered += floor
+            if (count in 1..4) lowCoverage += "$floor($count)"
+        }
+        if (uncovered.isNotEmpty()) errors += "饰品池楼层覆盖缺失: ${compactList(uncovered.map { it.toString() })}"
+        if (lowCoverage.isNotEmpty()) warnings += "饰品池部分楼层覆盖偏低(<5): ${compactList(lowCoverage)}"
+    }
+
+    private fun auditAccessoryBalanceLinks(warnings: MutableList<String>) {
+        val qualities = AccessoryRegistry.config.getConfigurationSection("inscription-books.qualities")
+        qualities?.getKeys(false)?.forEach { qualityId ->
+            if (BalanceConfigManager.config.getConfigurationSection("salvage.accessory-inscription.$qualityId") == null) {
+                warnings += "balance.yml 缺少饰品刻印书回收配置: salvage.accessory-inscription.$qualityId"
+            }
+        }
+        val rarities = AccessoryRegistry.config.getConfigurationSection("rarities")
+        rarities?.getKeys(false)?.forEach { rarityId ->
+            if (BalanceConfigManager.config.getConfigurationSection("salvage.accessory.${rarityId.lowercase()}") == null) {
+                warnings += "balance.yml 缺少饰品品质回收配置: salvage.accessory.${rarityId.lowercase()}"
+            }
+        }
+    }
+
     private fun auditModifiers(errors: MutableList<String>, warnings: MutableList<String>) {
-        val required = listOf("shop-debt", "sealed-chest-pressure", "gamble-streak", "shrine-blessing", "forge-overdrive")
+        val required = listOf(
+            "shop-debt",
+            "sealed-chest-pressure",
+            "gamble-streak",
+            "shrine-blessing",
+            "forge-overdrive",
+            "soul-debt",
+            "delayed-reward",
+            "room-prophecy",
+            "route-chain",
+            "boon-echo",
+            "boon-mutation",
+            "relic-charge",
+            "sealed-future"
+        )
         for (path in required) {
             if (RunModifierManager.config.getConfigurationSection(path) == null) {
                 errors += "modifiers.yml 缺少节点: $path"
@@ -162,11 +323,199 @@ object ContentAuditManager {
             checkNonNegative(it, "price", "forge-overdrive", errors)
             checkPercent01(it, "discount", "forge-overdrive", errors)
         }
+        auditModifierSection("soul-debt", errors) {
+            checkNonNegative(it, "grant-base", "soul-debt", errors)
+            checkNonNegative(it, "grant-power-scale", "soul-debt", errors)
+            checkAtLeast(it, "principal-multiplier", 1.0, "soul-debt", errors)
+            checkNonNegative(it, "interest-per-room", "soul-debt", errors)
+            checkAtLeast(it, "deadline-rooms", 1.0, "soul-debt", errors)
+        }
+        auditModifierSection("delayed-reward", errors) {
+            checkAtLeast(it, "default-rooms", 1.0, "delayed-reward", errors)
+            checkAtLeast(it, "shard-multiplier", 1.0, "delayed-reward", errors)
+            checkPercent01(it, "early-fallback-ratio", "delayed-reward", errors)
+        }
+        auditModifierSection("room-prophecy", errors) {
+            checkAtLeast(it, "default-within-rooms", 1.0, "room-prophecy", errors)
+            checkNonNegative(it, "reward-shards", "room-prophecy", errors)
+            checkNonNegative(it, "room-weight-bonus", "room-prophecy", errors)
+            checkNonNegative(it, "miss-penalty-shards", "room-prophecy", errors)
+        }
+        auditModifierSection("route-chain", errors) {
+            checkNonNegative(it, "default-tolerance", "route-chain", errors)
+            checkNonNegative(it, "room-weight-bonus", "route-chain", errors)
+        }
     }
 
     private fun auditModifierSection(path: String, errors: MutableList<String>, block: (ConfigurationSection) -> Unit) {
         val section = RunModifierManager.config.getConfigurationSection(path) ?: return
         block(section)
+    }
+
+    private fun auditBalance(errors: MutableList<String>, warnings: MutableList<String>) {
+        val config = BalanceConfigManager.config
+        if (config.getConfigurationSection("salvage") == null) errors += "balance.yml 缺少 salvage 节点"
+        if (config.getConfigurationSection("collection") == null) errors += "balance.yml 缺少 collection 节点"
+        checkBalanceNonNegative("salvage.temporary-loot.run-shards-base", errors)
+        checkBalanceNonNegative("salvage.temporary-loot.run-shards-per-floor", errors)
+        checkBalancePositive("salvage.temporary-loot.score-divisor", errors)
+        checkBalancePositive("salvage.permanent-loot.salvage-score-divisor", errors)
+        checkBalancePositive("salvage.permanent-loot.score-dust-divisor", errors)
+        checkBalancePositive("salvage.unidentified.floor-divisor", errors)
+        checkBalancePositive("salvage.sealed-accessory.floor-divisor", errors)
+        checkBalanceNonNegative("collection.gear.soul-base", errors)
+        checkBalanceNonNegative("collection.gear.soul-per-floor", errors)
+        checkBalanceNonNegative("collection.accessory.soul", errors)
+        checkBalanceNonNegative("collection.boss.soul-base", errors)
+        checkBalanceNonNegative("collection.boss.soul-per-floor", errors)
+
+        listOf(
+            "salvage.forge-book",
+            "salvage.accessory-inscription",
+            "collection.gear.rewards",
+            "collection.accessory.rewards",
+            "collection.boss.rewards"
+        ).forEach { auditMaterialTree(it, errors) }
+
+        val caps = config.getConfigurationSection("accessory-effect-caps")
+        if (caps == null) {
+            errors += "balance.yml 缺少 accessory-effect-caps 节点"
+        } else {
+            val known = AccessoryEffectType.values().map { it.name }.toSet()
+            for (type in AccessoryEffectType.values()) {
+                if (!caps.contains(type.name)) warnings += "balance.yml accessory-effect-caps 缺少 ${type.name}，将使用代码默认值"
+            }
+            for (key in caps.getKeys(false)) {
+                if (key !in known) warnings += "balance.yml accessory-effect-caps 存在未知效果类型: $key"
+                if (caps.getDouble(key, 0.0) < 0.0) errors += "balance.yml accessory-effect-caps.$key 不能为负数"
+            }
+        }
+        if (!config.contains("guide.enabled")) warnings += "balance.yml 缺少 guide.enabled，将默认开启引导"
+        if (!config.contains("guide.show-once")) warnings += "balance.yml 缺少 guide.show-once，将默认只提示一次"
+    }
+
+    private fun auditMythicMobs(errors: MutableList<String>, warnings: MutableList<String>): MythicAuditStats {
+        val configured = MonsterConfig.getConfiguredMobIdsForSelfCheck()
+        val dir = File("mythicmobs/Mobs/RogueCore")
+        if (!dir.exists() || !dir.isDirectory) {
+            warnings += "未找到 mythicmobs/Mobs/RogueCore，跳过本地 MM 配置对齐检查；请确认已部署到 plugins/MythicMobs/Mobs/RogueCore"
+            return MythicAuditStats(configuredCount = configured.size)
+        }
+        val files = dir.listFiles { file -> file.isFile && file.extension.equals("yml", ignoreCase = true) }?.toList().orEmpty()
+        if (files.isEmpty()) {
+            warnings += "mythicmobs/Mobs/RogueCore 下没有 yml 文件"
+            return MythicAuditStats(configuredCount = configured.size)
+        }
+        val definitions = linkedMapOf<String, MythicMobDefinition>()
+        for (file in files) {
+            for (definition in parseMythicDefinitions(file)) {
+                if (definition.id in definitions) warnings += "MythicMobs 怪物 ID 重复定义: ${definition.id}"
+                definitions[definition.id] = definition
+            }
+        }
+        val defined = definitions.keys
+        val missing = configured - defined
+        val extra = defined - configured
+        missing.take(30).forEach { errors += "monsters.yml 引用的 MythicMobs ID 缺失: $it" }
+        if (missing.size > 30) errors += "MythicMobs 缺失 ID 还有 ${missing.size - 30} 个未显示"
+        if (extra.isNotEmpty()) warnings += "MythicMobs 配置存在未被 monsters.yml 引用的 ID: ${compactList(extra.take(30).toList())}${if (extra.size > 30) " ..." else ""}"
+
+        var apAttributed = 0
+        for (definition in definitions.values) {
+            val text = definition.lines.joinToString("\n")
+            if (!text.contains(Regex("(?m)^\\s+Type:\\s*\\S+"))) errors += "MM怪物 ${definition.id} 缺少 Type"
+            if (!text.contains(Regex("(?m)^\\s+Health:\\s*\\S+"))) errors += "MM怪物 ${definition.id} 缺少 Health"
+            val hasAp = text.contains(Regex("(?m)^\\s+AttributePlus:\\s*$"))
+            val hasHealth = text.contains("生命上限:")
+            val hasAttack = text.contains("物理攻击:")
+            val hasDefense = text.contains("物理防御:")
+            if (hasAp && hasHealth && hasAttack && hasDefense) {
+                apAttributed++
+            } else {
+                errors += "MM怪物 ${definition.id} AP属性不完整(AttributePlus/生命上限/物理攻击/物理防御)"
+            }
+        }
+        return MythicAuditStats(configuredCount = configured.size, definedCount = defined.size, apAttributedCount = apAttributed)
+    }
+
+    private fun parseMythicDefinitions(file: File): List<MythicMobDefinition> {
+        val idRegex = Regex("^([A-Za-z0-9_]+):\\s*$")
+        val result = mutableListOf<MythicMobDefinition>()
+        var currentId: String? = null
+        val currentLines = mutableListOf<String>()
+        fun flush() {
+            val id = currentId ?: return
+            result += MythicMobDefinition(id, currentLines.toList())
+            currentLines.clear()
+        }
+        for (line in file.readLines()) {
+            val match = idRegex.find(line)
+            if (match != null && !line.startsWith(" ") && !line.startsWith("\t")) {
+                flush()
+                currentId = match.groupValues[1]
+                currentLines += line
+            } else if (currentId != null) {
+                currentLines += line
+            }
+        }
+        flush()
+        return result
+    }
+
+    private fun auditMaterialTree(path: String, errors: MutableList<String>) {
+        val section = BalanceConfigManager.config.getConfigurationSection(path) ?: return
+        fun walk(node: ConfigurationSection, prefix: String) {
+            for (key in node.getKeys(false)) {
+                val child = node.getConfigurationSection(key)
+                if (child != null) {
+                    walk(child, "$prefix.$key")
+                } else if (PermanentMaterialManager.MaterialType.fromId(key) == null) {
+                    errors += "balance.yml $prefix 使用未知材料 ID: $key"
+                } else if (node.getInt(key, 0) < 0) {
+                    errors += "balance.yml $prefix.$key 材料数量不能为负数"
+                }
+            }
+        }
+        walk(section, path)
+    }
+
+    private fun checkBalanceNonNegative(path: String, errors: MutableList<String>) {
+        if (BalanceConfigManager.config.contains(path) && BalanceConfigManager.config.getDouble(path, 0.0) < 0.0) {
+            errors += "balance.yml $path 不能为负数"
+        }
+    }
+
+    private fun checkBalancePositive(path: String, errors: MutableList<String>) {
+        if (!BalanceConfigManager.config.contains(path)) return
+        val value = BalanceConfigManager.config.getDouble(path, 0.0)
+        if (value <= 0.0) errors += "balance.yml $path 必须 > 0，当前 $value"
+    }
+
+    private fun auditQualityMarkers(warnings: MutableList<String>) {
+        val pools = buildList {
+            BoonRegistry.config.getConfigurationSection("boons")?.let { add("神恩" to it) }
+            RelicRegistry.config.getConfigurationSection("relics")?.let { add("遗物" to it) }
+            AffixRegistry.config.getConfigurationSection("affixes")?.let { add("副本词缀" to it) }
+            EventAffixManager.config.getConfigurationSection("event-affixes.affixes")?.let { add("事件词缀" to it) }
+            AccessoryRegistry.config.getConfigurationSection("accessories")?.let { add("饰品" to it) }
+        }
+        for ((label, section) in pools) {
+            var tempIds = 0
+            var templateDescriptions = 0
+            var noTriggerWords = 0
+            for (id in section.getKeys(false)) {
+                val node = section.getConfigurationSection(id) ?: continue
+                if (id.startsWith("exp2_")) tempIds++
+                val description = node.getString("description") ?: ""
+                if (description.contains("扩容2")) templateDescriptions++
+                if (description.isNotBlank() && listOf("当", "每", "后", "时", "选择", "开启", "清房", "击杀", "消费", "净化", "试炼", "路线").none { description.contains(it) }) {
+                    noTriggerWords++
+                }
+            }
+            if (tempIds > 0) warnings += "$label 仍有 $tempIds 个 exp2_ 临时内容 ID，建议逐步重命名为语义化 ID"
+            if (templateDescriptions > 0) warnings += "$label 仍有 $templateDescriptions 条描述包含“扩容2”，建议继续手工化文案"
+            if (noTriggerWords > 0) warnings += "$label 有 $noTriggerWords 条描述缺少明显触发/选择语义，建议补充玩法条件"
+        }
     }
 
     private fun auditBoonRawConfig(errors: MutableList<String>, warnings: MutableList<String>) {
@@ -409,6 +758,11 @@ object ContentAuditManager {
 
     private inline fun <reified E : Enum<E>> enumExists(value: String): Boolean {
         return runCatching { enumValueOf<E>(value.uppercase()) }.isSuccess
+    }
+
+    private fun compactList(values: List<String>, limit: Int = 20): String {
+        if (values.isEmpty()) return "无"
+        return values.take(limit).joinToString(", ") + if (values.size > limit) " ..." else ""
     }
 
     private fun fmt(value: Double): String {

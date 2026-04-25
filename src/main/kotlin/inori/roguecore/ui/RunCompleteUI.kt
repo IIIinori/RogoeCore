@@ -8,8 +8,11 @@ import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.dungeon.route.NextFloorRoute
 import inori.roguecore.party.Party
 import inori.roguecore.relic.PlayerRelicData
+import inori.roguecore.summary.RunSummary
+import inori.roguecore.summary.RunSummaryManager
 import inori.roguecore.unlock.UnlockManager
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 import taboolib.library.xseries.XMaterial
 import taboolib.module.ui.openMenu
 import taboolib.module.ui.type.Chest
@@ -47,7 +50,8 @@ object RunCompleteUI {
             val routeSlots = routePositions.mapIndexedNotNull { index, slot ->
                 routes.getOrNull(index)?.let { slot to it }
             }.toMap(linkedMapOf())
-            val optionSlots = routeSlots.keys + setOf(4, 22, 24, 49)
+            val summary = RunSummaryManager.getDisplaySummary(player)
+            val optionSlots = routeSlots.keys + setOf(2, 3, 4, 5, 6, 22, 24, 36, 37, 38, 39, 40, 42, 49)
             val glass = XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()!!.apply {
                 itemMeta = itemMeta?.also { it.setDisplayName(" ") }
             }
@@ -57,9 +61,19 @@ object RunCompleteUI {
                 }
             }
 
-            set(4, buildRunSummary(player, instance, party))
-            set(22, buildBuildSummary(player))
-            set(24, buildRoutePreviewHint())
+            set(2, buildRunSummary(player, instance, party))
+            set(3, buildResourceSummary(player, summary))
+            set(4, buildLootSummary(summary))
+            set(5, buildBuildSummary(player))
+            set(6, buildCollectionSummary(summary))
+            set(22, buildRoutePreviewHint())
+            set(24, buildNextStepHint(summary))
+            set(36, shortcutItem(XMaterial.HOPPER, "§6回收工坊", "§7处理低价值装备、饰品和书类", "/rogue salvage"))
+            set(37, shortcutItem(XMaterial.SPYGLASS, "§e装备鉴定", "§7鉴定未鉴定装备", "/rogue identify"))
+            set(38, shortcutItem(XMaterial.CRAFTING_TABLE, "§d饰品工坊", "§7鉴定密封饰品或刻印饰品书", "/rogue aworkshop"))
+            set(39, shortcutItem(XMaterial.LECTERN, "§5收藏馆", "§7提交高品质装备和饰品", "/rogue collection"))
+            set(40, shortcutItem(XMaterial.WRITABLE_BOOK, "§e完整报告", "§7查看本局详细报告", "/rogue summary"))
+            set(42, shortcutItem(XMaterial.ENCHANTED_BOOK, "§d构筑详情", "§7查看神恩、遗物、修正和饰品", "/rogue build"))
 
             for ((slot, route) in routeSlots) {
                 set(slot, (route.icon.parseItem() ?: XMaterial.MAP.parseItem()!!).apply {
@@ -127,6 +141,21 @@ object RunCompleteUI {
                     DungeonManager.advanceDungeon(instance.id, player.uniqueId, route)
                     return@onClick
                 }
+                val command = when (event.rawSlot) {
+                    36 -> "rogue salvage"
+                    37 -> "rogue identify"
+                    38 -> "rogue aworkshop"
+                    39 -> "rogue collection"
+                    40 -> "rogue summary"
+                    42 -> "rogue build"
+                    else -> null
+                }
+                if (command != null) {
+                    DungeonGuiGuard.unlock(player)
+                    player.closeInventory()
+                    player.performCommand(command)
+                    return@onClick
+                }
                 if (event.rawSlot == 49) {
                     DungeonGuiGuard.unlock(player)
                     player.closeInventory()
@@ -192,6 +221,87 @@ object RunCompleteUI {
                 "§7再选择能放大主流派收益的路线。"
             )
         }
+    }
+
+    private fun buildResourceSummary(player: Player, summary: RunSummary?) = XMaterial.GOLD_INGOT.parseItem()!!.apply {
+        itemMeta = itemMeta?.also { meta ->
+            meta.setDisplayName("§e资源收益")
+            meta.lore = listOf(
+                "",
+                "§7当前本局碎片: §6${ShardRewardManager.getRunShards(player.uniqueId)}",
+                "§7预计结算灵魂碎片: §6${ShardRewardManager.getSettlementPreview(player.uniqueId)}",
+                "§7峰值本局碎片: §e${summary?.peakRunShards ?: 0}",
+                "§7回收件数: §f${summary?.salvagedCount ?: 0}",
+                "§7回收本局碎片: §6${summary?.salvagedRunShards ?: 0}",
+                "§7回收灵魂碎片: §e${summary?.salvagedSoulShards ?: 0}"
+            )
+        }
+    }
+
+    private fun buildLootSummary(summary: RunSummary?) = XMaterial.CHEST.parseItem()!!.apply {
+        val counts = summary?.lootCounts.orEmpty()
+        itemMeta = itemMeta?.also { meta ->
+            meta.setDisplayName("§b本局掉落")
+            meta.lore = buildList {
+                add("")
+                lootKeys().forEach { key -> add("§7${lootLabel(key)}: §f${counts[key] ?: 0}") }
+                add("")
+                add("§8离开后可在对应工坊处理这些物品")
+            }
+        }
+    }
+
+    private fun buildCollectionSummary(summary: RunSummary?) = XMaterial.LECTERN.parseItem()!!.apply {
+        itemMeta = itemMeta?.also { meta ->
+            meta.setDisplayName("§5收藏进度")
+            meta.lore = buildList {
+                add("")
+                add("§7Boss 首杀: §5${summary?.bossFirstKills ?: 0}")
+                add("§7本局点亮: §d${summary?.collectionUnlocks?.size ?: 0}")
+                summary?.collectionUnlocks?.take(4)?.forEach { add("§a- $it") }
+                if ((summary?.collectionUnlocks?.size ?: 0) > 4) add("§7... 还有 ${(summary?.collectionUnlocks?.size ?: 0) - 4} 项")
+                add("")
+                add("§e点击下方收藏馆入口查看长期进度")
+            }
+        }
+    }
+
+    private fun buildNextStepHint(summary: RunSummary?) = XMaterial.COMPASS.parseItem()!!.apply {
+        itemMeta = itemMeta?.also { meta ->
+            meta.setDisplayName("§a下一步建议")
+            meta.lore = buildList {
+                add("")
+                val counts = summary?.lootCounts.orEmpty()
+                var suggestions = 0
+                if ((counts["unidentified_gear"] ?: 0) > 0) { add("§e有未鉴定装备 → /rogue identify"); suggestions++ }
+                if ((counts["forge_book"] ?: 0) > 0) { add("§6有锻造书 → /rogue craft"); suggestions++ }
+                if ((counts["sealed_accessory"] ?: 0) > 0) { add("§d有密封饰品 → /rogue aid"); suggestions++ }
+                if ((counts["accessory_inscription"] ?: 0) > 0) { add("§b有饰品刻印书 → /rogue inscribe"); suggestions++ }
+                if ((summary?.collectionUnlocks?.size ?: 0) > 0) { add("§5本局有收藏点亮 → /rogue collection"); suggestions++ }
+                if (suggestions == 0) add("§7继续选择路线，或者结算后回收低价值物品。")
+                add("")
+                add("§7下方按钮可快速打开相关系统。")
+            }
+        }
+    }
+
+    private fun shortcutItem(material: XMaterial, name: String, description: String, command: String): ItemStack = material.parseItem()!!.apply {
+        itemMeta = itemMeta?.also { meta ->
+            meta.setDisplayName(name)
+            meta.lore = listOf("", description, "§7命令: §f$command", "", "§e点击打开")
+        }
+    }
+
+    private fun lootKeys(): List<String> = listOf("temporary_gear", "unidentified_gear", "forge_book", "accessory", "sealed_accessory", "accessory_inscription")
+
+    private fun lootLabel(key: String): String = when (key) {
+        "temporary_gear" -> "临时装备"
+        "unidentified_gear" -> "未鉴定装备"
+        "forge_book" -> "锻造书"
+        "accessory" -> "饰品"
+        "sealed_accessory" -> "密封饰品"
+        "accessory_inscription" -> "饰品刻印书"
+        else -> key
     }
 
     private fun describeRouteBonus(modifiers: Map<RoomType, Int>): String {

@@ -7,6 +7,7 @@ import inori.roguecore.data.ForgeMaterialType
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.room.RoomType
+import inori.roguecore.modifier.RunModifierManager
 import inori.roguecore.relic.RelicEffectHandler
 import inori.roguecore.relic.RelicSelectManager
 import inori.roguecore.ui.DungeonGuiGuard
@@ -115,6 +116,7 @@ object TrialEvent {
                         "",
                         "§7失去 §c${(hpCostPercent * 100).toInt()}% §7当前生命",
                         "§7获得一次 §d神恩选择",
+                        "§7并让下一次神恩候选 §d变质 +1",
                         "",
                         "§e点击接受试炼"
                     )
@@ -131,6 +133,7 @@ object TrialEvent {
                             "§7失去 §c${(bloodCostPercent * 100).toInt()}% §7当前生命",
                             "§7获得 §6$bloodShardMin-$bloodShardMax §7本局碎片",
                             "§7并获得一次 §d神恩选择",
+                            "§7选择后的神恩会获得一次 §d回响",
                             if (forgeEmberReward > 0) "§7额外获得 ${ForgeMaterialType.BOSS_EMBER.coloredName()} §6x$forgeEmberReward" else "§8没有额外锻造材料",
                             "",
                             "§e点击接受更残酷的试炼"
@@ -178,6 +181,7 @@ object TrialEvent {
                         DungeonGuiGuard.unlock(player)
                         player.closeInventory()
                         if (!applyHealthCost(player, hpCostPercent)) return@onClick
+                        grantTrialRefund(player)
                         val reward = Random.nextInt(shardMin, shardMax + 1)
                         ShardRewardManager.addRunShards(player.uniqueId, reward)
                         player.sendMessage("§6试炼完成，获得 §e$reward §6本局碎片。")
@@ -187,6 +191,8 @@ object TrialEvent {
                         DungeonGuiGuard.unlock(player)
                         player.closeInventory()
                         if (!applyHealthCost(player, hpCostPercent)) return@onClick
+                        grantTrialRefund(player)
+                        RunModifierManager.addBoonMutation(player, 1, "启示试炼")
                         player.sendMessage("§b试炼完成，你获得了新的启示。")
                         BoonSelectManager.offerBoonSelection(player, EventScaling.boonOfferCount(instance))
                     }
@@ -195,6 +201,7 @@ object TrialEvent {
                         DungeonGuiGuard.unlock(player)
                         player.closeInventory()
                         if (!applyHealthCost(player, bloodCostPercent)) return@onClick
+                        grantTrialRefund(player)
                         val reward = Random.nextInt(bloodShardMin, bloodShardMax + 1)
                         ShardRewardManager.addRunShards(player.uniqueId, reward)
                         if (forgeEmberReward > 0) {
@@ -203,6 +210,7 @@ object TrialEvent {
                         if (forgeSigilReward > 0) {
                             ForgeMaterialManager.add(player.uniqueId, ForgeMaterialType.HIDDEN_SIGIL, forgeSigilReward)
                         }
+                        RunModifierManager.addBoonEcho(player, 1, "歃血试炼")
                         player.sendMessage("§4歃血试炼完成，获得 §e$reward §4本局碎片。")
                         if (forgeEmberReward > 0 || forgeSigilReward > 0) {
                             player.sendMessage("§6试炼炉渣凝成材料: ${ForgeMaterialType.BOSS_EMBER.coloredName()} §ex$forgeEmberReward" + if (forgeSigilReward > 0) " §7+ ${ForgeMaterialType.HIDDEN_SIGIL.coloredName()} §bx$forgeSigilReward" else "")
@@ -217,6 +225,7 @@ object TrialEvent {
                         DungeonGuiGuard.unlock(player)
                         player.closeInventory()
                         if (!applyHealthCost(player, hpCostPercent)) return@onClick
+                        grantTrialRefund(player)
                         val upgradeable = PlayerBoonData.getBoons(player).filter { it.canUpgrade }.randomOrNull()
                         if (upgradeable != null) {
                             PlayerBoonData.addBoon(player, upgradeable.boon)
@@ -231,6 +240,7 @@ object TrialEvent {
                         DungeonGuiGuard.unlock(player)
                         player.closeInventory()
                         if (!applyHealthCost(player, relicCostPercent)) return@onClick
+                        grantTrialRefund(player)
                         if (!RelicSelectManager.offerRelicSelection(player, EventScaling.relicOfferCount(instance, 3, UnlockManager.getRelicOfferBonus(player)))) {
                             player.sendMessage("§7没有新的遗物可供试炼，转化为一次神恩选择。")
                             BoonSelectManager.offerBoonSelection(player, EventScaling.boonOfferCount(instance))
@@ -239,6 +249,13 @@ object TrialEvent {
                 }
             }
         }
+    }
+
+    private fun grantTrialRefund(player: Player) {
+        val amount = RelicEffectHandler.getTrialRefundMaterial(player)
+        if (amount <= 0) return
+        ForgeMaterialManager.add(player.uniqueId, ForgeMaterialType.BOSS_EMBER, amount)
+        player.sendMessage("§6试炼遗物返还 ${ForgeMaterialType.BOSS_EMBER.coloredName()} §ex$amount")
     }
 
     private fun applyHealthCost(player: Player, percent: Double): Boolean {

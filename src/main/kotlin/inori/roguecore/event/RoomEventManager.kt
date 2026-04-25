@@ -4,6 +4,8 @@ import inori.roguecore.combat.RoomState
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.room.Room
 import inori.roguecore.dungeon.room.RoomType
+import inori.roguecore.modifier.RunModifierManager
+import inori.roguecore.relic.RelicEffectHandler
 import inori.roguecore.ui.DungeonSceneCueManager
 import org.bukkit.entity.Player
 
@@ -41,6 +43,15 @@ object RoomEventManager {
         val onlinePlayers = instance.getOnlinePlayers()
         if (onlinePlayers.isEmpty()) {
             return false
+        }
+        if (room.type == RoomType.HIDDEN && instance.getHiddenKeys() <= 0) {
+            player.sendMessage("§9§l🔒 这间隐藏宝藏房需要一把隐藏钥匙。")
+            player.sendMessage("§7当前队伍钥匙: §b${instance.getHiddenKeys()}")
+            return true
+        }
+        for (member in onlinePlayers) {
+            RunModifierManager.onRoomEntered(member, room.type)
+            RelicEffectHandler.onEventRoomEntered(member, room.type)
         }
 
         when (room.type) {

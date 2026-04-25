@@ -9,6 +9,7 @@ import inori.roguecore.summary.RunSummaryManager
 import inori.roguecore.dungeon.DungeonManager
 import inori.roguecore.item.ForgeBookTaskManager
 import inori.roguecore.item.IdentificationTaskManager
+import inori.roguecore.modifier.RunModifierManager
 import inori.roguecore.party.PartyManager
 import org.bukkit.entity.Player
 import org.bukkit.event.block.Action
@@ -187,10 +188,12 @@ object DungeonListener {
         val player = event.player
         if (!DungeonManager.isInDungeon(player)) return
 
-        DungeonManager.getPlayerDungeon(player)?.let { BalanceStatsManager.recordFloorDeath(it.config.floorNumber) }
+        val instance = DungeonManager.getPlayerDungeon(player)
+        instance?.let { BalanceStatsManager.recordFloorDeath(it.config.floorNumber) }
         RunSummaryManager.markEndReason(player.uniqueId, RunEndReason.DEATH)
 
         // 死亡结算碎片（打折）
+        RunModifierManager.onRunEnding(player, instance, death = true)
         val shards = ShardRewardManager.settleDeath(player.uniqueId)
         player.sendMessage("§c你在副本中死亡!")
         if (shards > 0) {

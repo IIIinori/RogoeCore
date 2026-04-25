@@ -18,5 +18,12 @@ data class RunSummaryProgress(
     var peakRunShards: Int = 0,
     val routeHistory: MutableList<String> = mutableListOf(),
     val milestones: MutableSet<RunMilestoneType> = mutableSetOf(),
-    val modifierCounts: MutableMap<RunModifierType, Int> = mutableMapOf()
+    val modifierCounts: MutableMap<RunModifierType, Int> = mutableMapOf(),
+    val lootCounts: MutableMap<String, Int> = mutableMapOf(),
+    var salvagedCount: Int = 0,
+    var salvagedRunShards: Int = 0,
+    var salvagedSoulShards: Int = 0,
+    val salvagedMaterials: MutableMap<String, Int> = mutableMapOf(),
+    val collectionUnlocks: MutableList<String> = mutableListOf(),
+    var bossFirstKills: Int = 0
 )

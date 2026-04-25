@@ -1,8 +1,10 @@
 package inori.roguecore.event
 
 import inori.roguecore.boon.Boon
+import inori.roguecore.boon.BoonEffectHandler
 import inori.roguecore.boon.BoonSelectManager
 import inori.roguecore.boon.PlayerBoonData
+import inori.roguecore.affix.AffixManager
 import inori.roguecore.data.ForgeMaterialManager
 import inori.roguecore.data.ForgeMaterialType
 import inori.roguecore.data.ShardRewardManager
@@ -39,8 +41,9 @@ object ShopEvent {
         val relicPower = EventAffixManager.getFamilyPower(instance, RoomType.SHOP, "SHOP_RELIC")
         val materialPower = EventAffixManager.getFamilyPower(instance, RoomType.SHOP, "SHOP_MATERIAL")
         val blackPower = EventAffixManager.getFamilyPower(instance, RoomType.SHOP, "SHOP_BLACK")
-        val discountMultiplier = (1.0 - discountPower * 0.04 - RelicEffectHandler.getShopDiscountPercent(player) / 100.0)
-            .coerceIn(0.45, 1.0)
+        val debtPower = EventAffixManager.getFamilyPower(instance, RoomType.SHOP, "SHOP_DEBT")
+        val discountMultiplier = (1.0 - discountPower * 0.04 - RelicEffectHandler.getShopDiscountPercent(player) / 100.0 - RelicEffectHandler.getShopFirstDiscountPercent(player) / 100.0 - AffixManager.getShopPriceModifier(instance))
+            .coerceIn(0.35, 1.0)
         fun discounted(value: Int): Int = (value * discountMultiplier).toInt().coerceAtLeast(0)
         val healMultiplier = (discountMultiplier - RelicEffectHandler.getShopHealDiscountPercent(player) / 100.0).coerceIn(0.2, 1.0)
         fun healDiscounted(value: Int): Int = (value * healMultiplier).toInt().coerceAtLeast(0)
@@ -82,7 +85,21 @@ object ShopEvent {
             )
         }
 
-        if (RunModifierManager.isEnabled(RunModifierType.SHOP_DEBT) && !RunModifierManager.hasModifier(player, RunModifierType.SHOP_DEBT)) {
+        if (RunModifierManager.getSoulDebtTotal(player) > 0) {
+            goods.add(ShopGood.RepayDebtGood(RunModifierManager.getSoulDebtTotal(player)))
+        }
+
+        if (RunModifierManager.isEnabled(RunModifierType.SOUL_DEBT) && !RunModifierManager.hasModifier(player, RunModifierType.SOUL_DEBT)) {
+            val grant = RunModifierManager.soulDebtGrant(instance, genericPower + debtPower)
+            goods.add(
+                ShopGood.SoulDebtGood(
+                    grant = grant,
+                    principal = RunModifierManager.soulDebtPrincipal(grant),
+                    interest = RunModifierManager.soulDebtInterest(instance, debtPower),
+                    rooms = RunModifierManager.soulDebtDeadlineRooms()
+                )
+            )
+        } else if (RunModifierManager.isEnabled(RunModifierType.SHOP_DEBT) && !RunModifierManager.hasModifier(player, RunModifierType.SHOP_DEBT)) {
             goods.add(
                 ShopGood.DebtGood(
                     grant = RunModifierManager.shopDebtGrant(instance, genericPower),
@@ -149,6 +166,7 @@ object ShopEvent {
                     player.sendMessage("§c本局碎片不足! 需要 §e${good.price} §c碎片")
                     return@onClick
                 }
+                BoonEffectHandler.onShopPurchase(player, good.price)
 
                 when (good) {
                     is ShopGood.Heal -> {
@@ -185,6 +203,19 @@ object ShopEvent {
                         ShardRewardManager.addRunShards(player.uniqueId, good.grant)
                         RunModifierManager.addModifier(player, RunModifierType.SHOP_DEBT, good.rooms, good.rooms, good.debt.toDouble(), "商店赊账")
                         player.sendMessage("§6你赊得 §e${good.grant} §6本局碎片，但接下来 ${good.rooms} 个房间要偿还债务。")
+                    }
+
+                    is ShopGood.SoulDebtGood -> {
+                        ShardRewardManager.addRunShards(player.uniqueId, good.grant)
+                        RunModifierManager.addSoulDebt(player, good.principal, good.interest, good.rooms, "商店灵魂债务")
+                        player.sendMessage("§6你借得 §e${good.grant} §6本局碎片；§c${good.rooms} §6房后需偿还 §e${good.principal} §6并按房计息。")
+                    }
+
+                    is ShopGood.RepayDebtGood -> {
+                        val paid = RunModifierManager.repaySoulDebt(player)
+                        if (paid <= 0) {
+                            player.sendMessage("§7你没有可用于偿还债务的本局碎片。")
+                        }
                     }
 
                     is ShopGood.BlackMarketGood -> {
@@ -308,6 +339,49 @@ object ShopEvent {
                             "",
                             "§e价格: §a无需立即支付",
                             "§e点击签下契约"
+                        )
+                    }
+                }
+            }
+        }
+
+        class SoulDebtGood(
+            val grant: Int,
+            val principal: Int,
+            val interest: Int,
+            val rooms: Int
+        ) : ShopGood(0) {
+            override fun toItemStack(): ItemStack {
+                return XMaterial.SOUL_LANTERN.parseItem()!!.apply {
+                    itemMeta = itemMeta?.also { meta ->
+                        meta.setDisplayName("§5灵魂借据")
+                        meta.lore = listOf(
+                            "",
+                            "§7立刻获得 §6$grant §7本局碎片",
+                            "§7生成 §c灵魂债务 §e$principal",
+                            "§7每清一房计息 §c+$interest",
+                            "§7到期: §b$rooms §7个房间后自动偿还",
+                            "§7不足时背负契约诅咒",
+                            "",
+                            "§e点击签下借据"
+                        )
+                    }
+                }
+            }
+        }
+
+        class RepayDebtGood(private val totalDebt: Int) : ShopGood(0) {
+            override fun toItemStack(): ItemStack {
+                return XMaterial.SUNFLOWER.parseItem()!!.apply {
+                    itemMeta = itemMeta?.also { meta ->
+                        meta.setDisplayName("§a偿还灵魂债务")
+                        meta.lore = listOf(
+                            "",
+                            "§7当前未偿债务: §c$totalDebt",
+                            "§7点击后会尽可能使用本局碎片主动偿还",
+                            "§7主动偿还不会产生额外利息或惩罚",
+                            "",
+                            "§e点击偿还"
                         )
                     }
                 }

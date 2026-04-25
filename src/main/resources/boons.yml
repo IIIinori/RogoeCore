@@ -1510,3 +1510,1268 @@ boons:
         cooldown-seconds: 25
         tag: "狩猎"
         per-tag: 0.59
+
+  exp2_hunt_pulse:
+    name: "猎场首杀令"
+    description: "每个房间第一次击杀会立刻回收魂屑，鼓励狩猎流抢首杀节奏"
+    rarity: RARE
+    icon: CROSSBOW
+    max-level: 3
+    tags: ["狩猎", "风暴"]
+    attributes:
+      "暴击几率": [2.8, 2.8]
+      "精英伤害": [1.6, 1.6]
+    effects:
+      effect_1:
+        type: FIRST_KILL_SHARD
+        value-per-level: 7
+        tag: "狩猎"
+        per-tag: 0.8
+  exp2_hunt_spark:
+    name: "猎场火花·狩猎"
+    description: "猎场火花会在关键节奏中提供击杀收益节奏，并推动狩猎/风暴路线成型"
+    rarity: COMMON
+    icon: GOLD_NUGGET
+    max-level: 3
+    tags: ["狩猎", "风暴"]
+    attributes:
+      "暴击几率": [1.8, 1.8]
+      "精英伤害": [1.3, 1.3]
+    effects:
+      effect_1:
+        type: KILL_SHARD
+        value-per-level: 2.9
+        tag: "狩猎"
+        per-tag: 0.215
+  exp2_hunt_ward:
+    name: "猎场护符·狩猎"
+    description: "猎场护符会在关键节奏中提供低血保护窗口，并推动狩猎/风暴路线成型"
+    rarity: RARE
+    icon: TOTEM_OF_UNDYING
+    max-level: 3
+    tags: ["狩猎", "风暴"]
+    attributes:
+      "暴击几率": [2, 2]
+      "精英伤害": [1.4, 1.4]
+    effects:
+      effect_1:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 3.6
+        chance: 0.126
+        cooldown-seconds: 10
+        duration-seconds: 2.7
+        tag: "狩猎"
+        per-tag: 0.25
+  exp2_hunt_edge:
+    name: "鹰眼终裁"
+    description: "对残血目标追加处决伤害，击杀窗口更适合精英征伐路线"
+    rarity: EPIC
+    icon: SPYGLASS
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "破甲": [3.2, 3.2]
+      "暴击伤害": [2.4, 2.4]
+    effects:
+      effect_1:
+        type: EXECUTE
+        value-per-level: 9
+        threshold: 34
+        tag: "狩猎"
+        per-tag: 0.9
+  exp2_hunt_chain:
+    name: "猎场链环·狩猎"
+    description: "猎场链环会在关键节奏中提供攻击连锁，并推动狩猎/风暴路线成型"
+    rarity: EPIC
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["狩猎", "风暴"]
+    attributes:
+      "暴击几率": [2.5, 2.5]
+      "精英伤害": [1.7, 1.7]
+    effects:
+      effect_1:
+        type: CHAIN_DAMAGE
+        value-per-level: 5
+        chance: 0.162
+        cooldown-seconds: 12
+        radius: 3.4
+        limit: 2
+        tag: "狩猎"
+        per-tag: 0.32
+  exp2_hunt_haste:
+    name: "猎场疾刻·狩猎"
+    description: "猎场疾刻会在关键节奏中提供击杀推进，并推动狩猎/风暴路线成型"
+    rarity: EPIC
+    icon: FEATHER
+    max-level: 3
+    tags: ["狩猎", "风暴"]
+    attributes:
+      "暴击几率": [2.7, 2.7]
+      "精英伤害": [1.9, 1.9]
+    effects:
+      effect_1:
+        type: KILL_SPEED
+        value-per-level: 5.7
+        duration-seconds: 3.0
+        tag: "狩猎"
+        per-tag: 0.355
+  exp2_hunt_renew:
+    name: "猎场复苏·狩猎"
+    description: "猎场复苏会在关键节奏中提供清房续航，并推动狩猎/风暴路线成型"
+    rarity: RARE
+    icon: GLISTERING_MELON_SLICE
+    max-level: 3
+    tags: ["狩猎", "风暴"]
+    attributes:
+      "暴击几率": [2.9, 2.9]
+      "精英伤害": [2.1, 2.1]
+    effects:
+      effect_1:
+        type: ROOM_HEAL
+        value-per-level: 6.4
+        tag: "狩猎"
+        per-tag: 0.39
+  exp2_hunt_crown:
+    name: "猎王战旗"
+    description: "清理精英房时获得额外碎片，适合精英征伐路线"
+    rarity: LEGENDARY
+    icon: CROSSBOW
+    max-level: 4
+    tags: ["狩猎", "风暴"]
+    attributes:
+      "精英伤害": [4.8, 4.8]
+      "暴击几率": [3.2, 3.2]
+    effects:
+      effect_1:
+        type: ELITE_ROOM_SHARD
+        value-per-level: 14
+        tag: "狩猎"
+        per-tag: 1.5
+  exp2_bulwark_pulse:
+    name: "坚城脉冲·壁垒"
+    description: "坚城脉冲会在关键节奏中提供清房收益节奏，并推动壁垒/霜寒路线成型"
+    rarity: COMMON
+    icon: EXPERIENCE_BOTTLE
+    max-level: 3
+    tags: ["壁垒", "霜寒"]
+    attributes:
+      "物理防御": [1.9, 1.9]
+      "减伤比例": [1.3, 1.3]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 2.75
+        tag: "壁垒"
+        per-tag: 0.205
+  exp2_bulwark_spark:
+    name: "坚城火花·壁垒"
+    description: "坚城火花会在关键节奏中提供击杀收益节奏，并推动壁垒/霜寒路线成型"
+    rarity: COMMON
+    icon: GOLD_NUGGET
+    max-level: 3
+    tags: ["壁垒", "霜寒"]
+    attributes:
+      "物理防御": [2.1, 2.1]
+      "减伤比例": [1.4, 1.4]
+    effects:
+      effect_1:
+        type: KILL_SHARD
+        value-per-level: 3.45
+        tag: "壁垒"
+        per-tag: 0.24
+  exp2_bulwark_ward:
+    name: "盾税城垣"
+    description: "清房时把剩余护盾折算成本局碎片，壁垒流不只抗压也能转收益"
+    rarity: EPIC
+    icon: SHIELD
+    max-level: 3
+    tags: ["壁垒", "财宝"]
+    attributes:
+      "物理防御": [3.0, 3.0]
+      "护盾强度": [2.6, 2.6]
+    effects:
+      effect_1:
+        type: SHIELD_TO_SHARD
+        value-per-level: 10
+        tag: "壁垒"
+        per-tag: 1.2
+  exp2_bulwark_edge:
+    name: "坚城锋线·壁垒"
+    description: "坚城锋线会在关键节奏中提供残血收割，并推动壁垒/霜寒路线成型"
+    rarity: RARE
+    icon: IRON_SWORD
+    max-level: 3
+    tags: ["壁垒", "霜寒"]
+    attributes:
+      "物理防御": [2.5, 2.5]
+      "减伤比例": [1.8, 1.8]
+    effects:
+      effect_1:
+        type: EXECUTE
+        value-per-level: 4.85
+        threshold: 28
+        tag: "壁垒"
+        per-tag: 0.31
+  exp2_bulwark_chain:
+    name: "坚城链环·壁垒"
+    description: "坚城链环会在关键节奏中提供攻击连锁，并推动壁垒/霜寒路线成型"
+    rarity: EPIC
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["壁垒", "霜寒"]
+    attributes:
+      "物理防御": [2.7, 2.7]
+      "减伤比例": [1.9, 1.9]
+    effects:
+      effect_1:
+        type: CHAIN_DAMAGE
+        value-per-level: 5.55
+        chance: 0.174
+        cooldown-seconds: 13
+        radius: 3.5
+        limit: 3
+        tag: "壁垒"
+        per-tag: 0.345
+  exp2_bulwark_haste:
+    name: "坚城疾刻·壁垒"
+    description: "坚城疾刻会在关键节奏中提供击杀推进，并推动壁垒/霜寒路线成型"
+    rarity: EPIC
+    icon: FEATHER
+    max-level: 3
+    tags: ["壁垒", "霜寒"]
+    attributes:
+      "物理防御": [3, 3]
+      "减伤比例": [2.1, 2.1]
+    effects:
+      effect_1:
+        type: KILL_SPEED
+        value-per-level: 6.25
+        duration-seconds: 3.1
+        tag: "壁垒"
+        per-tag: 0.38
+  exp2_bulwark_renew:
+    name: "白墙溢疗阵"
+    description: "清房治疗若溢出会转化为吸收护盾，适合圣辉与壁垒联动"
+    rarity: RARE
+    icon: GLISTERING_MELON_SLICE
+    max-level: 3
+    tags: ["壁垒", "圣辉"]
+    attributes:
+      "治疗加成": [2.1, 2.1]
+      "护盾强度": [2.0, 2.0]
+    effects:
+      effect_1:
+        type: OVERHEAL_SHIELD
+        value-per-level: 5
+        duration-seconds: 14
+        tag: "圣辉"
+        per-tag: 0.7
+  exp2_bulwark_crown:
+    name: "王城破冠盾"
+    description: "清理 Boss 房时获得额外碎片，防守构筑也能转换为首领收益"
+    rarity: LEGENDARY
+    icon: SHIELD
+    max-level: 4
+    tags: ["壁垒", "霜寒"]
+    attributes:
+      "物理防御": [5.0, 5.0]
+      "护盾强度": [4.0, 4.0]
+    effects:
+      effect_1:
+        type: BOSS_ROOM_SHARD
+        value-per-level: 16
+        tag: "壁垒"
+        per-tag: 1.4
+  exp2_blood_pulse:
+    name: "血契脉冲·鲜血"
+    description: "血契脉冲会在关键节奏中提供清房收益节奏，并推动鲜血/圣辉路线成型"
+    rarity: COMMON
+    icon: EXPERIENCE_BOTTLE
+    max-level: 3
+    tags: ["鲜血", "圣辉"]
+    attributes:
+      "生命偷取": [2.1, 2.1]
+      "治疗加成": [1.5, 1.5]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 3.3
+        tag: "鲜血"
+        per-tag: 0.23
+  exp2_blood_spark:
+    name: "赤誓首滴"
+    description: "每房间首次击杀获得碎片，鲜血流越早压低敌人越快滚起经济"
+    rarity: RARE
+    icon: REDSTONE
+    max-level: 3
+    tags: ["鲜血", "狩猎"]
+    attributes:
+      "生命偷取": [2.4, 2.4]
+      "暴击几率": [1.8, 1.8]
+    effects:
+      effect_1:
+        type: FIRST_KILL_SHARD
+        value-per-level: 6
+        tag: "鲜血"
+        per-tag: 0.9
+  exp2_blood_ward:
+    name: "血契护符·鲜血"
+    description: "血契护符会在关键节奏中提供低血保护窗口，并推动鲜血/圣辉路线成型"
+    rarity: RARE
+    icon: TOTEM_OF_UNDYING
+    max-level: 3
+    tags: ["鲜血", "圣辉"]
+    attributes:
+      "生命偷取": [2.5, 2.5]
+      "治疗加成": [1.8, 1.8]
+    effects:
+      effect_1:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 4.7
+        chance: 0.150
+        cooldown-seconds: 12
+        duration-seconds: 3.0
+        tag: "鲜血"
+        per-tag: 0.3
+  exp2_blood_edge:
+    name: "血契锋线·鲜血"
+    description: "血契锋线会在关键节奏中提供残血收割，并推动鲜血/圣辉路线成型"
+    rarity: RARE
+    icon: IRON_SWORD
+    max-level: 3
+    tags: ["鲜血", "圣辉"]
+    attributes:
+      "生命偷取": [2.8, 2.8]
+      "治疗加成": [1.9, 1.9]
+    effects:
+      effect_1:
+        type: EXECUTE
+        value-per-level: 5.4
+        threshold: 29
+        tag: "鲜血"
+        per-tag: 0.335
+  exp2_blood_chain:
+    name: "血契链环·鲜血"
+    description: "血契链环会在关键节奏中提供攻击连锁，并推动鲜血/圣辉路线成型"
+    rarity: EPIC
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["鲜血", "圣辉"]
+    attributes:
+      "生命偷取": [3, 3]
+      "治疗加成": [2.1, 2.1]
+    effects:
+      effect_1:
+        type: CHAIN_DAMAGE
+        value-per-level: 6.1
+        chance: 0.186
+        cooldown-seconds: 14
+        radius: 3.7
+        limit: 4
+        tag: "鲜血"
+        per-tag: 0.37
+  exp2_blood_haste:
+    name: "血契疾刻·鲜血"
+    description: "血契疾刻会在关键节奏中提供击杀推进，并推动鲜血/圣辉路线成型"
+    rarity: EPIC
+    icon: FEATHER
+    max-level: 3
+    tags: ["鲜血", "圣辉"]
+    attributes:
+      "生命偷取": [3.2, 3.2]
+      "治疗加成": [2.3, 2.3]
+    effects:
+      effect_1:
+        type: KILL_SPEED
+        value-per-level: 6.8
+        duration-seconds: 3.3
+        tag: "鲜血"
+        per-tag: 0.405
+  exp2_blood_renew:
+    name: "血契复苏·鲜血"
+    description: "血契复苏会在关键节奏中提供清房续航，并推动鲜血/圣辉路线成型"
+    rarity: RARE
+    icon: GLISTERING_MELON_SLICE
+    max-level: 3
+    tags: ["鲜血", "圣辉"]
+    attributes:
+      "生命偷取": [3.4, 3.4]
+      "治疗加成": [2.4, 2.4]
+    effects:
+      effect_1:
+        type: ROOM_HEAL
+        value-per-level: 7.5
+        tag: "鲜血"
+        per-tag: 0.44
+  exp2_blood_crown:
+    name: "险血清算"
+    description: "低血清房时获得额外碎片，鲜血流能把危险状态转成收益"
+    rarity: LEGENDARY
+    icon: REDSTONE
+    max-level: 4
+    tags: ["鲜血", "深渊"]
+    attributes:
+      "生命偷取": [4.2, 4.2]
+      "暴击伤害": [3.5, 3.5]
+    effects:
+      effect_1:
+        type: LOW_HEALTH_ROOM_SHARD
+        value-per-level: 15
+        threshold: 42
+        tag: "鲜血"
+        per-tag: 1.1
+  exp2_storm_pulse:
+    name: "魂潮复利环"
+    description: "清房时按当前本局碎片获得额外收益，越早滚起经济越强"
+    rarity: RARE
+    icon: EXPERIENCE_BOTTLE
+    max-level: 3
+    tags: ["风暴", "财宝"]
+    attributes:
+      "攻击速度": [2.2, 2.2]
+      "幸运": [2.0, 2.0]
+    effects:
+      effect_1:
+        type: SHARD_HELD_SCALING
+        value-per-level: 1.2
+        tag: "财宝"
+        per-tag: 0.15
+  exp2_storm_spark:
+    name: "雷环火花·风暴"
+    description: "雷环火花会在关键节奏中提供击杀收益节奏，并推动风暴/财宝路线成型"
+    rarity: COMMON
+    icon: GOLD_NUGGET
+    max-level: 3
+    tags: ["风暴", "财宝"]
+    attributes:
+      "雷霆伤害": [2.6, 2.6]
+      "攻击速度": [1.8, 1.8]
+    effects:
+      effect_1:
+        type: KILL_SHARD
+        value-per-level: 4.55
+        tag: "风暴"
+        per-tag: 0.29
+  exp2_storm_ward:
+    name: "雷环护符·风暴"
+    description: "雷环护符会在关键节奏中提供低血保护窗口，并推动风暴/财宝路线成型"
+    rarity: RARE
+    icon: TOTEM_OF_UNDYING
+    max-level: 3
+    tags: ["风暴", "财宝"]
+    attributes:
+      "雷霆伤害": [2.8, 2.8]
+      "攻击速度": [2, 2]
+    effects:
+      effect_1:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 5.25
+        chance: 0.162
+        cooldown-seconds: 13
+        duration-seconds: 3.2
+        tag: "风暴"
+        per-tag: 0.325
+  exp2_storm_edge:
+    name: "雷环锋线·风暴"
+    description: "雷环锋线会在关键节奏中提供残血收割，并推动风暴/财宝路线成型"
+    rarity: RARE
+    icon: IRON_SWORD
+    max-level: 3
+    tags: ["风暴", "财宝"]
+    attributes:
+      "雷霆伤害": [3, 3]
+      "攻击速度": [2.1, 2.1]
+    effects:
+      effect_1:
+        type: EXECUTE
+        value-per-level: 5.95
+        threshold: 30
+        tag: "风暴"
+        per-tag: 0.36
+  exp2_storm_chain:
+    name: "雷链奔流"
+    description: "攻击时概率连锁附近敌人，击杀加速窗口内更容易清场"
+    rarity: LEGENDARY
+    icon: AMETHYST_SHARD
+    max-level: 4
+    tags: ["风暴", "狩猎"]
+    attributes:
+      "雷霆伤害": [4.4, 4.4]
+      "攻击速度": [3.0, 3.0]
+    effects:
+      effect_1:
+        type: CHAIN_DAMAGE
+        value-per-level: 11
+        chance: 0.32
+        cooldown-seconds: 7
+        radius: 4.2
+        limit: 5
+        tag: "风暴"
+        per-tag: 0.9
+  exp2_storm_haste:
+    name: "疾雷连清窗"
+    description: "连续清理战斗房时获得递增碎片，鼓励风暴流保持推进速度"
+    rarity: EPIC
+    icon: LIGHTNING_ROD
+    max-level: 3
+    tags: ["风暴", "财宝"]
+    attributes:
+      "攻击速度": [2.8, 2.8]
+      "雷霆伤害": [3.1, 3.1]
+    effects:
+      effect_1:
+        type: ROOM_STREAK_SHARD
+        value-per-level: 4
+        tag: "风暴"
+        per-tag: 0.6
+  exp2_storm_renew:
+    name: "雷环复苏·风暴"
+    description: "雷环复苏会在关键节奏中提供清房续航，并推动风暴/财宝路线成型"
+    rarity: RARE
+    icon: GLISTERING_MELON_SLICE
+    max-level: 3
+    tags: ["风暴", "财宝"]
+    attributes:
+      "雷霆伤害": [3.7, 3.7]
+      "攻击速度": [2.6, 2.6]
+    effects:
+      effect_1:
+        type: ROOM_HEAL
+        value-per-level: 8.05
+        tag: "风暴"
+        per-tag: 0.465
+  exp2_storm_crown:
+    name: "雷环冠冕·风暴"
+    description: "雷环冠冕会在关键节奏中提供神恩成长，并推动风暴/财宝路线成型"
+    rarity: LEGENDARY
+    icon: NETHER_STAR
+    max-level: 4
+    tags: ["风暴", "财宝"]
+    attributes:
+      "雷霆伤害": [3.9, 3.9]
+      "攻击速度": [2.8, 2.8]
+    effects:
+      effect_1:
+        type: ROOM_UPGRADE_RANDOM
+        value-per-level: 8.75
+        chance: 0.252
+        tag: "风暴"
+        per-tag: 0.5
+      effect_2:
+        type: ROOM_SHARD
+        value-per-level: 12.05
+        tag: "财宝"
+        per-tag: 0.720
+  exp2_frost_pulse:
+    name: "冻土脉冲·霜寒"
+    description: "冻土脉冲会在关键节奏中提供清房收益节奏，并推动霜寒/壁垒路线成型"
+    rarity: COMMON
+    icon: EXPERIENCE_BOTTLE
+    max-level: 3
+    tags: ["霜寒", "壁垒"]
+    attributes:
+      "冰霜伤害": [2.6, 2.6]
+      "护盾强度": [1.8, 1.8]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 4.4
+        tag: "霜寒"
+        per-tag: 0.28
+  exp2_frost_spark:
+    name: "冻土火花·霜寒"
+    description: "冻土火花会在关键节奏中提供击杀收益节奏，并推动霜寒/壁垒路线成型"
+    rarity: COMMON
+    icon: GOLD_NUGGET
+    max-level: 3
+    tags: ["霜寒", "壁垒"]
+    attributes:
+      "冰霜伤害": [2.8, 2.8]
+      "护盾强度": [2, 2]
+    effects:
+      effect_1:
+        type: KILL_SHARD
+        value-per-level: 5.1
+        tag: "霜寒"
+        per-tag: 0.315
+  exp2_frost_ward:
+    name: "冻心余盾"
+    description: "低血护盾保护失误，清房时还能被盾税类效果转化为收益"
+    rarity: RARE
+    icon: BLUE_ICE
+    max-level: 3
+    tags: ["霜寒", "壁垒"]
+    attributes:
+      "冰霜伤害": [2.4, 2.4]
+      "护盾强度": [2.4, 2.4]
+    effects:
+      effect_1:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 7
+        threshold: 38
+        chance: 0.42
+        cooldown-seconds: 16
+        duration-seconds: 10
+        tag: "霜寒"
+        per-tag: 0.8
+  exp2_frost_edge:
+    name: "冻土锋线·霜寒"
+    description: "冻土锋线会在关键节奏中提供残血收割，并推动霜寒/壁垒路线成型"
+    rarity: RARE
+    icon: IRON_SWORD
+    max-level: 3
+    tags: ["霜寒", "壁垒"]
+    attributes:
+      "冰霜伤害": [3.3, 3.3]
+      "护盾强度": [2.3, 2.3]
+    effects:
+      effect_1:
+        type: EXECUTE
+        value-per-level: 6.5
+        threshold: 31
+        tag: "霜寒"
+        per-tag: 0.385
+  exp2_frost_chain:
+    name: "冻土链环·霜寒"
+    description: "冻土链环会在关键节奏中提供攻击连锁，并推动霜寒/壁垒路线成型"
+    rarity: EPIC
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["霜寒", "壁垒"]
+    attributes:
+      "冰霜伤害": [3.5, 3.5]
+      "护盾强度": [2.5, 2.5]
+    effects:
+      effect_1:
+        type: CHAIN_DAMAGE
+        value-per-level: 7.2
+        chance: 0.210
+        cooldown-seconds: 16
+        radius: 3.9
+        limit: 2
+        tag: "霜寒"
+        per-tag: 0.42
+  exp2_frost_haste:
+    name: "冻土疾刻·霜寒"
+    description: "冻土疾刻会在关键节奏中提供击杀推进，并推动霜寒/壁垒路线成型"
+    rarity: EPIC
+    icon: FEATHER
+    max-level: 3
+    tags: ["霜寒", "壁垒"]
+    attributes:
+      "冰霜伤害": [3.7, 3.7]
+      "护盾强度": [2.6, 2.6]
+    effects:
+      effect_1:
+        type: KILL_SPEED
+        value-per-level: 7.9
+        duration-seconds: 3.6
+        tag: "霜寒"
+        per-tag: 0.455
+  exp2_frost_renew:
+    name: "冻土复苏·霜寒"
+    description: "冻土复苏会在关键节奏中提供清房续航，并推动霜寒/壁垒路线成型"
+    rarity: RARE
+    icon: GLISTERING_MELON_SLICE
+    max-level: 3
+    tags: ["霜寒", "壁垒"]
+    attributes:
+      "冰霜伤害": [3.9, 3.9]
+      "护盾强度": [2.8, 2.8]
+    effects:
+      effect_1:
+        type: ROOM_HEAL
+        value-per-level: 8.6
+        tag: "霜寒"
+        per-tag: 0.49
+  exp2_frost_crown:
+    name: "冻土冠冕·霜寒"
+    description: "冻土冠冕会在关键节奏中提供神恩成长，并推动霜寒/壁垒路线成型"
+    rarity: LEGENDARY
+    icon: NETHER_STAR
+    max-level: 4
+    tags: ["霜寒", "壁垒"]
+    attributes:
+      "冰霜伤害": [4.1, 4.1]
+      "护盾强度": [2.9, 2.9]
+    effects:
+      effect_1:
+        type: ROOM_UPGRADE_RANDOM
+        value-per-level: 9.3
+        chance: 0.264
+        tag: "霜寒"
+        per-tag: 0.525
+      effect_2:
+        type: ROOM_SHARD
+        value-per-level: 12.60
+        tag: "壁垒"
+        per-tag: 0.745
+  exp2_abyss_pulse:
+    name: "遗响税册"
+    description: "清房时按遗物数量获得碎片，遗物流越成型收益越高"
+    rarity: RARE
+    icon: BOOK
+    max-level: 3
+    tags: ["深渊", "财宝"]
+    attributes:
+      "深渊伤害": [2.8, 2.8]
+      "幸运": [2.4, 2.4]
+    effects:
+      effect_1:
+        type: RELIC_COUNT_SHARD
+        value-per-level: 2.2
+        tag: "深渊"
+        per-tag: 0.25
+  exp2_abyss_spark:
+    name: "渊门火花·深渊"
+    description: "渊门火花会在关键节奏中提供击杀收益节奏，并推动深渊/鲜血路线成型"
+    rarity: COMMON
+    icon: GOLD_NUGGET
+    max-level: 3
+    tags: ["深渊", "鲜血"]
+    attributes:
+      "深渊伤害": [3.1, 3.1]
+      "暴击伤害": [2.2, 2.2]
+    effects:
+      effect_1:
+        type: KILL_SHARD
+        value-per-level: 5.65
+        tag: "深渊"
+        per-tag: 0.34
+  exp2_abyss_ward:
+    name: "渊门护符·深渊"
+    description: "渊门护符会在关键节奏中提供低血保护窗口，并推动深渊/鲜血路线成型"
+    rarity: RARE
+    icon: TOTEM_OF_UNDYING
+    max-level: 3
+    tags: ["深渊", "鲜血"]
+    attributes:
+      "深渊伤害": [3.3, 3.3]
+      "暴击伤害": [2.3, 2.3]
+    effects:
+      effect_1:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 6.35
+        chance: 0.186
+        cooldown-seconds: 15
+        duration-seconds: 3.5
+        tag: "深渊"
+        per-tag: 0.375
+  exp2_abyss_edge:
+    name: "渊门锋线·深渊"
+    description: "渊门锋线会在关键节奏中提供残血收割，并推动深渊/鲜血路线成型"
+    rarity: RARE
+    icon: IRON_SWORD
+    max-level: 3
+    tags: ["深渊", "鲜血"]
+    attributes:
+      "深渊伤害": [3.5, 3.5]
+      "暴击伤害": [2.5, 2.5]
+    effects:
+      effect_1:
+        type: EXECUTE
+        value-per-level: 7.05
+        threshold: 32
+        tag: "深渊"
+        per-tag: 0.41
+  exp2_abyss_chain:
+    name: "渊门链环·深渊"
+    description: "渊门链环会在关键节奏中提供攻击连锁，并推动深渊/鲜血路线成型"
+    rarity: EPIC
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["深渊", "鲜血"]
+    attributes:
+      "深渊伤害": [3.7, 3.7]
+      "暴击伤害": [2.6, 2.6]
+    effects:
+      effect_1:
+        type: CHAIN_DAMAGE
+        value-per-level: 7.75
+        chance: 0.222
+        cooldown-seconds: 17
+        radius: 4.0
+        limit: 3
+        tag: "深渊"
+        per-tag: 0.445
+  exp2_abyss_haste:
+    name: "渊门疾刻·深渊"
+    description: "渊门疾刻会在关键节奏中提供击杀推进，并推动深渊/鲜血路线成型"
+    rarity: EPIC
+    icon: FEATHER
+    max-level: 3
+    tags: ["深渊", "鲜血"]
+    attributes:
+      "深渊伤害": [4, 4]
+      "暴击伤害": [2.8, 2.8]
+    effects:
+      effect_1:
+        type: KILL_SPEED
+        value-per-level: 8.45
+        duration-seconds: 3.8
+        tag: "深渊"
+        per-tag: 0.48
+  exp2_abyss_renew:
+    name: "渊门复苏·深渊"
+    description: "渊门复苏会在关键节奏中提供清房续航，并推动深渊/鲜血路线成型"
+    rarity: RARE
+    icon: GLISTERING_MELON_SLICE
+    max-level: 3
+    tags: ["深渊", "鲜血"]
+    attributes:
+      "深渊伤害": [4.2, 4.2]
+      "暴击伤害": [3, 3]
+    effects:
+      effect_1:
+        type: ROOM_HEAL
+        value-per-level: 9.15
+        tag: "深渊"
+        per-tag: 0.515
+  exp2_abyss_crown:
+    name: "黑门路线税"
+    description: "选择下一层路线时获得碎片，路线奖励随路线收益等级提高"
+    rarity: LEGENDARY
+    icon: CRYING_OBSIDIAN
+    max-level: 4
+    tags: ["深渊", "财宝"]
+    attributes:
+      "深渊伤害": [4.2, 4.2]
+      "幸运": [3.4, 3.4]
+    effects:
+      effect_1:
+        type: ROUTE_PICK_BONUS
+        value-per-level: 6
+        tag: "深渊"
+        per-tag: 0.8
+      effect_2:
+        type: ROOM_SHARD
+        value-per-level: 5
+        tag: "财宝"
+        per-tag: 0.7
+  exp2_holy_pulse:
+    name: "群星祷账"
+    description: "清房时按神恩数量获得碎片，鼓励横向扩展构筑"
+    rarity: RARE
+    icon: GLOWSTONE_DUST
+    max-level: 3
+    tags: ["圣辉", "财宝"]
+    attributes:
+      "生命恢复": [2.2, 2.2]
+      "治疗加成": [2.0, 2.0]
+    effects:
+      effect_1:
+        type: BOON_COUNT_SHARD
+        value-per-level: 1.6
+        tag: "圣辉"
+        per-tag: 0.2
+  exp2_holy_spark:
+    name: "圣坛火花·圣辉"
+    description: "圣坛火花会在关键节奏中提供击杀收益节奏，并推动圣辉/壁垒路线成型"
+    rarity: COMMON
+    icon: GOLD_NUGGET
+    max-level: 3
+    tags: ["圣辉", "壁垒"]
+    attributes:
+      "生命恢复": [3.3, 3.3]
+      "治疗加成": [2.3, 2.3]
+    effects:
+      effect_1:
+        type: KILL_SHARD
+        value-per-level: 6.2
+        tag: "圣辉"
+        per-tag: 0.365
+  exp2_holy_ward:
+    name: "圣坛护符·圣辉"
+    description: "圣坛护符会在关键节奏中提供低血保护窗口，并推动圣辉/壁垒路线成型"
+    rarity: RARE
+    icon: TOTEM_OF_UNDYING
+    max-level: 3
+    tags: ["圣辉", "壁垒"]
+    attributes:
+      "生命恢复": [3.5, 3.5]
+      "治疗加成": [2.5, 2.5]
+    effects:
+      effect_1:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 6.9
+        chance: 0.198
+        cooldown-seconds: 16
+        duration-seconds: 3.6
+        tag: "圣辉"
+        per-tag: 0.4
+  exp2_holy_edge:
+    name: "圣坛锋线·圣辉"
+    description: "圣坛锋线会在关键节奏中提供残血收割，并推动圣辉/壁垒路线成型"
+    rarity: RARE
+    icon: IRON_SWORD
+    max-level: 3
+    tags: ["圣辉", "壁垒"]
+    attributes:
+      "生命恢复": [3.8, 3.8]
+      "治疗加成": [2.7, 2.7]
+    effects:
+      effect_1:
+        type: EXECUTE
+        value-per-level: 7.6
+        threshold: 33
+        tag: "圣辉"
+        per-tag: 0.435
+  exp2_holy_chain:
+    name: "圣坛链环·圣辉"
+    description: "圣坛链环会在关键节奏中提供攻击连锁，并推动圣辉/壁垒路线成型"
+    rarity: EPIC
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["圣辉", "壁垒"]
+    attributes:
+      "生命恢复": [4, 4]
+      "治疗加成": [2.8, 2.8]
+    effects:
+      effect_1:
+        type: CHAIN_DAMAGE
+        value-per-level: 8.3
+        chance: 0.234
+        cooldown-seconds: 18
+        radius: 4.1
+        limit: 4
+        tag: "圣辉"
+        per-tag: 0.47
+  exp2_holy_haste:
+    name: "圣坛疾刻·圣辉"
+    description: "圣坛疾刻会在关键节奏中提供击杀推进，并推动圣辉/壁垒路线成型"
+    rarity: EPIC
+    icon: FEATHER
+    max-level: 3
+    tags: ["圣辉", "壁垒"]
+    attributes:
+      "生命恢复": [4.2, 4.2]
+      "治疗加成": [3, 3]
+    effects:
+      effect_1:
+        type: KILL_SPEED
+        value-per-level: 9
+        duration-seconds: 3.9
+        tag: "圣辉"
+        per-tag: 0.505
+  exp2_holy_renew:
+    name: "白烛过量祷"
+    description: "清房溢疗转化为护盾，让圣辉流在满血时仍有防守收益"
+    rarity: EPIC
+    icon: GLOWSTONE_DUST
+    max-level: 3
+    tags: ["圣辉", "壁垒"]
+    attributes:
+      "治疗加成": [3.0, 3.0]
+      "生命恢复": [2.2, 2.2]
+    effects:
+      effect_1:
+        type: OVERHEAL_SHIELD
+        value-per-level: 7
+        duration-seconds: 16
+        tag: "圣辉"
+        per-tag: 0.9
+  exp2_holy_crown:
+    name: "圣坛冠冕·圣辉"
+    description: "圣坛冠冕会在关键节奏中提供神恩成长，并推动圣辉/壁垒路线成型"
+    rarity: LEGENDARY
+    icon: NETHER_STAR
+    max-level: 4
+    tags: ["圣辉", "壁垒"]
+    attributes:
+      "生命恢复": [4.6, 4.6]
+      "治疗加成": [3.3, 3.3]
+    effects:
+      effect_1:
+        type: ROOM_UPGRADE_RANDOM
+        value-per-level: 10.4
+        chance: 0.288
+        tag: "圣辉"
+        per-tag: 0.575
+      effect_2:
+        type: ROOM_SHARD
+        value-per-level: 13.70
+        tag: "壁垒"
+        per-tag: 0.795
+  exp2_treasure_pulse:
+    name: "铁算盘返利"
+    description: "在商店消费后返还部分本局碎片，财宝流越成型越敢买"
+    rarity: EPIC
+    icon: EMERALD
+    max-level: 3
+    tags: ["财宝"]
+    attributes:
+      "幸运": [3.2, 3.2]
+      "暴击几率": [1.6, 1.6]
+    effects:
+      effect_1:
+        type: SHOP_SPEND_REFUND
+        value-per-level: 5
+        tag: "财宝"
+        per-tag: 0.8
+  exp2_treasure_spark:
+    name: "金库火花·财宝"
+    description: "金库火花会在关键节奏中提供击杀收益节奏，并推动财宝/狩猎路线成型"
+    rarity: COMMON
+    icon: GOLD_NUGGET
+    max-level: 3
+    tags: ["财宝", "狩猎"]
+    attributes:
+      "幸运": [3.6, 3.6]
+      "暴击几率": [2.5, 2.5]
+    effects:
+      effect_1:
+        type: KILL_SHARD
+        value-per-level: 6.75
+        tag: "财宝"
+        per-tag: 0.39
+  exp2_treasure_ward:
+    name: "金库护符·财宝"
+    description: "金库护符会在关键节奏中提供低血保护窗口，并推动财宝/狩猎路线成型"
+    rarity: RARE
+    icon: TOTEM_OF_UNDYING
+    max-level: 3
+    tags: ["财宝", "狩猎"]
+    attributes:
+      "幸运": [3.8, 3.8]
+      "暴击几率": [2.7, 2.7]
+    effects:
+      effect_1:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 7.45
+        chance: 0.210
+        cooldown-seconds: 17
+        duration-seconds: 3.8
+        tag: "财宝"
+        per-tag: 0.425
+  exp2_treasure_edge:
+    name: "金库锋线·财宝"
+    description: "金库锋线会在关键节奏中提供残血收割，并推动财宝/狩猎路线成型"
+    rarity: RARE
+    icon: IRON_SWORD
+    max-level: 3
+    tags: ["财宝", "狩猎"]
+    attributes:
+      "幸运": [4, 4]
+      "暴击几率": [2.8, 2.8]
+    effects:
+      effect_1:
+        type: EXECUTE
+        value-per-level: 8.15
+        threshold: 34
+        tag: "财宝"
+        per-tag: 0.46
+  exp2_treasure_chain:
+    name: "开箱直觉"
+    description: "开启宝箱时额外获得碎片，秘藏宝库路线的即时反馈更强"
+    rarity: RARE
+    icon: CHEST
+    max-level: 3
+    tags: ["财宝", "狩猎"]
+    attributes:
+      "幸运": [2.6, 2.6]
+      "暴击几率": [1.5, 1.5]
+    effects:
+      effect_1:
+        type: CHEST_OPEN_BONUS
+        value-per-level: 8
+        tag: "财宝"
+        per-tag: 1.1
+  exp2_treasure_haste:
+    name: "金库疾刻·财宝"
+    description: "金库疾刻会在关键节奏中提供击杀推进，并推动财宝/狩猎路线成型"
+    rarity: EPIC
+    icon: FEATHER
+    max-level: 3
+    tags: ["财宝", "狩猎"]
+    attributes:
+      "幸运": [4.5, 4.5]
+      "暴击几率": [3.2, 3.2]
+    effects:
+      effect_1:
+        type: KILL_SPEED
+        value-per-level: 9.55
+        duration-seconds: 4.0
+        tag: "财宝"
+        per-tag: 0.53
+  exp2_treasure_renew:
+    name: "金库复苏·财宝"
+    description: "金库复苏会在关键节奏中提供清房续航，并推动财宝/狩猎路线成型"
+    rarity: RARE
+    icon: GLISTERING_MELON_SLICE
+    max-level: 3
+    tags: ["财宝", "狩猎"]
+    attributes:
+      "幸运": [4.7, 4.7]
+      "暴击几率": [3.3, 3.3]
+    effects:
+      effect_1:
+        type: ROOM_HEAL
+        value-per-level: 10.25
+        tag: "财宝"
+        per-tag: 0.565
+  exp2_treasure_crown:
+    name: "暗门金契"
+    description: "开启隐藏房时获得额外碎片，隐藏钥匙会变成直接经济收益"
+    rarity: LEGENDARY
+    icon: EMERALD
+    max-level: 4
+    tags: ["财宝", "狩猎"]
+    attributes:
+      "幸运": [5.2, 5.2]
+      "暴击几率": [2.8, 2.8]
+    effects:
+      effect_1:
+        type: HIDDEN_ROOM_SHARD
+        value-per-level: 18
+        tag: "财宝"
+        per-tag: 1.6
+
+  debt_tithe:
+    name: "赎债什一税"
+    description: "每次清房会削减灵魂债务；没有债务时只是普通经济神恩"
+    rarity: COMMON
+    icon: SUNFLOWER
+    max-level: 3
+    tags: ["财宝", "圣辉"]
+    effects:
+      effect_1:
+        type: SOUL_DEBT_RELIEF
+        value-per-level: 8
+        tag: "财宝"
+        per-tag: 1.0
+  debt_martyr_seal:
+    name: "殉债圣印"
+    description: "获得后封存一笔碎片奖励，撑过数个房间后兑现用于偿还债务"
+    rarity: RARE
+    icon: WRITABLE_BOOK
+    max-level: 3
+    tags: ["圣辉", "财宝"]
+    effects:
+      effect_1:
+        type: DELAYED_REWARD_SHARD
+        value-per-level: 24
+        threshold: 2
+  oracle_chest_oath:
+    name: "宝箱预言"
+    description: "获得后预言宝箱房；按时抵达会获得额外本局碎片"
+    rarity: RARE
+    icon: ENDER_EYE
+    max-level: 3
+    tags: ["财宝"]
+    effects:
+      effect_1:
+        type: ROOM_PROPHECY
+        value-per-level: 28
+        threshold: 4
+        tag: "CHEST"
+  oracle_elite_oath:
+    name: "猎首预言"
+    description: "获得后预言精英房，逼迫你规划一条更激进的路线"
+    rarity: EPIC
+    icon: SPYGLASS
+    max-level: 3
+    tags: ["狩猎", "深渊"]
+    effects:
+      effect_1:
+        type: ROOM_PROPHECY
+        value-per-level: 42
+        threshold: 4
+        tag: "ELITE"
+  route_treasure_order:
+    name: "藏宝订单"
+    description: "要求按宝箱>铁匠>精英推进，完成后让下一次神恩产生回响"
+    rarity: EPIC
+    icon: FILLED_MAP
+    max-level: 3
+    tags: ["财宝", "狩猎"]
+    effects:
+      effect_1:
+        type: ROUTE_CHAIN
+        value-per-level: 1
+        tag: "CHEST>FORGE>ELITE"
+  route_pilgrim_order:
+    name: "朝圣订单"
+    description: "要求按神龛>试炼>契约推进，完成后复制下一次神恩选择"
+    rarity: EPIC
+    icon: MAP
+    max-level: 3
+    tags: ["圣辉", "深渊"]
+    effects:
+      effect_1:
+        type: ROUTE_CHAIN
+        value-per-level: 1
+        tag: "SHRINE>TRIAL>CONTRACT"
+  echo_afterimage:
+    name: "神恩余像"
+    description: "获得后让下一次神恩选择产生回响，适合放大核心神恩"
+    rarity: RARE
+    icon: ECHO_SHARD
+    max-level: 3
+    tags: ["风暴", "深渊"]
+    effects:
+      effect_1:
+        type: NEXT_BOON_ECHO
+        value-per-level: 1
+  mutation_lens:
+    name: "变质透镜"
+    description: "获得后下一次神恩选择额外出现候选，方便寻找跨流派拼图"
+    rarity: RARE
+    icon: DRAGON_BREATH
+    max-level: 3
+    tags: ["深渊", "财宝"]
+    effects:
+      effect_1:
+        type: NEXT_BOON_MUTATION
+        value-per-level: 1
+  delayed_vault_prayer:
+    name: "迟开奖赏祷文"
+    description: "获得后托管一笔碎片，数房后兑现更高的局内资金"
+    rarity: COMMON
+    icon: CLOCK
+    max-level: 3
+    tags: ["圣辉", "财宝"]
+    effects:
+      effect_1:
+        type: DELAYED_REWARD_SHARD
+        value-per-level: 18
+        threshold: 3
+  debt_black_quill:
+    name: "黑羽债簿"
+    description: "清房削减债务，并在深渊标签成型时更快摆脱逾期风险"
+    rarity: EPIC
+    icon: INK_SAC
+    max-level: 3
+    tags: ["深渊", "财宝"]
+    effects:
+      effect_1:
+        type: SOUL_DEBT_RELIEF
+        value-per-level: 12
+        tag: "深渊"
+        per-tag: 1.4
+  echo_crown_loop:
+    name: "回响王冠"
+    description: "获得后下一次神恩选择会被回响强化，同时提供少量暴击成长"
+    rarity: LEGENDARY
+    icon: GOLDEN_HELMET
+    max-level: 4
+    tags: ["风暴", "财宝"]
+    attributes:
+      "暴击几率": [2.5, 2.5]
+    effects:
+      effect_1:
+        type: NEXT_BOON_ECHO
+        value-per-level: 1
+  prophecy_grand_design:
+    name: "大预言图纸"
+    description: "获得后预言铁匠房；兑现后取得大笔碎片用于锻造或偿债"
+    rarity: LEGENDARY
+    icon: LODESTONE
+    max-level: 4
+    tags: ["财宝", "壁垒"]
+    effects:
+      effect_1:
+        type: ROOM_PROPHECY
+        value-per-level: 50
+        threshold: 5
+        tag: "FORGE"

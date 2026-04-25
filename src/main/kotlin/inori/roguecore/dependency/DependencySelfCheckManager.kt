@@ -1,5 +1,6 @@
 package inori.roguecore.dependency
 
+import inori.roguecore.accessory.AccessoryRegistry
 import inori.roguecore.boon.BoonRegistry
 import inori.roguecore.combat.MonsterConfig
 import inori.roguecore.combat.MythicMobBridge
@@ -129,6 +130,7 @@ object DependencySelfCheckManager {
             }
         }
         names += DungeonLootManager.getConfiguredAttributeNames()
+        names += AccessoryRegistry.getConfiguredAttributeNames()
         return names.map { it.trim() }.filter { it.isNotEmpty() }.toSet()
     }
 

@@ -1,5 +1,11 @@
 package inori.roguecore.dungeon
 
+import inori.roguecore.accessory.AccessoryEffect
+import inori.roguecore.accessory.AccessoryEffectType
+import inori.roguecore.accessory.AccessoryInstance
+import inori.roguecore.accessory.AccessoryRegistry
+import inori.roguecore.accessory.AccessorySlot
+import inori.roguecore.accessory.PlayerAccessoryData
 import inori.roguecore.affix.AffixRegistry
 import inori.roguecore.boon.BoonInstance
 import inori.roguecore.boon.BoonRegistry
@@ -16,6 +22,7 @@ import inori.roguecore.dungeon.room.Room
 import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.dungeon.route.NextFloorRoute
 import inori.roguecore.event.EventAffixManager
+import inori.roguecore.item.DungeonLootSource
 import inori.roguecore.listener.DungeonListener
 import inori.roguecore.milestone.RunMilestoneManager
 import inori.roguecore.milestone.RunMilestoneType
@@ -149,6 +156,20 @@ object RunPersistenceManager {
                     mapOf("id" to boon.boon.id, "level" to boon.level)
                 },
                 "relics" to PlayerRelicData.getRelics(uuid).map { it.id },
+                "accessories" to PlayerAccessoryData.getEquipped(uuid).map { (slot, accessory) ->
+                    mapOf(
+                        "slot" to slot.name,
+                        "id" to accessory.definition.id,
+                        "rarity" to accessory.rarity.id,
+                        "source" to accessory.source.name,
+                        "floor" to accessory.floor,
+                        "score" to accessory.score,
+                        "attributes" to accessory.rolledAttributes,
+                        "effects" to accessory.effects.map { effect ->
+                            mapOf("type" to effect.type.name, "value" to effect.value, "chance" to effect.chance, "tag" to effect.tag)
+                        }
+                    )
+                },
                 "curses" to RunCurseManager.getCurses(uuid).map(RunCurseType::name),
                 "milestones" to RunMilestoneManager.getSnapshot(uuid).milestones.map(RunMilestoneType::name),
                 "combat-streak" to RunMilestoneManager.getSnapshot(uuid).combatStreak,
@@ -158,7 +179,8 @@ object RunPersistenceManager {
                         "remaining-rooms" to modifier.remainingRooms,
                         "charges" to modifier.charges,
                         "value" to modifier.value,
-                        "source" to modifier.source
+                        "source" to modifier.source,
+                        "payload" to modifier.payload
                     )
                 },
                 "materials" to ForgeMaterialManager.getAll(uuid).mapKeys { it.key.id },
@@ -241,6 +263,33 @@ object RunPersistenceManager {
             val relics = (raw["relics"] as? List<*>)?.mapNotNull { id -> id?.toString()?.let(RelicRegistry::get) } ?: emptyList()
             PlayerRelicData.restoreRelics(uuid, relics)
 
+            val accessories = (raw["accessories"] as? List<*>)?.mapNotNull { value ->
+                val node = value as? Map<*, *> ?: return@mapNotNull null
+                val slot = AccessorySlot.parse(node["slot"]?.toString()) ?: return@mapNotNull null
+                val definition = AccessoryRegistry.get(node["id"]?.toString() ?: return@mapNotNull null) ?: return@mapNotNull null
+                val rarity = AccessoryRegistry.getRarity(node["rarity"]?.toString() ?: "common") ?: return@mapNotNull null
+                val source = runCatching { DungeonLootSource.valueOf(node["source"]?.toString() ?: "CHEST") }.getOrDefault(DungeonLootSource.CHEST)
+                val floor = node["floor"]?.toString()?.toIntOrNull() ?: 1
+                val score = node["score"]?.toString()?.toDoubleOrNull() ?: 0.0
+                val attributes = (node["attributes"] as? Map<*, *>)?.mapNotNull { (key, attrValue) ->
+                    val attrName = key?.toString() ?: return@mapNotNull null
+                    val amount = attrValue?.toString()?.toDoubleOrNull() ?: return@mapNotNull null
+                    attrName to amount
+                }?.toMap() ?: emptyMap()
+                val effects = (node["effects"] as? List<*>)?.mapNotNull { rawEffect ->
+                    val effectNode = rawEffect as? Map<*, *> ?: return@mapNotNull null
+                    val type = runCatching { AccessoryEffectType.valueOf(effectNode["type"].toString()) }.getOrNull() ?: return@mapNotNull null
+                    AccessoryEffect(
+                        type = type,
+                        value = effectNode["value"]?.toString()?.toDoubleOrNull() ?: 0.0,
+                        chance = effectNode["chance"]?.toString()?.toDoubleOrNull() ?: 1.0,
+                        tag = effectNode["tag"]?.toString() ?: ""
+                    )
+                } ?: definition.effects
+                slot to AccessoryInstance(definition, rarity, source, floor, attributes, effects, score)
+            }?.toMap() ?: emptyMap()
+            PlayerAccessoryData.restore(uuid, accessories)
+
             val curses = (raw["curses"] as? List<*>)?.mapNotNull { id ->
                 runCatching { RunCurseType.valueOf(id.toString()) }.getOrNull()
             }?.toSet() ?: emptySet()
@@ -260,7 +309,8 @@ object RunPersistenceManager {
                     remainingRooms = node["remaining-rooms"]?.toString()?.toIntOrNull() ?: 0,
                     charges = node["charges"]?.toString()?.toIntOrNull() ?: 0,
                     value = node["value"]?.toString()?.toDoubleOrNull() ?: 0.0,
-                    source = node["source"]?.toString() ?: type.displayName
+                    source = node["source"]?.toString() ?: type.displayName,
+                    payload = node["payload"]?.toString() ?: ""
                 )
             } ?: emptyList()
             RunModifierManager.restore(uuid, modifiers)

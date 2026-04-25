@@ -3,6 +3,7 @@ package inori.roguecore.event
 import inori.roguecore.boon.BoonSelectManager
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
+import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.ui.DungeonGuiGuard
 import org.bukkit.entity.Player
 import taboolib.library.xseries.XMaterial
@@ -57,25 +58,28 @@ object GambleEvent {
     }
 
     private fun resolve(player: Player, instance: DungeonInstance) {
-        val loadedDice = EventAffixManager.hasAffix(instance, "loaded_dice")
+        val gamblePower = EventAffixManager.getFamilyPower(instance, RoomType.GAMBLE, "GAMBLE")
         val roll = Random.nextInt(100)
+        val winChance = (35 + gamblePower * 2).coerceAtMost(55)
+        val boonChance = (55 + gamblePower).coerceAtMost(72)
+        val lossChance = (80 + gamblePower).coerceAtMost(92)
         when {
-            roll < if (loadedDice) 45 else 35 -> {
+            roll < winChance -> {
                 val reward = Random.nextInt(
-                    EventScaling.reward(instance, config.getInt("gamble.shard-win-min", 12)),
-                    EventScaling.reward(instance, config.getInt("gamble.shard-win-max", 36)) + if (loadedDice) 12 else 1
+                    EventScaling.reward(instance, config.getInt("gamble.shard-win-min", 12) + gamblePower * 2),
+                    EventScaling.reward(instance, config.getInt("gamble.shard-win-max", 36) + gamblePower * 4) + 1
                 )
                 ShardRewardManager.addRunShards(player.uniqueId, reward)
                 player.sendMessage("§a赌局得手，获得 §e$reward §a本局碎片。")
             }
 
-            roll < if (loadedDice) 60 else 55 -> {
+            roll < boonChance -> {
                 player.sendMessage("§d你抽到了神谕，获得一次神恩选择。")
                 BoonSelectManager.offerBoonSelection(player, EventScaling.boonOfferCount(instance))
             }
 
-            roll < if (loadedDice) 85 else 80 -> {
-                val lossPercent = EventScaling.riskPercent(instance, config.getDouble("gamble.loss-percent", 0.35) + if (loadedDice) 0.08 else 0.0)
+            roll < lossChance -> {
+                val lossPercent = EventScaling.riskPercent(instance, config.getDouble("gamble.loss-percent", 0.35) + gamblePower * 0.01)
                 val current = ShardRewardManager.getRunShards(player.uniqueId)
                 val loss = (current * lossPercent).toInt().coerceAtLeast(1)
                 if (current > 0 && ShardRewardManager.takeRunShards(player.uniqueId, loss)) {
@@ -86,7 +90,7 @@ object GambleEvent {
             }
 
             else -> {
-                val damagePercent = EventScaling.riskPercent(instance, config.getDouble("gamble.damage-percent", 0.25) + if (loadedDice) 0.08 else 0.0)
+                val damagePercent = EventScaling.riskPercent(instance, config.getDouble("gamble.damage-percent", 0.25) + gamblePower * 0.01)
                 val damage = (player.health * damagePercent).coerceAtLeast(1.0)
                 if (player.health > damage) {
                     player.damage(damage)

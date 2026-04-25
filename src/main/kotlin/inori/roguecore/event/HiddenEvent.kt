@@ -5,6 +5,7 @@ import inori.roguecore.data.ForgeMaterialManager
 import inori.roguecore.data.ForgeMaterialType
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
+import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.item.DungeonLootManager
 import inori.roguecore.relic.RelicSelectManager
 import inori.roguecore.unlock.UnlockManager
@@ -23,12 +24,13 @@ object HiddenEvent {
         private set
 
     fun trigger(player: Player, instance: DungeonInstance) {
-        val stockpile = EventAffixManager.hasAffix(instance, "shadow_stockpile")
-        val shardMin = EventScaling.reward(instance, config.getInt("hidden.shard-min", 24))
-        val shardMax = EventScaling.reward(instance, config.getInt("hidden.shard-max", 48)).coerceAtLeast(shardMin)
+        val hiddenPower = EventAffixManager.getFamilyPower(instance, RoomType.HIDDEN, "HIDDEN")
+        val stockpile = hiddenPower > 0
+        val shardMin = EventScaling.reward(instance, config.getInt("hidden.shard-min", 24) + hiddenPower * 4)
+        val shardMax = EventScaling.reward(instance, config.getInt("hidden.shard-max", 48) + hiddenPower * 8).coerceAtLeast(shardMin)
         val giveBoon = config.getBoolean("hidden.give-boon", true)
         val materialBonus = EventScaling.materialBonus(instance)
-        val sigilExtra = if (stockpile) 1 else 0
+        val sigilExtra = hiddenPower.coerceAtMost(8)
         val sigilMin = (config.getInt("forge.materials.hidden-sigil.reward-min", 1) + materialBonus + sigilExtra).coerceAtLeast(0)
         val sigilMax = (config.getInt("forge.materials.hidden-sigil.reward-max", sigilMin) + materialBonus + sigilExtra).coerceAtLeast(sigilMin)
 
@@ -50,8 +52,11 @@ object HiddenEvent {
             player.sendMessage("§6  你从暗格中取出了一件临时装备。")
         }
 
-        if (stockpile && DungeonLootManager.grantHiddenLoot(player, instance)) {
-            player.sendMessage("§9  事件词缀撬开了更深的一层秘格。")
+        val extraHiddenRolls = (hiddenPower / 3).coerceAtMost(4)
+        repeat(extraHiddenRolls) {
+            if (DungeonLootManager.grantHiddenLoot(player, instance)) {
+                player.sendMessage("§9  事件词缀撬开了更深的一层秘格。")
+            }
         }
 
         if (UnlockManager.hasSealedVault(player) && DungeonLootManager.grantHiddenLoot(player, instance)) {

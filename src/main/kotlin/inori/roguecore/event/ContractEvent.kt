@@ -5,6 +5,7 @@ import inori.roguecore.curse.RunCurseManager
 import inori.roguecore.curse.RunCurseType
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
+import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.item.DungeonLootManager
 import inori.roguecore.relic.RelicSelectManager
 import inori.roguecore.ui.DungeonGuiGuard
@@ -29,16 +30,17 @@ object ContractEvent {
         private set
 
     fun trigger(player: Player, instance: DungeonInstance) {
-        val voidBroker = EventAffixManager.hasAffix(instance, "void_broker")
-        val shardBonus = if (voidBroker) EventScaling.reward(instance, 8) else 0
+        val contractPower = EventAffixManager.getFamilyPower(instance, RoomType.CONTRACT, "CONTRACT")
+        val voidBroker = contractPower > 0
+        val shardBonus = EventScaling.reward(instance, contractPower * 4)
         val shardMin = EventScaling.reward(instance, config.getInt("contract.shard-reward-min", 26)) + shardBonus
-        val shardMax = (EventScaling.reward(instance, config.getInt("contract.shard-reward-max", 52)) + shardBonus + if (voidBroker) 8 else 0)
+        val shardMax = (EventScaling.reward(instance, config.getInt("contract.shard-reward-max", 52)) + shardBonus + contractPower * 4)
             .coerceAtLeast(shardMin)
         val title = "§4§l契约祭坛"
         val hasVoidContract = UnlockManager.hasUnlock(player, "void_contract")
         val hasAbyssalBargain = UnlockManager.hasAbyssalBargain(player)
-        val relicOfferCount = EventScaling.relicOfferCount(instance, 3, UnlockManager.getRelicOfferBonus(player) + if (voidBroker) 1 else 0)
-        val crownReward = EventScaling.reward(instance, config.getInt("contract.crown-shard-reward", 44).coerceAtLeast(1)) + if (voidBroker) 12 else 0
+        val relicOfferCount = EventScaling.relicOfferCount(instance, 3, UnlockManager.getRelicOfferBonus(player) + contractPower.coerceAtMost(4))
+        val crownReward = EventScaling.reward(instance, config.getInt("contract.crown-shard-reward", 44).coerceAtLeast(1)) + contractPower * 8
 
         DungeonGuiGuard.lock(player, title) { target -> trigger(target, instance) }
 

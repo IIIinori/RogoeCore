@@ -4,6 +4,7 @@ import inori.roguecore.boon.BoonSelectManager
 import inori.roguecore.boon.PlayerBoonData
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
+import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.relic.RelicSelectManager
 import inori.roguecore.ui.DungeonGuiGuard
 import inori.roguecore.unlock.UnlockManager
@@ -30,14 +31,15 @@ object TrialEvent {
         val shardMin = EventScaling.reward(instance, config.getInt("trial.shard-reward-min", 18))
         val shardMax = EventScaling.reward(instance, config.getInt("trial.shard-reward-max", 40)).coerceAtLeast(shardMin)
         val hasForbiddenTrials = UnlockManager.hasForbiddenTrials(player)
-        val scarletOath = EventAffixManager.hasAffix(instance, "scarlet_oath")
+        val trialPower = EventAffixManager.getFamilyPower(instance, RoomType.TRIAL, "TRIAL")
+        val scarletOath = trialPower > 0
         val hasBloodTrial = scarletOath || instance.config.floorNumber >= config.getInt("event-variants.trial.blood-trial-floor", 8)
         val bloodCostPercent = EventScaling.riskPercent(
             instance,
-            config.getDouble("event-variants.trial.blood-trial-health-percent", 0.4) + if (scarletOath) 0.05 else 0.0
+            config.getDouble("event-variants.trial.blood-trial-health-percent", 0.4) + trialPower * 0.01
         )
-        val bloodShardMin = EventScaling.reward(instance, config.getInt("event-variants.trial.blood-trial-shard-min", 30) + if (scarletOath) 8 else 0)
-        val bloodShardMax = EventScaling.reward(instance, config.getInt("event-variants.trial.blood-trial-shard-max", 56) + if (scarletOath) 12 else 0)
+        val bloodShardMin = EventScaling.reward(instance, config.getInt("event-variants.trial.blood-trial-shard-min", 30) + trialPower * 4)
+        val bloodShardMax = EventScaling.reward(instance, config.getInt("event-variants.trial.blood-trial-shard-max", 56) + trialPower * 6)
             .coerceAtLeast(bloodShardMin)
         val title = "§5§l试炼之室"
 

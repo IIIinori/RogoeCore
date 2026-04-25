@@ -3,6 +3,7 @@ package inori.roguecore.event
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.DungeonManager
+import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.ui.DungeonGuiGuard
 import org.bukkit.entity.Player
 import taboolib.library.xseries.XMaterial
@@ -23,11 +24,12 @@ object ExtractionEvent {
         private set
 
     fun trigger(player: Player, instance: DungeonInstance) {
-        val goldenWaypoint = EventAffixManager.hasAffix(instance, "golden_waypoint")
+        val extractionPower = EventAffixManager.getFamilyPower(instance, RoomType.EXTRACTION, "EXTRACTION")
+        val goldenWaypoint = extractionPower > 0
         val ratio = config.getDouble("extraction.cashout-ratio", 0.5).coerceIn(0.0, 1.0)
-        val effectiveRatio = (ratio + if (goldenWaypoint) 0.15 else 0.0).coerceIn(0.0, 1.0)
+        val effectiveRatio = (ratio + extractionPower * 0.04).coerceIn(0.0, 1.0)
         val minCashOut = config.getInt("extraction.min-cashout-run-shards", 20).coerceAtLeast(0)
-        val effectiveMinCashOut = (minCashOut - if (goldenWaypoint) 8 else 0).coerceAtLeast(0)
+        val effectiveMinCashOut = (minCashOut - extractionPower * 3).coerceAtLeast(0)
         val runShards = ShardRewardManager.getRunShards(player.uniqueId)
         val preview = ShardRewardManager.getCashOutPreview(player.uniqueId, effectiveRatio)
         val title = "§3§l撤离点 §7(本局碎片: §e$runShards§7)"

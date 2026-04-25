@@ -7,6 +7,7 @@ import inori.roguecore.data.ForgeMaterialManager
 import inori.roguecore.data.ForgeMaterialType
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
+import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.item.DungeonLootManager
 import inori.roguecore.relic.RelicSelectManager
 import inori.roguecore.ui.DungeonGuiGuard
@@ -33,9 +34,10 @@ object ShopEvent {
         val boonPriceMin = EventScaling.price(instance, config.getInt("shop.boon-price-min", 20))
         val boonPriceMax = EventScaling.price(instance, config.getInt("shop.boon-price-max", 50)).coerceAtLeast(boonPriceMin)
         val healPrice = EventScaling.price(instance, config.getInt("shop.heal-price", 15))
-        val relicPrice = EventScaling.price(instance, config.getInt("shop.relic-price", 48))
-        val marketFever = EventAffixManager.hasAffix(instance, "greedy_market")
-        val shopBoonCount = EventScaling.boonOfferCount(instance, if (marketFever) 2 else 1)
+        val shopPower = EventAffixManager.getFamilyPower(instance, RoomType.SHOP, "SHOP")
+        val relicPrice = (EventScaling.price(instance, config.getInt("shop.relic-price", 48)) - shopPower * 3).coerceAtLeast(0)
+        val marketFever = shopPower > 0
+        val shopBoonCount = EventScaling.boonOfferCount(instance, 1 + shopPower.coerceAtMost(4))
         val blackMarketUnlocked = marketFever ||
             instance.config.floorNumber >= config.getInt("event-variants.shop.black-market-floor", 6)
 
@@ -59,12 +61,12 @@ object ShopEvent {
                 ShopGood.BlackMarketGood(
                     price = (
                         EventScaling.price(instance, config.getInt("event-variants.shop.black-market-price", 72)) -
-                            if (marketFever) 10 else 0
+                            shopPower * 4
                         ).coerceAtLeast(0),
                     emberReward = config.getInt("event-variants.shop.black-market-ember-reward", 2).coerceAtLeast(0) +
-                        if (marketFever) 1 else 0,
+                        shopPower.coerceAtMost(5),
                     sigilReward = config.getInt("event-variants.shop.black-market-sigil-reward", 1).coerceAtLeast(0) +
-                        if (marketFever) 1 else 0,
+                        (shopPower / 2).coerceAtMost(4),
                     grantHiddenLoot = config.getBoolean("event-variants.shop.black-market-grant-hidden-loot", true)
                 )
             )

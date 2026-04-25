@@ -1,224 +1,2207 @@
 # ================================
 # RogueCore 神恩(Boon)配置
 # ================================
-# 属性名必须与服务器 AttributePlus 配置中的属性名一致
-# attributes 格式: "属性名": [每级最小值, 每级最大值]
-# 例如 max-level: 3, attributes 物理攻击: [5, 5]
-#   Lv.1 = +5~5, Lv.2 = +10~10, Lv.3 = +15~15
+# 赛季级大内容池：8 个流派共 200 个神恩。
+# 属性名可对应 AttributePlus 自定义属性；请在 AP 侧注册后由 RogueCore 自检确认。
 
 boons:
-  # ===== 攻击型 =====
-  atk_boost:
-    name: "力量祝福"
-    description: "物理攻击 +{value}"
+  # ===== 狩猎系 =====
+  hunt_001:
+    name: "追猎01式"
+    description: "狩猎构筑属性成长"
     rarity: COMMON
-    icon: IRON_SWORD
+    icon: DIAMOND_SWORD
     max-level: 3
     tags: ["狩猎"]
     attributes:
-      "物理攻击": [5.0, 5.0]
-
-  crit_boost:
-    name: "暴击之眼"
-    description: "暴击几率 +{value}%"
-    rarity: RARE
-    icon: SPIDER_EYE
-    max-level: 3
-    tags: ["狩猎"]
-    attributes:
-      "暴击几率": [3.0, 3.0]
-
-  speed_boost:
-    name: "疾风步"
-    description: "攻击速度 +{value}%"
+      "物理攻击": [2.5, 2.5]
+      "移动速度": [1.3, 1.3]
+  hunt_002:
+    name: "追猎02式"
+    description: "狩猎构筑属性成长"
     rarity: COMMON
     icon: FEATHER
     max-level: 3
     tags: ["狩猎"]
     attributes:
-      "攻击速度": [5.0, 5.0]
-
-  # ===== 防御型 =====
-  hp_boost:
-    name: "生命之心"
-    description: "生命上限 +{value}"
+      "暴击几率": [2.9, 2.9]
+      "暴击伤害": [1.5, 1.5]
+  hunt_003:
+    name: "追猎03式"
+    description: "狩猎构筑属性成长"
+    rarity: COMMON
+    icon: SPIDER_EYE
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "攻击速度": [3.4, 3.4]
+      "精英伤害": [1.8, 1.8]
+  hunt_004:
+    name: "追猎04式"
+    description: "击杀后回复生命"
+    rarity: COMMON
+    icon: GOLDEN_APPLE
+    max-level: 3
+    tags: ["狩猎"]
+    effects:
+      effect_04:
+        type: KILL_HEAL
+        value-per-level: 6.6
+        threshold: 55.0
+        tag: "狩猎"
+        per-tag: 2.2
+  hunt_005:
+    name: "追猎05式"
+    description: "狩猎构筑属性成长"
+    rarity: COMMON
+    icon: IRON_CHESTPLATE
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "暴击伤害": [4.3, 4.3]
+      "破甲": [2.3, 2.3]
+  hunt_006:
+    name: "追猎06式"
+    description: "狩猎构筑属性成长"
+    rarity: COMMON
+    icon: ENDER_PEARL
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "精英伤害": [4.7, 4.7]
+      "物理攻击": [2.5, 2.5]
+  hunt_007:
+    name: "追猎07式"
+    description: "狩猎构筑属性成长"
+    rarity: COMMON
+    icon: REDSTONE
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "首领伤害": [5.2, 5.2]
+      "暴击几率": [2.8, 2.8]
+  hunt_008:
+    name: "追猎08式"
+    description: "受击后反击敌人"
+    rarity: COMMON
+    icon: SHIELD
+    max-level: 4
+    tags: ["狩猎"]
+    effects:
+      effect_08:
+        type: RETALIATE
+        value-per-level: 10.2
+        threshold: 50.0
+        tag: "狩猎"
+        per-tag: 1.5
+  hunt_009:
+    name: "追猎09式"
+    description: "狩猎构筑属性成长"
+    rarity: COMMON
+    icon: GHAST_TEAR
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "物理攻击": [6.0, 6.0]
+      "移动速度": [3.3, 3.3]
+  hunt_010:
+    name: "追猎10式"
+    description: "狩猎构筑属性成长"
+    rarity: RARE
+    icon: RABBIT_FOOT
+    max-level: 3
+    tags: ["狩猎", "壁垒"]
+    attributes:
+      "暴击几率": [6.5, 6.5]
+      "暴击伤害": [3.5, 3.5]
+  hunt_011:
+    name: "追猎11式"
+    description: "狩猎构筑属性成长"
+    rarity: RARE
+    icon: FIRE_CHARGE
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "攻击速度": [7.0, 7.0]
+      "精英伤害": [3.8, 3.8]
+  hunt_012:
+    name: "追猎12式"
+    description: "房间通关后回复生命"
+    rarity: RARE
+    icon: BLAZE_POWDER
+    max-level: 3
+    tags: ["狩猎"]
+    effects:
+      effect_12:
+        type: ROOM_HEAL
+        value-per-level: 13.8
+        threshold: 45.0
+        tag: "狩猎"
+        per-tag: 0.8
+  hunt_013:
+    name: "追猎13式"
+    description: "狩猎构筑属性成长"
+    rarity: RARE
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "暴击伤害": [7.9, 7.9]
+      "破甲": [4.3, 4.3]
+  hunt_014:
+    name: "追猎14式"
+    description: "狩猎构筑属性成长"
+    rarity: RARE
+    icon: PACKED_ICE
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "精英伤害": [8.3, 8.3]
+      "物理攻击": [4.5, 4.5]
+  hunt_015:
+    name: "追猎15式"
+    description: "狩猎构筑属性成长"
+    rarity: RARE
+    icon: CRYING_OBSIDIAN
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "首领伤害": [8.8, 8.8]
+      "暴击几率": [4.8, 4.8]
+  hunt_016:
+    name: "追猎16式"
+    description: "低血目标处决追加伤害"
+    rarity: RARE
+    icon: BEACON
+    max-level: 4
+    tags: ["狩猎"]
+    effects:
+      effect_16:
+        type: EXECUTE
+        value-per-level: 17.4
+        threshold: 40.0
+        tag: "狩猎"
+        per-tag: 2.2
+  hunt_017:
+    name: "追猎17式"
+    description: "狩猎构筑属性成长"
+    rarity: RARE
+    icon: NETHER_STAR
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "物理攻击": [9.7, 9.7]
+      "移动速度": [5.3, 5.3]
+  hunt_018:
+    name: "追猎18式"
+    description: "狩猎构筑属性成长"
+    rarity: EPIC
+    icon: TOTEM_OF_UNDYING
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "暴击几率": [10.1, 10.1]
+      "暴击伤害": [5.5, 5.5]
+  hunt_019:
+    name: "追猎19式"
+    description: "狩猎构筑属性成长"
+    rarity: EPIC
+    icon: ECHO_SHARD
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "攻击速度": [10.6, 10.6]
+      "精英伤害": [5.8, 5.8]
+  hunt_020:
+    name: "追猎20式"
+    description: "击杀后回复生命"
+    rarity: EPIC
+    icon: IRON_SWORD
+    max-level: 3
+    tags: ["狩猎", "壁垒"]
+    effects:
+      effect_20:
+        type: KILL_HEAL
+        value-per-level: 21.0
+        threshold: 35.0
+        tag: "狩猎"
+        per-tag: 1.5
+  hunt_021:
+    name: "追猎21式"
+    description: "狩猎构筑属性成长"
+    rarity: EPIC
+    icon: DIAMOND_SWORD
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "暴击伤害": [11.5, 11.5]
+      "破甲": [6.3, 6.3]
+  hunt_022:
+    name: "追猎22式"
+    description: "狩猎构筑属性成长"
+    rarity: EPIC
+    icon: FEATHER
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "精英伤害": [11.9, 11.9]
+      "物理攻击": [6.5, 6.5]
+  hunt_023:
+    name: "追猎23式"
+    description: "狩猎构筑属性成长"
+    rarity: EPIC
+    icon: SPIDER_EYE
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "首领伤害": [12.3, 12.3]
+      "暴击几率": [6.8, 6.8]
+  hunt_024:
+    name: "追猎24式"
+    description: "受击后反击敌人"
+    rarity: LEGENDARY
+    icon: GOLDEN_APPLE
+    max-level: 5
+    tags: ["狩猎"]
+    effects:
+      effect_24:
+        type: RETALIATE
+        value-per-level: 24.6
+        threshold: 55.0
+        tag: "狩猎"
+        per-tag: 0.8
+  hunt_025:
+    name: "追猎25式"
+    description: "狩猎构筑属性成长"
+    rarity: LEGENDARY
+    icon: IRON_CHESTPLATE
+    max-level: 4
+    tags: ["狩猎"]
+    attributes:
+      "物理攻击": [13.3, 13.3]
+      "移动速度": [7.3, 7.3]
+  # ===== 壁垒系 =====
+  bulwark_001:
+    name: "壁垒01式"
+    description: "壁垒构筑属性成长"
     rarity: COMMON
     icon: GOLDEN_APPLE
     max-level: 3
     tags: ["壁垒"]
     attributes:
-      "生命上限": [20.0, 20.0]
-
-  def_boost:
-    name: "铁壁"
-    description: "物理防御 +{value}"
-    rarity: RARE
+      "生命上限": [3.0, 3.0]
+      "反伤比例": [1.3, 1.3]
+  bulwark_002:
+    name: "壁垒02式"
+    description: "壁垒构筑属性成长"
+    rarity: COMMON
     icon: IRON_CHESTPLATE
     max-level: 3
     tags: ["壁垒"]
     attributes:
-      "物理防御": [5.0, 5.0]
-
-  dodge_boost:
-    name: "幻影"
-    description: "闪避几率 +{value}%"
+      "物理防御": [3.4, 3.4]
+      "护盾强度": [1.5, 1.5]
+  bulwark_003:
+    name: "壁垒03式"
+    description: "壁垒构筑属性成长"
+    rarity: COMMON
+    icon: ENDER_PEARL
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "减伤比例": [3.9, 3.9]
+      "生命恢复": [1.8, 1.8]
+  bulwark_004:
+    name: "壁垒04式"
+    description: "受击后反击敌人"
+    rarity: COMMON
+    icon: REDSTONE
+    max-level: 3
+    tags: ["壁垒"]
+    effects:
+      effect_04:
+        type: RETALIATE
+        value-per-level: 7.0
+        threshold: 55.0
+        tag: "壁垒"
+        per-tag: 2.2
+  bulwark_005:
+    name: "壁垒05式"
+    description: "壁垒构筑属性成长"
+    rarity: COMMON
+    icon: SHIELD
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "护盾强度": [4.8, 4.8]
+      "闪避几率": [2.3, 2.3]
+  bulwark_006:
+    name: "壁垒06式"
+    description: "壁垒构筑属性成长"
+    rarity: COMMON
+    icon: GHAST_TEAR
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "生命恢复": [5.2, 5.2]
+      "生命上限": [2.5, 2.5]
+  bulwark_007:
+    name: "壁垒07式"
+    description: "壁垒构筑属性成长"
+    rarity: COMMON
+    icon: RABBIT_FOOT
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "治疗加成": [5.7, 5.7]
+      "物理防御": [2.8, 2.8]
+  bulwark_008:
+    name: "壁垒08式"
+    description: "房间通关后回复生命"
+    rarity: COMMON
+    icon: FIRE_CHARGE
+    max-level: 4
+    tags: ["壁垒"]
+    effects:
+      effect_08:
+        type: ROOM_HEAL
+        value-per-level: 10.6
+        threshold: 50.0
+        tag: "壁垒"
+        per-tag: 1.5
+  bulwark_009:
+    name: "壁垒09式"
+    description: "壁垒构筑属性成长"
+    rarity: COMMON
+    icon: BLAZE_POWDER
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "生命上限": [6.5, 6.5]
+      "反伤比例": [3.3, 3.3]
+  bulwark_010:
+    name: "壁垒10式"
+    description: "壁垒构筑属性成长"
+    rarity: RARE
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["壁垒", "鲜血"]
+    attributes:
+      "物理防御": [7.0, 7.0]
+      "护盾强度": [3.5, 3.5]
+  bulwark_011:
+    name: "壁垒11式"
+    description: "壁垒构筑属性成长"
+    rarity: RARE
+    icon: PACKED_ICE
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "减伤比例": [7.5, 7.5]
+      "生命恢复": [3.8, 3.8]
+  bulwark_012:
+    name: "壁垒12式"
+    description: "低血目标处决追加伤害"
+    rarity: RARE
+    icon: CRYING_OBSIDIAN
+    max-level: 3
+    tags: ["壁垒"]
+    effects:
+      effect_12:
+        type: EXECUTE
+        value-per-level: 14.2
+        threshold: 45.0
+        tag: "壁垒"
+        per-tag: 0.8
+  bulwark_013:
+    name: "壁垒13式"
+    description: "壁垒构筑属性成长"
+    rarity: RARE
+    icon: BEACON
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "护盾强度": [8.4, 8.4]
+      "闪避几率": [4.3, 4.3]
+  bulwark_014:
+    name: "壁垒14式"
+    description: "壁垒构筑属性成长"
+    rarity: RARE
+    icon: NETHER_STAR
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "生命恢复": [8.8, 8.8]
+      "生命上限": [4.5, 4.5]
+  bulwark_015:
+    name: "壁垒15式"
+    description: "壁垒构筑属性成长"
+    rarity: RARE
+    icon: TOTEM_OF_UNDYING
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "治疗加成": [9.3, 9.3]
+      "物理防御": [4.8, 4.8]
+  bulwark_016:
+    name: "壁垒16式"
+    description: "击杀后回复生命"
+    rarity: RARE
+    icon: ECHO_SHARD
+    max-level: 4
+    tags: ["壁垒"]
+    effects:
+      effect_16:
+        type: KILL_HEAL
+        value-per-level: 17.8
+        threshold: 40.0
+        tag: "壁垒"
+        per-tag: 2.2
+  bulwark_017:
+    name: "壁垒17式"
+    description: "壁垒构筑属性成长"
+    rarity: RARE
+    icon: IRON_SWORD
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "生命上限": [10.2, 10.2]
+      "反伤比例": [5.3, 5.3]
+  bulwark_018:
+    name: "壁垒18式"
+    description: "壁垒构筑属性成长"
+    rarity: EPIC
+    icon: DIAMOND_SWORD
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "物理防御": [10.6, 10.6]
+      "护盾强度": [5.5, 5.5]
+  bulwark_019:
+    name: "壁垒19式"
+    description: "壁垒构筑属性成长"
+    rarity: EPIC
+    icon: FEATHER
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "减伤比例": [11.1, 11.1]
+      "生命恢复": [5.8, 5.8]
+  bulwark_020:
+    name: "壁垒20式"
+    description: "受击后反击敌人"
+    rarity: EPIC
+    icon: SPIDER_EYE
+    max-level: 3
+    tags: ["壁垒", "鲜血"]
+    effects:
+      effect_20:
+        type: RETALIATE
+        value-per-level: 21.4
+        threshold: 35.0
+        tag: "壁垒"
+        per-tag: 1.5
+  bulwark_021:
+    name: "壁垒21式"
+    description: "壁垒构筑属性成长"
+    rarity: EPIC
+    icon: GOLDEN_APPLE
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "护盾强度": [12.0, 12.0]
+      "闪避几率": [6.3, 6.3]
+  bulwark_022:
+    name: "壁垒22式"
+    description: "壁垒构筑属性成长"
+    rarity: EPIC
+    icon: IRON_CHESTPLATE
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "生命恢复": [12.4, 12.4]
+      "生命上限": [6.5, 6.5]
+  bulwark_023:
+    name: "壁垒23式"
+    description: "壁垒构筑属性成长"
     rarity: EPIC
     icon: ENDER_PEARL
     max-level: 3
-    tags: ["狩猎"]
+    tags: ["壁垒"]
     attributes:
-      "闪避几率": [3.0, 3.0]
-
-  # ===== 特殊型 =====
-  lifesteal:
-    name: "嗜血"
-    description: "生命偷取 +{value}%"
+      "治疗加成": [12.8, 12.8]
+      "物理防御": [6.8, 6.8]
+  bulwark_024:
+    name: "壁垒24式"
+    description: "房间通关后回复生命"
+    rarity: LEGENDARY
+    icon: REDSTONE
+    max-level: 5
+    tags: ["壁垒"]
+    effects:
+      effect_24:
+        type: ROOM_HEAL
+        value-per-level: 25.0
+        threshold: 55.0
+        tag: "壁垒"
+        per-tag: 0.8
+  bulwark_025:
+    name: "壁垒25式"
+    description: "壁垒构筑属性成长"
+    rarity: LEGENDARY
+    icon: SHIELD
+    max-level: 4
+    tags: ["壁垒"]
+    attributes:
+      "生命上限": [13.8, 13.8]
+      "反伤比例": [7.3, 7.3]
+  # ===== 鲜血系 =====
+  blood_001:
+    name: "鲜血01式"
+    description: "鲜血构筑属性成长"
+    rarity: COMMON
+    icon: REDSTONE
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "生命偷取": [3.5, 3.5]
+      "生命恢复": [1.3, 1.3]
+  blood_002:
+    name: "鲜血02式"
+    description: "鲜血构筑属性成长"
+    rarity: COMMON
+    icon: SHIELD
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "物理攻击": [3.9, 3.9]
+      "深渊伤害": [1.5, 1.5]
+  blood_003:
+    name: "鲜血03式"
+    description: "鲜血构筑属性成长"
+    rarity: COMMON
+    icon: GHAST_TEAR
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "暴击伤害": [4.3, 4.3]
+      "治疗加成": [1.8, 1.8]
+  blood_004:
+    name: "鲜血04式"
+    description: "房间通关后回复生命"
+    rarity: COMMON
+    icon: RABBIT_FOOT
+    max-level: 3
+    tags: ["鲜血"]
+    effects:
+      effect_04:
+        type: ROOM_HEAL
+        value-per-level: 7.4
+        threshold: 55.0
+        tag: "鲜血"
+        per-tag: 2.2
+  blood_005:
+    name: "鲜血05式"
+    description: "鲜血构筑属性成长"
+    rarity: COMMON
+    icon: FIRE_CHARGE
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "深渊伤害": [5.3, 5.3]
+      "破甲": [2.3, 2.3]
+  blood_006:
+    name: "鲜血06式"
+    description: "鲜血构筑属性成长"
+    rarity: COMMON
+    icon: BLAZE_POWDER
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "治疗加成": [5.7, 5.7]
+      "生命偷取": [2.5, 2.5]
+  blood_007:
+    name: "鲜血07式"
+    description: "鲜血构筑属性成长"
+    rarity: COMMON
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "首领伤害": [6.2, 6.2]
+      "物理攻击": [2.8, 2.8]
+  blood_008:
+    name: "鲜血08式"
+    description: "低血目标处决追加伤害"
+    rarity: COMMON
+    icon: PACKED_ICE
+    max-level: 4
+    tags: ["鲜血"]
+    effects:
+      effect_08:
+        type: EXECUTE
+        value-per-level: 11.0
+        threshold: 50.0
+        tag: "鲜血"
+        per-tag: 1.5
+  blood_009:
+    name: "鲜血09式"
+    description: "鲜血构筑属性成长"
+    rarity: COMMON
+    icon: CRYING_OBSIDIAN
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "生命偷取": [7.0, 7.0]
+      "生命恢复": [3.3, 3.3]
+  blood_010:
+    name: "鲜血10式"
+    description: "鲜血构筑属性成长"
+    rarity: RARE
+    icon: BEACON
+    max-level: 3
+    tags: ["鲜血", "雷霆"]
+    attributes:
+      "物理攻击": [7.5, 7.5]
+      "深渊伤害": [3.5, 3.5]
+  blood_011:
+    name: "鲜血11式"
+    description: "鲜血构筑属性成长"
+    rarity: RARE
+    icon: NETHER_STAR
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "暴击伤害": [8.0, 8.0]
+      "治疗加成": [3.8, 3.8]
+  blood_012:
+    name: "鲜血12式"
+    description: "击杀后回复生命"
+    rarity: RARE
+    icon: TOTEM_OF_UNDYING
+    max-level: 3
+    tags: ["鲜血"]
+    effects:
+      effect_12:
+        type: KILL_HEAL
+        value-per-level: 14.6
+        threshold: 45.0
+        tag: "鲜血"
+        per-tag: 0.8
+  blood_013:
+    name: "鲜血13式"
+    description: "鲜血构筑属性成长"
+    rarity: RARE
+    icon: ECHO_SHARD
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "深渊伤害": [8.9, 8.9]
+      "破甲": [4.3, 4.3]
+  blood_014:
+    name: "鲜血14式"
+    description: "鲜血构筑属性成长"
+    rarity: RARE
+    icon: IRON_SWORD
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "治疗加成": [9.3, 9.3]
+      "生命偷取": [4.5, 4.5]
+  blood_015:
+    name: "鲜血15式"
+    description: "鲜血构筑属性成长"
+    rarity: RARE
+    icon: DIAMOND_SWORD
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "首领伤害": [9.8, 9.8]
+      "物理攻击": [4.8, 4.8]
+  blood_016:
+    name: "鲜血16式"
+    description: "受击后反击敌人"
+    rarity: RARE
+    icon: FEATHER
+    max-level: 4
+    tags: ["鲜血"]
+    effects:
+      effect_16:
+        type: RETALIATE
+        value-per-level: 18.2
+        threshold: 40.0
+        tag: "鲜血"
+        per-tag: 2.2
+  blood_017:
+    name: "鲜血17式"
+    description: "鲜血构筑属性成长"
+    rarity: RARE
+    icon: SPIDER_EYE
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "生命偷取": [10.7, 10.7]
+      "生命恢复": [5.3, 5.3]
+  blood_018:
+    name: "鲜血18式"
+    description: "鲜血构筑属性成长"
+    rarity: EPIC
+    icon: GOLDEN_APPLE
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "物理攻击": [11.1, 11.1]
+      "深渊伤害": [5.5, 5.5]
+  blood_019:
+    name: "鲜血19式"
+    description: "鲜血构筑属性成长"
+    rarity: EPIC
+    icon: IRON_CHESTPLATE
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "暴击伤害": [11.6, 11.6]
+      "治疗加成": [5.8, 5.8]
+  blood_020:
+    name: "鲜血20式"
+    description: "房间通关后回复生命"
+    rarity: EPIC
+    icon: ENDER_PEARL
+    max-level: 3
+    tags: ["鲜血", "雷霆"]
+    effects:
+      effect_20:
+        type: ROOM_HEAL
+        value-per-level: 21.8
+        threshold: 35.0
+        tag: "鲜血"
+        per-tag: 1.5
+  blood_021:
+    name: "鲜血21式"
+    description: "鲜血构筑属性成长"
     rarity: EPIC
     icon: REDSTONE
     max-level: 3
     tags: ["鲜血"]
     attributes:
-      "生命偷取": [3.0, 3.0]
-
-  thorns:
-    name: "荆棘"
-    description: "反伤比例 +{value}%"
-    rarity: LEGENDARY
-    icon: CACTUS
-    max-level: 3
-    tags: ["壁垒"]
-    attributes:
-      "反伤比例": [5.0, 5.0]
-
-  execution_mark:
-    name: "处决印记"
-    description: "狩猎系终结手段"
-    rarity: RARE
-    icon: FLINT
-    max-level: 3
-    tags: ["狩猎"]
-    effects:
-      execute:
-        type: EXECUTE
-        value-per-level: 25.0
-        threshold: 35.0
-        tag: "狩猎"
-        per-tag: 6.0
-
-  blood_festival:
-    name: "猩红盛宴"
-    description: "鲜血系续航核心"
-    rarity: EPIC
-    icon: RED_DYE
-    max-level: 3
-    tags: ["鲜血"]
-    effects:
-      kill_heal:
-        type: KILL_HEAL
-        value-per-level: 2.0
-        tag: "鲜血"
-        per-tag: 1.0
-
-  barbed_carapace:
-    name: "尖刺甲壳"
-    description: "壁垒系反击核心"
+      "深渊伤害": [12.5, 12.5]
+      "破甲": [6.3, 6.3]
+  blood_022:
+    name: "鲜血22式"
+    description: "鲜血构筑属性成长"
     rarity: EPIC
     icon: SHIELD
     max-level: 3
-    tags: ["壁垒"]
+    tags: ["鲜血"]
+    attributes:
+      "治疗加成": [12.9, 12.9]
+      "生命偷取": [6.5, 6.5]
+  blood_023:
+    name: "鲜血23式"
+    description: "鲜血构筑属性成长"
+    rarity: EPIC
+    icon: GHAST_TEAR
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "首领伤害": [13.3, 13.3]
+      "物理攻击": [6.8, 6.8]
+  blood_024:
+    name: "鲜血24式"
+    description: "低血目标处决追加伤害"
+    rarity: LEGENDARY
+    icon: RABBIT_FOOT
+    max-level: 5
+    tags: ["鲜血"]
     effects:
-      retaliate:
+      effect_24:
+        type: EXECUTE
+        value-per-level: 25.4
+        threshold: 55.0
+        tag: "鲜血"
+        per-tag: 0.8
+  blood_025:
+    name: "鲜血25式"
+    description: "鲜血构筑属性成长"
+    rarity: LEGENDARY
+    icon: FIRE_CHARGE
+    max-level: 4
+    tags: ["鲜血"]
+    attributes:
+      "生命偷取": [14.3, 14.3]
+      "生命恢复": [7.3, 7.3]
+  # ===== 雷霆系 =====
+  thunder_001:
+    name: "雷霆01式"
+    description: "雷霆构筑属性成长"
+    rarity: COMMON
+    icon: RABBIT_FOOT
+    max-level: 3
+    tags: ["雷霆"]
+    attributes:
+      "雷霆伤害": [4.0, 4.0]
+      "暴击几率": [1.3, 1.3]
+  thunder_002:
+    name: "雷霆02式"
+    description: "雷霆构筑属性成长"
+    rarity: COMMON
+    icon: FIRE_CHARGE
+    max-level: 3
+    tags: ["雷霆"]
+    attributes:
+      "攻击速度": [4.4, 4.4]
+      "暴击伤害": [1.5, 1.5]
+  thunder_003:
+    name: "雷霆03式"
+    description: "雷霆构筑属性成长"
+    rarity: COMMON
+    icon: BLAZE_POWDER
+    max-level: 3
+    tags: ["雷霆"]
+    attributes:
+      "移动速度": [4.8, 4.8]
+      "冷却缩减": [1.8, 1.8]
+  thunder_004:
+    name: "雷霆04式"
+    description: "低血目标处决追加伤害"
+    rarity: COMMON
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["雷霆"]
+    effects:
+      effect_04:
+        type: EXECUTE
+        value-per-level: 7.8
+        threshold: 55.0
+        tag: "雷霆"
+        per-tag: 2.2
+  thunder_005:
+    name: "雷霆05式"
+    description: "雷霆构筑属性成长"
+    rarity: COMMON
+    icon: PACKED_ICE
+    max-level: 3
+    tags: ["雷霆"]
+    attributes:
+      "暴击伤害": [5.8, 5.8]
+      "破甲": [2.3, 2.3]
+  thunder_006:
+    name: "雷霆06式"
+    description: "雷霆构筑属性成长"
+    rarity: COMMON
+    icon: CRYING_OBSIDIAN
+    max-level: 3
+    tags: ["雷霆"]
+    attributes:
+      "冷却缩减": [6.2, 6.2]
+      "雷霆伤害": [2.5, 2.5]
+  thunder_007:
+    name: "雷霆07式"
+    description: "雷霆构筑属性成长"
+    rarity: COMMON
+    icon: BEACON
+    max-level: 3
+    tags: ["雷霆"]
+    attributes:
+      "技能伤害": [6.7, 6.7]
+      "攻击速度": [2.8, 2.8]
+  thunder_008:
+    name: "雷霆08式"
+    description: "击杀后回复生命"
+    rarity: COMMON
+    icon: NETHER_STAR
+    max-level: 4
+    tags: ["雷霆"]
+    effects:
+      effect_08:
+        type: KILL_HEAL
+        value-per-level: 11.4
+        threshold: 50.0
+        tag: "雷霆"
+        per-tag: 1.5
+  thunder_009:
+    name: "雷霆09式"
+    description: "雷霆构筑属性成长"
+    rarity: COMMON
+    icon: TOTEM_OF_UNDYING
+    max-level: 3
+    tags: ["雷霆"]
+    attributes:
+      "雷霆伤害": [7.5, 7.5]
+      "暴击几率": [3.3, 3.3]
+  thunder_010:
+    name: "雷霆10式"
+    description: "雷霆构筑属性成长"
+    rarity: RARE
+    icon: ECHO_SHARD
+    max-level: 3
+    tags: ["雷霆", "秘术"]
+    attributes:
+      "攻击速度": [8.0, 8.0]
+      "暴击伤害": [3.5, 3.5]
+  thunder_011:
+    name: "雷霆11式"
+    description: "雷霆构筑属性成长"
+    rarity: RARE
+    icon: IRON_SWORD
+    max-level: 3
+    tags: ["雷霆"]
+    attributes:
+      "移动速度": [8.4, 8.4]
+      "冷却缩减": [3.8, 3.8]
+  thunder_012:
+    name: "雷霆12式"
+    description: "受击后反击敌人"
+    rarity: RARE
+    icon: DIAMOND_SWORD
+    max-level: 3
+    tags: ["雷霆"]
+    effects:
+      effect_12:
         type: RETALIATE
-        value-per-level: 2.5
-        tag: "壁垒"
-        per-tag: 1.0
-
-  sanctuary:
-    name: "静谧圣所"
-    description: "战后恢复并稳固推进"
+        value-per-level: 15.0
+        threshold: 45.0
+        tag: "雷霆"
+        per-tag: 0.8
+  thunder_013:
+    name: "雷霆13式"
+    description: "雷霆构筑属性成长"
+    rarity: RARE
+    icon: FEATHER
+    max-level: 3
+    tags: ["雷霆"]
+    attributes:
+      "暴击伤害": [9.4, 9.4]
+      "破甲": [4.3, 4.3]
+  thunder_014:
+    name: "雷霆14式"
+    description: "雷霆构筑属性成长"
+    rarity: RARE
+    icon: SPIDER_EYE
+    max-level: 3
+    tags: ["雷霆"]
+    attributes:
+      "冷却缩减": [9.8, 9.8]
+      "雷霆伤害": [4.5, 4.5]
+  thunder_015:
+    name: "雷霆15式"
+    description: "雷霆构筑属性成长"
+    rarity: RARE
+    icon: GOLDEN_APPLE
+    max-level: 3
+    tags: ["雷霆"]
+    attributes:
+      "技能伤害": [10.3, 10.3]
+      "攻击速度": [4.8, 4.8]
+  thunder_016:
+    name: "雷霆16式"
+    description: "房间通关后回复生命"
+    rarity: RARE
+    icon: IRON_CHESTPLATE
+    max-level: 4
+    tags: ["雷霆"]
+    effects:
+      effect_16:
+        type: ROOM_HEAL
+        value-per-level: 18.6
+        threshold: 40.0
+        tag: "雷霆"
+        per-tag: 2.2
+  thunder_017:
+    name: "雷霆17式"
+    description: "雷霆构筑属性成长"
+    rarity: RARE
+    icon: ENDER_PEARL
+    max-level: 3
+    tags: ["雷霆"]
+    attributes:
+      "雷霆伤害": [11.2, 11.2]
+      "暴击几率": [5.3, 5.3]
+  thunder_018:
+    name: "雷霆18式"
+    description: "雷霆构筑属性成长"
+    rarity: EPIC
+    icon: REDSTONE
+    max-level: 3
+    tags: ["雷霆"]
+    attributes:
+      "攻击速度": [11.6, 11.6]
+      "暴击伤害": [5.5, 5.5]
+  thunder_019:
+    name: "雷霆19式"
+    description: "雷霆构筑属性成长"
+    rarity: EPIC
+    icon: SHIELD
+    max-level: 3
+    tags: ["雷霆"]
+    attributes:
+      "移动速度": [12.1, 12.1]
+      "冷却缩减": [5.8, 5.8]
+  thunder_020:
+    name: "雷霆20式"
+    description: "低血目标处决追加伤害"
+    rarity: EPIC
+    icon: GHAST_TEAR
+    max-level: 3
+    tags: ["雷霆", "秘术"]
+    effects:
+      effect_20:
+        type: EXECUTE
+        value-per-level: 22.2
+        threshold: 35.0
+        tag: "雷霆"
+        per-tag: 1.5
+  thunder_021:
+    name: "雷霆21式"
+    description: "雷霆构筑属性成长"
+    rarity: EPIC
+    icon: RABBIT_FOOT
+    max-level: 3
+    tags: ["雷霆"]
+    attributes:
+      "暴击伤害": [13.0, 13.0]
+      "破甲": [6.3, 6.3]
+  thunder_022:
+    name: "雷霆22式"
+    description: "雷霆构筑属性成长"
+    rarity: EPIC
+    icon: FIRE_CHARGE
+    max-level: 3
+    tags: ["雷霆"]
+    attributes:
+      "冷却缩减": [13.4, 13.4]
+      "雷霆伤害": [6.5, 6.5]
+  thunder_023:
+    name: "雷霆23式"
+    description: "雷霆构筑属性成长"
+    rarity: EPIC
+    icon: BLAZE_POWDER
+    max-level: 3
+    tags: ["雷霆"]
+    attributes:
+      "技能伤害": [13.8, 13.8]
+      "攻击速度": [6.8, 6.8]
+  thunder_024:
+    name: "雷霆24式"
+    description: "击杀后回复生命"
+    rarity: LEGENDARY
+    icon: AMETHYST_SHARD
+    max-level: 5
+    tags: ["雷霆"]
+    effects:
+      effect_24:
+        type: KILL_HEAL
+        value-per-level: 25.8
+        threshold: 55.0
+        tag: "雷霆"
+        per-tag: 0.8
+  thunder_025:
+    name: "雷霆25式"
+    description: "雷霆构筑属性成长"
+    rarity: LEGENDARY
+    icon: PACKED_ICE
+    max-level: 4
+    tags: ["雷霆"]
+    attributes:
+      "雷霆伤害": [14.8, 14.8]
+      "暴击几率": [7.3, 7.3]
+  # ===== 秘术系 =====
+  arcane_001:
+    name: "秘术01式"
+    description: "秘术构筑属性成长"
+    rarity: COMMON
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["秘术"]
+    attributes:
+      "技能伤害": [4.5, 4.5]
+      "幸运": [1.3, 1.3]
+  arcane_002:
+    name: "秘术02式"
+    description: "秘术构筑属性成长"
+    rarity: COMMON
+    icon: PACKED_ICE
+    max-level: 3
+    tags: ["秘术"]
+    attributes:
+      "元素伤害": [4.9, 4.9]
+      "暴击几率": [1.5, 1.5]
+  arcane_003:
+    name: "秘术03式"
+    description: "秘术构筑属性成长"
+    rarity: COMMON
+    icon: CRYING_OBSIDIAN
+    max-level: 3
+    tags: ["秘术"]
+    attributes:
+      "冷却缩减": [5.3, 5.3]
+      "暴击伤害": [1.8, 1.8]
+  arcane_004:
+    name: "秘术04式"
+    description: "击杀后回复生命"
+    rarity: COMMON
+    icon: BEACON
+    max-level: 3
+    tags: ["秘术"]
+    effects:
+      effect_04:
+        type: KILL_HEAL
+        value-per-level: 8.2
+        threshold: 55.0
+        tag: "秘术"
+        per-tag: 2.2
+  arcane_005:
+    name: "秘术05式"
+    description: "秘术构筑属性成长"
+    rarity: COMMON
+    icon: NETHER_STAR
+    max-level: 3
+    tags: ["秘术"]
+    attributes:
+      "暴击几率": [6.3, 6.3]
+      "治疗加成": [2.3, 2.3]
+  arcane_006:
+    name: "秘术06式"
+    description: "秘术构筑属性成长"
+    rarity: COMMON
+    icon: TOTEM_OF_UNDYING
+    max-level: 3
+    tags: ["秘术"]
+    attributes:
+      "暴击伤害": [6.7, 6.7]
+      "技能伤害": [2.5, 2.5]
+  arcane_007:
+    name: "秘术07式"
+    description: "秘术构筑属性成长"
+    rarity: COMMON
+    icon: ECHO_SHARD
+    max-level: 3
+    tags: ["秘术"]
+    attributes:
+      "物理攻击": [7.2, 7.2]
+      "元素伤害": [2.8, 2.8]
+  arcane_008:
+    name: "秘术08式"
+    description: "受击后反击敌人"
+    rarity: COMMON
+    icon: IRON_SWORD
+    max-level: 4
+    tags: ["秘术"]
+    effects:
+      effect_08:
+        type: RETALIATE
+        value-per-level: 11.8
+        threshold: 50.0
+        tag: "秘术"
+        per-tag: 1.5
+  arcane_009:
+    name: "秘术09式"
+    description: "秘术构筑属性成长"
+    rarity: COMMON
+    icon: DIAMOND_SWORD
+    max-level: 3
+    tags: ["秘术"]
+    attributes:
+      "技能伤害": [8.1, 8.1]
+      "幸运": [3.3, 3.3]
+  arcane_010:
+    name: "秘术10式"
+    description: "秘术构筑属性成长"
+    rarity: RARE
+    icon: FEATHER
+    max-level: 3
+    tags: ["秘术", "霜寒"]
+    attributes:
+      "元素伤害": [8.5, 8.5]
+      "暴击几率": [3.5, 3.5]
+  arcane_011:
+    name: "秘术11式"
+    description: "秘术构筑属性成长"
+    rarity: RARE
+    icon: SPIDER_EYE
+    max-level: 3
+    tags: ["秘术"]
+    attributes:
+      "冷却缩减": [8.9, 8.9]
+      "暴击伤害": [3.8, 3.8]
+  arcane_012:
+    name: "秘术12式"
+    description: "房间通关后回复生命"
+    rarity: RARE
+    icon: GOLDEN_APPLE
+    max-level: 3
+    tags: ["秘术"]
+    effects:
+      effect_12:
+        type: ROOM_HEAL
+        value-per-level: 15.4
+        threshold: 45.0
+        tag: "秘术"
+        per-tag: 0.8
+  arcane_013:
+    name: "秘术13式"
+    description: "秘术构筑属性成长"
+    rarity: RARE
+    icon: IRON_CHESTPLATE
+    max-level: 3
+    tags: ["秘术"]
+    attributes:
+      "暴击几率": [9.9, 9.9]
+      "治疗加成": [4.3, 4.3]
+  arcane_014:
+    name: "秘术14式"
+    description: "秘术构筑属性成长"
+    rarity: RARE
+    icon: ENDER_PEARL
+    max-level: 3
+    tags: ["秘术"]
+    attributes:
+      "暴击伤害": [10.3, 10.3]
+      "技能伤害": [4.5, 4.5]
+  arcane_015:
+    name: "秘术15式"
+    description: "秘术构筑属性成长"
+    rarity: RARE
+    icon: REDSTONE
+    max-level: 3
+    tags: ["秘术"]
+    attributes:
+      "物理攻击": [10.8, 10.8]
+      "元素伤害": [4.8, 4.8]
+  arcane_016:
+    name: "秘术16式"
+    description: "低血目标处决追加伤害"
+    rarity: RARE
+    icon: SHIELD
+    max-level: 4
+    tags: ["秘术"]
+    effects:
+      effect_16:
+        type: EXECUTE
+        value-per-level: 19.0
+        threshold: 40.0
+        tag: "秘术"
+        per-tag: 2.2
+  arcane_017:
+    name: "秘术17式"
+    description: "秘术构筑属性成长"
     rarity: RARE
     icon: GHAST_TEAR
     max-level: 3
-    tags: ["壁垒"]
+    tags: ["秘术"]
+    attributes:
+      "技能伤害": [11.7, 11.7]
+      "幸运": [5.3, 5.3]
+  arcane_018:
+    name: "秘术18式"
+    description: "秘术构筑属性成长"
+    rarity: EPIC
+    icon: RABBIT_FOOT
+    max-level: 3
+    tags: ["秘术"]
+    attributes:
+      "元素伤害": [12.1, 12.1]
+      "暴击几率": [5.5, 5.5]
+  arcane_019:
+    name: "秘术19式"
+    description: "秘术构筑属性成长"
+    rarity: EPIC
+    icon: FIRE_CHARGE
+    max-level: 3
+    tags: ["秘术"]
+    attributes:
+      "冷却缩减": [12.6, 12.6]
+      "暴击伤害": [5.8, 5.8]
+  arcane_020:
+    name: "秘术20式"
+    description: "击杀后回复生命"
+    rarity: EPIC
+    icon: BLAZE_POWDER
+    max-level: 3
+    tags: ["秘术", "霜寒"]
     effects:
-      room_heal:
+      effect_20:
+        type: KILL_HEAL
+        value-per-level: 22.6
+        threshold: 35.0
+        tag: "秘术"
+        per-tag: 1.5
+  arcane_021:
+    name: "秘术21式"
+    description: "秘术构筑属性成长"
+    rarity: EPIC
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["秘术"]
+    attributes:
+      "暴击几率": [13.5, 13.5]
+      "治疗加成": [6.3, 6.3]
+  arcane_022:
+    name: "秘术22式"
+    description: "秘术构筑属性成长"
+    rarity: EPIC
+    icon: PACKED_ICE
+    max-level: 3
+    tags: ["秘术"]
+    attributes:
+      "暴击伤害": [13.9, 13.9]
+      "技能伤害": [6.5, 6.5]
+  arcane_023:
+    name: "秘术23式"
+    description: "秘术构筑属性成长"
+    rarity: EPIC
+    icon: CRYING_OBSIDIAN
+    max-level: 3
+    tags: ["秘术"]
+    attributes:
+      "物理攻击": [14.3, 14.3]
+      "元素伤害": [6.8, 6.8]
+  arcane_024:
+    name: "秘术24式"
+    description: "受击后反击敌人"
+    rarity: LEGENDARY
+    icon: BEACON
+    max-level: 5
+    tags: ["秘术"]
+    effects:
+      effect_24:
+        type: RETALIATE
+        value-per-level: 26.2
+        threshold: 55.0
+        tag: "秘术"
+        per-tag: 0.8
+  arcane_025:
+    name: "秘术25式"
+    description: "秘术构筑属性成长"
+    rarity: LEGENDARY
+    icon: NETHER_STAR
+    max-level: 4
+    tags: ["秘术"]
+    attributes:
+      "技能伤害": [15.3, 15.3]
+      "幸运": [7.3, 7.3]
+  # ===== 霜寒系 =====
+  frost_001:
+    name: "霜寒01式"
+    description: "霜寒构筑属性成长"
+    rarity: COMMON
+    icon: BEACON
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "冰霜伤害": [5.0, 5.0]
+      "生命上限": [1.3, 1.3]
+  frost_002:
+    name: "霜寒02式"
+    description: "霜寒构筑属性成长"
+    rarity: COMMON
+    icon: NETHER_STAR
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "物理防御": [5.4, 5.4]
+      "闪避几率": [1.5, 1.5]
+  frost_003:
+    name: "霜寒03式"
+    description: "霜寒构筑属性成长"
+    rarity: COMMON
+    icon: TOTEM_OF_UNDYING
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "减伤比例": [5.8, 5.8]
+      "护盾强度": [1.8, 1.8]
+  frost_004:
+    name: "霜寒04式"
+    description: "受击后反击敌人"
+    rarity: COMMON
+    icon: ECHO_SHARD
+    max-level: 3
+    tags: ["霜寒"]
+    effects:
+      effect_04:
+        type: RETALIATE
+        value-per-level: 8.6
+        threshold: 55.0
+        tag: "霜寒"
+        per-tag: 2.2
+  frost_005:
+    name: "霜寒05式"
+    description: "霜寒构筑属性成长"
+    rarity: COMMON
+    icon: IRON_SWORD
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "闪避几率": [6.8, 6.8]
+      "元素伤害": [2.3, 2.3]
+  frost_006:
+    name: "霜寒06式"
+    description: "霜寒构筑属性成长"
+    rarity: COMMON
+    icon: DIAMOND_SWORD
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "护盾强度": [7.2, 7.2]
+      "冰霜伤害": [2.5, 2.5]
+  frost_007:
+    name: "霜寒07式"
+    description: "霜寒构筑属性成长"
+    rarity: COMMON
+    icon: FEATHER
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "生命恢复": [7.7, 7.7]
+      "物理防御": [2.8, 2.8]
+  frost_008:
+    name: "霜寒08式"
+    description: "房间通关后回复生命"
+    rarity: COMMON
+    icon: SPIDER_EYE
+    max-level: 4
+    tags: ["霜寒"]
+    effects:
+      effect_08:
         type: ROOM_HEAL
-        value-per-level: 6.0
-        tag: "壁垒"
-        per-tag: 2.0
-
-  hunter_momentum:
-    name: "追猎余势"
-    description: "攻击速度 +{value}% 且移动更轻快"
+        value-per-level: 12.2
+        threshold: 50.0
+        tag: "霜寒"
+        per-tag: 1.5
+  frost_009:
+    name: "霜寒09式"
+    description: "霜寒构筑属性成长"
+    rarity: COMMON
+    icon: GOLDEN_APPLE
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "冰霜伤害": [8.6, 8.6]
+      "生命上限": [3.3, 3.3]
+  frost_010:
+    name: "霜寒10式"
+    description: "霜寒构筑属性成长"
+    rarity: RARE
+    icon: IRON_CHESTPLATE
+    max-level: 3
+    tags: ["霜寒", "深渊"]
+    attributes:
+      "物理防御": [9.0, 9.0]
+      "闪避几率": [3.5, 3.5]
+  frost_011:
+    name: "霜寒11式"
+    description: "霜寒构筑属性成长"
+    rarity: RARE
+    icon: ENDER_PEARL
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "减伤比例": [9.4, 9.4]
+      "护盾强度": [3.8, 3.8]
+  frost_012:
+    name: "霜寒12式"
+    description: "低血目标处决追加伤害"
+    rarity: RARE
+    icon: REDSTONE
+    max-level: 3
+    tags: ["霜寒"]
+    effects:
+      effect_12:
+        type: EXECUTE
+        value-per-level: 15.8
+        threshold: 45.0
+        tag: "霜寒"
+        per-tag: 0.8
+  frost_013:
+    name: "霜寒13式"
+    description: "霜寒构筑属性成长"
+    rarity: RARE
+    icon: SHIELD
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "闪避几率": [10.4, 10.4]
+      "元素伤害": [4.3, 4.3]
+  frost_014:
+    name: "霜寒14式"
+    description: "霜寒构筑属性成长"
+    rarity: RARE
+    icon: GHAST_TEAR
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "护盾强度": [10.8, 10.8]
+      "冰霜伤害": [4.5, 4.5]
+  frost_015:
+    name: "霜寒15式"
+    description: "霜寒构筑属性成长"
     rarity: RARE
     icon: RABBIT_FOOT
     max-level: 3
-    tags: ["狩猎"]
+    tags: ["霜寒"]
     attributes:
-      "攻击速度": [4.0, 4.0]
-      "移动速度": [2.0, 2.0]
-
-  exposed_weakness:
-    name: "破绽洞察"
-    description: "狩猎系会更早进入处决窗口"
-    rarity: EPIC
-    icon: FERMENTED_SPIDER_EYE
-    max-level: 3
-    tags: ["狩猎"]
-    effects:
-      execute:
-        type: EXECUTE
-        value-per-level: 18.0
-        threshold: 50.0
-        tag: "狩猎"
-        per-tag: 4.0
-
-  bulwark_march:
-    name: "壁垒行军"
-    description: "生命上限 +{value} 并稳固前线"
+      "生命恢复": [11.3, 11.3]
+      "物理防御": [4.8, 4.8]
+  frost_016:
+    name: "霜寒16式"
+    description: "击杀后回复生命"
     rarity: RARE
-    icon: TURTLE_HELMET
-    max-level: 3
-    tags: ["壁垒"]
-    attributes:
-      "生命上限": [16.0, 16.0]
-      "移动速度": [1.5, 1.5]
-
-  iron_rebuke:
-    name: "铁律回敬"
-    description: "壁垒系每次反击都会更沉重"
-    rarity: RARE
-    icon: IRON_BARS
-    max-level: 3
-    tags: ["壁垒"]
+    icon: FIRE_CHARGE
+    max-level: 4
+    tags: ["霜寒"]
     effects:
-      retaliate:
-        type: RETALIATE
-        value-per-level: 1.5
-        tag: "壁垒"
-        per-tag: 0.8
-
-  crimson_contract:
-    name: "猩红契约"
-    description: "生命偷取 +{value}% 并附带进攻增益"
-    rarity: RARE
-    icon: CRIMSON_FUNGUS
-    max-level: 3
-    tags: ["鲜血"]
-    attributes:
-      "生命偷取": [2.0, 2.0]
-      "物理攻击": [3.0, 3.0]
-
-  feast_of_ruin:
-    name: "破灭宴飨"
-    description: "鲜血系击杀后会掠取更多生命"
-    rarity: LEGENDARY
-    icon: GOLDEN_CARROT
-    max-level: 3
-    tags: ["鲜血"]
-    effects:
-      kill_heal:
+      effect_16:
         type: KILL_HEAL
-        value-per-level: 3.0
-        tag: "鲜血"
+        value-per-level: 19.4
+        threshold: 40.0
+        tag: "霜寒"
+        per-tag: 2.2
+  frost_017:
+    name: "霜寒17式"
+    description: "霜寒构筑属性成长"
+    rarity: RARE
+    icon: BLAZE_POWDER
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "冰霜伤害": [12.2, 12.2]
+      "生命上限": [5.3, 5.3]
+  frost_018:
+    name: "霜寒18式"
+    description: "霜寒构筑属性成长"
+    rarity: EPIC
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "物理防御": [12.6, 12.6]
+      "闪避几率": [5.5, 5.5]
+  frost_019:
+    name: "霜寒19式"
+    description: "霜寒构筑属性成长"
+    rarity: EPIC
+    icon: PACKED_ICE
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "减伤比例": [13.1, 13.1]
+      "护盾强度": [5.8, 5.8]
+  frost_020:
+    name: "霜寒20式"
+    description: "受击后反击敌人"
+    rarity: EPIC
+    icon: CRYING_OBSIDIAN
+    max-level: 3
+    tags: ["霜寒", "深渊"]
+    effects:
+      effect_20:
+        type: RETALIATE
+        value-per-level: 23.0
+        threshold: 35.0
+        tag: "霜寒"
         per-tag: 1.5
+  frost_021:
+    name: "霜寒21式"
+    description: "霜寒构筑属性成长"
+    rarity: EPIC
+    icon: BEACON
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "闪避几率": [14.0, 14.0]
+      "元素伤害": [6.3, 6.3]
+  frost_022:
+    name: "霜寒22式"
+    description: "霜寒构筑属性成长"
+    rarity: EPIC
+    icon: NETHER_STAR
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "护盾强度": [14.4, 14.4]
+      "冰霜伤害": [6.5, 6.5]
+  frost_023:
+    name: "霜寒23式"
+    description: "霜寒构筑属性成长"
+    rarity: EPIC
+    icon: TOTEM_OF_UNDYING
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "生命恢复": [14.8, 14.8]
+      "物理防御": [6.8, 6.8]
+  frost_024:
+    name: "霜寒24式"
+    description: "房间通关后回复生命"
+    rarity: LEGENDARY
+    icon: ECHO_SHARD
+    max-level: 5
+    tags: ["霜寒"]
+    effects:
+      effect_24:
+        type: ROOM_HEAL
+        value-per-level: 26.6
+        threshold: 55.0
+        tag: "霜寒"
+        per-tag: 0.8
+  frost_025:
+    name: "霜寒25式"
+    description: "霜寒构筑属性成长"
+    rarity: LEGENDARY
+    icon: IRON_SWORD
+    max-level: 4
+    tags: ["霜寒"]
+    attributes:
+      "冰霜伤害": [15.8, 15.8]
+      "生命上限": [7.3, 7.3]
+  # ===== 深渊系 =====
+  abyss_001:
+    name: "深渊01式"
+    description: "深渊构筑属性成长"
+    rarity: COMMON
+    icon: ECHO_SHARD
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "深渊伤害": [5.5, 5.5]
+      "暴击伤害": [1.3, 1.3]
+  abyss_002:
+    name: "深渊02式"
+    description: "深渊构筑属性成长"
+    rarity: COMMON
+    icon: IRON_SWORD
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "物理攻击": [5.9, 5.9]
+      "首领伤害": [1.5, 1.5]
+  abyss_003:
+    name: "深渊03式"
+    description: "深渊构筑属性成长"
+    rarity: COMMON
+    icon: DIAMOND_SWORD
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "生命偷取": [6.3, 6.3]
+      "破甲": [1.8, 1.8]
+  abyss_004:
+    name: "深渊04式"
+    description: "房间通关后回复生命"
+    rarity: COMMON
+    icon: FEATHER
+    max-level: 3
+    tags: ["深渊"]
+    effects:
+      effect_04:
+        type: ROOM_HEAL
+        value-per-level: 9.0
+        threshold: 55.0
+        tag: "深渊"
+        per-tag: 2.2
+  abyss_005:
+    name: "深渊05式"
+    description: "深渊构筑属性成长"
+    rarity: COMMON
+    icon: SPIDER_EYE
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "首领伤害": [7.3, 7.3]
+      "移动速度": [2.3, 2.3]
+  abyss_006:
+    name: "深渊06式"
+    description: "深渊构筑属性成长"
+    rarity: COMMON
+    icon: GOLDEN_APPLE
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "破甲": [7.7, 7.7]
+      "深渊伤害": [2.5, 2.5]
+  abyss_007:
+    name: "深渊07式"
+    description: "深渊构筑属性成长"
+    rarity: COMMON
+    icon: IRON_CHESTPLATE
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "技能伤害": [8.2, 8.2]
+      "物理攻击": [2.8, 2.8]
+  abyss_008:
+    name: "深渊08式"
+    description: "低血目标处决追加伤害"
+    rarity: COMMON
+    icon: ENDER_PEARL
+    max-level: 4
+    tags: ["深渊"]
+    effects:
+      effect_08:
+        type: EXECUTE
+        value-per-level: 12.6
+        threshold: 50.0
+        tag: "深渊"
+        per-tag: 1.5
+  abyss_009:
+    name: "深渊09式"
+    description: "深渊构筑属性成长"
+    rarity: COMMON
+    icon: REDSTONE
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "深渊伤害": [9.1, 9.1]
+      "暴击伤害": [3.3, 3.3]
+  abyss_010:
+    name: "深渊10式"
+    description: "深渊构筑属性成长"
+    rarity: RARE
+    icon: SHIELD
+    max-level: 3
+    tags: ["深渊", "圣辉"]
+    attributes:
+      "物理攻击": [9.5, 9.5]
+      "首领伤害": [3.5, 3.5]
+  abyss_011:
+    name: "深渊11式"
+    description: "深渊构筑属性成长"
+    rarity: RARE
+    icon: GHAST_TEAR
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "生命偷取": [9.9, 9.9]
+      "破甲": [3.8, 3.8]
+  abyss_012:
+    name: "深渊12式"
+    description: "击杀后回复生命"
+    rarity: RARE
+    icon: RABBIT_FOOT
+    max-level: 3
+    tags: ["深渊"]
+    effects:
+      effect_12:
+        type: KILL_HEAL
+        value-per-level: 16.2
+        threshold: 45.0
+        tag: "深渊"
+        per-tag: 0.8
+  abyss_013:
+    name: "深渊13式"
+    description: "深渊构筑属性成长"
+    rarity: RARE
+    icon: FIRE_CHARGE
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "首领伤害": [10.9, 10.9]
+      "移动速度": [4.3, 4.3]
+  abyss_014:
+    name: "深渊14式"
+    description: "深渊构筑属性成长"
+    rarity: RARE
+    icon: BLAZE_POWDER
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "破甲": [11.3, 11.3]
+      "深渊伤害": [4.5, 4.5]
+  abyss_015:
+    name: "深渊15式"
+    description: "深渊构筑属性成长"
+    rarity: RARE
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "技能伤害": [11.8, 11.8]
+      "物理攻击": [4.8, 4.8]
+  abyss_016:
+    name: "深渊16式"
+    description: "受击后反击敌人"
+    rarity: RARE
+    icon: PACKED_ICE
+    max-level: 4
+    tags: ["深渊"]
+    effects:
+      effect_16:
+        type: RETALIATE
+        value-per-level: 19.8
+        threshold: 40.0
+        tag: "深渊"
+        per-tag: 2.2
+  abyss_017:
+    name: "深渊17式"
+    description: "深渊构筑属性成长"
+    rarity: RARE
+    icon: CRYING_OBSIDIAN
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "深渊伤害": [12.7, 12.7]
+      "暴击伤害": [5.3, 5.3]
+  abyss_018:
+    name: "深渊18式"
+    description: "深渊构筑属性成长"
+    rarity: EPIC
+    icon: BEACON
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "物理攻击": [13.1, 13.1]
+      "首领伤害": [5.5, 5.5]
+  abyss_019:
+    name: "深渊19式"
+    description: "深渊构筑属性成长"
+    rarity: EPIC
+    icon: NETHER_STAR
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "生命偷取": [13.6, 13.6]
+      "破甲": [5.8, 5.8]
+  abyss_020:
+    name: "深渊20式"
+    description: "房间通关后回复生命"
+    rarity: EPIC
+    icon: TOTEM_OF_UNDYING
+    max-level: 3
+    tags: ["深渊", "圣辉"]
+    effects:
+      effect_20:
+        type: ROOM_HEAL
+        value-per-level: 23.4
+        threshold: 35.0
+        tag: "深渊"
+        per-tag: 1.5
+  abyss_021:
+    name: "深渊21式"
+    description: "深渊构筑属性成长"
+    rarity: EPIC
+    icon: ECHO_SHARD
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "首领伤害": [14.5, 14.5]
+      "移动速度": [6.3, 6.3]
+  abyss_022:
+    name: "深渊22式"
+    description: "深渊构筑属性成长"
+    rarity: EPIC
+    icon: IRON_SWORD
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "破甲": [14.9, 14.9]
+      "深渊伤害": [6.5, 6.5]
+  abyss_023:
+    name: "深渊23式"
+    description: "深渊构筑属性成长"
+    rarity: EPIC
+    icon: DIAMOND_SWORD
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "技能伤害": [15.3, 15.3]
+      "物理攻击": [6.8, 6.8]
+  abyss_024:
+    name: "深渊24式"
+    description: "低血目标处决追加伤害"
+    rarity: LEGENDARY
+    icon: FEATHER
+    max-level: 5
+    tags: ["深渊"]
+    effects:
+      effect_24:
+        type: EXECUTE
+        value-per-level: 27.0
+        threshold: 55.0
+        tag: "深渊"
+        per-tag: 0.8
+  abyss_025:
+    name: "深渊25式"
+    description: "深渊构筑属性成长"
+    rarity: LEGENDARY
+    icon: SPIDER_EYE
+    max-level: 4
+    tags: ["深渊"]
+    attributes:
+      "深渊伤害": [16.3, 16.3]
+      "暴击伤害": [7.3, 7.3]
+  # ===== 圣辉系 =====
+  radiance_001:
+    name: "圣辉01式"
+    description: "圣辉构筑属性成长"
+    rarity: COMMON
+    icon: FEATHER
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "圣辉伤害": [6.0, 6.0]
+      "生命恢复": [1.3, 1.3]
+  radiance_002:
+    name: "圣辉02式"
+    description: "圣辉构筑属性成长"
+    rarity: COMMON
+    icon: SPIDER_EYE
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "治疗加成": [6.4, 6.4]
+      "物理防御": [1.5, 1.5]
+  radiance_003:
+    name: "圣辉03式"
+    description: "圣辉构筑属性成长"
+    rarity: COMMON
+    icon: GOLDEN_APPLE
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "生命上限": [6.8, 6.8]
+      "减伤比例": [1.8, 1.8]
+  radiance_004:
+    name: "圣辉04式"
+    description: "低血目标处决追加伤害"
+    rarity: COMMON
+    icon: IRON_CHESTPLATE
+    max-level: 3
+    tags: ["圣辉"]
+    effects:
+      effect_04:
+        type: EXECUTE
+        value-per-level: 9.4
+        threshold: 55.0
+        tag: "圣辉"
+        per-tag: 2.2
+  radiance_005:
+    name: "圣辉05式"
+    description: "圣辉构筑属性成长"
+    rarity: COMMON
+    icon: ENDER_PEARL
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "物理防御": [7.8, 7.8]
+      "护盾强度": [2.3, 2.3]
+  radiance_006:
+    name: "圣辉06式"
+    description: "圣辉构筑属性成长"
+    rarity: COMMON
+    icon: REDSTONE
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "减伤比例": [8.2, 8.2]
+      "圣辉伤害": [2.5, 2.5]
+  radiance_007:
+    name: "圣辉07式"
+    description: "圣辉构筑属性成长"
+    rarity: COMMON
+    icon: SHIELD
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "幸运": [8.7, 8.7]
+      "治疗加成": [2.8, 2.8]
+  radiance_008:
+    name: "圣辉08式"
+    description: "击杀后回复生命"
+    rarity: COMMON
+    icon: GHAST_TEAR
+    max-level: 4
+    tags: ["圣辉"]
+    effects:
+      effect_08:
+        type: KILL_HEAL
+        value-per-level: 13.0
+        threshold: 50.0
+        tag: "圣辉"
+        per-tag: 1.5
+  radiance_009:
+    name: "圣辉09式"
+    description: "圣辉构筑属性成长"
+    rarity: COMMON
+    icon: RABBIT_FOOT
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "圣辉伤害": [9.6, 9.6]
+      "生命恢复": [3.3, 3.3]
+  radiance_010:
+    name: "圣辉10式"
+    description: "圣辉构筑属性成长"
+    rarity: RARE
+    icon: FIRE_CHARGE
+    max-level: 3
+    tags: ["圣辉", "狩猎"]
+    attributes:
+      "治疗加成": [10.0, 10.0]
+      "物理防御": [3.5, 3.5]
+  radiance_011:
+    name: "圣辉11式"
+    description: "圣辉构筑属性成长"
+    rarity: RARE
+    icon: BLAZE_POWDER
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "生命上限": [10.4, 10.4]
+      "减伤比例": [3.8, 3.8]
+  radiance_012:
+    name: "圣辉12式"
+    description: "受击后反击敌人"
+    rarity: RARE
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["圣辉"]
+    effects:
+      effect_12:
+        type: RETALIATE
+        value-per-level: 16.6
+        threshold: 45.0
+        tag: "圣辉"
+        per-tag: 0.8
+  radiance_013:
+    name: "圣辉13式"
+    description: "圣辉构筑属性成长"
+    rarity: RARE
+    icon: PACKED_ICE
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "物理防御": [11.4, 11.4]
+      "护盾强度": [4.3, 4.3]
+  radiance_014:
+    name: "圣辉14式"
+    description: "圣辉构筑属性成长"
+    rarity: RARE
+    icon: CRYING_OBSIDIAN
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "减伤比例": [11.8, 11.8]
+      "圣辉伤害": [4.5, 4.5]
+  radiance_015:
+    name: "圣辉15式"
+    description: "圣辉构筑属性成长"
+    rarity: RARE
+    icon: BEACON
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "幸运": [12.3, 12.3]
+      "治疗加成": [4.8, 4.8]
+  radiance_016:
+    name: "圣辉16式"
+    description: "房间通关后回复生命"
+    rarity: RARE
+    icon: NETHER_STAR
+    max-level: 4
+    tags: ["圣辉"]
+    effects:
+      effect_16:
+        type: ROOM_HEAL
+        value-per-level: 20.2
+        threshold: 40.0
+        tag: "圣辉"
+        per-tag: 2.2
+  radiance_017:
+    name: "圣辉17式"
+    description: "圣辉构筑属性成长"
+    rarity: RARE
+    icon: TOTEM_OF_UNDYING
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "圣辉伤害": [13.2, 13.2]
+      "生命恢复": [5.3, 5.3]
+  radiance_018:
+    name: "圣辉18式"
+    description: "圣辉构筑属性成长"
+    rarity: EPIC
+    icon: ECHO_SHARD
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "治疗加成": [13.6, 13.6]
+      "物理防御": [5.5, 5.5]
+  radiance_019:
+    name: "圣辉19式"
+    description: "圣辉构筑属性成长"
+    rarity: EPIC
+    icon: IRON_SWORD
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "生命上限": [14.1, 14.1]
+      "减伤比例": [5.8, 5.8]
+  radiance_020:
+    name: "圣辉20式"
+    description: "低血目标处决追加伤害"
+    rarity: EPIC
+    icon: DIAMOND_SWORD
+    max-level: 3
+    tags: ["圣辉", "狩猎"]
+    effects:
+      effect_20:
+        type: EXECUTE
+        value-per-level: 23.8
+        threshold: 35.0
+        tag: "圣辉"
+        per-tag: 1.5
+  radiance_021:
+    name: "圣辉21式"
+    description: "圣辉构筑属性成长"
+    rarity: EPIC
+    icon: FEATHER
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "物理防御": [15.0, 15.0]
+      "护盾强度": [6.3, 6.3]
+  radiance_022:
+    name: "圣辉22式"
+    description: "圣辉构筑属性成长"
+    rarity: EPIC
+    icon: SPIDER_EYE
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "减伤比例": [15.4, 15.4]
+      "圣辉伤害": [6.5, 6.5]
+  radiance_023:
+    name: "圣辉23式"
+    description: "圣辉构筑属性成长"
+    rarity: EPIC
+    icon: GOLDEN_APPLE
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "幸运": [15.8, 15.8]
+      "治疗加成": [6.8, 6.8]
+  radiance_024:
+    name: "圣辉24式"
+    description: "击杀后回复生命"
+    rarity: LEGENDARY
+    icon: IRON_CHESTPLATE
+    max-level: 5
+    tags: ["圣辉"]
+    effects:
+      effect_24:
+        type: KILL_HEAL
+        value-per-level: 27.4
+        threshold: 55.0
+        tag: "圣辉"
+        per-tag: 0.8
+  radiance_025:
+    name: "圣辉25式"
+    description: "圣辉构筑属性成长"
+    rarity: LEGENDARY
+    icon: ENDER_PEARL
+    max-level: 4
+    tags: ["圣辉"]
+    attributes:
+      "圣辉伤害": [16.8, 16.8]
+      "生命恢复": [7.3, 7.3]

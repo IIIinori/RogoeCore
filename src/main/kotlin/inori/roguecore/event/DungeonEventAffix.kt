@@ -13,5 +13,7 @@ data class DungeonEventAffix(
     val description: String,
     val rooms: Set<RoomType>,
     val minFloor: Int,
-    val weight: Int
+    val weight: Int,
+    val family: String = "",
+    val power: Int = 1
 )

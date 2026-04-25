@@ -4,6 +4,7 @@ import inori.roguecore.data.ForgeMaterialManager
 import inori.roguecore.data.ForgeMaterialType
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
+import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.item.DungeonLootManager
 import inori.roguecore.ui.DungeonGuiGuard
 import inori.roguecore.unlock.UnlockManager
@@ -42,17 +43,18 @@ object ForgeEvent {
     }
 
     private fun openForgeUI(player: Player, instance: DungeonInstance) {
+        val forgePower = EventAffixManager.getFamilyPower(instance, RoomType.FORGE, "FORGE")
         val shards = ShardRewardManager.getRunShards(player.uniqueId)
-        val rerollPrice = config.getInt("forge.reroll-price", 18).coerceAtLeast(0)
-        val lockPrice = getLockPrice(player)
-        val lockSigilCost = getLockSigilCost()
-        val coolingEmberCost = getCoolingEmberCost()
-        val coolingHeatReduce = getCoolingHeatReduce(player)
-        val refinePrice = getNoHeatReforgePrice(player)
-        val refineEmberCost = getNoHeatReforgeEmberCost()
-        val refineSigilCost = getNoHeatReforgeSigilCost(player)
-        val temperEmberCost = getTemperEmberCost()
-        val temperLevelGain = getTemperLevelGain(player)
+        val rerollPrice = (config.getInt("forge.reroll-price", 18) - forgePower * 2).coerceAtLeast(0)
+        val lockPrice = (getLockPrice(player) - forgePower).coerceAtLeast(0)
+        val lockSigilCost = (getLockSigilCost() - forgePower / 4).coerceAtLeast(0)
+        val coolingEmberCost = (getCoolingEmberCost() - forgePower / 5).coerceAtLeast(0)
+        val coolingHeatReduce = getCoolingHeatReduce(player) + forgePower.coerceAtMost(6)
+        val refinePrice = (getNoHeatReforgePrice(player) - forgePower * 3).coerceAtLeast(0)
+        val refineEmberCost = (getNoHeatReforgeEmberCost() - forgePower / 5).coerceAtLeast(0)
+        val refineSigilCost = (getNoHeatReforgeSigilCost(player) - forgePower / 5).coerceAtLeast(0)
+        val temperEmberCost = (getTemperEmberCost() - forgePower / 6).coerceAtLeast(0)
+        val temperLevelGain = getTemperLevelGain(player) + (forgePower / 7).coerceAtMost(2)
         val temperUnlocked = UnlockManager.hasSoulTempering(player)
         val lockingUnlocked = UnlockManager.hasPrecisionLocking(player)
         val coolingUnlocked = UnlockManager.hasEmberCooling(player)

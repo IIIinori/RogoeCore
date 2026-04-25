@@ -56,7 +56,9 @@ object EventAffixManager {
                     description = node.getString("description") ?: "",
                     rooms = rooms,
                     minFloor = node.getInt("min-floor", 1).coerceAtLeast(1),
-                    weight = node.getInt("weight", 10).coerceAtLeast(1)
+                    weight = node.getInt("weight", 10).coerceAtLeast(1),
+                    family = (node.getString("family") ?: rooms.first().name).uppercase(),
+                    power = node.getInt("power", 1).coerceAtLeast(1)
                 )
             }
         }
@@ -89,6 +91,17 @@ object EventAffixManager {
 
     fun getAffixesForRoom(instance: DungeonInstance, roomType: RoomType): List<DungeonEventAffix> {
         return instance.eventAffixes.filter { roomType in it.rooms }
+    }
+
+    fun getFamilyPower(instance: DungeonInstance, roomType: RoomType, family: String): Int {
+        val normalized = family.uppercase()
+        return instance.eventAffixes
+            .filter { roomType in it.rooms && it.family.equals(normalized, ignoreCase = true) }
+            .sumOf { it.power }
+    }
+
+    fun hasFamily(instance: DungeonInstance, roomType: RoomType, family: String): Boolean {
+        return getFamilyPower(instance, roomType, family) > 0
     }
 
     private fun getAffixCount(floorNumber: Int): Int {

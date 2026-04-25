@@ -3,6 +3,7 @@ package inori.roguecore.event
 import inori.roguecore.boon.BoonInstance
 import inori.roguecore.boon.PlayerBoonData
 import inori.roguecore.dungeon.DungeonInstance
+import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.ui.DungeonGuiGuard
 import org.bukkit.entity.Player
 import taboolib.library.xseries.XMaterial
@@ -21,10 +22,11 @@ object RestEvent {
         private set
 
     fun trigger(player: Player, instance: DungeonInstance) {
-        val restfulEcho = EventAffixManager.hasAffix(instance, "restful_echo")
+        val restPower = EventAffixManager.getFamilyPower(instance, RoomType.REST, "REST")
+        val restfulEcho = restPower > 0
         val healPercent = config.getDouble("rest.heal-percent", 1.0)
-        val effectiveHealPercent = (healPercent + if (restfulEcho) 0.15 else 0.0).coerceAtMost(1.0)
-        val boonHealPercent = if (restfulEcho) 0.2 else 0.0
+        val effectiveHealPercent = (healPercent + restPower * 0.04).coerceAtMost(1.0)
+        val boonHealPercent = (restPower * 0.05).coerceAtMost(0.45)
         val boons = PlayerBoonData.getBoons(player)
         val upgradeable = boons.firstOrNull { it.canUpgrade }
         val optionSlots = setOf(11, 15)

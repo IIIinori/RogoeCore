@@ -97,6 +97,8 @@ object DependencySelfCheckManager {
             return AttributeCheck(available = false, missingNames = configuredNames)
         }
 
+        RogueAttributePlusRegistrar.registerConfiguredAttributes(configuredNames)
+
         val knownKeys = runCatching {
             (AttributeAPI.allServerKey() + AttributeAPI.allDefaultKey())
                 .map { it.trim() }

@@ -4,6 +4,7 @@ import inori.roguecore.boon.BoonSelectManager
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.room.Room
+import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.item.DungeonLootManager
 import org.bukkit.entity.Player
 import taboolib.module.configuration.Config
@@ -20,8 +21,9 @@ object ChestEvent {
         private set
 
     fun trigger(player: Player, instance: DungeonInstance, room: Room) {
-        val shardMin = EventScaling.reward(instance, config.getInt("chest.shard-min", 10))
-        val shardMax = EventScaling.reward(instance, config.getInt("chest.shard-max", 30)).coerceAtLeast(shardMin)
+        val chestPower = EventAffixManager.getFamilyPower(instance, RoomType.CHEST, "CHEST")
+        val shardMin = EventScaling.reward(instance, config.getInt("chest.shard-min", 10) + chestPower * 3)
+        val shardMax = EventScaling.reward(instance, config.getInt("chest.shard-max", 30) + chestPower * 6).coerceAtLeast(shardMin)
         val giveBoon = config.getBoolean("chest.give-boon", true)
 
         player.sendMessage("§6§l✦ §e你打开了宝箱!")
@@ -32,13 +34,16 @@ object ChestEvent {
         ShardRewardManager.addRunShards(player.uniqueId, shards)
         player.sendMessage("§e  获得 §6$shards §e本局碎片")
 
-        if (DungeonLootManager.grantChestLoot(player, instance)) {
-            player.sendMessage("§6  宝箱里还藏着一件临时装备。")
+        val lootRolls = 1 + (chestPower / 4).coerceAtMost(3)
+        repeat(lootRolls) { index ->
+            if (DungeonLootManager.grantChestLoot(player, instance)) {
+                player.sendMessage(if (index == 0) "§6  宝箱里还藏着一件临时装备。" else "§6  事件词缀让宝箱额外吐出一件装备。")
+            }
         }
 
         // Boon
         if (giveBoon) {
-            BoonSelectManager.offerBoonSelection(player, EventScaling.boonOfferCount(instance))
+            BoonSelectManager.offerBoonSelection(player, EventScaling.boonOfferCount(instance, 1 + (chestPower / 3).coerceAtMost(3)))
         }
     }
 }

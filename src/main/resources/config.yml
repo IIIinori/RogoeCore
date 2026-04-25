@@ -2,35 +2,20 @@
 # RogueCore 主配置文件
 # ================================
 
-# 地牢生成设置
 dungeon:
-  # 基础宽度（方块数，随楼层递增）
-  base-width: 80
-  # 每层增加的宽度
-  width-per-floor: 5
-  # BSP 最小分区尺寸
+  base-width: 84
+  width-per-floor: 2
   min-partition-size: 16
-  # 房间最小外框尺寸，默认已上调，避免生成接近走廊宽度的小房间
   min-room-size: 12
-  # 房间净高（不含地板和天花板）
   room-height: 4
-  # 走廊宽度
   corridor-width: 3
-  # 生成 Y 坐标
   floor-level: 64
   hidden-room:
-    # 是否启用隐藏宝藏房
     enabled: true
-    # 生成隐藏房的概率
     chance: 0.45
-    # 精英房掉落隐藏钥匙概率
     elite-key-chance: 0.35
-    # Boss 房固定掉落的隐藏钥匙数量
     boss-keys: 1
 
-# 楼层主题配置
-# 格式: 楼层范围 -> 主题
-# 主题材质使用 TabooLib XMaterial 名称
 floors:
   crypt:
     name: "地下墓穴"
@@ -59,8 +44,160 @@ floors:
     ceiling: PURPUR_BLOCK
     accent: END_STONE
     light: END_ROD
+  frost:
+    name: "冰封深窟"
+    range: "16-20"
+    bsp-depth: 5
+    floor: PACKED_ICE
+    wall: BLUE_ICE
+    ceiling: PACKED_ICE
+    accent: PRISMARINE_BRICKS
+    light: SEA_LANTERN
+  forge:
+    name: "黑曜熔炉"
+    range: "21-25"
+    bsp-depth: 5
+    floor: POLISHED_BLACKSTONE_BRICKS
+    wall: BLACKSTONE
+    ceiling: POLISHED_BLACKSTONE_BRICKS
+    accent: MAGMA_BLOCK
+    light: SHROOMLIGHT
+  astral:
+    name: "星界残垣"
+    range: "26-30"
+    bsp-depth: 6
+    floor: PURPUR_BLOCK
+    wall: END_STONE_BRICKS
+    ceiling: PURPUR_PILLAR
+    accent: AMETHYST_BLOCK
+    light: END_ROD
+  crimson:
+    name: "猩红王庭"
+    range: "31-35"
+    bsp-depth: 6
+    floor: CRIMSON_NYLIUM
+    wall: NETHER_WART_BLOCK
+    ceiling: CRIMSON_STEM
+    accent: RED_NETHER_BRICKS
+    light: SHROOMLIGHT
+  core:
+    name: "永夜核心"
+    range: "36-40"
+    bsp-depth: 6
+    floor: DEEPSLATE_TILES
+    wall: DEEPSLATE_BRICKS
+    ceiling: DEEPSLATE_TILES
+    accent: SCULK
+    light: SOUL_LANTERN
+  rotwood:
+    name: "腐化林海"
+    range: "41-45"
+    bsp-depth: 6
+    floor: MOSS_BLOCK
+    wall: MANGROVE_ROOTS
+    ceiling: DARK_OAK_PLANKS
+    accent: MOSSY_COBBLESTONE
+    light: GLOWSTONE
+  stormspire:
+    name: "雷鸣高塔"
+    range: "46-50"
+    bsp-depth: 6
+    floor: CUT_COPPER
+    wall: OXIDIZED_COPPER
+    ceiling: WEATHERED_COPPER
+    accent: LIGHTNING_ROD
+    light: SEA_LANTERN
+  sunken:
+    name: "沉没神殿"
+    range: "51-55"
+    bsp-depth: 7
+    floor: PRISMARINE_BRICKS
+    wall: DARK_PRISMARINE
+    ceiling: PRISMARINE
+    accent: SEA_LANTERN
+    light: SEA_LANTERN
+  bonewaste:
+    name: "白骨荒原"
+    range: "56-60"
+    bsp-depth: 7
+    floor: BONE_BLOCK
+    wall: SMOOTH_SANDSTONE
+    ceiling: BONE_BLOCK
+    accent: CHISELED_SANDSTONE
+    light: SOUL_TORCH
+  mirror:
+    name: "镜影迷宫"
+    range: "61-65"
+    bsp-depth: 7
+    floor: QUARTZ_BLOCK
+    wall: SMOOTH_QUARTZ
+    ceiling: QUARTZ_PILLAR
+    accent: GLASS
+    light: END_ROD
+  mire:
+    name: "毒雾沼泽"
+    range: "66-70"
+    bsp-depth: 7
+    floor: MUD_BRICKS
+    wall: MOSSY_STONE_BRICKS
+    ceiling: MUD_BRICKS
+    accent: SLIME_BLOCK
+    light: SEA_LANTERN
+  dune:
+    name: "黄金沙丘"
+    range: "71-75"
+    bsp-depth: 7
+    floor: SMOOTH_SANDSTONE
+    wall: CUT_SANDSTONE
+    ceiling: SMOOTH_SANDSTONE
+    accent: GOLD_BLOCK
+    light: LANTERN
+  theater:
+    name: "灵魂剧场"
+    range: "76-80"
+    bsp-depth: 8
+    floor: DARK_OAK_PLANKS
+    wall: RED_TERRACOTTA
+    ceiling: DARK_OAK_PLANKS
+    accent: SOUL_SAND
+    light: SOUL_LANTERN
+  machine:
+    name: "机械圣所"
+    range: "81-85"
+    bsp-depth: 8
+    floor: IRON_BLOCK
+    wall: POLISHED_ANDESITE
+    ceiling: SMOOTH_STONE
+    accent: COPPER_BLOCK
+    light: REDSTONE_LAMP
+  eclipse:
+    name: "月蚀庭院"
+    range: "86-90"
+    bsp-depth: 8
+    floor: BLACKSTONE
+    wall: BASALT
+    ceiling: POLISHED_BLACKSTONE
+    accent: AMETHYST_BLOCK
+    light: END_ROD
+  chaos:
+    name: "混沌裂隙"
+    range: "91-95"
+    bsp-depth: 8
+    floor: OBSIDIAN
+    wall: CRYING_OBSIDIAN
+    ceiling: BLACKSTONE
+    accent: SCULK_CATALYST
+    light: SOUL_LANTERN
+  throne:
+    name: "终焉王座"
+    range: "96-100"
+    bsp-depth: 9
+    floor: NETHERITE_BLOCK
+    wall: OBSIDIAN
+    ceiling: CRYING_OBSIDIAN
+    accent: BEACON
+    light: END_ROD
 
-# 房间类型分配权重（中间房间随机分配）
 room-weights:
   COMBAT: 60
   ELITE: 10
@@ -74,16 +211,11 @@ room-weights:
   GAMBLE: 3
   SHRINE: 3
 
-# 房型多样性控制
 room-diversity:
-  # 是否对重复房型进行软抑制
   enabled: true
-  # 超过 soft-caps 后的权重衰减倍率
   post-cap-multiplier: 0.35
-  # 这些房型默认同一层只允许出现一次
   unique-types:
     - EXTRACTION
-  # 这些房型在同一层达到数量后，后续仍可出现，但权重会明显下降
   soft-caps:
     SHOP: 2
     FORGE: 2
@@ -94,27 +226,16 @@ room-diversity:
     GAMBLE: 1
     SHRINE: 1
 
-# 灵魂碎片奖励设置
 soul-shards:
-  # 每清一个战斗房间获得的碎片
   per-room-clear: 5
-  # 通关整个副本的额外奖励
   per-dungeon-clear: 50
-  # 楼层倍率（实际碎片 = 基础碎片 * (1 + (楼层-1) * multiplier)）
   floor-multiplier: 0.2
-  # 死亡惩罚（死亡时只获得该比例的已积累碎片）
   death-penalty: 0.5
 
-# 数据库设置
 database:
-  # SQLite 文件名（存放在插件目录下）
   file: "data.db"
-  # DatabasePlayer 使用的键值表名
   table: "roguecore_playerdata"
 
-# 组队设置
 party:
-  # 队伍最大人数
   max-size: 4
-  # 邀请超时时间（秒）
   invite-timeout: 60

@@ -2,247 +2,929 @@
 # RogueCore 随机事件配置
 # ================================
 
-# 事件房楼层成长
 event-scaling:
-  # 事件奖励每层递增倍率
   reward-per-floor: 0.08
   max-reward-multiplier: 2.2
-  # 商店/神龛等事件价格每层递增倍率
   price-per-floor: 0.05
   max-price-multiplier: 1.8
-  # 试炼/赌局/献祭等风险每层递增倍率
   risk-per-floor: 0.03
   max-risk-multiplier: 1.45
   max-risk-percent: 0.75
-  # 每隔多少层，神恩/遗物候选 +1
   extra-offer-every-floors: 5
   max-extra-offers: 1
-  # 每隔多少层，隐藏房材料奖励 +1
   material-bonus-every-floors: 6
   max-material-bonus: 2
 
-# 高层事件专属变体
 event-variants:
   shop:
-    # 达到该层后，商店会出售黑市货柜
     black-market-floor: 6
     black-market-price: 72
     black-market-ember-reward: 2
     black-market-sigil-reward: 1
     black-market-grant-hidden-loot: true
   shrine:
-    # 达到该层后，神龛开放双生祷文
     twin-prayer-floor: 8
     twin-prayer-price: 44
     twin-prayer-heal-percent: 0.45
   trial:
-    # 达到该层后，试炼房开放歃血试炼
     blood-trial-floor: 8
     blood-trial-health-percent: 0.4
     blood-trial-shard-min: 30
     blood-trial-shard-max: 56
 
-# 高层事件词缀池
 event-affixes:
-  # 每层可抽取的事件词缀数量
   rules:
-    "1-7": 0
-    "8-11": 1
-    "12-99": 2
+    "1-10": 0
+    "11-20": 1
+    "21-35": 2
+    "36-50": 3
+    "51-70": 4
+    "71-90": 5
+    "91-100": 6
   affixes:
-    greedy_market:
-      name: "§d贪婪集市"
-      description: "商店额外刷新货品，黑市货柜更便宜也更丰厚。"
+    shop_affix_01:
+      name: "§d商店异象01"
+      description: "强化商店房：货品、黑市与材料换购，强度 1。"
       rooms: ["SHOP"]
-      min-floor: 8
-      weight: 18
-    twinned_faith:
-      name: "§f双生圣像"
-      description: "神龛的治疗更强，并固定开放双生祷文。"
-      rooms: ["SHRINE"]
-      min-floor: 8
+      family: SHOP
+      power: 1
+      min-floor: 11
+      weight: 17
+    shop_affix_02:
+      name: "§d商店异象02"
+      description: "强化商店房：货品、黑市与材料换购，强度 2。"
+      rooms: ["SHOP"]
+      family: SHOP
+      power: 2
+      min-floor: 20
       weight: 16
-    scarlet_oath:
-      name: "§4猩红盟誓"
-      description: "试炼固定开放歃血试炼，代价更高，回报也更高。"
-      rooms: ["TRIAL"]
-      min-floor: 8
+    shop_affix_03:
+      name: "§d商店异象03"
+      description: "强化商店房：货品、黑市与材料换购，强度 3。"
+      rooms: ["SHOP"]
+      family: SHOP
+      power: 3
+      min-floor: 29
+      weight: 15
+    shop_affix_04:
+      name: "§d商店异象04"
+      description: "强化商店房：货品、黑市与材料换购，强度 4。"
+      rooms: ["SHOP"]
+      family: SHOP
+      power: 4
+      min-floor: 38
+      weight: 14
+    shop_affix_05:
+      name: "§d商店异象05"
+      description: "强化商店房：货品、黑市与材料换购，强度 5。"
+      rooms: ["SHOP"]
+      family: SHOP
+      power: 5
+      min-floor: 47
+      weight: 13
+    shop_affix_06:
+      name: "§d商店异象06"
+      description: "强化商店房：货品、黑市与材料换购，强度 6。"
+      rooms: ["SHOP"]
+      family: SHOP
+      power: 6
+      min-floor: 56
+      weight: 12
+    shop_affix_07:
+      name: "§d商店异象07"
+      description: "强化商店房：货品、黑市与材料换购，强度 7。"
+      rooms: ["SHOP"]
+      family: SHOP
+      power: 7
+      min-floor: 65
+      weight: 11
+    shop_affix_08:
+      name: "§d商店异象08"
+      description: "强化商店房：货品、黑市与材料换购，强度 8。"
+      rooms: ["SHOP"]
+      family: SHOP
+      power: 8
+      min-floor: 74
+      weight: 10
+    shop_affix_09:
+      name: "§d商店异象09"
+      description: "强化商店房：货品、黑市与材料换购，强度 9。"
+      rooms: ["SHOP"]
+      family: SHOP
+      power: 9
+      min-floor: 83
+      weight: 9
+    shop_affix_10:
+      name: "§d商店异象10"
+      description: "强化商店房：货品、黑市与材料换购，强度 10。"
+      rooms: ["SHOP"]
+      family: SHOP
+      power: 10
+      min-floor: 92
+      weight: 8
+    forge_affix_01:
+      name: "§d铁匠异象01"
+      description: "强化铁匠房：锻造价格、热度与材料，强度 1。"
+      rooms: ["FORGE"]
+      family: FORGE
+      power: 1
+      min-floor: 11
+      weight: 17
+    forge_affix_02:
+      name: "§d铁匠异象02"
+      description: "强化铁匠房：锻造价格、热度与材料，强度 2。"
+      rooms: ["FORGE"]
+      family: FORGE
+      power: 2
+      min-floor: 20
       weight: 16
-    shadow_stockpile:
-      name: "§9幽匿秘储"
-      description: "隐藏房会额外撬开一层秘格，并获得更多秘库印记。"
-      rooms: ["HIDDEN"]
-      min-floor: 8
+    forge_affix_03:
+      name: "§d铁匠异象03"
+      description: "强化铁匠房：锻造价格、热度与材料，强度 3。"
+      rooms: ["FORGE"]
+      family: FORGE
+      power: 3
+      min-floor: 29
+      weight: 15
+    forge_affix_04:
+      name: "§d铁匠异象04"
+      description: "强化铁匠房：锻造价格、热度与材料，强度 4。"
+      rooms: ["FORGE"]
+      family: FORGE
+      power: 4
+      min-floor: 38
       weight: 14
-    loaded_dice:
-      name: "§2灌铅骰盘"
-      description: "赌局更极端，更容易暴富，也更容易遭受重创。"
-      rooms: ["GAMBLE"]
-      min-floor: 8
+    forge_affix_05:
+      name: "§d铁匠异象05"
+      description: "强化铁匠房：锻造价格、热度与材料，强度 5。"
+      rooms: ["FORGE"]
+      family: FORGE
+      power: 5
+      min-floor: 47
+      weight: 13
+    forge_affix_06:
+      name: "§d铁匠异象06"
+      description: "强化铁匠房：锻造价格、热度与材料，强度 6。"
+      rooms: ["FORGE"]
+      family: FORGE
+      power: 6
+      min-floor: 56
+      weight: 12
+    forge_affix_07:
+      name: "§d铁匠异象07"
+      description: "强化铁匠房：锻造价格、热度与材料，强度 7。"
+      rooms: ["FORGE"]
+      family: FORGE
+      power: 7
+      min-floor: 65
+      weight: 11
+    forge_affix_08:
+      name: "§d铁匠异象08"
+      description: "强化铁匠房：锻造价格、热度与材料，强度 8。"
+      rooms: ["FORGE"]
+      family: FORGE
+      power: 8
+      min-floor: 74
+      weight: 10
+    forge_affix_09:
+      name: "§d铁匠异象09"
+      description: "强化铁匠房：锻造价格、热度与材料，强度 9。"
+      rooms: ["FORGE"]
+      family: FORGE
+      power: 9
+      min-floor: 83
+      weight: 9
+    forge_affix_10:
+      name: "§d铁匠异象10"
+      description: "强化铁匠房：锻造价格、热度与材料，强度 10。"
+      rooms: ["FORGE"]
+      family: FORGE
+      power: 10
+      min-floor: 92
+      weight: 8
+    chest_affix_01:
+      name: "§d宝箱异象01"
+      description: "强化宝箱房：碎片、神恩与额外装备，强度 1。"
+      rooms: ["CHEST"]
+      family: CHEST
+      power: 1
+      min-floor: 11
+      weight: 17
+    chest_affix_02:
+      name: "§d宝箱异象02"
+      description: "强化宝箱房：碎片、神恩与额外装备，强度 2。"
+      rooms: ["CHEST"]
+      family: CHEST
+      power: 2
+      min-floor: 20
+      weight: 16
+    chest_affix_03:
+      name: "§d宝箱异象03"
+      description: "强化宝箱房：碎片、神恩与额外装备，强度 3。"
+      rooms: ["CHEST"]
+      family: CHEST
+      power: 3
+      min-floor: 29
+      weight: 15
+    chest_affix_04:
+      name: "§d宝箱异象04"
+      description: "强化宝箱房：碎片、神恩与额外装备，强度 4。"
+      rooms: ["CHEST"]
+      family: CHEST
+      power: 4
+      min-floor: 38
       weight: 14
-    restful_echo:
-      name: "§b安眠回响"
-      description: "休息点会提供更强恢复，升级神恩时也会顺带疗伤。"
+    chest_affix_05:
+      name: "§d宝箱异象05"
+      description: "强化宝箱房：碎片、神恩与额外装备，强度 5。"
+      rooms: ["CHEST"]
+      family: CHEST
+      power: 5
+      min-floor: 47
+      weight: 13
+    chest_affix_06:
+      name: "§d宝箱异象06"
+      description: "强化宝箱房：碎片、神恩与额外装备，强度 6。"
+      rooms: ["CHEST"]
+      family: CHEST
+      power: 6
+      min-floor: 56
+      weight: 12
+    chest_affix_07:
+      name: "§d宝箱异象07"
+      description: "强化宝箱房：碎片、神恩与额外装备，强度 7。"
+      rooms: ["CHEST"]
+      family: CHEST
+      power: 7
+      min-floor: 65
+      weight: 11
+    chest_affix_08:
+      name: "§d宝箱异象08"
+      description: "强化宝箱房：碎片、神恩与额外装备，强度 8。"
+      rooms: ["CHEST"]
+      family: CHEST
+      power: 8
+      min-floor: 74
+      weight: 10
+    chest_affix_09:
+      name: "§d宝箱异象09"
+      description: "强化宝箱房：碎片、神恩与额外装备，强度 9。"
+      rooms: ["CHEST"]
+      family: CHEST
+      power: 9
+      min-floor: 83
+      weight: 9
+    chest_affix_10:
+      name: "§d宝箱异象10"
+      description: "强化宝箱房：碎片、神恩与额外装备，强度 10。"
+      rooms: ["CHEST"]
+      family: CHEST
+      power: 10
+      min-floor: 92
+      weight: 8
+    rest_affix_01:
+      name: "§d休息异象01"
+      description: "强化休息房：治疗、神恩升级与恢复，强度 1。"
       rooms: ["REST"]
-      min-floor: 8
+      family: REST
+      power: 1
+      min-floor: 11
+      weight: 17
+    rest_affix_02:
+      name: "§d休息异象02"
+      description: "强化休息房：治疗、神恩升级与恢复，强度 2。"
+      rooms: ["REST"]
+      family: REST
+      power: 2
+      min-floor: 20
+      weight: 16
+    rest_affix_03:
+      name: "§d休息异象03"
+      description: "强化休息房：治疗、神恩升级与恢复，强度 3。"
+      rooms: ["REST"]
+      family: REST
+      power: 3
+      min-floor: 29
+      weight: 15
+    rest_affix_04:
+      name: "§d休息异象04"
+      description: "强化休息房：治疗、神恩升级与恢复，强度 4。"
+      rooms: ["REST"]
+      family: REST
+      power: 4
+      min-floor: 38
       weight: 14
-    golden_waypoint:
-      name: "§6鎏金路标"
-      description: "撤离点会放宽提现门槛，并提高提前兑现比例。"
+    rest_affix_05:
+      name: "§d休息异象05"
+      description: "强化休息房：治疗、神恩升级与恢复，强度 5。"
+      rooms: ["REST"]
+      family: REST
+      power: 5
+      min-floor: 47
+      weight: 13
+    rest_affix_06:
+      name: "§d休息异象06"
+      description: "强化休息房：治疗、神恩升级与恢复，强度 6。"
+      rooms: ["REST"]
+      family: REST
+      power: 6
+      min-floor: 56
+      weight: 12
+    rest_affix_07:
+      name: "§d休息异象07"
+      description: "强化休息房：治疗、神恩升级与恢复，强度 7。"
+      rooms: ["REST"]
+      family: REST
+      power: 7
+      min-floor: 65
+      weight: 11
+    rest_affix_08:
+      name: "§d休息异象08"
+      description: "强化休息房：治疗、神恩升级与恢复，强度 8。"
+      rooms: ["REST"]
+      family: REST
+      power: 8
+      min-floor: 74
+      weight: 10
+    rest_affix_09:
+      name: "§d休息异象09"
+      description: "强化休息房：治疗、神恩升级与恢复，强度 9。"
+      rooms: ["REST"]
+      family: REST
+      power: 9
+      min-floor: 83
+      weight: 9
+    rest_affix_10:
+      name: "§d休息异象10"
+      description: "强化休息房：治疗、神恩升级与恢复，强度 10。"
+      rooms: ["REST"]
+      family: REST
+      power: 10
+      min-floor: 92
+      weight: 8
+    extraction_affix_01:
+      name: "§d撤离异象01"
+      description: "强化撤离房：提现门槛与提现比例，强度 1。"
       rooms: ["EXTRACTION"]
-      min-floor: 8
+      family: EXTRACTION
+      power: 1
+      min-floor: 11
+      weight: 17
+    extraction_affix_02:
+      name: "§d撤离异象02"
+      description: "强化撤离房：提现门槛与提现比例，强度 2。"
+      rooms: ["EXTRACTION"]
+      family: EXTRACTION
+      power: 2
+      min-floor: 20
+      weight: 16
+    extraction_affix_03:
+      name: "§d撤离异象03"
+      description: "强化撤离房：提现门槛与提现比例，强度 3。"
+      rooms: ["EXTRACTION"]
+      family: EXTRACTION
+      power: 3
+      min-floor: 29
+      weight: 15
+    extraction_affix_04:
+      name: "§d撤离异象04"
+      description: "强化撤离房：提现门槛与提现比例，强度 4。"
+      rooms: ["EXTRACTION"]
+      family: EXTRACTION
+      power: 4
+      min-floor: 38
+      weight: 14
+    extraction_affix_05:
+      name: "§d撤离异象05"
+      description: "强化撤离房：提现门槛与提现比例，强度 5。"
+      rooms: ["EXTRACTION"]
+      family: EXTRACTION
+      power: 5
+      min-floor: 47
       weight: 13
-    void_broker:
-      name: "§5虚空经纪"
-      description: "契约祭坛的代价与回报都会进一步放大。"
+    extraction_affix_06:
+      name: "§d撤离异象06"
+      description: "强化撤离房：提现门槛与提现比例，强度 6。"
+      rooms: ["EXTRACTION"]
+      family: EXTRACTION
+      power: 6
+      min-floor: 56
+      weight: 12
+    extraction_affix_07:
+      name: "§d撤离异象07"
+      description: "强化撤离房：提现门槛与提现比例，强度 7。"
+      rooms: ["EXTRACTION"]
+      family: EXTRACTION
+      power: 7
+      min-floor: 65
+      weight: 11
+    extraction_affix_08:
+      name: "§d撤离异象08"
+      description: "强化撤离房：提现门槛与提现比例，强度 8。"
+      rooms: ["EXTRACTION"]
+      family: EXTRACTION
+      power: 8
+      min-floor: 74
+      weight: 10
+    extraction_affix_09:
+      name: "§d撤离异象09"
+      description: "强化撤离房：提现门槛与提现比例，强度 9。"
+      rooms: ["EXTRACTION"]
+      family: EXTRACTION
+      power: 9
+      min-floor: 83
+      weight: 9
+    extraction_affix_10:
+      name: "§d撤离异象10"
+      description: "强化撤离房：提现门槛与提现比例，强度 10。"
+      rooms: ["EXTRACTION"]
+      family: EXTRACTION
+      power: 10
+      min-floor: 92
+      weight: 8
+    contract_affix_01:
+      name: "§d契约异象01"
+      description: "强化契约房：代价、遗物候选与碎片，强度 1。"
       rooms: ["CONTRACT"]
-      min-floor: 8
+      family: CONTRACT
+      power: 1
+      min-floor: 11
+      weight: 17
+    contract_affix_02:
+      name: "§d契约异象02"
+      description: "强化契约房：代价、遗物候选与碎片，强度 2。"
+      rooms: ["CONTRACT"]
+      family: CONTRACT
+      power: 2
+      min-floor: 20
+      weight: 16
+    contract_affix_03:
+      name: "§d契约异象03"
+      description: "强化契约房：代价、遗物候选与碎片，强度 3。"
+      rooms: ["CONTRACT"]
+      family: CONTRACT
+      power: 3
+      min-floor: 29
+      weight: 15
+    contract_affix_04:
+      name: "§d契约异象04"
+      description: "强化契约房：代价、遗物候选与碎片，强度 4。"
+      rooms: ["CONTRACT"]
+      family: CONTRACT
+      power: 4
+      min-floor: 38
+      weight: 14
+    contract_affix_05:
+      name: "§d契约异象05"
+      description: "强化契约房：代价、遗物候选与碎片，强度 5。"
+      rooms: ["CONTRACT"]
+      family: CONTRACT
+      power: 5
+      min-floor: 47
       weight: 13
+    contract_affix_06:
+      name: "§d契约异象06"
+      description: "强化契约房：代价、遗物候选与碎片，强度 6。"
+      rooms: ["CONTRACT"]
+      family: CONTRACT
+      power: 6
+      min-floor: 56
+      weight: 12
+    contract_affix_07:
+      name: "§d契约异象07"
+      description: "强化契约房：代价、遗物候选与碎片，强度 7。"
+      rooms: ["CONTRACT"]
+      family: CONTRACT
+      power: 7
+      min-floor: 65
+      weight: 11
+    contract_affix_08:
+      name: "§d契约异象08"
+      description: "强化契约房：代价、遗物候选与碎片，强度 8。"
+      rooms: ["CONTRACT"]
+      family: CONTRACT
+      power: 8
+      min-floor: 74
+      weight: 10
+    contract_affix_09:
+      name: "§d契约异象09"
+      description: "强化契约房：代价、遗物候选与碎片，强度 9。"
+      rooms: ["CONTRACT"]
+      family: CONTRACT
+      power: 9
+      min-floor: 83
+      weight: 9
+    contract_affix_10:
+      name: "§d契约异象10"
+      description: "强化契约房：代价、遗物候选与碎片，强度 10。"
+      rooms: ["CONTRACT"]
+      family: CONTRACT
+      power: 10
+      min-floor: 92
+      weight: 8
+    hidden_affix_01:
+      name: "§d隐藏异象01"
+      description: "强化隐藏房：秘库材料与深层宝藏，强度 1。"
+      rooms: ["HIDDEN"]
+      family: HIDDEN
+      power: 1
+      min-floor: 11
+      weight: 17
+    hidden_affix_02:
+      name: "§d隐藏异象02"
+      description: "强化隐藏房：秘库材料与深层宝藏，强度 2。"
+      rooms: ["HIDDEN"]
+      family: HIDDEN
+      power: 2
+      min-floor: 20
+      weight: 16
+    hidden_affix_03:
+      name: "§d隐藏异象03"
+      description: "强化隐藏房：秘库材料与深层宝藏，强度 3。"
+      rooms: ["HIDDEN"]
+      family: HIDDEN
+      power: 3
+      min-floor: 29
+      weight: 15
+    hidden_affix_04:
+      name: "§d隐藏异象04"
+      description: "强化隐藏房：秘库材料与深层宝藏，强度 4。"
+      rooms: ["HIDDEN"]
+      family: HIDDEN
+      power: 4
+      min-floor: 38
+      weight: 14
+    hidden_affix_05:
+      name: "§d隐藏异象05"
+      description: "强化隐藏房：秘库材料与深层宝藏，强度 5。"
+      rooms: ["HIDDEN"]
+      family: HIDDEN
+      power: 5
+      min-floor: 47
+      weight: 13
+    hidden_affix_06:
+      name: "§d隐藏异象06"
+      description: "强化隐藏房：秘库材料与深层宝藏，强度 6。"
+      rooms: ["HIDDEN"]
+      family: HIDDEN
+      power: 6
+      min-floor: 56
+      weight: 12
+    hidden_affix_07:
+      name: "§d隐藏异象07"
+      description: "强化隐藏房：秘库材料与深层宝藏，强度 7。"
+      rooms: ["HIDDEN"]
+      family: HIDDEN
+      power: 7
+      min-floor: 65
+      weight: 11
+    hidden_affix_08:
+      name: "§d隐藏异象08"
+      description: "强化隐藏房：秘库材料与深层宝藏，强度 8。"
+      rooms: ["HIDDEN"]
+      family: HIDDEN
+      power: 8
+      min-floor: 74
+      weight: 10
+    hidden_affix_09:
+      name: "§d隐藏异象09"
+      description: "强化隐藏房：秘库材料与深层宝藏，强度 9。"
+      rooms: ["HIDDEN"]
+      family: HIDDEN
+      power: 9
+      min-floor: 83
+      weight: 9
+    hidden_affix_10:
+      name: "§d隐藏异象10"
+      description: "强化隐藏房：秘库材料与深层宝藏，强度 10。"
+      rooms: ["HIDDEN"]
+      family: HIDDEN
+      power: 10
+      min-floor: 92
+      weight: 8
+    trial_affix_01:
+      name: "§d试炼异象01"
+      description: "强化试炼房：风险代价与试炼奖励，强度 1。"
+      rooms: ["TRIAL"]
+      family: TRIAL
+      power: 1
+      min-floor: 11
+      weight: 17
+    trial_affix_02:
+      name: "§d试炼异象02"
+      description: "强化试炼房：风险代价与试炼奖励，强度 2。"
+      rooms: ["TRIAL"]
+      family: TRIAL
+      power: 2
+      min-floor: 20
+      weight: 16
+    trial_affix_03:
+      name: "§d试炼异象03"
+      description: "强化试炼房：风险代价与试炼奖励，强度 3。"
+      rooms: ["TRIAL"]
+      family: TRIAL
+      power: 3
+      min-floor: 29
+      weight: 15
+    trial_affix_04:
+      name: "§d试炼异象04"
+      description: "强化试炼房：风险代价与试炼奖励，强度 4。"
+      rooms: ["TRIAL"]
+      family: TRIAL
+      power: 4
+      min-floor: 38
+      weight: 14
+    trial_affix_05:
+      name: "§d试炼异象05"
+      description: "强化试炼房：风险代价与试炼奖励，强度 5。"
+      rooms: ["TRIAL"]
+      family: TRIAL
+      power: 5
+      min-floor: 47
+      weight: 13
+    trial_affix_06:
+      name: "§d试炼异象06"
+      description: "强化试炼房：风险代价与试炼奖励，强度 6。"
+      rooms: ["TRIAL"]
+      family: TRIAL
+      power: 6
+      min-floor: 56
+      weight: 12
+    trial_affix_07:
+      name: "§d试炼异象07"
+      description: "强化试炼房：风险代价与试炼奖励，强度 7。"
+      rooms: ["TRIAL"]
+      family: TRIAL
+      power: 7
+      min-floor: 65
+      weight: 11
+    trial_affix_08:
+      name: "§d试炼异象08"
+      description: "强化试炼房：风险代价与试炼奖励，强度 8。"
+      rooms: ["TRIAL"]
+      family: TRIAL
+      power: 8
+      min-floor: 74
+      weight: 10
+    trial_affix_09:
+      name: "§d试炼异象09"
+      description: "强化试炼房：风险代价与试炼奖励，强度 9。"
+      rooms: ["TRIAL"]
+      family: TRIAL
+      power: 9
+      min-floor: 83
+      weight: 9
+    trial_affix_10:
+      name: "§d试炼异象10"
+      description: "强化试炼房：风险代价与试炼奖励，强度 10。"
+      rooms: ["TRIAL"]
+      family: TRIAL
+      power: 10
+      min-floor: 92
+      weight: 8
+    gamble_affix_01:
+      name: "§d赌局异象01"
+      description: "强化赌局房：暴富概率与反噬强度，强度 1。"
+      rooms: ["GAMBLE"]
+      family: GAMBLE
+      power: 1
+      min-floor: 11
+      weight: 17
+    gamble_affix_02:
+      name: "§d赌局异象02"
+      description: "强化赌局房：暴富概率与反噬强度，强度 2。"
+      rooms: ["GAMBLE"]
+      family: GAMBLE
+      power: 2
+      min-floor: 20
+      weight: 16
+    gamble_affix_03:
+      name: "§d赌局异象03"
+      description: "强化赌局房：暴富概率与反噬强度，强度 3。"
+      rooms: ["GAMBLE"]
+      family: GAMBLE
+      power: 3
+      min-floor: 29
+      weight: 15
+    gamble_affix_04:
+      name: "§d赌局异象04"
+      description: "强化赌局房：暴富概率与反噬强度，强度 4。"
+      rooms: ["GAMBLE"]
+      family: GAMBLE
+      power: 4
+      min-floor: 38
+      weight: 14
+    gamble_affix_05:
+      name: "§d赌局异象05"
+      description: "强化赌局房：暴富概率与反噬强度，强度 5。"
+      rooms: ["GAMBLE"]
+      family: GAMBLE
+      power: 5
+      min-floor: 47
+      weight: 13
+    gamble_affix_06:
+      name: "§d赌局异象06"
+      description: "强化赌局房：暴富概率与反噬强度，强度 6。"
+      rooms: ["GAMBLE"]
+      family: GAMBLE
+      power: 6
+      min-floor: 56
+      weight: 12
+    gamble_affix_07:
+      name: "§d赌局异象07"
+      description: "强化赌局房：暴富概率与反噬强度，强度 7。"
+      rooms: ["GAMBLE"]
+      family: GAMBLE
+      power: 7
+      min-floor: 65
+      weight: 11
+    gamble_affix_08:
+      name: "§d赌局异象08"
+      description: "强化赌局房：暴富概率与反噬强度，强度 8。"
+      rooms: ["GAMBLE"]
+      family: GAMBLE
+      power: 8
+      min-floor: 74
+      weight: 10
+    gamble_affix_09:
+      name: "§d赌局异象09"
+      description: "强化赌局房：暴富概率与反噬强度，强度 9。"
+      rooms: ["GAMBLE"]
+      family: GAMBLE
+      power: 9
+      min-floor: 83
+      weight: 9
+    gamble_affix_10:
+      name: "§d赌局异象10"
+      description: "强化赌局房：暴富概率与反噬强度，强度 10。"
+      rooms: ["GAMBLE"]
+      family: GAMBLE
+      power: 10
+      min-floor: 92
+      weight: 8
+    shrine_affix_01:
+      name: "§d神龛异象01"
+      description: "强化神龛房：治疗、净化与祷文，强度 1。"
+      rooms: ["SHRINE"]
+      family: SHRINE
+      power: 1
+      min-floor: 11
+      weight: 17
+    shrine_affix_02:
+      name: "§d神龛异象02"
+      description: "强化神龛房：治疗、净化与祷文，强度 2。"
+      rooms: ["SHRINE"]
+      family: SHRINE
+      power: 2
+      min-floor: 20
+      weight: 16
+    shrine_affix_03:
+      name: "§d神龛异象03"
+      description: "强化神龛房：治疗、净化与祷文，强度 3。"
+      rooms: ["SHRINE"]
+      family: SHRINE
+      power: 3
+      min-floor: 29
+      weight: 15
+    shrine_affix_04:
+      name: "§d神龛异象04"
+      description: "强化神龛房：治疗、净化与祷文，强度 4。"
+      rooms: ["SHRINE"]
+      family: SHRINE
+      power: 4
+      min-floor: 38
+      weight: 14
+    shrine_affix_05:
+      name: "§d神龛异象05"
+      description: "强化神龛房：治疗、净化与祷文，强度 5。"
+      rooms: ["SHRINE"]
+      family: SHRINE
+      power: 5
+      min-floor: 47
+      weight: 13
+    shrine_affix_06:
+      name: "§d神龛异象06"
+      description: "强化神龛房：治疗、净化与祷文，强度 6。"
+      rooms: ["SHRINE"]
+      family: SHRINE
+      power: 6
+      min-floor: 56
+      weight: 12
+    shrine_affix_07:
+      name: "§d神龛异象07"
+      description: "强化神龛房：治疗、净化与祷文，强度 7。"
+      rooms: ["SHRINE"]
+      family: SHRINE
+      power: 7
+      min-floor: 65
+      weight: 11
+    shrine_affix_08:
+      name: "§d神龛异象08"
+      description: "强化神龛房：治疗、净化与祷文，强度 8。"
+      rooms: ["SHRINE"]
+      family: SHRINE
+      power: 8
+      min-floor: 74
+      weight: 10
+    shrine_affix_09:
+      name: "§d神龛异象09"
+      description: "强化神龛房：治疗、净化与祷文，强度 9。"
+      rooms: ["SHRINE"]
+      family: SHRINE
+      power: 9
+      min-floor: 83
+      weight: 9
+    shrine_affix_10:
+      name: "§d神龛异象10"
+      description: "强化神龛房：治疗、净化与祷文，强度 10。"
+      rooms: ["SHRINE"]
+      family: SHRINE
+      power: 10
+      min-floor: 92
+      weight: 8
 
-# 商店房配置
 shop:
-  # Boon 商品价格范围
   boon-price-min: 20
   boon-price-max: 50
-  # 回复商品价格（回满生命）
   heal-price: 15
-  # 遗物契据价格（研究解锁后出现）
   relic-price: 48
 
-# 铁匠房配置
 forge:
-  # 重铸一件已装备临时装备的本局碎片消耗
   reroll-price: 18
-  # 循环锁定一条随机词条的本局碎片消耗
   lock-affix-price: 6
   cooling:
-    # 余烬退火消耗的炉核余烬
     ember-cost: 1
-    # 每次退火降低的热度
     heat-reduce: 2
   no-heat-reforge:
-    # 精炼无热重铸的碎片消耗
     shard-price: 28
-    # 精炼无热重铸消耗的炉核余烬
     ember-cost: 1
-    # 精炼无热重铸消耗的秘库印记
     sigil-cost: 1
   materials:
     boss-ember:
-      # Boss 奖励的炉核余烬数量
       reward-min: 1
       reward-max: 2
-      # 灵魂淬火消耗的炉核余烬
       temper-cost: 1
     hidden-sigil:
-      # 隐藏宝藏奖励的秘库印记数量
       reward-min: 1
       reward-max: 1
-      # 锁词操作消耗的秘库印记
       lock-cost: 1
   heat:
-    # 单件装备可承受的最大锻造热度；达到后无法继续重铸/升阶/淬火
     max: 6
-    # 每次重铸增加的热度
     reforge: 1
-    # 每次升阶增加的热度
     upgrade: 2
-    # 每次灵魂淬火增加的热度
     temper: 3
-  # 淬火一件已装备临时装备的基础消耗
   temper-price: 28
-  # 每有 1 级锻造等级，淬火额外增加的消耗
   temper-price-per-level: 12
-  # 升阶一件已装备临时装备的基础消耗
   upgrade-price: 22
-  # 每有 1 级锻造等级，升阶额外增加的消耗
   upgrade-price-per-level: 10
-  # 每级锻造对属性的增幅
   attribute-bonus-per-level: 0.18
-  # 单件装备最大锻造等级
   max-upgrades: 3
-  # 分解任意一件临时装备时的基础返还
   salvage-base: 8
-  # 分解返还 = 基础返还 + 装备评分 * 该系数
   salvage-score-scale: 0.35
-  # 每级锻造额外返还的本局碎片
   salvage-forge-bonus: 6
 
-# 撤离点配置
 extraction:
-  # 提现时可转化为永久灵魂碎片的局内碎片比例
   cashout-ratio: 0.5
-  # 若当前局内碎片低于该值，则不能提现
   min-cashout-run-shards: 20
 
-# 契约房配置
 contract:
-  # 镀金契约碎片奖励范围
   shard-reward-min: 26
   shard-reward-max: 52
-  # 脆弱诅咒减少的最大生命
   fragile-health-penalty: 6.0
-  # 凋敝诅咒使治疗量乘以该倍率
   withered-heal-multiplier: 0.5
-  # 易伤诅咒使受到伤害乘以该倍率
   vulnerable-damage-multiplier: 1.25
-  # 空蚀诅咒使造成伤害乘以该倍率
   hollow-damage-multiplier: 0.8
-  # 王冠契约的固定本局碎片奖励
   crown-shard-reward: 44
 
-# 宝箱房配置
 chest:
-  # 碎片奖励范围
   shard-min: 10
   shard-max: 30
-  # 是否给一个随机 Boon
   give-boon: true
 
-# 休息房配置
 rest:
-  # 回复生命比例（1.0 = 回满）
   heal-percent: 1.0
 
-# 试炼房配置
 trial:
-  # 试炼扣除当前生命比例
   hp-cost-percent: 0.2
-  # 超越试炼扣除当前生命比例
   relic-hp-cost-percent: 0.35
-  # 贪欲试炼本局碎片奖励范围
   shard-reward-min: 18
   shard-reward-max: 40
 
-# 赌局房配置
 gamble:
-  # 赌局获胜时的碎片奖励范围
   shard-win-min: 12
   shard-win-max: 36
-  # 赌输时失去当前本局碎片比例
   loss-percent: 0.35
-  # 赌输时受伤比例（按当前生命）
   damage-percent: 0.25
 
-# 神龛房配置
 shrine:
-  # 祈祷赐福消耗的本局碎片
   blessing-cost: 20
-  # 净化祷告消耗的本局碎片
   purify-price: 26
-  # 祈祷时回复最大生命比例
   heal-percent: 0.3
-  # 献祭时失去当前生命比例
   sacrifice-health-percent: 0.2
-  # 献祭后获得的本局碎片
   sacrifice-shard-reward: 28
 
-# 隐藏宝藏房配置
 hidden:
-  # 本局碎片奖励范围
   shard-min: 24
   shard-max: 48
-  # 是否额外给一次遗物选择；开启时优先于神恩选择
   give-relic: true
-  # 是否额外给一次神恩选择
   give-boon: true

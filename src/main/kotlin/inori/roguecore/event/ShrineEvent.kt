@@ -5,6 +5,7 @@ import inori.roguecore.boon.PlayerBoonData
 import inori.roguecore.curse.RunCurseManager
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
+import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.relic.RelicSelectManager
 import inori.roguecore.ui.DungeonGuiGuard
 import inori.roguecore.unlock.UnlockManager
@@ -32,10 +33,11 @@ object ShrineEvent {
         val sacrificePercent = EventScaling.riskPercent(instance, config.getDouble("shrine.sacrifice-health-percent", 0.2))
         val shardReward = EventScaling.reward(instance, config.getInt("shrine.sacrifice-shard-reward", 28))
         val hasSanctifiedPrayer = UnlockManager.hasSanctifiedPrayer(player)
-        val twinnedFaith = EventAffixManager.hasAffix(instance, "twinned_faith")
+        val shrinePower = EventAffixManager.getFamilyPower(instance, RoomType.SHRINE, "SHRINE")
+        val twinnedFaith = shrinePower > 0
         val hasTwinPrayer = twinnedFaith || instance.config.floorNumber >= config.getInt("event-variants.shrine.twin-prayer-floor", 8)
-        val twinPrice = EventScaling.price(instance, config.getInt("event-variants.shrine.twin-prayer-price", 44))
-        val bonusHeal = if (twinnedFaith) 0.1 else 0.0
+        val twinPrice = (EventScaling.price(instance, config.getInt("event-variants.shrine.twin-prayer-price", 44)) - shrinePower * 2).coerceAtLeast(0)
+        val bonusHeal = (shrinePower * 0.03).coerceAtMost(0.35)
         val effectiveHealPercent = (healPercent + bonusHeal).coerceAtMost(1.0)
         val twinHealPercent = (config.getDouble("event-variants.shrine.twin-prayer-heal-percent", 0.45) + bonusHeal).coerceAtLeast(effectiveHealPercent)
         val title = "§f§l古老神龛"

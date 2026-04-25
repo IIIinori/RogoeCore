@@ -1,90 +1,426 @@
 # ================================
 # RogueCore 怪物配置
 # ================================
-# 怪物配置按楼层段读取，不再支持旧的全局通用格式
-# mob-id 必须是 MythicMobs 中已配置的怪物 ID
-# floors:
-#   节点名只是分组名，可自定义
-#   range: "起始层-结束层"
-#   combat:
-#     normal-mobs: 普通战斗房怪物池，会随楼层在列表中轮换
-#     base-count: 基础刷怪数量
-#     count-per-floors: 每多少层额外 +1 只，0 表示固定不变
-#     max-count: 普通房最大刷怪数
-#   elite:
-#     mobs: 精英房怪物池，随机选取
-#     count: 精英房刷怪数量
-#   boss:
-#     mob-id: Boss 的 MythicMobs ID，可用 {floor} 占位符
-#     count: Boss 房刷怪数量
-# 注意：
-# 1. 不同楼层段之间的怪物池、数量、Boss 都互不共享
-# 2. 如果某个 mob-id 在 MythicMobs 中不存在，该房间会刷怪失败并输出警告
+# 1-100 层怪物池。MythicMobs 侧需要提供对应 ID，RogueCore 自检会列出缺失项。
 
 floors:
   crypt:
-    # 适用楼层：1-5
     range: "1-5"
     combat:
-      # 普通战斗房怪物池
       normal-mobs:
-        - "rogue_zombie"
-        - "rogue_skeleton"
-        - "rogue_spider"
-      # 基础刷怪数量
+        - "rogue_crypt_bonewalker"
+        - "rogue_crypt_grave_hound"
+        - "rogue_crypt_dust_acolyte"
+        - "rogue_crypt_crypt_lurker"
+        - "rogue_crypt_tomb_guard"
       base-count: 3
-      # 每 3 层额外 +1 只
       count-per-floors: 3
-      # 普通房最大 6 只
       max-count: 6
     elite:
-      # 精英房怪物池
       mobs:
-        - "rogue_elite_knight"
-        - "rogue_elite_mage"
-      # 精英房数量
+        - "rogue_crypt_elite_vanguard"
+        - "rogue_crypt_elite_arcanist"
+        - "rogue_crypt_elite_executioner"
       count: 1
     boss:
-      # Boss ID 支持 {floor} 占位符
-      mob-id: "rogue_boss_floor{floor}"
+      mob-id: "rogue_crypt_boss_floor{floor}"
       count: 1
-
   nether:
-    # 适用楼层：6-10
     range: "6-10"
     combat:
       normal-mobs:
-        - "rogue_blaze"
-        - "rogue_piglin"
-        - "rogue_wither_skeleton"
-      base-count: 4
-      count-per-floors: 2
-      max-count: 7
+        - "rogue_nether_ember_imp"
+        - "rogue_nether_ash_piglin"
+        - "rogue_nether_blaze_cultist"
+        - "rogue_nether_magma_hound"
+        - "rogue_nether_wither_scout"
+      base-count: 3
+      count-per-floors: 3
+      max-count: 6
     elite:
       mobs:
-        - "rogue_nether_guard"
-        - "rogue_nether_mage"
+        - "rogue_nether_elite_vanguard"
+        - "rogue_nether_elite_arcanist"
+        - "rogue_nether_elite_executioner"
       count: 1
     boss:
       mob-id: "rogue_nether_boss_floor{floor}"
       count: 1
-
   end:
-    # 适用楼层：11-15
     range: "11-15"
     combat:
       normal-mobs:
-        - "rogue_enderman"
-        - "rogue_shulker"
-        - "rogue_void_walker"
+        - "rogue_end_voidling"
+        - "rogue_end_end_sentinel"
+        - "rogue_end_shulker_wisp"
+        - "rogue_end_chorus_stalker"
+        - "rogue_end_pearl_hunter"
+      base-count: 3
+      count-per-floors: 3
+      max-count: 6
+    elite:
+      mobs:
+        - "rogue_end_elite_vanguard"
+        - "rogue_end_elite_arcanist"
+        - "rogue_end_elite_executioner"
+      count: 1
+    boss:
+      mob-id: "rogue_end_boss_floor{floor}"
+      count: 1
+  frost:
+    range: "16-20"
+    combat:
+      normal-mobs:
+        - "rogue_frost_ice_crawler"
+        - "rogue_frost_frost_skeleton"
+        - "rogue_frost_glacier_witch"
+        - "rogue_frost_snowbound_guard"
+        - "rogue_frost_rime_spider"
+      base-count: 3
+      count-per-floors: 3
+      max-count: 7
+    elite:
+      mobs:
+        - "rogue_frost_elite_vanguard"
+        - "rogue_frost_elite_arcanist"
+        - "rogue_frost_elite_executioner"
+      count: 1
+    boss:
+      mob-id: "rogue_frost_boss_floor{floor}"
+      count: 1
+  forge:
+    range: "21-25"
+    combat:
+      normal-mobs:
+        - "rogue_forge_slag_golem"
+        - "rogue_forge_cinder_guard"
+        - "rogue_forge_obsidian_hound"
+        - "rogue_forge_anvil_thrall"
+        - "rogue_forge_blast_mage"
       base-count: 4
-      count-per-floors: 2
+      count-per-floors: 3
+      max-count: 7
+    elite:
+      mobs:
+        - "rogue_forge_elite_vanguard"
+        - "rogue_forge_elite_arcanist"
+        - "rogue_forge_elite_executioner"
+      count: 1
+    boss:
+      mob-id: "rogue_forge_boss_floor{floor}"
+      count: 1
+  astral:
+    range: "26-30"
+    combat:
+      normal-mobs:
+        - "rogue_astral_star_wraith"
+        - "rogue_astral_astral_knight"
+        - "rogue_astral_nebula_eye"
+        - "rogue_astral_comet_shard"
+        - "rogue_astral_lunar_adept"
+      base-count: 4
+      count-per-floors: 3
+      max-count: 7
+    elite:
+      mobs:
+        - "rogue_astral_elite_vanguard"
+        - "rogue_astral_elite_arcanist"
+        - "rogue_astral_elite_executioner"
+      count: 1
+    boss:
+      mob-id: "rogue_astral_boss_floor{floor}"
+      count: 1
+  crimson:
+    range: "31-35"
+    combat:
+      normal-mobs:
+        - "rogue_crimson_blood_page"
+        - "rogue_crimson_court_duelist"
+        - "rogue_crimson_crimson_hound"
+        - "rogue_crimson_vessel_monk"
+        - "rogue_crimson_vein_walker"
+      base-count: 4
+      count-per-floors: 3
       max-count: 8
     elite:
       mobs:
-        - "rogue_end_knight"
-        - "rogue_void_priest"
+        - "rogue_crimson_elite_vanguard"
+        - "rogue_crimson_elite_arcanist"
+        - "rogue_crimson_elite_executioner"
+      count: 1
+    boss:
+      mob-id: "rogue_crimson_boss_floor{floor}"
+      count: 1
+  core:
+    range: "36-40"
+    combat:
+      normal-mobs:
+        - "rogue_core_night_core"
+        - "rogue_core_soul_reaver"
+        - "rogue_core_deep_echo"
+        - "rogue_core_sculk_wardenling"
+        - "rogue_core_gloom_priest"
+      base-count: 4
+      count-per-floors: 3
+      max-count: 8
+    elite:
+      mobs:
+        - "rogue_core_elite_vanguard"
+        - "rogue_core_elite_arcanist"
+        - "rogue_core_elite_executioner"
       count: 2
     boss:
-      mob-id: "rogue_end_boss_floor{floor}"
+      mob-id: "rogue_core_boss_floor{floor}"
+      count: 1
+  rotwood:
+    range: "41-45"
+    combat:
+      normal-mobs:
+        - "rogue_rotwood_rot_sprite"
+        - "rogue_rotwood_moss_husk"
+        - "rogue_rotwood_thorn_beast"
+        - "rogue_rotwood_fungal_mage"
+        - "rogue_rotwood_bog_wolf"
+      base-count: 5
+      count-per-floors: 3
+      max-count: 8
+    elite:
+      mobs:
+        - "rogue_rotwood_elite_vanguard"
+        - "rogue_rotwood_elite_arcanist"
+        - "rogue_rotwood_elite_executioner"
+      count: 2
+    boss:
+      mob-id: "rogue_rotwood_boss_floor{floor}"
+      count: 1
+  stormspire:
+    range: "46-50"
+    combat:
+      normal-mobs:
+        - "rogue_stormspire_volt_wisp"
+        - "rogue_stormspire_copper_guard"
+        - "rogue_stormspire_storm_archer"
+        - "rogue_stormspire_thunder_monk"
+        - "rogue_stormspire_coil_construct"
+      base-count: 5
+      count-per-floors: 3
+      max-count: 9
+    elite:
+      mobs:
+        - "rogue_stormspire_elite_vanguard"
+        - "rogue_stormspire_elite_arcanist"
+        - "rogue_stormspire_elite_executioner"
+      count: 2
+    boss:
+      mob-id: "rogue_stormspire_boss_floor{floor}"
+      count: 1
+  sunken:
+    range: "51-55"
+    combat:
+      normal-mobs:
+        - "rogue_sunken_drowned_cultist"
+        - "rogue_sunken_reef_guard"
+        - "rogue_sunken_prismarine_witch"
+        - "rogue_sunken_tide_hunter"
+        - "rogue_sunken_abyss_fishman"
+      base-count: 5
+      count-per-floors: 3
+      max-count: 9
+    elite:
+      mobs:
+        - "rogue_sunken_elite_vanguard"
+        - "rogue_sunken_elite_arcanist"
+        - "rogue_sunken_elite_executioner"
+      count: 2
+    boss:
+      mob-id: "rogue_sunken_boss_floor{floor}"
+      count: 1
+  bonewaste:
+    range: "56-60"
+    combat:
+      normal-mobs:
+        - "rogue_bonewaste_marrow_husk"
+        - "rogue_bonewaste_bone_slinger"
+        - "rogue_bonewaste_dust_knight"
+        - "rogue_bonewaste_skull_oracle"
+        - "rogue_bonewaste_rib_golem"
+      base-count: 5
+      count-per-floors: 3
+      max-count: 9
+    elite:
+      mobs:
+        - "rogue_bonewaste_elite_vanguard"
+        - "rogue_bonewaste_elite_arcanist"
+        - "rogue_bonewaste_elite_executioner"
+      count: 2
+    boss:
+      mob-id: "rogue_bonewaste_boss_floor{floor}"
+      count: 1
+  mirror:
+    range: "61-65"
+    combat:
+      normal-mobs:
+        - "rogue_mirror_glass_echo"
+        - "rogue_mirror_mirror_duelist"
+        - "rogue_mirror_quartz_phantom"
+        - "rogue_mirror_split_soul"
+        - "rogue_mirror_silver_acolyte"
+      base-count: 6
+      count-per-floors: 3
+      max-count: 10
+    elite:
+      mobs:
+        - "rogue_mirror_elite_vanguard"
+        - "rogue_mirror_elite_arcanist"
+        - "rogue_mirror_elite_executioner"
+      count: 2
+    boss:
+      mob-id: "rogue_mirror_boss_floor{floor}"
+      count: 1
+  mire:
+    range: "66-70"
+    combat:
+      normal-mobs:
+        - "rogue_mire_toxic_slime"
+        - "rogue_mire_mire_husk"
+        - "rogue_mire_venom_witch"
+        - "rogue_mire_bog_stalker"
+        - "rogue_mire_spore_knight"
+      base-count: 6
+      count-per-floors: 3
+      max-count: 10
+    elite:
+      mobs:
+        - "rogue_mire_elite_vanguard"
+        - "rogue_mire_elite_arcanist"
+        - "rogue_mire_elite_executioner"
+      count: 2
+    boss:
+      mob-id: "rogue_mire_boss_floor{floor}"
+      count: 1
+  dune:
+    range: "71-75"
+    combat:
+      normal-mobs:
+        - "rogue_dune_sand_bandit"
+        - "rogue_dune_gold_scarab"
+        - "rogue_dune_sun_adept"
+        - "rogue_dune_dune_guard"
+        - "rogue_dune_mirage_stalker"
+      base-count: 6
+      count-per-floors: 3
+      max-count: 10
+    elite:
+      mobs:
+        - "rogue_dune_elite_vanguard"
+        - "rogue_dune_elite_arcanist"
+        - "rogue_dune_elite_executioner"
+      count: 3
+    boss:
+      mob-id: "rogue_dune_boss_floor{floor}"
+      count: 1
+  theater:
+    range: "76-80"
+    combat:
+      normal-mobs:
+        - "rogue_theater_mask_actor"
+        - "rogue_theater_soul_violinist"
+        - "rogue_theater_stage_knight"
+        - "rogue_theater_curtain_wraith"
+        - "rogue_theater_opera_mage"
+      base-count: 6
+      count-per-floors: 3
+      max-count: 11
+    elite:
+      mobs:
+        - "rogue_theater_elite_vanguard"
+        - "rogue_theater_elite_arcanist"
+        - "rogue_theater_elite_executioner"
+      count: 3
+    boss:
+      mob-id: "rogue_theater_boss_floor{floor}"
+      count: 1
+  machine:
+    range: "81-85"
+    combat:
+      normal-mobs:
+        - "rogue_machine_gearling"
+        - "rogue_machine_iron_seraph"
+        - "rogue_machine_redstone_sapper"
+        - "rogue_machine_servo_guard"
+        - "rogue_machine_clockwork_mage"
+      base-count: 7
+      count-per-floors: 3
+      max-count: 11
+    elite:
+      mobs:
+        - "rogue_machine_elite_vanguard"
+        - "rogue_machine_elite_arcanist"
+        - "rogue_machine_elite_executioner"
+      count: 3
+    boss:
+      mob-id: "rogue_machine_boss_floor{floor}"
+      count: 1
+  eclipse:
+    range: "86-90"
+    combat:
+      normal-mobs:
+        - "rogue_eclipse_moonshade"
+        - "rogue_eclipse_eclipse_duelist"
+        - "rogue_eclipse_night_bloom"
+        - "rogue_eclipse_lunar_witch"
+        - "rogue_eclipse_umbra_guard"
+      base-count: 7
+      count-per-floors: 3
+      max-count: 11
+    elite:
+      mobs:
+        - "rogue_eclipse_elite_vanguard"
+        - "rogue_eclipse_elite_arcanist"
+        - "rogue_eclipse_elite_executioner"
+      count: 3
+    boss:
+      mob-id: "rogue_eclipse_boss_floor{floor}"
+      count: 1
+  chaos:
+    range: "91-95"
+    combat:
+      normal-mobs:
+        - "rogue_chaos_rift_spawn"
+        - "rogue_chaos_chaos_hound"
+        - "rogue_chaos_warped_cultist"
+        - "rogue_chaos_unstable_eye"
+        - "rogue_chaos_fracture_knight"
+      base-count: 7
+      count-per-floors: 3
+      max-count: 12
+    elite:
+      mobs:
+        - "rogue_chaos_elite_vanguard"
+        - "rogue_chaos_elite_arcanist"
+        - "rogue_chaos_elite_executioner"
+      count: 3
+    boss:
+      mob-id: "rogue_chaos_boss_floor{floor}"
+      count: 1
+  throne:
+    range: "96-100"
+    combat:
+      normal-mobs:
+        - "rogue_throne_final_guard"
+        - "rogue_throne_end_crown"
+        - "rogue_throne_void_champion"
+        - "rogue_throne_apex_priest"
+        - "rogue_throne_throne_wraith"
+      base-count: 7
+      count-per-floors: 3
+      max-count: 12
+    elite:
+      mobs:
+        - "rogue_throne_elite_vanguard"
+        - "rogue_throne_elite_arcanist"
+        - "rogue_throne_elite_executioner"
+      count: 3
+    boss:
+      mob-id: "rogue_throne_boss_floor{floor}"
       count: 1

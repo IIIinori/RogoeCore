@@ -1,4 +1,4 @@
-// RogueCore AttributePlus script. Deploy to plugins/AttributePlus/script/RogueCore/rogue_cooldown_reduce.js
+// RogueCore AttributePlus script. This attribute is registered for RogueCore systems to read.
 var priority = -1
 var combatPower = 0.4
 var attributeName = "冷却缩减"

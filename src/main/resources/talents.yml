@@ -31,12 +31,12 @@ talents:
 
   damage_reduce_talent:
     name: "坚壁减伤"
-    description: "进入副本时减伤比例 +{value}%"
+    description: "进入副本时护甲值 +{value}%"
     icon: SHIELD
     max-level: 8
     cost: [100, 170, 270, 420, 640, 920, 1280, 1760]
     effect-type: ATTRIBUTE
-    attribute: "减伤比例"
+    attribute: "护甲值"
     value-per-level: 2.0
 
   shield_talent:

@@ -1,6 +1,8 @@
 package inori.roguecore.relic
 
 import inori.roguecore.dungeon.RunPersistenceManager
+import inori.roguecore.milestone.RunMilestoneManager
+import inori.roguecore.stats.BalanceStatsManager
 import org.bukkit.entity.Player
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
@@ -24,7 +26,9 @@ object PlayerRelicData {
         }
         list += relic
         RunPersistenceManager.markDirty()
+        BalanceStatsManager.recordRelicAcquired(relic)
         player.sendMessage("§d获得遗物 ${relic.rarity.color}${relic.name}§d!")
+        RunMilestoneManager.onRelicChanged(player)
         return true
     }
 

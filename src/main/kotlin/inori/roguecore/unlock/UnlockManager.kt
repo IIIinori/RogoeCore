@@ -148,6 +148,70 @@ object UnlockManager {
         return if (hasInscriptionMastery(player)) 1 else 0
     }
 
+    fun getGearStorageBonus(player: Player): Int {
+        return when {
+            hasUnlock(player, "gear_storage_iii") -> 27
+            hasUnlock(player, "gear_storage_ii") -> 18
+            hasUnlock(player, "gear_storage_i") -> 9
+            else -> 0
+        }
+    }
+
+    fun getIdentificationQueueBonus(player: Player): Int {
+        return if (hasUnlock(player, "batch_identification")) 1 else 0
+    }
+
+    fun getIdentificationTimeMultiplier(player: Player): Double {
+        return if (hasUnlock(player, "rapid_identification")) 0.85 else 1.0
+    }
+
+    fun getIdentificationPriceMultiplier(player: Player): Double {
+        return if (hasUnlock(player, "identification_discount")) 0.85 else 1.0
+    }
+
+    fun getForgeBookQueueBonus(player: Player): Int {
+        return if (hasUnlock(player, "forge_queue_expansion")) 1 else 0
+    }
+
+    fun getForgeBookTimeMultiplier(player: Player): Double {
+        return if (hasUnlock(player, "furnace_acceleration")) 0.85 else 1.0
+    }
+
+    fun getForgeBookDropMultiplier(player: Player): Double {
+        return if (hasUnlock(player, "forge_book_hunt")) 1.2 else 1.0
+    }
+
+    fun getForgeBookQualityWeightBonus(player: Player, qualityId: String): Int {
+        if (!hasUnlock(player, "high_tier_schematics")) {
+            return 0
+        }
+        return when (qualityId.lowercase()) {
+            "epic" -> 5
+            "legendary" -> 4
+            else -> 0
+        }
+    }
+
+    fun getPermanentForgeMaxLevelBonus(player: Player): Int {
+        return when {
+            hasUnlock(player, "permanent_forge_cap_ii") -> 5
+            hasUnlock(player, "permanent_forge_cap_i") -> 3
+            else -> 0
+        }
+    }
+
+    fun getPermanentForgePriceMultiplier(player: Player): Double {
+        return if (hasUnlock(player, "inscription_saving")) 0.9 else 1.0
+    }
+
+    fun getRarityUpgradePriceMultiplier(player: Player): Double {
+        return if (hasUnlock(player, "rarity_upgrade_discount")) 0.88 else 1.0
+    }
+
+    fun getSalvageMaterialBonus(player: Player): Int {
+        return if (hasUnlock(player, "salvage_accounting")) 1 else 0
+    }
+
     fun hasSealedVault(player: Player): Boolean {
         return hasUnlock(player, "sealed_vault")
     }
@@ -170,6 +234,8 @@ object UnlockManager {
 
     fun getRouteWeightBonus(uuid: UUID, route: NextFloorRoute): Map<RoomType, Int> {
         return when (route) {
+            NextFloorRoute.STABLE -> emptyMap()
+
             NextFloorRoute.BATTLE -> if (hasUnlock(uuid, "battle_doctrine")) {
                 mapOf(RoomType.COMBAT to 10, RoomType.ELITE to 5, RoomType.CHEST to 2)
             } else emptyMap()
@@ -182,6 +248,10 @@ object UnlockManager {
                 mapOf(RoomType.CHEST to 8, RoomType.GAMBLE to 3, RoomType.REST to 2)
             } else emptyMap()
 
+            NextFloorRoute.PILGRIMAGE -> if (hasUnlock(uuid, "sanctified_prayer")) {
+                mapOf(RoomType.SHRINE to 5, RoomType.REST to 4, RoomType.TRIAL to 3)
+            } else emptyMap()
+
             NextFloorRoute.EXTREME -> emptyMap()
         }
     }
@@ -189,6 +259,7 @@ object UnlockManager {
     fun getRouteHiddenBonus(uuid: UUID, route: NextFloorRoute): Double {
         return when (route) {
             NextFloorRoute.TREASURE -> if (hasUnlock(uuid, "treasure_cipher")) 0.2 else 0.0
+            NextFloorRoute.PILGRIMAGE -> if (hasUnlock(uuid, "sanctified_prayer")) 0.08 else 0.0
             else -> 0.0
         }
     }

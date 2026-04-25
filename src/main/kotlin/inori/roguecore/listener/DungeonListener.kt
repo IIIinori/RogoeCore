@@ -3,7 +3,12 @@ package inori.roguecore.listener
 import inori.roguecore.combat.RoomCombatManager
 import inori.roguecore.data.DatabaseManager
 import inori.roguecore.data.ShardRewardManager
+import inori.roguecore.stats.BalanceStatsManager
+import inori.roguecore.summary.RunEndReason
+import inori.roguecore.summary.RunSummaryManager
 import inori.roguecore.dungeon.DungeonManager
+import inori.roguecore.item.ForgeBookTaskManager
+import inori.roguecore.item.IdentificationTaskManager
 import inori.roguecore.party.PartyManager
 import org.bukkit.entity.Player
 import org.bukkit.event.block.Action
@@ -43,6 +48,14 @@ object DungeonListener {
         PartyManager.onPlayerJoin(player)
         if (DungeonManager.canRejoinDungeon(uuid)) {
             player.sendMessage("§e你有一场未结束的冒险，输入 §f/rogue rejoin §e可返回副本。")
+        }
+        val completedIdentify = IdentificationTaskManager.getCompletedCount(uuid)
+        if (completedIdentify > 0) {
+            player.sendMessage("§e你有 §a$completedIdentify §e个已完成的装备鉴定，输入 §f/rogue identify §e可一键领取。")
+        }
+        val completedForge = ForgeBookTaskManager.getCompletedCount(uuid)
+        if (completedForge > 0) {
+            player.sendMessage("§e你有 §a$completedForge §e个已完成的装备打造，输入 §f/rogue craft §e可一键领取。")
         }
     }
 
@@ -173,6 +186,9 @@ object DungeonListener {
     fun onPlayerRespawn(event: PlayerRespawnEvent) {
         val player = event.player
         if (!DungeonManager.isInDungeon(player)) return
+
+        DungeonManager.getPlayerDungeon(player)?.let { BalanceStatsManager.recordFloorDeath(it.config.floorNumber) }
+        RunSummaryManager.markEndReason(player.uniqueId, RunEndReason.DEATH)
 
         // 死亡结算碎片（打折）
         val shards = ShardRewardManager.settleDeath(player.uniqueId)

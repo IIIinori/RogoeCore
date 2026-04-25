@@ -2,6 +2,9 @@ package inori.roguecore.data
 
 import inori.roguecore.dungeon.DungeonManager
 import inori.roguecore.dungeon.RunPersistenceManager
+import inori.roguecore.milestone.RunMilestoneManager
+import inori.roguecore.stats.BalanceStatsManager
+import inori.roguecore.summary.RunSummaryManager
 import inori.roguecore.talent.TalentManager
 import inori.roguecore.ui.DungeonHudManager
 import org.bukkit.Bukkit
@@ -68,8 +71,10 @@ object ShardRewardManager {
             return
         }
         runShards[uuid] = (runShards[uuid] ?: 0) + amount
+        RunSummaryManager.onRunShardsChanged(uuid, runShards[uuid] ?: 0)
         RunPersistenceManager.markDirty()
         notifyHud(uuid, "§6本局碎片 +$amount")
+        RunMilestoneManager.onRunShardsChanged(uuid)
     }
 
     /**
@@ -89,6 +94,7 @@ object ShardRewardManager {
         } else {
             runShards.remove(uuid)
         }
+        RunSummaryManager.onRunShardsChanged(uuid, remain)
         RunPersistenceManager.markDirty()
         notifyHud(uuid, "§c本局碎片 -$amount")
         return true
@@ -106,6 +112,8 @@ object ShardRewardManager {
         val bonus = TalentManager.getShardBonus(uuid)
         val total = (base * bonus).toInt()
         PlayerDataManager.addSoulShards(uuid, total)
+        BalanceStatsManager.recordSoulShardsSettled(total)
+        RunSummaryManager.onSoulShardsSettled(uuid, total)
         return total
     }
 
@@ -121,6 +129,8 @@ object ShardRewardManager {
         val bonus = TalentManager.getShardBonus(uuid)
         val total = (base * bonus * deathPenalty).toInt()
         PlayerDataManager.addSoulShards(uuid, total)
+        BalanceStatsManager.recordSoulShardsSettled(total)
+        RunSummaryManager.onSoulShardsSettled(uuid, total)
         return total
     }
 
@@ -149,6 +159,9 @@ object ShardRewardManager {
         val bonus = TalentManager.getShardBonus(uuid)
         val total = (base * bonus).toInt()
         PlayerDataManager.addSoulShards(uuid, total)
+        BalanceStatsManager.recordSoulShardsSettled(total)
+        RunSummaryManager.onSoulShardsSettled(uuid, total)
+        RunSummaryManager.onRunShardsChanged(uuid, remain)
         RunPersistenceManager.markDirty()
         notifyHud(uuid, "§b提前提现 +$total 灵魂碎片")
         return total

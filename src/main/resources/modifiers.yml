@@ -1,0 +1,39 @@
+# ================================
+# RogueCore 本局临时修正配置
+# ================================
+# 这些数值会影响事件链强度，修改后使用 /rogue reload 重载。
+
+shop-debt:
+  enabled: true
+  grant-base: 55
+  grant-power-scale: 5
+  debt-per-room: 24
+  duration-rooms: 3
+
+sealed-chest-pressure:
+  enabled: true
+  reward-base: 18
+  reward-power-scale: 3
+  duration-rooms: 3
+  charges: 1
+
+gamble-streak:
+  enabled: true
+  base-multiplier: 1.5
+  high-power-scale: 0.05
+  max-multiplier: 2.5
+
+shrine-blessing:
+  enabled: true
+  blessing-duration: 2
+  twin-duration: 3
+  blessing-reward-base: 8
+  twin-reward-base: 10
+  reward-power-scale: 2
+  twin-relic-scale: 1
+  heal-percent: 0.06
+
+forge-overdrive:
+  enabled: true
+  price: 24
+  discount: 0.25

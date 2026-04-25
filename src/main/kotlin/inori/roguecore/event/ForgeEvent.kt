@@ -6,6 +6,8 @@ import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.item.DungeonLootManager
+import inori.roguecore.modifier.RunModifierManager
+import inori.roguecore.modifier.RunModifierType
 import inori.roguecore.ui.DungeonGuiGuard
 import inori.roguecore.unlock.UnlockManager
 import org.bukkit.entity.Player
@@ -17,6 +19,8 @@ import taboolib.module.configuration.Config
 import taboolib.module.configuration.Configuration
 import taboolib.module.ui.openMenu
 import taboolib.module.ui.type.Chest
+import java.util.UUID
+import kotlin.math.roundToInt
 
 /**
  * 铁匠房事件。
@@ -37,6 +41,8 @@ object ForgeEvent {
         EquipmentSlot.HAND to 33,
         EquipmentSlot.OFF_HAND to 34
     )
+    private val permanentConfirmAt = mutableMapOf<Pair<UUID, EquipmentSlot>, Long>()
+    private const val PERMANENT_CONFIRM_WINDOW_MS = 10_000L
 
     fun trigger(player: Player, instance: DungeonInstance) {
         openForgeUI(player, instance)
@@ -44,17 +50,27 @@ object ForgeEvent {
 
     private fun openForgeUI(player: Player, instance: DungeonInstance) {
         val forgePower = EventAffixManager.getFamilyPower(instance, RoomType.FORGE, "FORGE")
+        val forgeDiscount = RunModifierManager.getForgeDiscount(player)
+        val overdriveEnabled = RunModifierManager.isEnabled(RunModifierType.FORGE_OVERDRIVE)
+        val overdriveCost = RunModifierManager.forgeOverdrivePrice(instance)
+        val overdriveDiscountPercent = (RunModifierManager.forgeOverdriveDiscount() * 100).toInt()
+        fun discountedPrice(value: Int): Int = (value * (1.0 - forgeDiscount)).toInt().coerceAtLeast(0)
         val shards = ShardRewardManager.getRunShards(player.uniqueId)
-        val rerollPrice = (config.getInt("forge.reroll-price", 18) - forgePower * 2).coerceAtLeast(0)
-        val lockPrice = (getLockPrice(player) - forgePower).coerceAtLeast(0)
+        val rerollPrice = discountedPrice((config.getInt("forge.reroll-price", 18) - forgePower * 2).coerceAtLeast(0))
+        val lockPrice = discountedPrice((getLockPrice(player) - forgePower).coerceAtLeast(0))
         val lockSigilCost = (getLockSigilCost() - forgePower / 4).coerceAtLeast(0)
         val coolingEmberCost = (getCoolingEmberCost() - forgePower / 5).coerceAtLeast(0)
         val coolingHeatReduce = getCoolingHeatReduce(player) + forgePower.coerceAtMost(6)
-        val refinePrice = (getNoHeatReforgePrice(player) - forgePower * 3).coerceAtLeast(0)
+        val refinePrice = discountedPrice((getNoHeatReforgePrice(player) - forgePower * 3).coerceAtLeast(0))
         val refineEmberCost = (getNoHeatReforgeEmberCost() - forgePower / 5).coerceAtLeast(0)
         val refineSigilCost = (getNoHeatReforgeSigilCost(player) - forgePower / 5).coerceAtLeast(0)
         val temperEmberCost = (getTemperEmberCost() - forgePower / 6).coerceAtLeast(0)
         val temperLevelGain = getTemperLevelGain(player) + (forgePower / 7).coerceAtMost(2)
+        val permanentEnabled = config.getBoolean("forge.permanent-convert.enabled", true)
+        val permanentMinFloor = config.getInt("forge.permanent-convert.min-floor", 10).coerceAtLeast(1)
+        val permanentAvailable = permanentEnabled && instance.config.floorNumber >= permanentMinFloor
+        val permanentBossEmberCost = (config.getInt("forge.permanent-convert.boss-ember-cost", 2) - forgePower / 6).coerceAtLeast(0)
+        val permanentHiddenSigilCost = (config.getInt("forge.permanent-convert.hidden-sigil-cost", 1) - forgePower / 8).coerceAtLeast(0)
         val temperUnlocked = UnlockManager.hasSoulTempering(player)
         val lockingUnlocked = UnlockManager.hasPrecisionLocking(player)
         val coolingUnlocked = UnlockManager.hasEmberCooling(player)
@@ -71,7 +87,7 @@ object ForgeEvent {
             handLocked(true)
 
             val gearSlots = displaySlots.values.toSet()
-            val infoSlots = mutableSetOf(10, 13, 16, 22, 24, 40)
+            val infoSlots = mutableSetOf(10, 13, 15, 16, 22, 24, 40, 41)
             if (temperUnlocked) {
                 infoSlots += 25
             }
@@ -110,6 +126,28 @@ object ForgeEvent {
                 }
             })
 
+            set(15, XMaterial.NETHER_STAR.parseItem()!!.apply {
+                itemMeta = itemMeta?.also { meta ->
+                    meta.setDisplayName("§6灵魂铭刻")
+                    meta.lore = buildList {
+                        add("")
+                        add("§7按 §eF键 §7点击装备位")
+                        add("§7可将临时装备转为永久装备")
+                        add("§7铭刻后会保留当前属性、词条和锻造等级")
+                        add("")
+                        if (permanentAvailable) {
+                            add("§e价格按装备评分和锻造等级计算")
+                            add("§7材料: ${ForgeMaterialType.BOSS_EMBER.coloredName()} §6x$permanentBossEmberCost §7+ ${ForgeMaterialType.HIDDEN_SIGIL.coloredName()} §bx$permanentHiddenSigilCost")
+                            add("§8首次按 F 预确认，10 秒内再次按 F 执行")
+                        } else if (!permanentEnabled) {
+                            add("§c当前服务器未启用灵魂铭刻")
+                        } else {
+                            add("§c需要到达第 $permanentMinFloor 层后开放")
+                        }
+                    }
+                }
+            })
+
             set(16, XMaterial.SMITHING_TABLE.parseItem()!!.apply {
                 itemMeta = itemMeta?.also { meta ->
                     meta.setDisplayName("§6升阶")
@@ -134,6 +172,7 @@ object ForgeEvent {
                         add(if (lockingUnlocked) "§7中键: 循环锁定 1 条随机词条" else "§8中键: 需要研究“精密锁词”")
                         add(if (coolingUnlocked) "§7Q键: 余烬退火，降低装备热度" else "§8Q键: 需要研究“余烬退火”")
                         add(if (refinedReforgeUnlocked) "§7Ctrl+Q: 精炼无热重铸" else "§8Ctrl+Q: 需要研究“精炼重铸”")
+                        add(if (permanentAvailable) "§7F键: 灵魂铭刻，转为永久装备" else "§8F键: 灵魂铭刻暂未开放")
                         add("§7Shift+左键: 分解换本局碎片")
                         add(if (temperUnlocked) "§7Shift+右键: 灵魂淬火" else "§8研究“灵魂淬火”可开启高级工艺")
                         add("")
@@ -205,6 +244,24 @@ object ForgeEvent {
                 })
             }
 
+            set(41, XMaterial.FIRE_CHARGE.parseItem()!!.apply {
+                itemMeta = itemMeta?.also { meta ->
+                    meta.setDisplayName(if (overdriveEnabled) "§6炉火过载" else "§8炉火过载")
+                    meta.lore = if (overdriveEnabled) {
+                        listOf(
+                            "",
+                            "§7消耗 §6$overdriveCost §7本局碎片",
+                            "§7下一次铁匠锻造碎片价格降低 §a$overdriveDiscountPercent%",
+                            "§7成功锻造后消耗此修正",
+                            "",
+                            "§e点击点燃过载炉火"
+                        )
+                    } else {
+                        listOf("", "§8当前服务器未启用炉火过载")
+                    }
+                }
+            })
+
             set(40, XMaterial.BARRIER.parseItem()!!.apply {
                 itemMeta = itemMeta?.also { meta ->
                     meta.setDisplayName("§c离开铁匠铺")
@@ -213,7 +270,7 @@ object ForgeEvent {
             })
 
             for ((equipmentSlot, menuSlot) in displaySlots) {
-                set(menuSlot, toDisplayItem(player, equipmentSlot, temperUnlocked))
+                set(menuSlot, toDisplayItem(player, equipmentSlot, temperUnlocked, permanentAvailable, permanentMinFloor, forgePower, permanentBossEmberCost, permanentHiddenSigilCost))
             }
 
             onClick { event ->
@@ -222,6 +279,19 @@ object ForgeEvent {
                 if (event.rawSlot == 40) {
                     DungeonGuiGuard.unlock(player)
                     player.closeInventory()
+                    return@onClick
+                }
+                if (event.rawSlot == 41) {
+                    if (!overdriveEnabled) {
+                        player.sendMessage("§c当前服务器未启用炉火过载。")
+                        return@onClick
+                    }
+                    if (!ShardRewardManager.takeRunShards(player.uniqueId, overdriveCost)) {
+                        player.sendMessage("§c本局碎片不足，炉火过载需要 §e$overdriveCost §c碎片。")
+                        return@onClick
+                    }
+                    RunModifierManager.addModifier(player, RunModifierType.FORGE_OVERDRIVE, 0, 1, RunModifierManager.forgeOverdriveDiscount(), "铁匠炉火")
+                    openForgeUI(player, instance)
                     return@onClick
                 }
 
@@ -252,6 +322,9 @@ object ForgeEvent {
                         ForgeMaterialManager.add(player.uniqueId, ForgeMaterialType.HIDDEN_SIGIL, lockSigilCost)
                     }
                     player.sendMessage(result.message)
+                    if (result.success) {
+                        RunModifierManager.consumeForgeOverdrive(player)
+                    }
                     openForgeUI(player, instance)
                     return@onClick
                 }
@@ -275,6 +348,9 @@ object ForgeEvent {
                         ForgeMaterialManager.add(player.uniqueId, ForgeMaterialType.BOSS_EMBER, coolingEmberCost)
                     }
                     player.sendMessage(result.message)
+                    if (result.success) {
+                        RunModifierManager.consumeForgeOverdrive(player)
+                    }
                     openForgeUI(player, instance)
                     return@onClick
                 }
@@ -312,6 +388,54 @@ object ForgeEvent {
                         ForgeMaterialManager.add(player.uniqueId, ForgeMaterialType.HIDDEN_SIGIL, refineSigilCost)
                     }
                     player.sendMessage(result.message)
+                    if (result.success) {
+                        RunModifierManager.consumeForgeOverdrive(player)
+                    }
+                    openForgeUI(player, instance)
+                    return@onClick
+                }
+
+                if (event.clickEvent().click == ClickType.SWAP_OFFHAND) {
+                    if (!permanentAvailable) {
+                        player.sendMessage(if (!permanentEnabled) "§c当前服务器未启用灵魂铭刻。" else "§c灵魂铭刻需要到达第 $permanentMinFloor 层后开放。")
+                        return@onClick
+                    }
+                    val price = discountedPrice(getPermanentPrice(equipped.score, equipped.forgeLevel, forgePower))
+                    val key = player.uniqueId to equipmentSlot
+                    val now = System.currentTimeMillis()
+                    val confirmed = permanentConfirmAt[key]?.let { now - it <= PERMANENT_CONFIRM_WINDOW_MS } == true
+                    if (!confirmed) {
+                        permanentConfirmAt[key] = now
+                        player.sendMessage("§e再次按 §6F键 §e确认灵魂铭刻: §6$price §e碎片 + ${ForgeMaterialType.BOSS_EMBER.coloredName()} §6x$permanentBossEmberCost §e+ ${ForgeMaterialType.HIDDEN_SIGIL.coloredName()} §bx$permanentHiddenSigilCost")
+                        player.sendMessage("§7铭刻后装备会变为永久装备，且不能继续使用副本铁匠强化。")
+                        return@onClick
+                    }
+                    permanentConfirmAt.remove(key)
+                    if (!ShardRewardManager.takeRunShards(player.uniqueId, price)) {
+                        player.sendMessage("§c本局碎片不足，灵魂铭刻需要 §e$price §c碎片。")
+                        return@onClick
+                    }
+                    if (!ForgeMaterialManager.take(player.uniqueId, ForgeMaterialType.BOSS_EMBER, permanentBossEmberCost)) {
+                        ShardRewardManager.addRunShards(player.uniqueId, price)
+                        player.sendMessage("§c缺少 ${ForgeMaterialType.BOSS_EMBER.coloredName()} §c，灵魂铭刻需要 §6x$permanentBossEmberCost")
+                        return@onClick
+                    }
+                    if (!ForgeMaterialManager.take(player.uniqueId, ForgeMaterialType.HIDDEN_SIGIL, permanentHiddenSigilCost)) {
+                        ShardRewardManager.addRunShards(player.uniqueId, price)
+                        ForgeMaterialManager.add(player.uniqueId, ForgeMaterialType.BOSS_EMBER, permanentBossEmberCost)
+                        player.sendMessage("§c缺少 ${ForgeMaterialType.HIDDEN_SIGIL.coloredName()} §c，灵魂铭刻需要 §bx$permanentHiddenSigilCost")
+                        return@onClick
+                    }
+                    val result = DungeonLootManager.convertEquippedToPermanent(player, equipmentSlot)
+                    if (!result.success) {
+                        ShardRewardManager.addRunShards(player.uniqueId, price)
+                        ForgeMaterialManager.add(player.uniqueId, ForgeMaterialType.BOSS_EMBER, permanentBossEmberCost)
+                        ForgeMaterialManager.add(player.uniqueId, ForgeMaterialType.HIDDEN_SIGIL, permanentHiddenSigilCost)
+                    }
+                    player.sendMessage(result.message)
+                    if (result.success) {
+                        RunModifierManager.consumeForgeOverdrive(player)
+                    }
                     openForgeUI(player, instance)
                     return@onClick
                 }
@@ -328,12 +452,15 @@ object ForgeEvent {
                         ShardRewardManager.addRunShards(player.uniqueId, result.reward)
                     }
                     player.sendMessage(result.message)
+                    if (result.success) {
+                        RunModifierManager.consumeForgeOverdrive(player)
+                    }
                     openForgeUI(player, instance)
                     return@onClick
                 }
 
                 if (temperUnlocked && event.clickEvent().click == ClickType.SHIFT_RIGHT) {
-                    val price = getTemperPrice(equipped.forgeLevel)
+                    val price = discountedPrice(getTemperPrice(equipped.forgeLevel))
                     if (!ShardRewardManager.takeRunShards(player.uniqueId, price)) {
                         player.sendMessage("§c本局碎片不足，淬火需要 §e$price §c碎片。")
                         return@onClick
@@ -358,12 +485,15 @@ object ForgeEvent {
                         ForgeMaterialManager.add(player.uniqueId, ForgeMaterialType.BOSS_EMBER, temperEmberCost)
                     }
                     player.sendMessage(result.message)
+                    if (result.success) {
+                        RunModifierManager.consumeForgeOverdrive(player)
+                    }
                     openForgeUI(player, instance)
                     return@onClick
                 }
 
                 if (event.clickEvent().click == ClickType.RIGHT) {
-                    val price = getUpgradePrice(equipped.forgeLevel)
+                    val price = discountedPrice(getUpgradePrice(equipped.forgeLevel))
                     if (!ShardRewardManager.takeRunShards(player.uniqueId, price)) {
                         player.sendMessage("§c本局碎片不足，升阶需要 §e$price §c碎片。")
                         return@onClick
@@ -380,6 +510,9 @@ object ForgeEvent {
                         ShardRewardManager.addRunShards(player.uniqueId, price)
                     }
                     player.sendMessage(result.message)
+                    if (result.success) {
+                        RunModifierManager.consumeForgeOverdrive(player)
+                    }
                     openForgeUI(player, instance)
                     return@onClick
                 }
@@ -409,6 +542,14 @@ object ForgeEvent {
         val base = config.getInt("forge.upgrade-price", 22).coerceAtLeast(0)
         val extra = config.getInt("forge.upgrade-price-per-level", 10).coerceAtLeast(0)
         return base + (forgeLevel * extra)
+    }
+
+    private fun getPermanentPrice(score: Double, forgeLevel: Int, forgePower: Int): Int {
+        val base = config.getInt("forge.permanent-convert.base-price", 120).coerceAtLeast(0)
+        val scoreScale = config.getDouble("forge.permanent-convert.score-scale", 1.6).coerceAtLeast(0.0)
+        val forgeLevelPrice = config.getInt("forge.permanent-convert.forge-level-price", 35).coerceAtLeast(0)
+        val discount = forgePower * 5
+        return (base + (score * scoreScale).roundToInt() + forgeLevel * forgeLevelPrice - discount).coerceAtLeast(0)
     }
 
     private fun getTemperPrice(forgeLevel: Int): Int {
@@ -472,12 +613,22 @@ object ForgeEvent {
         return 1 + UnlockManager.getTemperLevelBonus(player)
     }
 
-    private fun toDisplayItem(player: Player, equipmentSlot: EquipmentSlot, temperUnlocked: Boolean): ItemStack {
+    private fun toDisplayItem(
+        player: Player,
+        equipmentSlot: EquipmentSlot,
+        temperUnlocked: Boolean,
+        permanentAvailable: Boolean,
+        permanentMinFloor: Int,
+        forgePower: Int,
+        permanentBossEmberCost: Int,
+        permanentHiddenSigilCost: Int
+    ): ItemStack {
         val equipped = DungeonLootManager.getEquippedLoot(player, equipmentSlot)
         if (equipped == null) {
             return placeholder(equipmentSlot)
         }
         val temperLevelGain = getTemperLevelGain(player)
+        val permanentPrice = getPermanentPrice(equipped.score, equipped.forgeLevel, forgePower)
 
         return equipped.item.clone().apply {
             itemMeta = itemMeta?.also { meta ->
@@ -507,6 +658,11 @@ object ForgeEvent {
                     "§eCtrl+Q: 精炼重铸 (${getNoHeatReforgePrice(player)} 碎片 + ${ForgeMaterialType.BOSS_EMBER.displayName} x${getNoHeatReforgeEmberCost()} + ${ForgeMaterialType.HIDDEN_SIGIL.displayName} x${getNoHeatReforgeSigilCost(player)})"
                 } else {
                     "§8Ctrl+Q: 需要研究“精炼重铸”"
+                }
+                lore += if (permanentAvailable) {
+                    "§eF键: 灵魂铭刻 (${permanentPrice} 碎片 + ${ForgeMaterialType.BOSS_EMBER.displayName} x$permanentBossEmberCost + ${ForgeMaterialType.HIDDEN_SIGIL.displayName} x$permanentHiddenSigilCost)"
+                } else {
+                    "§8F键: 第 $permanentMinFloor 层后可灵魂铭刻"
                 }
                 lore += "§eShift+左键: 分解 (+${getSalvageReward(player, equipmentSlot)} 本局碎片)"
                 if (temperUnlocked) {

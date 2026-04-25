@@ -11,10 +11,15 @@ import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.DungeonManager
 import inori.roguecore.dungeon.RunPersistenceManager
+import inori.roguecore.event.EventScaling
 import inori.roguecore.event.RoomEventManager
 import inori.roguecore.dungeon.room.Room
 import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.item.DungeonLootManager
+import inori.roguecore.milestone.RunMilestoneManager
+import inori.roguecore.modifier.RunModifierManager
+import inori.roguecore.stats.BalanceStatsManager
+import inori.roguecore.summary.RunSummaryManager
 import inori.roguecore.party.PartyManager
 import inori.roguecore.relic.RelicEffectHandler
 import inori.roguecore.ui.DungeonHudManager
@@ -27,6 +32,8 @@ import org.bukkit.Sound
 import org.bukkit.World
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.function.info
@@ -162,6 +169,7 @@ object RoomCombatManager {
         for (member in instance.getOnlinePlayers()) {
             member.sendMessage("§c⚔ ${typeName}房间已激活! 消灭所有怪物!")
             DungeonHudManager.pushActionBar(member, "§c$typeName 已封锁，清除全部怪物")
+            RelicEffectHandler.onCombatStart(member)
         }
         DungeonSceneCueManager.broadcastCombatStart(instance, room)
     }
@@ -180,6 +188,7 @@ object RoomCombatManager {
 
         // 词缀倍率
         val countMultiplier = AffixManager.getMobCountMultiplier(instance) * getPartySizeMultiplier(instance)
+        val hpMultiplier = AffixManager.getMobHpMultiplier(instance)
         val speedBonus = AffixManager.getMobSpeedBonus(instance)
 
         for (wave in waves) {
@@ -193,11 +202,25 @@ object RoomCombatManager {
                     mobRoomMap[entity.uniqueId] = instance.id to room.id
                     spawnedCount++
 
-                    // 移速词缀
-                    if (speedBonus > 0 && entity is org.bukkit.entity.LivingEntity) {
-                        val attr = entity.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MOVEMENT_SPEED)
-                        if (attr != null) {
-                            attr.baseValue = attr.baseValue * (1.0 + speedBonus)
+                    if (entity is org.bukkit.entity.LivingEntity) {
+                        if (hpMultiplier > 0.0 && hpMultiplier != 1.0) {
+                            val hpAttr = entity.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH)
+                            if (hpAttr != null) {
+                                hpAttr.baseValue = (hpAttr.baseValue * hpMultiplier).coerceAtLeast(1.0)
+                                entity.health = hpAttr.value.coerceAtMost(hpAttr.baseValue)
+                            }
+                        }
+                        val spawnShield = AffixManager.getMobSpawnShield(instance)
+                        if (spawnShield > 0.0) {
+                            val amplifier = (spawnShield / 4.0).toInt().coerceIn(0, 9)
+                            entity.addPotionEffect(PotionEffect(PotionEffectType.ABSORPTION, 20 * 60, amplifier, true, true, true))
+                        }
+                        // 移速词缀
+                        if (speedBonus > 0) {
+                            val attr = entity.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MOVEMENT_SPEED)
+                            if (attr != null) {
+                                attr.baseValue = attr.baseValue * (1.0 + speedBonus)
+                            }
                         }
                     }
                 }
@@ -355,19 +378,48 @@ object RoomCombatManager {
             player.sendMessage("§a✔ ${room.type.displayName}房间已通关!")
             DungeonHudManager.pushActionBar(player, "§a${room.type.displayName}已通关")
             ShardRewardManager.onRoomClear(uuid, instance.config.floorNumber, AffixManager.getShardMultiplier(instance))
+            val affixShardBonus = AffixManager.getCombatShardFlat(instance)
+            if (affixShardBonus > 0) {
+                ShardRewardManager.addRunShards(uuid, affixShardBonus)
+                player.sendMessage("§6战斗词缀额外奖励 §e$affixShardBonus §6本局碎片。")
+            }
+            val affixEmberBonus = AffixManager.getCombatEmberFlat(instance)
+            if (affixEmberBonus > 0) {
+                ForgeMaterialManager.add(uuid, ForgeMaterialType.BOSS_EMBER, affixEmberBonus)
+                player.sendMessage("§6战斗余烬凝成 ${ForgeMaterialType.BOSS_EMBER.coloredName()} §ex$affixEmberBonus")
+            }
             BoonEffectHandler.onRoomCleared(player)
             RelicEffectHandler.onRoomCleared(player)
+            RunMilestoneManager.onRoomCleared(player, room.type)
+            RunSummaryManager.onRoomCleared(player, room.type)
+            RunModifierManager.onRoomCleared(player, room.type)
             when (room.type) {
                 RoomType.ELITE -> {
                     if (DungeonLootManager.grantEliteLoot(player, instance)) {
                         player.sendMessage("§6精英倒下后留下了一件临时装备。")
+                    }
+                    val eliteLootChance = RelicEffectHandler.getEliteLootChance(player) + AffixManager.getHiddenLootChance(instance) * 100.0
+                    if (Random.nextDouble() * 100.0 < eliteLootChance && DungeonLootManager.grantEliteLoot(player, instance)) {
+                        player.sendMessage("§d额外战利品共鸣让精英掉落了一件装备。")
+                    }
+                    val eliteRelicChance = RelicEffectHandler.getEliteRelicChance(player)
+                    if (Random.nextDouble() * 100.0 < eliteRelicChance) {
+                        inori.roguecore.relic.RelicSelectManager.offerRelicSelection(player, EventScaling.relicOfferCount(instance, 3))
                     }
                 }
                 RoomType.BOSS -> {
                     if (DungeonLootManager.grantBossLoot(player, instance)) {
                         player.sendMessage("§6Boss 战利品中包含临时装备。")
                     }
-                    val embers = rewardBossEmbers(player)
+                    val bossExtraLootChance = RelicEffectHandler.getBossLootChance(player) + AffixManager.getHiddenLootChance(instance) * 100.0
+                    if (Random.nextDouble() * 100.0 < bossExtraLootChance && DungeonLootManager.grantBossLoot(player, instance)) {
+                        player.sendMessage("§d额外战利品共鸣让 Boss 多掉落了一件装备。")
+                    }
+                    val bossRelicChance = AffixManager.getBossRelicChance(instance)
+                    if (bossRelicChance > 0.0 && Random.nextDouble() < bossRelicChance) {
+                        inori.roguecore.relic.RelicSelectManager.offerRelicSelection(player, EventScaling.relicOfferCount(instance, 3))
+                    }
+                    val embers = rewardBossEmbers(player, instance)
                     if (embers > 0) {
                         player.sendMessage("§6Boss 炉心崩裂，掉出了 ${ForgeMaterialType.BOSS_EMBER.coloredName()} §ex$embers")
                     }
@@ -408,6 +460,7 @@ object RoomCombatManager {
             for (uuid in instance.players) {
                 val player = Bukkit.getPlayer(uuid) ?: continue
                 ShardRewardManager.onDungeonClear(uuid, instance.config.floorNumber, AffixManager.getShardMultiplier(instance))
+                BalanceStatsManager.recordFloorCleared(instance.config.floorNumber)
                 PlayerDataManager.updateBestFloor(uuid, instance.config.floorNumber)
                 player.sendMessage("§6§l★ 副本通关! 所有房间已清除!")
                 player.sendMessage("§e当前本局碎片: §6${ShardRewardManager.getRunShards(uuid)}")
@@ -425,8 +478,10 @@ object RoomCombatManager {
     }
 
     private fun rewardHiddenKeys(instance: DungeonInstance, room: Room) {
+        val relicKeyChance = instance.getOnlinePlayers().maxOfOrNull { RelicEffectHandler.getHiddenKeyChance(it) } ?: 0.0
+        val affixKeyChance = AffixManager.getEliteKeyChance(instance)
         val reward = when (room.type) {
-            RoomType.ELITE -> if (Random.nextDouble() <= instance.config.hiddenEliteKeyChance) 1 else 0
+            RoomType.ELITE -> if (Random.nextDouble() <= instance.config.hiddenEliteKeyChance + affixKeyChance + relicKeyChance / 100.0) 1 else 0
             RoomType.BOSS -> instance.config.hiddenBossKeys
             else -> 0
         }
@@ -441,9 +496,10 @@ object RoomCombatManager {
         }
     }
 
-    private fun rewardBossEmbers(player: Player): Int {
-        val min = eventsConfig.getInt("forge.materials.boss-ember.reward-min", 1).coerceAtLeast(0)
-        val max = eventsConfig.getInt("forge.materials.boss-ember.reward-max", min).coerceAtLeast(min)
+    private fun rewardBossEmbers(player: Player, instance: DungeonInstance): Int {
+        val bonus = AffixManager.getBossEmberBonus(instance) + RelicEffectHandler.getBossEmberBonus(player)
+        val min = (eventsConfig.getInt("forge.materials.boss-ember.reward-min", 1) + bonus).coerceAtLeast(0)
+        val max = (eventsConfig.getInt("forge.materials.boss-ember.reward-max", min) + bonus).coerceAtLeast(min)
         if (max <= 0) {
             return 0
         }

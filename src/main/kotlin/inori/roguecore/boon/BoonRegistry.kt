@@ -76,7 +76,12 @@ object BoonRegistry {
                             valuePerLevel = sectionNode.getDouble("value-per-level", 0.0),
                             threshold = sectionNode.getDouble("threshold", 0.0),
                             tag = sectionNode.getString("tag") ?: "",
-                            perTag = sectionNode.getDouble("per-tag", 0.0)
+                            perTag = sectionNode.getDouble("per-tag", 0.0),
+                            chance = sectionNode.getDouble("chance", 1.0).coerceIn(0.0, 1.0),
+                            cooldownSeconds = sectionNode.getDouble("cooldown-seconds", 0.0).coerceAtLeast(0.0),
+                            durationSeconds = sectionNode.getDouble("duration-seconds", 0.0).coerceAtLeast(0.0),
+                            radius = sectionNode.getDouble("radius", 0.0).coerceAtLeast(0.0),
+                            limit = sectionNode.getInt("limit", 0).coerceAtLeast(0)
                         )
                     }
                 }

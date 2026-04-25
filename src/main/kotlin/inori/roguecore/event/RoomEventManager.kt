@@ -67,6 +67,7 @@ object RoomEventManager {
                     } else {
                         member.sendMessage("§6§l⚒ ${player.name} 找到了铁匠铺，你也可以进行锻造。")
                     }
+                    sendEventAffixHint(member, instance, room.type)
                     ForgeEvent.trigger(member, instance)
                 }
                 return true

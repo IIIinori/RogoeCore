@@ -5,7 +5,11 @@ import inori.roguecore.dungeon.DungeonManager
 import org.bukkit.Bukkit
 import org.bukkit.Particle
 import org.bukkit.Sound
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
+import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
+import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityRegainHealthEvent
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
@@ -22,6 +26,7 @@ object AffixEffectHandler {
 
     /** 下次允许触发灼烧的时间戳 */
     private val nextFloorFireAt = ConcurrentHashMap<UUID, Long>()
+    private val nextVoidFieldAt = ConcurrentHashMap<UUID, Long>()
 
     /**
      * 启动周期性任务 — 地板着火效果
@@ -34,24 +39,57 @@ object AffixEffectHandler {
             for (player in Bukkit.getOnlinePlayers()) {
                 val uuid = player.uniqueId
                 val instance = DungeonManager.getPlayerDungeon(player)
-                if (instance == null || instance.completed || !AffixManager.hasAffix(instance, AffixType.FLOOR_FIRE)) {
+                if (instance == null || instance.completed) {
                     nextFloorFireAt.remove(uuid)
+                    nextVoidFieldAt.remove(uuid)
                     continue
                 }
-                if (!shouldTriggerFloorFire(player, instance)) {
-                    continue
+                if (AffixManager.hasAffix(instance, AffixType.FLOOR_FIRE) && shouldTriggerFloorFire(player, instance)) {
+                    val nextAt = nextFloorFireAt[uuid] ?: 0L
+                    if (now >= nextAt) {
+                        triggerFloorFire(player)
+
+                        val intervalMillis = (AffixManager.getAffixValue(instance, AffixType.FLOOR_FIRE)
+                            .coerceAtLeast(1.0) * 1000.0).toLong()
+                        nextFloorFireAt[uuid] = now + intervalMillis
+                    }
+                } else {
+                    nextFloorFireAt.remove(uuid)
                 }
 
-                val nextAt = nextFloorFireAt[uuid] ?: 0L
-                if (now < nextAt) {
+                if (AffixManager.hasAffix(instance, AffixType.VOID_FIELD) && shouldTriggerFloorFire(player, instance)) {
+                    val nextVoidAt = nextVoidFieldAt[uuid] ?: 0L
+                    if (now >= nextVoidAt) {
+                        triggerVoidField(player, AffixManager.getAffixValue(instance, AffixType.VOID_FIELD))
+                        nextVoidFieldAt[uuid] = now + 4000L
+                    }
+                } else {
+                    nextVoidFieldAt.remove(uuid)
+                }
+            }
+            regenerateMobs()
+        }
+    }
+
+    private fun regenerateMobs() {
+        for (instance in DungeonManager.getActiveDungeons()) {
+            val regen = AffixManager.getMobRegenPercent(instance)
+            if (regen <= 0.0 || instance.completed) {
+                continue
+            }
+            val room = inori.roguecore.combat.RoomCombatManager.getActiveRoom(instance) ?: continue
+            if (room.state != inori.roguecore.combat.RoomState.ACTIVE) {
+                continue
+            }
+            for (entity in instance.world.livingEntities) {
+                if (entity is Player || entity.isDead) {
                     continue
                 }
-
-                triggerFloorFire(player)
-
-                val intervalMillis = (AffixManager.getAffixValue(instance, AffixType.FLOOR_FIRE)
-                    .coerceAtLeast(1.0) * 1000.0).toLong()
-                nextFloorFireAt[uuid] = now + intervalMillis
+                val maxHealth = entity.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH)?.value ?: continue
+                if (maxHealth <= 0.0 || entity.health >= maxHealth) {
+                    continue
+                }
+                entity.health = (entity.health + maxHealth * regen).coerceAtMost(maxHealth)
             }
         }
     }
@@ -88,6 +126,55 @@ object AffixEffectHandler {
         player.world.playSound(location, Sound.BLOCK_FIRE_AMBIENT, 0.7f, 1.15f)
     }
 
+    private fun triggerVoidField(player: Player, strength: Double) {
+        val location = player.location.clone().add(0.0, 0.8, 0.0)
+        val damage = strength.coerceAtLeast(0.5)
+        player.damage(damage)
+        player.addPotionEffect(PotionEffect(PotionEffectType.SLOW, 60, 0, true, true, true))
+        player.world.spawnParticle(Particle.PORTAL, location, 30, 0.5, 0.6, 0.5, 0.04)
+        player.world.playSound(location, Sound.ENTITY_ENDERMAN_AMBIENT, 0.45f, 0.8f)
+    }
+
+    @SubscribeEvent(ignoreCancelled = true)
+    fun onEntityDamage(event: EntityDamageByEntityEvent) {
+        val player = event.entity as? Player ?: return
+        val instance = DungeonManager.getPlayerDungeon(player) ?: return
+        val damager = event.damager as? LivingEntity ?: return
+
+        val mobDamageMultiplier = AffixManager.getMobDamageMultiplier(instance)
+        if (mobDamageMultiplier > 0.0 && mobDamageMultiplier != 1.0) {
+            event.damage *= mobDamageMultiplier
+        }
+
+        val mobMaxHealth = damager.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH)?.value ?: 0.0
+        if (mobMaxHealth > 0.0 && damager.health / mobMaxHealth <= 0.35) {
+            event.damage *= 1.0 + AffixManager.getMobLowHealthRage(instance)
+        }
+
+        val room = inori.roguecore.combat.RoomCombatManager.getPlayerRoom(player)
+        if (room?.type == inori.roguecore.dungeon.room.RoomType.BOSS) {
+            event.damage *= AffixManager.getBossDamageMultiplier(instance)
+        }
+
+        val lifesteal = AffixManager.getMobLifesteal(instance)
+        if (lifesteal > 0.0) {
+            val max = damager.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH)?.value ?: damager.health
+            damager.health = (damager.health + event.damage * lifesteal).coerceAtMost(max)
+        }
+
+        if (AffixManager.hasAffix(instance, AffixType.MOB_FIRE_ATTACK)) {
+            player.fireTicks = maxOf(player.fireTicks, (AffixManager.getAffixValue(instance, AffixType.MOB_FIRE_ATTACK) * 20.0).toInt().coerceAtLeast(40))
+        }
+
+        val pressure = AffixManager.getLowHealthPressure(instance)
+        if (pressure > 0.0) {
+            val maxHealth = player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH)?.value ?: 20.0
+            if (maxHealth > 0.0 && player.health / maxHealth <= 0.35) {
+                event.damage *= 1.0 + pressure
+            }
+        }
+    }
+
     /**
      * 禁止自然回复 — 拦截回复事件
      */
@@ -95,6 +182,10 @@ object AffixEffectHandler {
     fun onHealthRegain(event: EntityRegainHealthEvent) {
         val player = event.entity as? Player ?: return
         val instance = DungeonManager.getPlayerDungeon(player) ?: return
+
+        if (AffixManager.hasAffix(instance, AffixType.HEALING_REDUCE)) {
+            event.amount *= AffixManager.getHealingMultiplier(instance)
+        }
 
         if (!AffixManager.hasAffix(instance, AffixType.NO_HEAL)) return
 

@@ -1,10 +1,12 @@
 package inori.roguecore.command
 
 import inori.roguecore.affix.AffixRegistry
+import inori.roguecore.audit.ContentAuditManager
 import inori.roguecore.boon.BoonRegistry
 import inori.roguecore.boon.PlayerBoonData
 import inori.roguecore.combat.MonsterConfig
 import inori.roguecore.curse.RunCurseManager
+import inori.roguecore.data.PermanentMaterialManager
 import inori.roguecore.data.PlayerDataManager
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dependency.DependencySelfCheckManager
@@ -23,15 +25,29 @@ import inori.roguecore.event.ShrineEvent
 import inori.roguecore.event.ShopEvent
 import inori.roguecore.event.TrialEvent
 import inori.roguecore.item.DungeonLootManager
+import inori.roguecore.modifier.RunModifierManager
 import inori.roguecore.relic.RelicRegistry
 import inori.roguecore.relic.PlayerRelicData
+import inori.roguecore.stats.BalanceStatsManager
 import inori.roguecore.talent.TalentManager
 import inori.roguecore.talent.TalentRegistry
 import inori.roguecore.ui.TalentUI
+import inori.roguecore.ui.BuildUI
 import inori.roguecore.ui.CodexUI
+import inori.roguecore.ui.ForgeBookUI
+import inori.roguecore.ui.GearStorageUI
+import inori.roguecore.ui.IdentifyUI
+import inori.roguecore.ui.PermanentForgeUI
+import inori.roguecore.ui.RogueMenuUI
+import inori.roguecore.ui.RunCompleteUI
+import inori.roguecore.ui.RunMilestoneUI
+import inori.roguecore.ui.RunModifierUI
+import inori.roguecore.ui.RunSummaryUI
 import inori.roguecore.ui.UnlockUI
+import inori.roguecore.ui.WorkshopUI
 import inori.roguecore.unlock.UnlockManager
 import inori.roguecore.unlock.UnlockRegistry
+import inori.roguecore.workshop.WorkshopManager
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -42,15 +58,56 @@ import taboolib.common.platform.command.subCommand
 import taboolib.expansion.createHelper
 import java.util.UUID
 
-@CommandHeader("rogue", permission = "roguecore.admin")
+@CommandHeader("rogue", permission = "roguecore.use")
 object CommandRogue {
 
     @CommandBody
     val main = mainCommand {
-        createHelper()
+        execute<Player> { sender, _, _ ->
+            RogueMenuUI.open(sender)
+        }
+        execute<CommandSender> { sender, _, _ ->
+            sender.sendMessage("§e玩家请在游戏内使用 /rogue 打开主菜单。")
+            sender.sendMessage("§7命令帮助: /rogue help")
+        }
     }
 
     // ==================== 副本命令 ====================
+
+    @CommandBody(description = "打开主菜单")
+    val menu = subCommand {
+        execute<Player> { sender, _, _ ->
+            RogueMenuUI.open(sender)
+        }
+    }
+
+    @CommandBody(description = "查看玩家命令帮助")
+    val help = subCommand {
+        execute<CommandSender> { sender, _, _ ->
+            sender.sendMessage("§6===== RogueCore 玩家命令 =====")
+            sender.sendMessage("§e/rogue §7- 打开主菜单")
+            sender.sendMessage("§e/rogue menu §7- 打开主菜单")
+            sender.sendMessage("§e/rogue enter [floor] §7- 开始冒险")
+            sender.sendMessage("§e/rogue leave §7- 离开当前副本")
+            sender.sendMessage("§e/rogue rejoin §7- 重连未结束的副本")
+            sender.sendMessage("§e/rogue create/invite/accept/quit/list §7- 队伍相关")
+            sender.sendMessage("§e/rogue talent §7- 打开天赋树")
+            sender.sendMessage("§e/rogue unlocks §7- 打开研究所")
+            sender.sendMessage("§e/rogue forge §7- 打开局外锻造")
+            sender.sendMessage("§e/rogue identify §7- 打开装备鉴定")
+            sender.sendMessage("§e/rogue craft §7- 打开锻造书打造")
+            sender.sendMessage("§e/rogue gear §7- 打开装备仓库")
+            sender.sendMessage("§e/rogue materials §7- 查看局外锻造材料")
+            sender.sendMessage("§e/rogue workshop §7- 打开材料工坊")
+            sender.sendMessage("§e/rogue build §7- 打开当前构筑面板")
+            sender.sendMessage("§e/rogue milestones §7- 查看本局里程碑")
+            sender.sendMessage("§e/rogue modifiers §7- 查看本局临时修正")
+            sender.sendMessage("§e/rogue summary §7- 查看最近一次冒险报告")
+            sender.sendMessage("§e/rogue route §7- 通关后重新打开路线选择")
+            sender.sendMessage("§e/rogue codex §7- 打开冒险图鉴")
+            sender.sendMessage("§e/rogue stats §7- 查看个人统计")
+        }
+    }
 
     @CommandBody(description = "进入地牢(有队伍则全队进入)")
     val enter = subCommand {
@@ -283,6 +340,104 @@ object CommandRogue {
         }
     }
 
+    @CommandBody(description = "打开局外锻造")
+    val forge = subCommand {
+        execute<Player> { sender, _, _ ->
+            if (DungeonManager.isInDungeon(sender)) {
+                sender.sendMessage("§c副本内请使用铁匠房，局外锻造只能在副本外使用。")
+                return@execute
+            }
+            PermanentForgeUI.open(sender)
+        }
+    }
+
+    @CommandBody(description = "打开装备鉴定")
+    val identify = subCommand {
+        execute<Player> { sender, _, _ ->
+            IdentifyUI.open(sender)
+        }
+    }
+
+    @CommandBody(description = "打开锻造书打造")
+    val craft = subCommand {
+        execute<Player> { sender, _, _ ->
+            ForgeBookUI.open(sender)
+        }
+    }
+
+    @CommandBody(description = "打开装备仓库")
+    val gear = subCommand {
+        execute<Player> { sender, _, _ ->
+            GearStorageUI.open(sender)
+        }
+    }
+
+    @CommandBody(description = "查看局外锻造材料")
+    val materials = subCommand {
+        execute<Player> { sender, _, _ ->
+            sender.sendMessage("§6===== 局外锻造材料 =====")
+            for (line in PermanentMaterialManager.formatOwned(sender)) {
+                sender.sendMessage(line)
+            }
+        }
+    }
+
+    @CommandBody(description = "打开材料工坊")
+    val workshop = subCommand {
+        execute<Player> { sender, _, _ ->
+            WorkshopUI.open(sender)
+        }
+    }
+
+    @CommandBody(description = "打开当前构筑面板")
+    val build = subCommand {
+        execute<Player> { sender, _, _ ->
+            BuildUI.open(sender)
+        }
+    }
+
+    @CommandBody(description = "查看本局里程碑")
+    val milestones = subCommand {
+        execute<Player> { sender, _, _ ->
+            RunMilestoneUI.open(sender)
+        }
+    }
+
+    @CommandBody(description = "查看本局临时修正")
+    val modifiers = subCommand {
+        execute<Player> { sender, _, _ ->
+            RunModifierUI.open(sender)
+        }
+    }
+
+    @CommandBody(description = "查看最近一次冒险报告")
+    val summary = subCommand {
+        execute<Player> { sender, _, _ ->
+            RunSummaryUI.open(sender)
+        }
+    }
+
+    @CommandBody(description = "通关后重新打开路线选择")
+    val route = subCommand {
+        execute<Player> { sender, _, _ ->
+            val dungeon = DungeonManager.getPlayerDungeon(sender)
+            if (dungeon == null) {
+                sender.sendMessage("§c你不在副本中。")
+                return@execute
+            }
+            if (!dungeon.completed) {
+                sender.sendMessage("§c当前副本尚未通关，不能选择下一层路线。")
+                return@execute
+            }
+            val party = PartyManager.getPartyByDungeonId(dungeon.id)
+            if (party != null && !party.isLeader(sender.uniqueId)) {
+                sender.sendMessage("§c只有队长可以选择下一层路线。")
+                return@execute
+            }
+            RunCompleteUI.open(sender, dungeon, party)
+        }
+    }
+
     @CommandBody(description = "打开冒险图鉴")
     val codex = subCommand {
         execute<Player> { sender, _, _ ->
@@ -291,6 +446,54 @@ object CommandRogue {
     }
 
     // ==================== 管理员命令 ====================
+
+    @CommandBody(description = "管理员 - 内容自检", permission = "roguecore.admin")
+    val audit = subCommand {
+        execute<CommandSender> { sender, _, _ ->
+            runContentAudit(sender)
+        }
+    }
+
+    @CommandBody(description = "管理员入口", permission = "roguecore.admin")
+    val admin = subCommand {
+        dynamic("action") {
+            suggestion<CommandSender> { _, _ -> listOf("audit", "stats") }
+            dynamic("subaction", optional = true) {
+                suggestion<CommandSender> { _, context ->
+                    if (context["action"].equals("stats", ignoreCase = true)) listOf("reset") else emptyList()
+                }
+                execute<CommandSender> { sender, context, argument ->
+                    when (context["action"].lowercase()) {
+                        "stats" -> {
+                            if (argument.equals("reset", ignoreCase = true)) {
+                                BalanceStatsManager.reset()
+                                sender.sendMessage("§a平衡统计已重置。")
+                            } else {
+                                BalanceStatsManager.sendSummary(sender)
+                            }
+                        }
+                        "audit" -> runContentAudit(sender)
+                        else -> sender.sendMessage("§c未知管理操作: §f${context["action"]} §7(可用: audit, stats)")
+                    }
+                }
+            }
+            execute<CommandSender> { sender, _, argument ->
+                when (argument.lowercase()) {
+                    "audit" -> runContentAudit(sender)
+                    "stats" -> BalanceStatsManager.sendSummary(sender)
+                    else -> sender.sendMessage("§c未知管理操作: §f$argument §7(可用: audit, stats)")
+                }
+            }
+        }
+        execute<CommandSender> { sender, _, _ ->
+            sender.sendMessage("§6===== RogueCore 管理员命令 =====")
+            sender.sendMessage("§e/rogue admin audit §7- 内容自检")
+            sender.sendMessage("§e/rogue admin stats §7- 查看平衡统计")
+            sender.sendMessage("§e/rogue admin stats reset §7- 重置平衡统计")
+            sender.sendMessage("§e/rogue dungeons §7- 查看活跃副本")
+            sender.sendMessage("§e/rogue reload §7- 重载配置")
+        }
+    }
 
     @CommandBody(description = "管理员 - 查看所有活跃副本", permission = "roguecore.admin")
     val dungeons = subCommand {
@@ -570,11 +773,24 @@ object CommandRogue {
             GambleEvent.config.reload()
             ShrineEvent.config.reload()
             HiddenEvent.config.reload()
+            RunModifierManager.config.reload()
+            RunModifierManager.load()
+            WorkshopManager.config.reload()
+            WorkshopManager.load()
             AffixRegistry.config.reload()
             AffixRegistry.load()
+            inori.roguecore.event.EventAffixManager.config.reload()
+            inori.roguecore.event.EventAffixManager.load()
             PartyManager.load()
             DependencySelfCheckManager.runCheck(sender)
             sender.sendMessage("§a配置文件已重载")
+        }
+    }
+
+    private fun runContentAudit(sender: CommandSender) {
+        val result = ContentAuditManager.run()
+        for (line in ContentAuditManager.format(result)) {
+            sender.sendMessage(line)
         }
     }
 

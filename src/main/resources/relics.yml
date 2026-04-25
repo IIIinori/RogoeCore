@@ -1,1173 +1,405 @@
 # ================================
 # RogueCore 遗物配置
 # ================================
-# 赛季级遗物池：150 个遗物。
+# 扩容版：允许同类效果在不同数值/场景下复用，但避免完整效果签名重复。
 
 relics:
-  # ===== COMMON =====
-  common_relic_001:
+  rusted_dice:
     name: "锈蚀秘银骰盅"
-    description: "濒危时唤醒遗物核心：生命低于 50% 时伤害提高 5%"
+    description: "生命低于 50% 时伤害提高 8%，适合残血爆发"
     rarity: COMMON
     icon: HONEY_BOTTLE
     effect-type: LOW_HEALTH_DAMAGE
-    value: 5
+    value: 8
     threshold: 50
-  common_relic_002:
-    name: "旧猎团裂痕面甲"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 4 本局碎片"
+  hunter_mask:
+    name: "旧猎团面甲"
+    description: "每次击杀额外获得 3 本局碎片，适合清怪路线"
     rarity: COMMON
     icon: GOLD_INGOT
     effect-type: KILL_SHARD
-    value: 4
-  common_relic_003:
-    name: "低语兽王角冠"
-    description: "濒危时唤醒遗物核心：生命低于 60% 时伤害提高 7%"
-    rarity: COMMON
-    icon: BLAZE_POWDER
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 7
-    threshold: 60
-  common_relic_004:
-    name: "尘封军需账页"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 6 本局碎片"
-    rarity: COMMON
-    icon: WITHER_SKELETON_SKULL
-    effect-type: KILL_SHARD
-    value: 6
-  common_relic_005:
-    name: "裂边虚誓封印"
-    description: "濒危时唤醒遗物核心：生命低于 70% 时伤害提高 9%"
-    rarity: COMMON
-    icon: NETHERITE_SWORD
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 9
-    threshold: 70
-  common_relic_006:
-    name: "远行者潮汐贝冠"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 8 本局碎片"
-    rarity: COMMON
-    icon: DRAGON_HEAD
-    effect-type: KILL_SHARD
-    value: 8
-  common_relic_007:
-    name: "残灯龙骨指环"
-    description: "濒危时唤醒遗物核心：生命低于 50% 时伤害提高 11%"
-    rarity: COMMON
-    icon: ECHO_SHARD
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 11
-    threshold: 50
-  common_relic_008:
-    name: "灰羽风暴钉锤"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 3 本局碎片"
-    rarity: COMMON
-    icon: BOOK
-    effect-type: KILL_SHARD
     value: 3
-  common_relic_009:
-    name: "暗纹机械心核"
-    description: "濒危时唤醒遗物核心：生命低于 60% 时伤害提高 13%"
+  camp_cinder:
+    name: "营火余烬"
+    description: "通关房间后恢复 5% 最大生命，提高续航"
     rarity: COMMON
-    icon: FIRE_CHARGE
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 13
-    threshold: 60
-  common_relic_010:
-    name: "缺角黑铁徽记"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 5 本局碎片"
-    rarity: COMMON
-    icon: CRYING_OBSIDIAN
-    effect-type: KILL_SHARD
+    icon: CAMPFIRE
+    effect-type: ROOM_HEAL
     value: 5
-  common_relic_011:
-    name: "锈蚀寒霜短笛"
-    description: "濒危时唤醒遗物核心：生命低于 70% 时伤害提高 15%"
+  soup_coupon:
+    name: "旅店汤券"
+    description: "商店治疗价格额外降低 35%，低血时更敢进商店"
     rarity: COMMON
-    icon: TOTEM_OF_UNDYING
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 15
-    threshold: 70
-  common_relic_012:
-    name: "旧猎团镜面残片"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 7 本局碎片"
+    icon: BOWL
+    effect-type: SHOP_HEAL_DISCOUNT
+    value: 35
+  cracked_crate:
+    name: "裂缝补给箱"
+    description: "宝箱房额外附带少量锻造材料"
     rarity: COMMON
-    icon: BEACON
-    effect-type: KILL_SHARD
-    value: 7
-  common_relic_013:
-    name: "低语雷鸣导线"
-    description: "濒危时唤醒遗物核心：生命低于 50% 时伤害提高 17%"
+    icon: CHEST
+    effect-type: CHEST_MATERIAL_BONUS
+    value: 1
+  whispered_page:
+    name: "低语残页"
+    description: "每次神恩选择候选 +1，帮助尽快凑出共鸣"
     rarity: COMMON
-    icon: AMETHYST_SHARD
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 17
-    threshold: 50
-  common_relic_014:
-    name: "尘封白骨骰子"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 2 本局碎片"
-    rarity: COMMON
-    icon: HEART_OF_THE_SEA
-    effect-type: KILL_SHARD
-    value: 2
-  common_relic_015:
-    name: "裂边旧王金币"
-    description: "濒危时唤醒遗物核心：生命低于 60% 时伤害提高 4%"
-    rarity: COMMON
-    icon: CLOCK
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 4
-    threshold: 60
-  common_relic_016:
-    name: "远行者秘银骰盅"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 4 本局碎片"
-    rarity: COMMON
-    icon: COMPASS
-    effect-type: KILL_SHARD
-    value: 4
-  common_relic_017:
-    name: "残灯裂痕面甲"
-    description: "濒危时唤醒遗物核心：生命低于 70% 时伤害提高 6%"
-    rarity: COMMON
-    icon: DIAMOND
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 6
-    threshold: 70
-  common_relic_018:
-    name: "灰羽兽王角冠"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 6 本局碎片"
-    rarity: COMMON
+    icon: PAPER
+    effect-type: BOON_OFFER_BONUS
+    value: 1
+
+  blacksmith_token:
+    name: "铁匠抵押牌"
+    description: "商店材料箱与黑市货柜额外附带锻造材料"
+    rarity: RARE
+    icon: IRON_INGOT
+    effect-type: SHOP_MATERIAL_BONUS
+    value: 1
+  insurance_chip:
+    name: "保险筹码"
+    description: "赌局损失与反噬降低 30%，适合稳健翻牌"
+    rarity: RARE
     icon: EMERALD
-    effect-type: KILL_SHARD
+    effect-type: GAMBLE_INSURANCE
+    value: 30
+  furnace_writ:
+    name: "试炼炉契"
+    description: "试炼熔炉额外产出锻造材料"
+    rarity: RARE
+    icon: BLAST_FURNACE
+    effect-type: TRIAL_FORGE_BONUS
+    value: 1
+  prayer_lens:
+    name: "祈愿透镜"
+    description: "神龛遗物候选 +1"
+    rarity: RARE
+    icon: SPYGLASS
+    effect-type: SHRINE_RELIC_BOOST
+    value: 1
+  shadow_map:
+    name: "暗层地图"
+    description: "隐藏房额外开启 1 次深层战利品掷骰"
+    rarity: RARE
+    icon: FILLED_MAP
+    effect-type: HIDDEN_LOOT_BONUS
+    value: 1
+  guard_totem:
+    name: "守门图腾"
+    description: "每场战斗开始获得吸收护盾 6"
+    rarity: RARE
+    icon: TOTEM_OF_UNDYING
+    effect-type: COMBAT_START_SHIELD
     value: 6
-  common_relic_019:
-    name: "暗纹军需账页"
-    description: "濒危时唤醒遗物核心：生命低于 50% 时伤害提高 8%"
-    rarity: COMMON
-    icon: NETHER_STAR
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 8
-    threshold: 50
-  common_relic_020:
-    name: "缺角虚誓封印"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 8 本局碎片"
-    rarity: COMMON
-    icon: SUNFLOWER
-    effect-type: KILL_SHARD
-    value: 8
-  common_relic_021:
-    name: "锈蚀潮汐贝冠"
-    description: "濒危时唤醒遗物核心：生命低于 60% 时伤害提高 10%"
-    rarity: COMMON
-    icon: HONEY_BOTTLE
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 10
-    threshold: 60
-  common_relic_022:
-    name: "旧猎团龙骨指环"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 3 本局碎片"
-    rarity: COMMON
-    icon: GOLD_INGOT
-    effect-type: KILL_SHARD
-    value: 3
-  common_relic_023:
-    name: "低语风暴钉锤"
-    description: "濒危时唤醒遗物核心：生命低于 70% 时伤害提高 12%"
-    rarity: COMMON
-    icon: BLAZE_POWDER
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 12
-    threshold: 70
-  common_relic_024:
-    name: "尘封机械心核"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 5 本局碎片"
-    rarity: COMMON
-    icon: WITHER_SKELETON_SKULL
-    effect-type: KILL_SHARD
-    value: 5
-  common_relic_025:
-    name: "裂边黑铁徽记"
-    description: "濒危时唤醒遗物核心：生命低于 50% 时伤害提高 14%"
-    rarity: COMMON
-    icon: NETHERITE_SWORD
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 14
-    threshold: 50
-  common_relic_026:
-    name: "远行者寒霜短笛"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 7 本局碎片"
-    rarity: COMMON
-    icon: DRAGON_HEAD
-    effect-type: KILL_SHARD
-    value: 7
-  common_relic_027:
-    name: "残灯镜面残片"
-    description: "濒危时唤醒遗物核心：生命低于 60% 时伤害提高 16%"
-    rarity: COMMON
-    icon: ECHO_SHARD
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 16
-    threshold: 60
-  common_relic_028:
-    name: "灰羽雷鸣导线"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 2 本局碎片"
-    rarity: COMMON
-    icon: BOOK
-    effect-type: KILL_SHARD
-    value: 2
-  common_relic_029:
-    name: "暗纹白骨骰子"
-    description: "濒危时唤醒遗物核心：生命低于 70% 时伤害提高 18%"
-    rarity: COMMON
+
+  crown_ember:
+    name: "王冠炉渣"
+    description: "Boss 额外炉核余烬 +2，推进永久锻造"
+    rarity: EPIC
     icon: FIRE_CHARGE
+    effect-type: BOSS_EMBER_BONUS
+    value: 2
+  key_compass:
+    name: "寻钥罗盘"
+    description: "精英房额外隐藏钥匙概率 +18%，适合找隐藏房"
+    rarity: EPIC
+    icon: COMPASS
+    effect-type: HIDDEN_KEY_CHANCE
+    value: 18
+  elite_horn:
+    name: "猎首号角"
+    description: "精英额外战利品概率 +16%，精英路线收益更高"
+    rarity: EPIC
+    icon: GOAT_HORN
+    effect-type: ELITE_LOOT_CHANCE
+    value: 16
+  treasure_writ:
+    name: "秘藏宝券"
+    description: "精英与 Boss 额外掉落概率 +16%"
+    rarity: EPIC
+    icon: AMETHYST_SHARD
+    effect-type: BONUS_LOOT_CHANCE
+    value: 16
+  merchant_crown:
+    name: "商王冠印"
+    description: "所有商店价格降低 12%，适合经济路线"
+    rarity: EPIC
+    icon: GOLDEN_HELMET
+    effect-type: SHOP_DISCOUNT
+    value: 12
+  oracle_codex:
+    name: "神谕索引"
+    description: "高稀有神恩权重 +30%，帮助构筑核心成型"
+    rarity: EPIC
+    icon: ENCHANTED_BOOK
+    effect-type: BOON_RARITY_LUCK
+    value: 30
+
+  royal_discount:
+    name: "旧王黑卡"
+    description: "黑市货柜价格额外降低 22%"
+    rarity: LEGENDARY
+    icon: GOLD_BLOCK
+    effect-type: BLACK_MARKET_DISCOUNT
+    value: 22
+  boss_foundry:
+    name: "Boss 熔炉契约"
+    description: "Boss 额外战利品概率 +24%"
+    rarity: LEGENDARY
+    icon: NETHERITE_INGOT
+    effect-type: BOSS_LOOT_CHANCE
+    value: 24
+  secret_map:
+    name: "无名秘库图"
+    description: "隐藏房遗物候选 +1，强化秘库路线"
+    rarity: LEGENDARY
+    icon: MAP
+    effect-type: HIDDEN_RELIC_BOOST
+    value: 1
+  dragon_contract:
+    name: "龙骨战契"
+    description: "精英房通关后 18% 概率获得遗物祈愿"
+    rarity: LEGENDARY
+    icon: DRAGON_HEAD
+    effect-type: ELITE_RELIC_CHANCE
+    value: 18
+  sun_chalice:
+    name: "日冕圣杯"
+    description: "清房时 18% 概率升级一个已有神恩"
+    rarity: LEGENDARY
+    icon: BEACON
+    effect-type: ROOM_UPGRADE_CHANCE
+    value: 18
+  void_lottery:
+    name: "虚空彩券"
+    description: "宝箱额外战利品概率 +26%，高价值宝箱路线核心"
+    rarity: LEGENDARY
+    icon: NETHER_STAR
+    effect-type: CHEST_EXTRA_LOOT_CHANCE
+    value: 26
+
+  exp_blood_meter:
+    name: "血契量杯"
+    description: "击杀收益提高并鼓励清怪推进"
+    rarity: RARE
+    icon: HONEY_BOTTLE
+    effect-type: KILL_SHARD
+    value: 4
+  exp_shelter_bell:
+    name: "避难铃铛"
+    description: "清房后小幅恢复生命，适合稳线"
+    rarity: COMMON
+    icon: BELL
+    effect-type: ROOM_HEAL
+    value: 6
+  exp_last_oath:
+    name: "濒死誓环"
+    description: "低血时追加爆发伤害"
+    rarity: EPIC
+    icon: REDSTONE
     effect-type: LOW_HEALTH_DAMAGE
     value: 18
-    threshold: 70
-  common_relic_030:
-    name: "缺角旧王金币"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 4 本局碎片"
-    rarity: COMMON
-    icon: CRYING_OBSIDIAN
-    effect-type: KILL_SHARD
-    value: 4
-  common_relic_031:
-    name: "锈蚀秘银骰盅"
-    description: "濒危时唤醒遗物核心：生命低于 50% 时伤害提高 5%"
-    rarity: COMMON
-    icon: TOTEM_OF_UNDYING
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 5
-    threshold: 50
-  common_relic_032:
-    name: "旧猎团裂痕面甲"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 6 本局碎片"
-    rarity: COMMON
-    icon: BEACON
-    effect-type: KILL_SHARD
-    value: 6
-  common_relic_033:
-    name: "低语兽王角冠"
-    description: "濒危时唤醒遗物核心：生命低于 60% 时伤害提高 7%"
-    rarity: COMMON
-    icon: AMETHYST_SHARD
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 7
-    threshold: 60
-  common_relic_034:
-    name: "尘封军需账页"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 8 本局碎片"
-    rarity: COMMON
-    icon: HEART_OF_THE_SEA
-    effect-type: KILL_SHARD
+    threshold: 35
+  exp_lucky_clasp:
+    name: "夹层幸运扣"
+    description: "提高额外战利品概率"
+    rarity: RARE
+    icon: RABBIT_FOOT
+    effect-type: BONUS_LOOT_CHANCE
     value: 8
-  common_relic_035:
-    name: "裂边虚誓封印"
-    description: "濒危时唤醒遗物核心：生命低于 70% 时伤害提高 9%"
-    rarity: COMMON
-    icon: CLOCK
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 9
-    threshold: 70
-  common_relic_036:
-    name: "远行者潮汐贝冠"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 3 本局碎片"
-    rarity: COMMON
-    icon: COMPASS
-    effect-type: KILL_SHARD
-    value: 3
-  common_relic_037:
-    name: "残灯龙骨指环"
-    description: "濒危时唤醒遗物核心：生命低于 50% 时伤害提高 11%"
-    rarity: COMMON
-    icon: DIAMOND
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 11
-    threshold: 50
-  common_relic_038:
-    name: "灰羽风暴钉锤"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 5 本局碎片"
-    rarity: COMMON
+  exp_silver_contract:
+    name: "银印采购契"
+    description: "商店折扣提高，利于经济路线"
+    rarity: RARE
     icon: EMERALD
-    effect-type: KILL_SHARD
-    value: 5
-  common_relic_039:
-    name: "暗纹机械心核"
-    description: "濒危时唤醒遗物核心：生命低于 60% 时伤害提高 13%"
-    rarity: COMMON
-    icon: NETHER_STAR
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 13
-    threshold: 60
-  common_relic_040:
-    name: "缺角黑铁徽记"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 7 本局碎片"
-    rarity: COMMON
-    icon: SUNFLOWER
-    effect-type: KILL_SHARD
+    effect-type: SHOP_DISCOUNT
     value: 7
-  common_relic_041:
-    name: "锈蚀寒霜短笛"
-    description: "濒危时唤醒遗物核心：生命低于 70% 时伤害提高 15%"
-    rarity: COMMON
-    icon: HONEY_BOTTLE
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 15
-    threshold: 70
-  common_relic_042:
-    name: "旧猎团镜面残片"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 2 本局碎片"
-    rarity: COMMON
-    icon: GOLD_INGOT
-    effect-type: KILL_SHARD
+  exp_boss_ember_jar:
+    name: "首领余烬罐"
+    description: "Boss 额外余烬收益"
+    rarity: EPIC
+    icon: BLAZE_POWDER
+    effect-type: BOSS_EMBER_BONUS
     value: 2
-  common_relic_043:
-    name: "低语雷鸣导线"
-    description: "濒危时唤醒遗物核心：生命低于 50% 时伤害提高 17%"
+  exp_hidden_tuning_key:
+    name: "暗门调音钥"
+    description: "额外隐藏钥匙概率"
+    rarity: RARE
+    icon: TRIPWIRE_HOOK
+    effect-type: HIDDEN_KEY_CHANCE
+    value: 10
+  exp_guardian_pebble:
+    name: "守门石子"
+    description: "战斗开始获得吸收护盾"
     rarity: COMMON
-    icon: BLAZE_POWDER
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 17
-    threshold: 50
-  common_relic_044:
-    name: "尘封白骨骰子"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 4 本局碎片"
+    icon: SHIELD
+    effect-type: COMBAT_START_SHIELD
+    value: 7
+  exp_elite_tax_badge:
+    name: "精英税章"
+    description: "精英房额外战利品概率"
+    rarity: RARE
+    icon: CROSSBOW
+    effect-type: ELITE_LOOT_CHANCE
+    value: 11
+  exp_warm_soup_ladle:
+    name: "暖汤长勺"
+    description: "商店治疗折扣更明显"
     rarity: COMMON
-    icon: WITHER_SKELETON_SKULL
-    effect-type: KILL_SHARD
-    value: 4
-  common_relic_045:
-    name: "裂边旧王金币"
-    description: "濒危时唤醒遗物核心：生命低于 60% 时伤害提高 4%"
+    icon: BOWL
+    effect-type: SHOP_HEAL_DISCOUNT
+    value: 45
+  exp_miner_invoice:
+    name: "矿工货单"
+    description: "商店材料箱额外材料"
+    rarity: RARE
+    icon: RAW_IRON
+    effect-type: SHOP_MATERIAL_BONUS
+    value: 2
+  exp_shrine_incense:
+    name: "白檀圣香"
+    description: "神龛遗物候选强化"
+    rarity: EPIC
+    icon: WHITE_DYE
+    effect-type: SHRINE_RELIC_BOOST
+    value: 2
+  exp_safe_chip:
+    name: "稳注银筹"
+    description: "赌局失败惩罚降低"
     rarity: COMMON
-    icon: NETHERITE_SWORD
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 4
-    threshold: 60
-  # ===== RARE =====
-  rare_relic_001:
-    name: "秘藏月蚀挂坠"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 6%"
-    rarity: RARE
-    icon: DRAGON_HEAD
-    effect-type: BONUS_LOOT_CHANCE
-    value: 6
-  rare_relic_002:
-    name: "镀银终焉冠羽"
-    description: "房间尘埃落定时释放余温：通关后恢复 7% 最大生命"
-    rarity: RARE
-    icon: ECHO_SHARD
-    effect-type: ROOM_HEAL
-    value: 7
-  rare_relic_003:
-    name: "醒梦灵魂票根"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 8%"
-    rarity: RARE
-    icon: BOOK
-    effect-type: BONUS_LOOT_CHANCE
-    value: 8
-  rare_relic_004:
-    name: "暮色金砂圣甲"
-    description: "房间尘埃落定时释放余温：通关后恢复 9% 最大生命"
-    rarity: RARE
-    icon: FIRE_CHARGE
-    effect-type: ROOM_HEAL
-    value: 9
-  rare_relic_005:
-    name: "蓝火腐花念珠"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 10%"
-    rarity: RARE
-    icon: CRYING_OBSIDIAN
-    effect-type: BONUS_LOOT_CHANCE
-    value: 10
-  rare_relic_006:
-    name: "古誓沉船圣钉"
-    description: "房间尘埃落定时释放余温：通关后恢复 11% 最大生命"
-    rarity: RARE
-    icon: TOTEM_OF_UNDYING
-    effect-type: ROOM_HEAL
-    value: 11
-  rare_relic_007:
-    name: "星屑暮光钥匙"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 12%"
-    rarity: RARE
-    icon: BEACON
-    effect-type: BONUS_LOOT_CHANCE
-    value: 12
-  rare_relic_008:
-    name: "静潮琥珀烛泪"
-    description: "房间尘埃落定时释放余温：通关后恢复 13% 最大生命"
-    rarity: RARE
-    icon: AMETHYST_SHARD
-    effect-type: ROOM_HEAL
-    value: 13
-  rare_relic_009:
-    name: "回声灰烬圣徽"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 14%"
-    rarity: RARE
-    icon: HEART_OF_THE_SEA
-    effect-type: BONUS_LOOT_CHANCE
-    value: 14
-  rare_relic_010:
-    name: "折光终誓剑柄"
-    description: "房间尘埃落定时释放余温：通关后恢复 6% 最大生命"
-    rarity: RARE
-    icon: CLOCK
-    effect-type: ROOM_HEAL
-    value: 6
-  rare_relic_011:
-    name: "秘藏深渊匣钥"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 16%"
-    rarity: RARE
-    icon: COMPASS
-    effect-type: BONUS_LOOT_CHANCE
-    value: 16
-  rare_relic_012:
-    name: "镀银余烬罗盘"
-    description: "房间尘埃落定时释放余温：通关后恢复 8% 最大生命"
-    rarity: RARE
-    icon: DIAMOND
-    effect-type: ROOM_HEAL
-    value: 8
-  rare_relic_013:
-    name: "醒梦白塔残钟"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 6%"
-    rarity: RARE
-    icon: EMERALD
-    effect-type: BONUS_LOOT_CHANCE
-    value: 6
-  rare_relic_014:
-    name: "暮色星砂瓶"
-    description: "房间尘埃落定时释放余温：通关后恢复 10% 最大生命"
-    rarity: RARE
-    icon: NETHER_STAR
-    effect-type: ROOM_HEAL
-    value: 10
-  rare_relic_015:
-    name: "蓝火血色丝带"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 8%"
-    rarity: RARE
-    icon: SUNFLOWER
-    effect-type: BONUS_LOOT_CHANCE
-    value: 8
-  rare_relic_016:
-    name: "古誓月蚀挂坠"
-    description: "房间尘埃落定时释放余温：通关后恢复 12% 最大生命"
-    rarity: RARE
-    icon: HONEY_BOTTLE
-    effect-type: ROOM_HEAL
-    value: 12
-  rare_relic_017:
-    name: "星屑终焉冠羽"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 10%"
-    rarity: RARE
-    icon: GOLD_INGOT
-    effect-type: BONUS_LOOT_CHANCE
-    value: 10
-  rare_relic_018:
-    name: "静潮灵魂票根"
-    description: "房间尘埃落定时释放余温：通关后恢复 5% 最大生命"
-    rarity: RARE
-    icon: BLAZE_POWDER
-    effect-type: ROOM_HEAL
-    value: 5
-  rare_relic_019:
-    name: "回声金砂圣甲"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 12%"
-    rarity: RARE
-    icon: WITHER_SKELETON_SKULL
-    effect-type: BONUS_LOOT_CHANCE
-    value: 12
-  rare_relic_020:
-    name: "折光腐花念珠"
-    description: "房间尘埃落定时释放余温：通关后恢复 7% 最大生命"
-    rarity: RARE
-    icon: NETHERITE_SWORD
-    effect-type: ROOM_HEAL
-    value: 7
-  rare_relic_021:
-    name: "秘藏沉船圣钉"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 14%"
-    rarity: RARE
-    icon: DRAGON_HEAD
-    effect-type: BONUS_LOOT_CHANCE
-    value: 14
-  rare_relic_022:
-    name: "镀银暮光钥匙"
-    description: "房间尘埃落定时释放余温：通关后恢复 9% 最大生命"
-    rarity: RARE
-    icon: ECHO_SHARD
-    effect-type: ROOM_HEAL
-    value: 9
-  rare_relic_023:
-    name: "醒梦琥珀烛泪"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 16%"
-    rarity: RARE
-    icon: BOOK
-    effect-type: BONUS_LOOT_CHANCE
-    value: 16
-  rare_relic_024:
-    name: "暮色灰烬圣徽"
-    description: "房间尘埃落定时释放余温：通关后恢复 11% 最大生命"
-    rarity: RARE
-    icon: FIRE_CHARGE
-    effect-type: ROOM_HEAL
-    value: 11
-  rare_relic_025:
-    name: "蓝火终誓剑柄"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 6%"
-    rarity: RARE
-    icon: CRYING_OBSIDIAN
-    effect-type: BONUS_LOOT_CHANCE
-    value: 6
-  rare_relic_026:
-    name: "古誓深渊匣钥"
-    description: "房间尘埃落定时释放余温：通关后恢复 13% 最大生命"
-    rarity: RARE
-    icon: TOTEM_OF_UNDYING
-    effect-type: ROOM_HEAL
-    value: 13
-  rare_relic_027:
-    name: "星屑余烬罗盘"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 8%"
-    rarity: RARE
-    icon: BEACON
-    effect-type: BONUS_LOOT_CHANCE
-    value: 8
-  rare_relic_028:
-    name: "静潮白塔残钟"
-    description: "房间尘埃落定时释放余温：通关后恢复 6% 最大生命"
-    rarity: RARE
-    icon: AMETHYST_SHARD
-    effect-type: ROOM_HEAL
-    value: 6
-  rare_relic_029:
-    name: "回声星砂瓶"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 10%"
-    rarity: RARE
-    icon: HEART_OF_THE_SEA
-    effect-type: BONUS_LOOT_CHANCE
-    value: 10
-  rare_relic_030:
-    name: "折光血色丝带"
-    description: "房间尘埃落定时释放余温：通关后恢复 8% 最大生命"
-    rarity: RARE
-    icon: CLOCK
-    effect-type: ROOM_HEAL
-    value: 8
-  rare_relic_031:
-    name: "秘藏月蚀挂坠"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 12%"
-    rarity: RARE
-    icon: COMPASS
-    effect-type: BONUS_LOOT_CHANCE
-    value: 12
-  rare_relic_032:
-    name: "镀银终焉冠羽"
-    description: "房间尘埃落定时释放余温：通关后恢复 10% 最大生命"
-    rarity: RARE
-    icon: DIAMOND
-    effect-type: ROOM_HEAL
-    value: 10
-  rare_relic_033:
-    name: "醒梦灵魂票根"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 14%"
-    rarity: RARE
-    icon: EMERALD
-    effect-type: BONUS_LOOT_CHANCE
-    value: 14
-  rare_relic_034:
-    name: "暮色金砂圣甲"
-    description: "房间尘埃落定时释放余温：通关后恢复 12% 最大生命"
-    rarity: RARE
-    icon: NETHER_STAR
-    effect-type: ROOM_HEAL
-    value: 12
-  rare_relic_035:
-    name: "蓝火腐花念珠"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 16%"
-    rarity: RARE
-    icon: SUNFLOWER
-    effect-type: BONUS_LOOT_CHANCE
-    value: 16
-  rare_relic_036:
-    name: "古誓沉船圣钉"
-    description: "房间尘埃落定时释放余温：通关后恢复 5% 最大生命"
-    rarity: RARE
-    icon: HONEY_BOTTLE
-    effect-type: ROOM_HEAL
-    value: 5
-  rare_relic_037:
-    name: "星屑暮光钥匙"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 6%"
-    rarity: RARE
-    icon: GOLD_INGOT
-    effect-type: BONUS_LOOT_CHANCE
-    value: 6
-  rare_relic_038:
-    name: "静潮琥珀烛泪"
-    description: "房间尘埃落定时释放余温：通关后恢复 7% 最大生命"
-    rarity: RARE
-    icon: BLAZE_POWDER
-    effect-type: ROOM_HEAL
-    value: 7
-  rare_relic_039:
-    name: "回声灰烬圣徽"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 8%"
-    rarity: RARE
-    icon: WITHER_SKELETON_SKULL
-    effect-type: BONUS_LOOT_CHANCE
-    value: 8
-  rare_relic_040:
-    name: "折光终誓剑柄"
-    description: "房间尘埃落定时释放余温：通关后恢复 9% 最大生命"
-    rarity: RARE
-    icon: NETHERITE_SWORD
-    effect-type: ROOM_HEAL
-    value: 9
-  rare_relic_041:
-    name: "秘藏深渊匣钥"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 10%"
-    rarity: RARE
-    icon: DRAGON_HEAD
-    effect-type: BONUS_LOOT_CHANCE
-    value: 10
-  rare_relic_042:
-    name: "镀银余烬罗盘"
-    description: "房间尘埃落定时释放余温：通关后恢复 11% 最大生命"
-    rarity: RARE
-    icon: ECHO_SHARD
-    effect-type: ROOM_HEAL
-    value: 11
-  rare_relic_043:
-    name: "醒梦白塔残钟"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 12%"
-    rarity: RARE
-    icon: BOOK
-    effect-type: BONUS_LOOT_CHANCE
-    value: 12
-  rare_relic_044:
-    name: "暮色星砂瓶"
-    description: "房间尘埃落定时释放余温：通关后恢复 13% 最大生命"
-    rarity: RARE
-    icon: FIRE_CHARGE
-    effect-type: ROOM_HEAL
-    value: 13
-  rare_relic_045:
-    name: "蓝火血色丝带"
-    description: "精英与 Boss 的宝库更容易松动：额外掉落概率提高 14%"
-    rarity: RARE
-    icon: CRYING_OBSIDIAN
-    effect-type: BONUS_LOOT_CHANCE
-    value: 14
-  # ===== EPIC =====
-  epic_relic_001:
-    name: "奇迹秘银骰盅"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 11 本局碎片"
-    rarity: EPIC
-    icon: TOTEM_OF_UNDYING
-    effect-type: KILL_SHARD
-    value: 11
-    required-unlock: advanced_relics
-  epic_relic_002:
-    name: "渊纹裂痕面甲"
-    description: "濒危时唤醒遗物核心：生命低于 55% 时伤害提高 22%"
-    rarity: EPIC
-    icon: BEACON
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 22
-    threshold: 55
-    required-unlock: advanced_relics
-  epic_relic_003:
-    name: "王庭兽王角冠"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 13 本局碎片"
-    rarity: EPIC
-    icon: AMETHYST_SHARD
-    effect-type: KILL_SHARD
-    value: 13
-    required-unlock: advanced_relics
-  epic_relic_004:
-    name: "天启军需账页"
-    description: "濒危时唤醒遗物核心：生命低于 65% 时伤害提高 24%"
-    rarity: EPIC
-    icon: HEART_OF_THE_SEA
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 24
-    threshold: 65
-    required-unlock: advanced_relics
-  epic_relic_005:
-    name: "绯月虚誓封印"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 15 本局碎片"
-    rarity: EPIC
-    icon: CLOCK
-    effect-type: KILL_SHARD
-    value: 15
-    required-unlock: advanced_relics
-  epic_relic_006:
-    name: "不灭潮汐贝冠"
-    description: "濒危时唤醒遗物核心：生命低于 45% 时伤害提高 26%"
-    rarity: EPIC
-    icon: COMPASS
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 26
-    threshold: 45
-    required-unlock: advanced_relics
-  epic_relic_007:
-    name: "雷铸龙骨指环"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 10 本局碎片"
-    rarity: EPIC
-    icon: DIAMOND
-    effect-type: KILL_SHARD
-    value: 10
-    required-unlock: advanced_relics
-  epic_relic_008:
-    name: "霜冕风暴钉锤"
-    description: "濒危时唤醒遗物核心：生命低于 55% 时伤害提高 28%"
-    rarity: EPIC
-    icon: EMERALD
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 28
-    threshold: 55
-    required-unlock: advanced_relics
-  epic_relic_009:
-    name: "圣裁机械心核"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 12 本局碎片"
-    rarity: EPIC
-    icon: NETHER_STAR
-    effect-type: KILL_SHARD
-    value: 12
-    required-unlock: advanced_relics
-  epic_relic_010:
-    name: "永夜黑铁徽记"
-    description: "濒危时唤醒遗物核心：生命低于 65% 时伤害提高 30%"
-    rarity: EPIC
-    icon: SUNFLOWER
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 30
-    threshold: 65
-    required-unlock: advanced_relics
-  epic_relic_011:
-    name: "奇迹寒霜短笛"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 14 本局碎片"
-    rarity: EPIC
-    icon: HONEY_BOTTLE
-    effect-type: KILL_SHARD
-    value: 14
-    required-unlock: advanced_relics
-  epic_relic_012:
-    name: "渊纹镜面残片"
-    description: "濒危时唤醒遗物核心：生命低于 45% 时伤害提高 32%"
-    rarity: EPIC
-    icon: GOLD_INGOT
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 32
-    threshold: 45
-    required-unlock: advanced_relics
-  epic_relic_013:
-    name: "王庭雷鸣导线"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 16 本局碎片"
-    rarity: EPIC
-    icon: BLAZE_POWDER
-    effect-type: KILL_SHARD
-    value: 16
-    required-unlock: advanced_relics
-  epic_relic_014:
-    name: "天启白骨骰子"
-    description: "濒危时唤醒遗物核心：生命低于 55% 时伤害提高 34%"
-    rarity: EPIC
-    icon: WITHER_SKELETON_SKULL
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 34
-    threshold: 55
-    required-unlock: advanced_relics
-  epic_relic_015:
-    name: "绯月旧王金币"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 11 本局碎片"
-    rarity: EPIC
-    icon: NETHERITE_SWORD
-    effect-type: KILL_SHARD
-    value: 11
-    required-unlock: advanced_relics
-  epic_relic_016:
-    name: "不灭秘银骰盅"
-    description: "濒危时唤醒遗物核心：生命低于 65% 时伤害提高 21%"
-    rarity: EPIC
-    icon: DRAGON_HEAD
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 21
-    threshold: 65
-    required-unlock: advanced_relics
-  epic_relic_017:
-    name: "雷铸裂痕面甲"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 13 本局碎片"
-    rarity: EPIC
-    icon: ECHO_SHARD
-    effect-type: KILL_SHARD
-    value: 13
-    required-unlock: advanced_relics
-  epic_relic_018:
-    name: "霜冕兽王角冠"
-    description: "濒危时唤醒遗物核心：生命低于 45% 时伤害提高 23%"
-    rarity: EPIC
-    icon: BOOK
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 23
-    threshold: 45
-    required-unlock: advanced_relics
-  epic_relic_019:
-    name: "圣裁军需账页"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 15 本局碎片"
-    rarity: EPIC
-    icon: FIRE_CHARGE
-    effect-type: KILL_SHARD
-    value: 15
-    required-unlock: advanced_relics
-  epic_relic_020:
-    name: "永夜虚誓封印"
-    description: "濒危时唤醒遗物核心：生命低于 55% 时伤害提高 25%"
-    rarity: EPIC
-    icon: CRYING_OBSIDIAN
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 25
-    threshold: 55
-    required-unlock: advanced_relics
-  epic_relic_021:
-    name: "奇迹潮汐贝冠"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 10 本局碎片"
-    rarity: EPIC
-    icon: TOTEM_OF_UNDYING
-    effect-type: KILL_SHARD
-    value: 10
-    required-unlock: advanced_relics
-  epic_relic_022:
-    name: "渊纹龙骨指环"
-    description: "濒危时唤醒遗物核心：生命低于 65% 时伤害提高 27%"
-    rarity: EPIC
-    icon: BEACON
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 27
-    threshold: 65
-    required-unlock: advanced_relics
-  epic_relic_023:
-    name: "王庭风暴钉锤"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 12 本局碎片"
-    rarity: EPIC
-    icon: AMETHYST_SHARD
-    effect-type: KILL_SHARD
-    value: 12
-    required-unlock: advanced_relics
-  epic_relic_024:
-    name: "天启机械心核"
-    description: "濒危时唤醒遗物核心：生命低于 45% 时伤害提高 29%"
-    rarity: EPIC
-    icon: HEART_OF_THE_SEA
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 29
-    threshold: 45
-    required-unlock: advanced_relics
-  epic_relic_025:
-    name: "绯月黑铁徽记"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 14 本局碎片"
-    rarity: EPIC
-    icon: CLOCK
-    effect-type: KILL_SHARD
-    value: 14
-    required-unlock: advanced_relics
-  epic_relic_026:
-    name: "不灭寒霜短笛"
-    description: "濒危时唤醒遗物核心：生命低于 55% 时伤害提高 31%"
-    rarity: EPIC
-    icon: COMPASS
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 31
-    threshold: 55
-    required-unlock: advanced_relics
-  epic_relic_027:
-    name: "雷铸镜面残片"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 16 本局碎片"
-    rarity: EPIC
-    icon: DIAMOND
-    effect-type: KILL_SHARD
-    value: 16
-    required-unlock: advanced_relics
-  epic_relic_028:
-    name: "霜冕雷鸣导线"
-    description: "濒危时唤醒遗物核心：生命低于 65% 时伤害提高 33%"
-    rarity: EPIC
-    icon: EMERALD
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 33
-    threshold: 65
-    required-unlock: advanced_relics
-  epic_relic_029:
-    name: "圣裁白骨骰子"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 11 本局碎片"
-    rarity: EPIC
-    icon: NETHER_STAR
-    effect-type: KILL_SHARD
-    value: 11
-    required-unlock: advanced_relics
-  epic_relic_030:
-    name: "永夜旧王金币"
-    description: "濒危时唤醒遗物核心：生命低于 45% 时伤害提高 20%"
-    rarity: EPIC
-    icon: SUNFLOWER
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 20
-    threshold: 45
-    required-unlock: advanced_relics
-  epic_relic_031:
-    name: "奇迹秘银骰盅"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 13 本局碎片"
-    rarity: EPIC
-    icon: HONEY_BOTTLE
-    effect-type: KILL_SHARD
-    value: 13
-    required-unlock: advanced_relics
-  epic_relic_032:
-    name: "渊纹裂痕面甲"
-    description: "濒危时唤醒遗物核心：生命低于 55% 时伤害提高 22%"
-    rarity: EPIC
-    icon: GOLD_INGOT
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 22
-    threshold: 55
-    required-unlock: advanced_relics
-  epic_relic_033:
-    name: "王庭兽王角冠"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 15 本局碎片"
-    rarity: EPIC
-    icon: BLAZE_POWDER
-    effect-type: KILL_SHARD
-    value: 15
-    required-unlock: advanced_relics
-  epic_relic_034:
-    name: "天启军需账页"
-    description: "濒危时唤醒遗物核心：生命低于 65% 时伤害提高 24%"
-    rarity: EPIC
-    icon: WITHER_SKELETON_SKULL
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 24
-    threshold: 65
-    required-unlock: advanced_relics
-  epic_relic_035:
-    name: "绯月虚誓封印"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 10 本局碎片"
-    rarity: EPIC
-    icon: NETHERITE_SWORD
-    effect-type: KILL_SHARD
-    value: 10
-    required-unlock: advanced_relics
-  epic_relic_036:
-    name: "不灭潮汐贝冠"
-    description: "濒危时唤醒遗物核心：生命低于 45% 时伤害提高 26%"
-    rarity: EPIC
-    icon: DRAGON_HEAD
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 26
-    threshold: 45
-    required-unlock: advanced_relics
-  epic_relic_037:
-    name: "雷铸龙骨指环"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 12 本局碎片"
-    rarity: EPIC
-    icon: ECHO_SHARD
-    effect-type: KILL_SHARD
-    value: 12
-    required-unlock: advanced_relics
-  epic_relic_038:
-    name: "霜冕风暴钉锤"
-    description: "濒危时唤醒遗物核心：生命低于 55% 时伤害提高 28%"
-    rarity: EPIC
-    icon: BOOK
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 28
-    threshold: 55
-    required-unlock: advanced_relics
-  epic_relic_039:
-    name: "圣裁机械心核"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 14 本局碎片"
-    rarity: EPIC
-    icon: FIRE_CHARGE
-    effect-type: KILL_SHARD
-    value: 14
-    required-unlock: advanced_relics
-  epic_relic_040:
-    name: "永夜黑铁徽记"
-    description: "濒危时唤醒遗物核心：生命低于 65% 时伤害提高 30%"
-    rarity: EPIC
-    icon: CRYING_OBSIDIAN
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 30
-    threshold: 65
-    required-unlock: advanced_relics
-  # ===== LEGENDARY =====
-  legendary_relic_001:
-    name: "终焉潮汐贝冠"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 19 本局碎片"
-    rarity: LEGENDARY
-    icon: TOTEM_OF_UNDYING
-    effect-type: KILL_SHARD
-    value: 19
-    required-unlock: legendary_relics
-  legendary_relic_002:
-    name: "万象龙骨指环"
-    description: "濒危时唤醒遗物核心：生命低于 55% 时伤害提高 38%"
-    rarity: LEGENDARY
-    icon: BEACON
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 38
-    threshold: 55
-    required-unlock: legendary_relics
-  legendary_relic_003:
-    name: "无冕王风暴钉锤"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 21 本局碎片"
-    rarity: LEGENDARY
-    icon: AMETHYST_SHARD
-    effect-type: KILL_SHARD
-    value: 21
-    required-unlock: legendary_relics
-  legendary_relic_004:
-    name: "诸神机械心核"
-    description: "濒危时唤醒遗物核心：生命低于 65% 时伤害提高 40%"
-    rarity: LEGENDARY
-    icon: HEART_OF_THE_SEA
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 40
-    threshold: 65
-    required-unlock: legendary_relics
-  legendary_relic_005:
-    name: "星界黑铁徽记"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 23 本局碎片"
-    rarity: LEGENDARY
-    icon: CLOCK
-    effect-type: KILL_SHARD
-    value: 23
-    required-unlock: legendary_relics
-  legendary_relic_006:
-    name: "深渊王寒霜短笛"
-    description: "濒危时唤醒遗物核心：生命低于 45% 时伤害提高 42%"
-    rarity: LEGENDARY
-    icon: COMPASS
-    effect-type: LOW_HEALTH_DAMAGE
+    icon: IRON_NUGGET
+    effect-type: GAMBLE_INSURANCE
     value: 42
-    threshold: 45
-    required-unlock: legendary_relics
-  legendary_relic_007:
-    name: "永恒镜面残片"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 18 本局碎片"
-    rarity: LEGENDARY
-    icon: DIAMOND
-    effect-type: KILL_SHARD
+  exp_trial_hammer:
+    name: "试炼锤柄"
+    description: "试炼额外锻造材料"
+    rarity: RARE
+    icon: ANVIL
+    effect-type: TRIAL_FORGE_BONUS
+    value: 2
+  exp_crate_compass:
+    name: "箱底罗盘"
+    description: "宝箱材料收益提高"
+    rarity: COMMON
+    icon: COMPASS
+    effect-type: CHEST_MATERIAL_BONUS
+    value: 2
+  exp_secret_satchel:
+    name: "秘袋夹层"
+    description: "隐藏房额外战利品"
+    rarity: EPIC
+    icon: ENDER_CHEST
+    effect-type: HIDDEN_LOOT_BONUS
+    value: 2
+  exp_boon_lens:
+    name: "神恩透镜"
+    description: "神恩候选数量提高"
+    rarity: EPIC
+    icon: SPYGLASS
+    effect-type: BOON_OFFER_BONUS
+    value: 2
+  exp_growth_seed:
+    name: "成长种核"
+    description: "清房概率升级已有神恩"
+    rarity: RARE
+    icon: WHEAT_SEEDS
+    effect-type: ROOM_UPGRADE_CHANCE
+    value: 14
+  exp_oracle_coin:
+    name: "谕者金币"
+    description: "提高高稀有神恩权重"
+    rarity: EPIC
+    icon: GOLD_NUGGET
+    effect-type: BOON_RARITY_LUCK
     value: 18
-    required-unlock: legendary_relics
-  legendary_relic_008:
-    name: "日冕雷鸣导线"
-    description: "濒危时唤醒遗物核心：生命低于 55% 时伤害提高 44%"
+  exp_boss_lottery:
+    name: "王冠彩券"
+    description: "Boss 额外战利品概率"
+    rarity: EPIC
+    icon: GOLDEN_HELMET
+    effect-type: BOSS_LOOT_CHANCE
+    value: 16
+  exp_hidden_astrolabe:
+    name: "秘室星盘"
+    description: "隐藏房遗物候选提高"
     rarity: LEGENDARY
-    icon: EMERALD
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 44
-    threshold: 55
-    required-unlock: legendary_relics
-  legendary_relic_009:
-    name: "虚空白骨骰子"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 20 本局碎片"
+    icon: CLOCK
+    effect-type: HIDDEN_RELIC_BOOST
+    value: 2
+  exp_elite_invitation:
+    name: "精英请柬"
+    description: "精英房概率触发遗物祈愿"
+    rarity: EPIC
+    icon: PAPER
+    effect-type: ELITE_RELIC_CHANCE
+    value: 13
+  exp_black_coupon:
+    name: "黑市折页"
+    description: "黑市货柜价格下降"
+    rarity: RARE
+    icon: BLACK_DYE
+    effect-type: BLACK_MARKET_DISCOUNT
+    value: 16
+  exp_chest_echo:
+    name: "宝箱回声"
+    description: "宝箱额外装备概率"
+    rarity: RARE
+    icon: CHEST
+    effect-type: CHEST_EXTRA_LOOT_CHANCE
+    value: 12
+  exp_crown_purse:
+    name: "王冠钱袋"
+    description: "击杀碎片收益更高"
     rarity: LEGENDARY
-    icon: NETHER_STAR
+    icon: GOLD_BLOCK
     effect-type: KILL_SHARD
-    value: 20
-    required-unlock: legendary_relics
-  legendary_relic_010:
-    name: "原初旧王金币"
-    description: "濒危时唤醒遗物核心：生命低于 65% 时伤害提高 46%"
+    value: 7
+  exp_pilgrim_cup:
+    name: "朝圣杯"
+    description: "清房恢复与神龛路线契合"
+    rarity: RARE
+    icon: GLASS_BOTTLE
+    effect-type: ROOM_HEAL
+    value: 8
+  exp_red_mirror:
+    name: "赤色残镜"
+    description: "低血爆发更激进"
     rarity: LEGENDARY
-    icon: SUNFLOWER
+    icon: RED_STAINED_GLASS
     effect-type: LOW_HEALTH_DAMAGE
-    value: 46
-    threshold: 65
-    required-unlock: legendary_relics
-  legendary_relic_011:
-    name: "终焉秘银骰盅"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 22 本局碎片"
-    rarity: LEGENDARY
-    icon: HONEY_BOTTLE
-    effect-type: KILL_SHARD
-    value: 22
-    required-unlock: legendary_relics
-  legendary_relic_012:
-    name: "万象裂痕面甲"
-    description: "濒危时唤醒遗物核心：生命低于 45% 时伤害提高 48%"
-    rarity: LEGENDARY
-    icon: GOLD_INGOT
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 48
-    threshold: 45
-    required-unlock: legendary_relics
-  legendary_relic_013:
-    name: "无冕王兽王角冠"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 24 本局碎片"
-    rarity: LEGENDARY
-    icon: BLAZE_POWDER
-    effect-type: KILL_SHARD
-    value: 24
-    required-unlock: legendary_relics
-  legendary_relic_014:
-    name: "诸神军需账页"
-    description: "濒危时唤醒遗物核心：生命低于 55% 时伤害提高 50%"
-    rarity: LEGENDARY
-    icon: WITHER_SKELETON_SKULL
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 50
-    threshold: 55
-    required-unlock: legendary_relics
-  legendary_relic_015:
-    name: "星界虚誓封印"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 19 本局碎片"
-    rarity: LEGENDARY
-    icon: NETHERITE_SWORD
-    effect-type: KILL_SHARD
-    value: 19
-    required-unlock: legendary_relics
-  legendary_relic_016:
-    name: "深渊王潮汐贝冠"
-    description: "濒危时唤醒遗物核心：生命低于 65% 时伤害提高 37%"
-    rarity: LEGENDARY
-    icon: DRAGON_HEAD
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 37
-    threshold: 65
-    required-unlock: legendary_relics
-  legendary_relic_017:
-    name: "永恒龙骨指环"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 21 本局碎片"
-    rarity: LEGENDARY
-    icon: ECHO_SHARD
-    effect-type: KILL_SHARD
-    value: 21
-    required-unlock: legendary_relics
-  legendary_relic_018:
-    name: "日冕风暴钉锤"
-    description: "濒危时唤醒遗物核心：生命低于 45% 时伤害提高 39%"
-    rarity: LEGENDARY
-    icon: BOOK
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 39
-    threshold: 45
-    required-unlock: legendary_relics
-  legendary_relic_019:
-    name: "虚空机械心核"
-    description: "战利品会记住每一次击杀：每次击杀额外获得 23 本局碎片"
-    rarity: LEGENDARY
-    icon: FIRE_CHARGE
-    effect-type: KILL_SHARD
-    value: 23
-    required-unlock: legendary_relics
-  legendary_relic_020:
-    name: "原初黑铁徽记"
-    description: "濒危时唤醒遗物核心：生命低于 55% 时伤害提高 41%"
-    rarity: LEGENDARY
-    icon: CRYING_OBSIDIAN
-    effect-type: LOW_HEALTH_DAMAGE
-    value: 41
-    threshold: 55
-    required-unlock: legendary_relics
+    value: 26
+    threshold: 28
+  exp_merchant_scale:
+    name: "商衡银秤"
+    description: "商店折扣适中但更早成型"
+    rarity: COMMON
+    icon: SCAFFOLDING
+    effect-type: SHOP_DISCOUNT
+    value: 4
+  exp_treasure_hook:
+    name: "藏宝钩索"
+    description: "隐藏钥匙概率小幅提高"
+    rarity: COMMON
+    icon: FISHING_ROD
+    effect-type: HIDDEN_KEY_CHANCE
+    value: 5
+  exp_storm_battery:
+    name: "风暴电池"
+    description: "战斗开场护盾更强"
+    rarity: EPIC
+    icon: LIGHTNING_ROD
+    effect-type: COMBAT_START_SHIELD
+    value: 11
+  exp_relic_dust_box:
+    name: "遗尘匣"
+    description: "宝箱额外材料更多"
+    rarity: EPIC
+    icon: BARREL
+    effect-type: CHEST_MATERIAL_BONUS
+    value: 3
+  exp_gambler_stamp:
+    name: "赌徒邮戳"
+    description: "高风险赌局更安全"
+    rarity: RARE
+    icon: MAP
+    effect-type: GAMBLE_INSURANCE
+    value: 55

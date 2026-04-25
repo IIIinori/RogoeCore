@@ -2,9 +2,12 @@ package inori.roguecore.event
 
 import inori.roguecore.boon.BoonSelectManager
 import inori.roguecore.boon.PlayerBoonData
+import inori.roguecore.data.ForgeMaterialManager
+import inori.roguecore.data.ForgeMaterialType
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.room.RoomType
+import inori.roguecore.relic.RelicEffectHandler
 import inori.roguecore.relic.RelicSelectManager
 import inori.roguecore.ui.DungeonGuiGuard
 import inori.roguecore.unlock.UnlockManager
@@ -32,15 +35,20 @@ object TrialEvent {
         val shardMax = EventScaling.reward(instance, config.getInt("trial.shard-reward-max", 40)).coerceAtLeast(shardMin)
         val hasForbiddenTrials = UnlockManager.hasForbiddenTrials(player)
         val trialPower = EventAffixManager.getFamilyPower(instance, RoomType.TRIAL, "TRIAL")
-        val scarletOath = trialPower > 0
+        val forgePower = EventAffixManager.getFamilyPower(instance, RoomType.TRIAL, "TRIAL_FORGE")
+        val relicPower = EventAffixManager.getFamilyPower(instance, RoomType.TRIAL, "TRIAL_RELIC")
+        val scarletOath = trialPower + forgePower + relicPower > 0
         val hasBloodTrial = scarletOath || instance.config.floorNumber >= config.getInt("event-variants.trial.blood-trial-floor", 8)
         val bloodCostPercent = EventScaling.riskPercent(
             instance,
             config.getDouble("event-variants.trial.blood-trial-health-percent", 0.4) + trialPower * 0.01
         )
-        val bloodShardMin = EventScaling.reward(instance, config.getInt("event-variants.trial.blood-trial-shard-min", 30) + trialPower * 4)
-        val bloodShardMax = EventScaling.reward(instance, config.getInt("event-variants.trial.blood-trial-shard-max", 56) + trialPower * 6)
+        val bloodShardMin = EventScaling.reward(instance, config.getInt("event-variants.trial.blood-trial-shard-min", 30) + (trialPower + forgePower) * 4)
+        val bloodShardMax = EventScaling.reward(instance, config.getInt("event-variants.trial.blood-trial-shard-max", 56) + (trialPower + forgePower) * 6)
             .coerceAtLeast(bloodShardMin)
+        val trialForgeBonus = RelicEffectHandler.getTrialForgeBonus(player)
+        val forgeEmberReward = (forgePower / 3 + trialForgeBonus).coerceAtLeast(if (forgePower > 0 || trialForgeBonus > 0) 1 else 0)
+        val forgeSigilReward = (forgePower / 5 + trialForgeBonus / 2).coerceAtLeast(0)
         val title = "§5§l试炼之室"
 
         DungeonGuiGuard.lock(player, title) { target -> trigger(target, instance) }
@@ -67,7 +75,7 @@ object TrialEvent {
                 hasForbiddenTrials -> 15
                 else -> 16
             }
-            val relicSlot = if (hasForbiddenTrials) 17 else null
+            val relicSlot = if (hasForbiddenTrials || relicPower > 0) 17 else null
             val optionSlots = buildSet {
                 add(shardSlot)
                 add(boonSlot)
@@ -123,6 +131,7 @@ object TrialEvent {
                             "§7失去 §c${(bloodCostPercent * 100).toInt()}% §7当前生命",
                             "§7获得 §6$bloodShardMin-$bloodShardMax §7本局碎片",
                             "§7并获得一次 §d神恩选择",
+                            if (forgeEmberReward > 0) "§7额外获得 ${ForgeMaterialType.BOSS_EMBER.coloredName()} §6x$forgeEmberReward" else "§8没有额外锻造材料",
                             "",
                             "§e点击接受更残酷的试炼"
                         )
@@ -188,7 +197,16 @@ object TrialEvent {
                         if (!applyHealthCost(player, bloodCostPercent)) return@onClick
                         val reward = Random.nextInt(bloodShardMin, bloodShardMax + 1)
                         ShardRewardManager.addRunShards(player.uniqueId, reward)
+                        if (forgeEmberReward > 0) {
+                            ForgeMaterialManager.add(player.uniqueId, ForgeMaterialType.BOSS_EMBER, forgeEmberReward)
+                        }
+                        if (forgeSigilReward > 0) {
+                            ForgeMaterialManager.add(player.uniqueId, ForgeMaterialType.HIDDEN_SIGIL, forgeSigilReward)
+                        }
                         player.sendMessage("§4歃血试炼完成，获得 §e$reward §4本局碎片。")
+                        if (forgeEmberReward > 0 || forgeSigilReward > 0) {
+                            player.sendMessage("§6试炼炉渣凝成材料: ${ForgeMaterialType.BOSS_EMBER.coloredName()} §ex$forgeEmberReward" + if (forgeSigilReward > 0) " §7+ ${ForgeMaterialType.HIDDEN_SIGIL.coloredName()} §bx$forgeSigilReward" else "")
+                        }
                         BoonSelectManager.offerBoonSelection(
                             player,
                             EventScaling.boonOfferCount(instance, if (scarletOath) 4 else 3)

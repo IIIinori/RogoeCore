@@ -7,6 +7,8 @@ import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.item.DungeonLootManager
+import inori.roguecore.milestone.RunMilestoneManager
+import inori.roguecore.relic.RelicEffectHandler
 import inori.roguecore.relic.RelicSelectManager
 import inori.roguecore.unlock.UnlockManager
 import org.bukkit.entity.Player
@@ -25,16 +27,22 @@ object HiddenEvent {
 
     fun trigger(player: Player, instance: DungeonInstance) {
         val hiddenPower = EventAffixManager.getFamilyPower(instance, RoomType.HIDDEN, "HIDDEN")
-        val stockpile = hiddenPower > 0
-        val shardMin = EventScaling.reward(instance, config.getInt("hidden.shard-min", 24) + hiddenPower * 4)
-        val shardMax = EventScaling.reward(instance, config.getInt("hidden.shard-max", 48) + hiddenPower * 8).coerceAtLeast(shardMin)
+        val relicPower = EventAffixManager.getFamilyPower(instance, RoomType.HIDDEN, "HIDDEN_RELIC")
+        val forgePower = EventAffixManager.getFamilyPower(instance, RoomType.HIDDEN, "HIDDEN_FORGE")
+        val gearPower = EventAffixManager.getFamilyPower(instance, RoomType.HIDDEN, "HIDDEN_GEAR")
+        val hiddenLootBonus = RelicEffectHandler.getHiddenLootBonus(player)
+        val relicBoost = RelicEffectHandler.getShrineRelicBoost(player) + RelicEffectHandler.getHiddenRelicBoost(player)
+        val stockpile = hiddenPower + relicPower + forgePower + gearPower + hiddenLootBonus + relicBoost > 0
+        val shardMin = EventScaling.reward(instance, config.getInt("hidden.shard-min", 24) + (hiddenPower + relicPower) * 4)
+        val shardMax = EventScaling.reward(instance, config.getInt("hidden.shard-max", 48) + (hiddenPower + relicPower) * 8).coerceAtLeast(shardMin)
         val giveBoon = config.getBoolean("hidden.give-boon", true)
         val materialBonus = EventScaling.materialBonus(instance)
-        val sigilExtra = hiddenPower.coerceAtMost(8)
+        val sigilExtra = (hiddenPower + forgePower).coerceAtMost(8)
         val sigilMin = (config.getInt("forge.materials.hidden-sigil.reward-min", 1) + materialBonus + sigilExtra).coerceAtLeast(0)
         val sigilMax = (config.getInt("forge.materials.hidden-sigil.reward-max", sigilMin) + materialBonus + sigilExtra).coerceAtLeast(sigilMin)
 
         player.sendMessage("§9§l✦ 你开启了隐藏宝藏!")
+        RunMilestoneManager.onHiddenRoomOpened(player)
 
         val shards = Random.nextInt(shardMin, shardMax + 1)
         ShardRewardManager.addRunShards(player.uniqueId, shards)
@@ -52,7 +60,7 @@ object HiddenEvent {
             player.sendMessage("§6  你从暗格中取出了一件临时装备。")
         }
 
-        val extraHiddenRolls = (hiddenPower / 3).coerceAtMost(4)
+        val extraHiddenRolls = (((hiddenPower + gearPower) / 3) + hiddenLootBonus).coerceAtMost(5)
         repeat(extraHiddenRolls) {
             if (DungeonLootManager.grantHiddenLoot(player, instance)) {
                 player.sendMessage("§9  事件词缀撬开了更深的一层秘格。")
@@ -64,7 +72,7 @@ object HiddenEvent {
         }
 
         val giveRelic = config.getBoolean("hidden.give-relic", true)
-        val relicOfferCount = EventScaling.relicOfferCount(instance, 3, UnlockManager.getRelicOfferBonus(player))
+        val relicOfferCount = EventScaling.relicOfferCount(instance, 3, UnlockManager.getRelicOfferBonus(player) + relicPower.coerceAtMost(3) + relicBoost)
         val relicOffered = giveRelic && RelicSelectManager.offerRelicSelection(player, relicOfferCount)
 
         if (giveBoon && !relicOffered) {

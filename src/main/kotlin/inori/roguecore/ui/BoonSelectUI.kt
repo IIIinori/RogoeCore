@@ -1,6 +1,7 @@
 package inori.roguecore.ui
 
 import inori.roguecore.boon.Boon
+import inori.roguecore.boon.BoonResonanceManager
 import inori.roguecore.boon.PlayerBoonData
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonManager
@@ -89,14 +90,21 @@ object BoonSelectUI {
         return XMaterial.NETHER_STAR.parseItem()!!.apply {
             itemMeta = itemMeta?.also { meta ->
                 meta.setDisplayName("§6当前构筑")
-                meta.lore = listOf(
-                    "",
-                    "§7已持有神恩: §e${owned.size}",
-                    "§7主流派: §f$tagSummary",
-                    "§7同名神恩会直接升级",
-                    "",
-                    "§e本次选择会立刻生效"
-                )
+                meta.lore = buildList {
+                    add("")
+                    add("§7已持有神恩: §e${owned.size}")
+                    add("§7主流派: §f$tagSummary")
+                    val resonances = BoonResonanceManager.getActiveResonanceLines(player)
+                    if (resonances.isNotEmpty()) {
+                        add("§6已激活共鸣:")
+                        addAll(resonances.take(4))
+                    } else {
+                        add("§7流派共鸣: §8同标签达到 3/5/7 激活")
+                    }
+                    add("§7同名神恩会直接升级")
+                    add("")
+                    add("§e本次选择会立刻生效")
+                }
             }
         }
     }
@@ -165,7 +173,14 @@ object BoonSelectUI {
             add("")
             addAll(boon.getPreviewLore(nextLevel))
             if (bestSynergy != null && bestSynergy.value > 0) {
-                add("§7当前流派共鸣: §a${bestSynergy.key} x${bestSynergy.value}")
+                val afterPick = bestSynergy.value + 1
+                val levelHint = when {
+                    afterPick >= 7 -> "§6III"
+                    afterPick >= 5 -> "§eII"
+                    afterPick >= 3 -> "§aI"
+                    else -> "§8未激活"
+                }
+                add("§7当前流派共鸣: §a${bestSynergy.key} x${bestSynergy.value} §7→ x$afterPick $levelHint")
             }
             add("")
             add(if (currentLevel > 0) "§e点击升级" else "§e点击选择")

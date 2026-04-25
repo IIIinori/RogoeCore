@@ -2,6 +2,7 @@ package inori.roguecore.event
 
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.room.RoomType
+import inori.roguecore.dungeon.route.NextFloorRoute
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.function.info
@@ -66,7 +67,7 @@ object EventAffixManager {
         info("[RogueCore] 已加载 ${affixes.size} 个事件词缀")
     }
 
-    fun rollAffixes(floorNumber: Int): List<DungeonEventAffix> {
+    fun rollAffixes(floorNumber: Int, route: NextFloorRoute? = null): List<DungeonEventAffix> {
         val count = getAffixCount(floorNumber)
         if (count <= 0) {
             return emptyList()
@@ -78,7 +79,7 @@ object EventAffixManager {
 
         val result = mutableListOf<DungeonEventAffix>()
         repeat(count.coerceAtMost(pool.size)) {
-            val picked = weightedRandom(pool) ?: return@repeat
+            val picked = weightedRandom(pool, route) ?: return@repeat
             result += picked
             pool.remove(picked)
         }
@@ -108,19 +109,22 @@ object EventAffixManager {
         return rules.firstOrNull { floorNumber in it.first..it.second }?.third ?: 0
     }
 
-    private fun weightedRandom(pool: List<DungeonEventAffix>): DungeonEventAffix? {
+    private fun weightedRandom(pool: List<DungeonEventAffix>, route: NextFloorRoute? = null): DungeonEventAffix? {
         if (pool.isEmpty()) {
             return null
         }
-        val total = pool.sumOf { it.weight }
+        val weighted = pool.map { affix ->
+            affix to (affix.weight + (route?.eventFamilyModifiers?.get(affix.family.uppercase()) ?: 0)).coerceAtLeast(1)
+        }
+        val total = weighted.sumOf { it.second }
         var roll = Random.nextInt(total)
-        for (affix in pool) {
-            roll -= affix.weight
+        for ((affix, weight) in weighted) {
+            roll -= weight
             if (roll < 0) {
                 return affix
             }
         }
-        return pool.last()
+        return weighted.last().first
     }
 
     private fun parseRoomType(id: String): RoomType? {

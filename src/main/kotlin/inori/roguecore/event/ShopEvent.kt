@@ -9,6 +9,9 @@ import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.item.DungeonLootManager
+import inori.roguecore.modifier.RunModifierManager
+import inori.roguecore.modifier.RunModifierType
+import inori.roguecore.relic.RelicEffectHandler
 import inori.roguecore.relic.RelicSelectManager
 import inori.roguecore.ui.DungeonGuiGuard
 import inori.roguecore.unlock.UnlockManager
@@ -31,13 +34,26 @@ object ShopEvent {
         private set
 
     fun trigger(player: Player, instance: DungeonInstance) {
-        val boonPriceMin = EventScaling.price(instance, config.getInt("shop.boon-price-min", 20))
-        val boonPriceMax = EventScaling.price(instance, config.getInt("shop.boon-price-max", 50)).coerceAtLeast(boonPriceMin)
-        val healPrice = EventScaling.price(instance, config.getInt("shop.heal-price", 15))
-        val shopPower = EventAffixManager.getFamilyPower(instance, RoomType.SHOP, "SHOP")
-        val relicPrice = (EventScaling.price(instance, config.getInt("shop.relic-price", 48)) - shopPower * 3).coerceAtLeast(0)
-        val marketFever = shopPower > 0
-        val shopBoonCount = EventScaling.boonOfferCount(instance, 1 + shopPower.coerceAtMost(4))
+        val genericPower = EventAffixManager.getFamilyPower(instance, RoomType.SHOP, "SHOP")
+        val discountPower = EventAffixManager.getFamilyPower(instance, RoomType.SHOP, "SHOP_DISCOUNT")
+        val relicPower = EventAffixManager.getFamilyPower(instance, RoomType.SHOP, "SHOP_RELIC")
+        val materialPower = EventAffixManager.getFamilyPower(instance, RoomType.SHOP, "SHOP_MATERIAL")
+        val blackPower = EventAffixManager.getFamilyPower(instance, RoomType.SHOP, "SHOP_BLACK")
+        val discountMultiplier = (1.0 - discountPower * 0.04 - RelicEffectHandler.getShopDiscountPercent(player) / 100.0)
+            .coerceIn(0.45, 1.0)
+        fun discounted(value: Int): Int = (value * discountMultiplier).toInt().coerceAtLeast(0)
+        val healMultiplier = (discountMultiplier - RelicEffectHandler.getShopHealDiscountPercent(player) / 100.0).coerceIn(0.2, 1.0)
+        fun healDiscounted(value: Int): Int = (value * healMultiplier).toInt().coerceAtLeast(0)
+        val shopMaterialBonus = RelicEffectHandler.getShopMaterialBonus(player)
+        val blackMarketMultiplier = (discountMultiplier - RelicEffectHandler.getBlackMarketDiscountPercent(player) / 100.0).coerceIn(0.25, 1.0)
+        fun blackMarketDiscounted(value: Int): Int = (value * blackMarketMultiplier).toInt().coerceAtLeast(0)
+
+        val boonPriceMin = discounted(EventScaling.price(instance, config.getInt("shop.boon-price-min", 20)))
+        val boonPriceMax = discounted(EventScaling.price(instance, config.getInt("shop.boon-price-max", 50))).coerceAtLeast(boonPriceMin)
+        val healPrice = healDiscounted(EventScaling.price(instance, config.getInt("shop.heal-price", 15)))
+        val relicPrice = discounted((EventScaling.price(instance, config.getInt("shop.relic-price", 48)) - (genericPower + relicPower) * 3).coerceAtLeast(0))
+        val marketFever = genericPower + blackPower + materialPower > 0
+        val shopBoonCount = EventScaling.boonOfferCount(instance, 1 + (genericPower + discountPower).coerceAtMost(4))
         val blackMarketUnlocked = marketFever ||
             instance.config.floorNumber >= config.getInt("event-variants.shop.black-market-floor", 6)
 
@@ -52,21 +68,41 @@ object ShopEvent {
             }
         }
 
-        if (UnlockManager.hasArcaneExchange(player)) {
+        if (UnlockManager.hasArcaneExchange(player) || relicPower > 0) {
             goods.add(ShopGood.RelicGood(relicPrice))
+        }
+
+        if (materialPower > 0) {
+            goods.add(
+                ShopGood.MaterialGood(
+                    price = discounted(EventScaling.price(instance, 34 + materialPower * 3)),
+                    emberReward = (1 + materialPower / 2 + shopMaterialBonus).coerceAtLeast(1),
+                    sigilReward = (materialPower / 2 + shopMaterialBonus / 2).coerceAtLeast(1)
+                )
+            )
+        }
+
+        if (RunModifierManager.isEnabled(RunModifierType.SHOP_DEBT) && !RunModifierManager.hasModifier(player, RunModifierType.SHOP_DEBT)) {
+            goods.add(
+                ShopGood.DebtGood(
+                    grant = RunModifierManager.shopDebtGrant(instance, genericPower),
+                    debt = RunModifierManager.shopDebtPerRoom(instance),
+                    rooms = RunModifierManager.shopDebtDurationRooms()
+                )
+            )
         }
 
         if (blackMarketUnlocked) {
             goods.add(
                 ShopGood.BlackMarketGood(
                     price = (
-                        EventScaling.price(instance, config.getInt("event-variants.shop.black-market-price", 72)) -
-                            shopPower * 4
+                        blackMarketDiscounted(EventScaling.price(instance, config.getInt("event-variants.shop.black-market-price", 72))) -
+                            (blackPower + genericPower) * 4
                         ).coerceAtLeast(0),
                     emberReward = config.getInt("event-variants.shop.black-market-ember-reward", 2).coerceAtLeast(0) +
-                        shopPower.coerceAtMost(5),
+                        (blackPower + materialPower + genericPower).coerceAtMost(5) + shopMaterialBonus,
                     sigilReward = config.getInt("event-variants.shop.black-market-sigil-reward", 1).coerceAtLeast(0) +
-                        (shopPower / 2).coerceAtMost(4),
+                        ((blackPower + materialPower + genericPower) / 2).coerceAtMost(4) + shopMaterialBonus / 2,
                     grantHiddenLoot = config.getBoolean("event-variants.shop.black-market-grant-hidden-loot", true)
                 )
             )
@@ -134,6 +170,23 @@ object ShopEvent {
                         }
                     }
 
+                    is ShopGood.MaterialGood -> {
+                        player.sendMessage("§7(-${good.price}本局碎片)")
+                        if (good.emberReward > 0) {
+                            ForgeMaterialManager.add(player.uniqueId, ForgeMaterialType.BOSS_EMBER, good.emberReward)
+                        }
+                        if (good.sigilReward > 0) {
+                            ForgeMaterialManager.add(player.uniqueId, ForgeMaterialType.HIDDEN_SIGIL, good.sigilReward)
+                        }
+                        player.sendMessage("§6获得锻造材料补给: ${ForgeMaterialType.BOSS_EMBER.coloredName()} §ex${good.emberReward} §7+ ${ForgeMaterialType.HIDDEN_SIGIL.coloredName()} §bx${good.sigilReward}")
+                    }
+
+                    is ShopGood.DebtGood -> {
+                        ShardRewardManager.addRunShards(player.uniqueId, good.grant)
+                        RunModifierManager.addModifier(player, RunModifierType.SHOP_DEBT, good.rooms, good.rooms, good.debt.toDouble(), "商店赊账")
+                        player.sendMessage("§6你赊得 §e${good.grant} §6本局碎片，但接下来 ${good.rooms} 个房间要偿还债务。")
+                    }
+
                     is ShopGood.BlackMarketGood -> {
                         player.sendMessage("§7(-${good.price}本局碎片)")
                         if (good.emberReward > 0) {
@@ -160,7 +213,10 @@ object ShopEvent {
             3 -> listOf(11, 13, 15)
             4 -> listOf(10, 12, 14, 16)
             5 -> listOf(9, 11, 13, 15, 17)
-            else -> listOf(10, 11, 12, 14, 15, 16)
+            6 -> listOf(10, 11, 12, 14, 15, 16)
+            7 -> listOf(10, 11, 12, 13, 14, 15, 16)
+            8 -> listOf(9, 10, 11, 12, 14, 15, 16, 17)
+            else -> listOf(9, 10, 11, 12, 13, 14, 15, 16, 17)
         }
     }
 
@@ -207,6 +263,51 @@ object ShopEvent {
                             "",
                             "§e价格: §6$price §e本局碎片",
                             "§e点击购买"
+                        )
+                    }
+                }
+            }
+        }
+
+        class MaterialGood(
+            price: Int,
+            val emberReward: Int,
+            val sigilReward: Int
+        ) : ShopGood(price) {
+            override fun toItemStack(): ItemStack {
+                return XMaterial.BLAST_FURNACE.parseItem()!!.apply {
+                    itemMeta = itemMeta?.also { meta ->
+                        meta.setDisplayName("§6锻造材料箱")
+                        meta.lore = listOf(
+                            "",
+                            "§7获得 ${ForgeMaterialType.BOSS_EMBER.coloredName()} §6x$emberReward",
+                            "§7获得 ${ForgeMaterialType.HIDDEN_SIGIL.coloredName()} §bx$sigilReward",
+                            "",
+                            "§e价格: §6$price §e本局碎片",
+                            "§e点击购买"
+                        )
+                    }
+                }
+            }
+        }
+
+        class DebtGood(
+            val grant: Int,
+            val debt: Int,
+            val rooms: Int
+        ) : ShopGood(0) {
+            override fun toItemStack(): ItemStack {
+                return XMaterial.WRITABLE_BOOK.parseItem()!!.apply {
+                    itemMeta = itemMeta?.also { meta ->
+                        meta.setDisplayName("§e赊账契约")
+                        meta.lore = listOf(
+                            "",
+                            "§7立刻获得 §6$grant §7本局碎片",
+                            "§7之后 §e$rooms §7个房间清理时",
+                            "§7每次偿还 §c$debt §7本局碎片",
+                            "",
+                            "§e价格: §a无需立即支付",
+                            "§e点击签下契约"
                         )
                     }
                 }

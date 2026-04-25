@@ -1,5 +1,6 @@
 package inori.roguecore.boon
 
+import inori.roguecore.relic.RelicEffectHandler
 import inori.roguecore.talent.TalentManager
 import org.bukkit.entity.Player
 import kotlin.random.Random
@@ -13,7 +14,8 @@ object BoonSelectManager {
      * 房间通关后触发 Boon 选择
      */
     fun offerBoonSelection(player: Player, count: Int = 3) {
-        val candidates = rollBoons(count, player)
+        val effectiveCount = (count + RelicEffectHandler.getBoonOfferBonus(player)).coerceIn(1, 4)
+        val candidates = rollBoons(effectiveCount, player)
 
         if (candidates.isEmpty()) {
             player.sendMessage("§7没有可用的神恩了...")
@@ -42,7 +44,8 @@ object BoonSelectManager {
         // 加权随机选取（不重复）
         val selected = mutableListOf<Boon>()
         val remaining = pool.toMutableList()
-        val luckBonus = TalentManager.getBoonLuckBonus(player.uniqueId)
+        val dungeonLuck = inori.roguecore.dungeon.DungeonManager.getPlayerDungeon(player)?.let { inori.roguecore.affix.AffixManager.getBoonLuckBonus(it) } ?: 0.0
+        val luckBonus = TalentManager.getBoonLuckBonus(player.uniqueId) + RelicEffectHandler.getBoonRarityLuckBonus(player) + dungeonLuck
 
         repeat(count.coerceAtMost(remaining.size)) {
             val boon = weightedRandom(remaining, luckBonus)

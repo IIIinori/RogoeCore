@@ -1,9 +1,11 @@
 package inori.roguecore.item
 
 import inori.roguecore.affix.AffixManager
+import inori.roguecore.data.PermanentMaterialManager
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.DungeonManager
 import inori.roguecore.relic.RelicEffectHandler
+import inori.roguecore.unlock.UnlockManager
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
@@ -24,6 +26,7 @@ import taboolib.library.configuration.ConfigurationSection
 import taboolib.library.xseries.XMaterial
 import taboolib.module.configuration.Config
 import taboolib.module.configuration.Configuration
+import java.util.UUID
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.random.Random
@@ -43,6 +46,19 @@ object DungeonLootManager {
     private val baseLoreKey = NamespacedKey("roguecore", "loot_base_lore")
     private val lockedAffixKey = NamespacedKey("roguecore", "locked_affix")
     private val forgeHeatKey = NamespacedKey("roguecore", "forge_heat")
+    private val permanentLootKey = NamespacedKey("roguecore", "permanent_loot")
+    private val favoriteKey = NamespacedKey("roguecore", "favorite")
+    private val ownerUuidKey = NamespacedKey("roguecore", "owner_uuid")
+    private val ownerNameKey = NamespacedKey("roguecore", "owner_name")
+    private val unidentifiedKey = NamespacedKey("roguecore", "unidentified_loot")
+    private val unidentifiedLootIdKey = NamespacedKey("roguecore", "unidentified_loot_id")
+    private val unidentifiedSourceKey = NamespacedKey("roguecore", "unidentified_source")
+    private val unidentifiedFloorKey = NamespacedKey("roguecore", "unidentified_floor")
+    private val forgeBookKey = NamespacedKey("roguecore", "forge_book")
+    private val forgeBookQualityKey = NamespacedKey("roguecore", "forge_book_quality")
+    private val forgeBookLootIdKey = NamespacedKey("roguecore", "forge_book_loot_id")
+    private val forgeBookSourceKey = NamespacedKey("roguecore", "forge_book_source")
+    private val forgeBookFloorKey = NamespacedKey("roguecore", "forge_book_floor")
 
     @Config("loot.yml")
     lateinit var config: Configuration
@@ -67,6 +83,17 @@ object DungeonLootManager {
     private var protectionMaxUpgradeBonus = 0.75
     private var protectionDowngradePenaltyScale = 0.012
     private var protectionMinFactor = 0.25
+    private var permanentGearBindOnConvert = true
+    private var identificationEnabled = true
+    private var identificationBasePrice = 80
+    private var identificationFloorPrice = 6
+    private var identificationBossExtraPrice = 120
+    private var identificationHiddenExtraPrice = 80
+    private val unidentifiedDropChance = mutableMapOf<DungeonLootSource, Double>()
+    private val forgeBookDropChance = mutableMapOf<DungeonLootSource, Double>()
+    private val forgeBookQualityWeights = mutableMapOf<String, Int>()
+    private val forgeBookQualities = linkedMapOf<String, ForgeBookQuality>()
+    private var forgeBooksEnabled = true
 
     data class EquippedLootView(
         val slot: EquipmentSlot,
@@ -79,6 +106,36 @@ object DungeonLootManager {
 
     data class LootActionResult(
         val success: Boolean,
+        val message: String
+    )
+
+    data class UnidentifiedLootInfo(
+        val lootId: String,
+        val source: DungeonLootSource,
+        val floor: Int,
+        val price: Int
+    )
+
+    data class ForgeBookQuality(
+        val id: String,
+        val name: String,
+        val color: String,
+        val rarityId: String,
+        val timeMillis: Long,
+        val soulShards: Int,
+        val materials: Map<PermanentMaterialManager.MaterialType, Int>
+    )
+
+    data class ForgeBookInfo(
+        val lootId: String,
+        val source: DungeonLootSource,
+        val floor: Int,
+        val quality: ForgeBookQuality
+    )
+
+    data class IdentifyClaimResult(
+        val success: Boolean,
+        val item: ItemStack?,
         val message: String
     )
 
@@ -117,12 +174,19 @@ object DungeonLootManager {
         sourceAffixBonus.clear()
         sourceRarityUpgradeChance.clear()
         definitionScoreCache.clear()
+        unidentifiedDropChance.clear()
+        forgeBookDropChance.clear()
+        forgeBookQualityWeights.clear()
+        forgeBookQualities.clear()
 
         chestChance = config.getDouble("rules.chest-chance", 0.4)
         eliteCount = config.getInt("rules.elite-count", 1).coerceAtLeast(1)
         bossCount = config.getInt("rules.boss-count", 1).coerceAtLeast(1)
         apPercentageMark = config.getString("rules.ap-percentage-mark") ?: "(%)"
         loadDropProtectionRules()
+        permanentGearBindOnConvert = config.getBoolean("permanent-gear.bind-on-convert", true)
+        loadIdentificationRules()
+        loadForgeBookRules()
         loadSourceBonuses()
 
         loadRarities()
@@ -152,6 +216,49 @@ object DungeonLootManager {
         protectionDowngradePenaltyScale = config.getDouble("rules.drop-protection.downgrade-penalty-scale", 0.012)
             .coerceAtLeast(0.0)
         protectionMinFactor = config.getDouble("rules.drop-protection.min-weight-factor", 0.25).coerceIn(0.05, 1.0)
+    }
+
+    private fun loadIdentificationRules() {
+        identificationEnabled = config.getBoolean("identification.enabled", true)
+        identificationBasePrice = config.getInt("identification.base-price", 80).coerceAtLeast(0)
+        identificationFloorPrice = config.getInt("identification.floor-price", 6).coerceAtLeast(0)
+        identificationBossExtraPrice = config.getInt("identification.boss-extra-price", 120).coerceAtLeast(0)
+        identificationHiddenExtraPrice = config.getInt("identification.hidden-extra-price", 80).coerceAtLeast(0)
+        val section = config.getConfigurationSection("identification.drop-as-unidentified-chance") ?: return
+        for (key in section.getKeys(false)) {
+            val source = parseSource(key) ?: continue
+            unidentifiedDropChance[source] = section.getDouble(key, 0.0).coerceIn(0.0, 1.0)
+        }
+    }
+
+    private fun loadForgeBookRules() {
+        forgeBooksEnabled = config.getBoolean("forge-books.enabled", true)
+        val dropSection = config.getConfigurationSection("forge-books.drop-chance")
+        if (dropSection != null) {
+            for (key in dropSection.getKeys(false)) {
+                val source = parseSource(key) ?: continue
+                forgeBookDropChance[source] = dropSection.getDouble(key, 0.0).coerceIn(0.0, 1.0)
+            }
+        }
+        val weightSection = config.getConfigurationSection("forge-books.quality-weight")
+        if (weightSection != null) {
+            for (key in weightSection.getKeys(false)) {
+                forgeBookQualityWeights[key.lowercase()] = weightSection.getInt(key, 0).coerceAtLeast(0)
+            }
+        }
+        val qualitySection = config.getConfigurationSection("forge-books.qualities") ?: return
+        for (id in qualitySection.getKeys(false)) {
+            val node = qualitySection.getConfigurationSection(id) ?: continue
+            forgeBookQualities[id.lowercase()] = ForgeBookQuality(
+                id = id.lowercase(),
+                name = node.getString("name") ?: id,
+                color = node.getString("color") ?: "§f",
+                rarityId = node.getString("rarity") ?: "common",
+                timeMillis = node.getInt("time-seconds", 60).coerceAtLeast(1) * 1000L,
+                soulShards = node.getInt("soul-shards", 100).coerceAtLeast(0),
+                materials = PermanentMaterialManager.parseCost(node.getConfigurationSection("materials"))
+            )
+        }
     }
 
     private fun loadSourceBonuses() {
@@ -320,12 +427,104 @@ object DungeonLootManager {
             val definition = weightedRandom(pool) { candidate ->
                 effectiveLootWeight(player, candidate)
             } ?: return@repeat
-            val rolled = buildRolledLoot(definition, source, source.displayName(), instance.config.floorNumber, 0, 0, 0, 0.0)
-                ?: return@repeat
-            give(player, rolled.item)
+            val item = if (shouldDropUnidentified(source)) {
+                buildUnidentifiedLoot(definition, source, instance.config.floorNumber)
+            } else {
+                buildRolledLoot(definition, source, source.displayName(), instance.config.floorNumber, 0, 0, 0, 0.0)?.item
+            } ?: return@repeat
+            give(player, item)
+            if (shouldDropForgeBook(player, source)) {
+                val quality = rollForgeBookQuality(player)
+                val book = quality?.let { buildForgeBook(definition, source, instance.config.floorNumber, it) }
+                if (book != null) {
+                    give(player, book)
+                }
+            }
             granted = true
         }
         return granted
+    }
+
+    private fun shouldDropUnidentified(source: DungeonLootSource): Boolean {
+        if (!identificationEnabled) {
+            return false
+        }
+        val chance = unidentifiedDropChance[source] ?: return false
+        return chance > 0.0 && Random.nextDouble() < chance
+    }
+
+    private fun shouldDropForgeBook(player: Player, source: DungeonLootSource): Boolean {
+        if (!forgeBooksEnabled || forgeBookQualities.isEmpty()) {
+            return false
+        }
+        val chance = ((forgeBookDropChance[source] ?: return false) * UnlockManager.getForgeBookDropMultiplier(player))
+            .coerceIn(0.0, 1.0)
+        return chance > 0.0 && Random.nextDouble() < chance
+    }
+
+    private fun rollForgeBookQuality(player: Player): ForgeBookQuality? {
+        val candidates = forgeBookQualities.values.filter { quality ->
+            getForgeBookQualityWeight(player, quality) > 0
+        }
+        return weightedRandom(candidates) { quality -> getForgeBookQualityWeight(player, quality) }
+    }
+
+    private fun getForgeBookQualityWeight(player: Player, quality: ForgeBookQuality): Int {
+        return ((forgeBookQualityWeights[quality.id] ?: 0) + UnlockManager.getForgeBookQualityWeightBonus(player, quality.id))
+            .coerceAtLeast(0)
+    }
+
+    private fun buildForgeBook(
+        definition: DungeonLootDefinition,
+        source: DungeonLootSource,
+        floor: Int,
+        quality: ForgeBookQuality
+    ): ItemStack? {
+        val item = XMaterial.ENCHANTED_BOOK.parseItem() ?: XMaterial.BOOK.parseItem() ?: return null
+        val meta = item.itemMeta ?: return item
+        meta.setDisplayName("${quality.color}${quality.name}锻造书: §f${definition.name}")
+        meta.persistentDataContainer.set(forgeBookKey, PersistentDataType.BYTE, 1)
+        meta.persistentDataContainer.set(forgeBookQualityKey, PersistentDataType.STRING, quality.id)
+        meta.persistentDataContainer.set(forgeBookLootIdKey, PersistentDataType.STRING, definition.id)
+        meta.persistentDataContainer.set(forgeBookSourceKey, PersistentDataType.STRING, source.name)
+        meta.persistentDataContainer.set(forgeBookFloorKey, PersistentDataType.INTEGER, floor)
+        meta.lore = listOf(
+            "",
+            "§7记载着一件装备的锻造方法。",
+            "§7品质: ${quality.color}${quality.name}",
+            "§7预计耗时: §f${ForgeBookTaskManager.formatDuration(quality.timeMillis)}",
+            "§7灵魂碎片: §6${quality.soulShards}",
+            "§7材料需求: ${PermanentMaterialManager.formatCost(quality.materials)}",
+            "§7来源: §f${source.displayName()}",
+            "§7层数: §f$floor",
+            "",
+            "§e使用 §6/rogue craft §e开始锻造"
+        )
+        item.itemMeta = meta
+        return item
+    }
+
+    private fun buildUnidentifiedLoot(definition: DungeonLootDefinition, source: DungeonLootSource, floor: Int): ItemStack? {
+        val item = XMaterial.MAP.parseItem() ?: XMaterial.PAPER.parseItem() ?: return null
+        val meta = item.itemMeta ?: return item
+        val sourceName = source.displayName()
+        meta.setDisplayName("§e未鉴定的${definition.name}")
+        meta.persistentDataContainer.set(unidentifiedKey, PersistentDataType.BYTE, 1)
+        meta.persistentDataContainer.set(unidentifiedLootIdKey, PersistentDataType.STRING, definition.id)
+        meta.persistentDataContainer.set(unidentifiedSourceKey, PersistentDataType.STRING, source.name)
+        meta.persistentDataContainer.set(unidentifiedFloorKey, PersistentDataType.INTEGER, floor)
+        meta.lore = listOf(
+            "",
+            "§7这件装备被地牢气息遮蔽。",
+            "§7需要在局外进行鉴定。",
+            "§8鉴定后将揭示稀有度、词条和属性。",
+            "",
+            "§7来源: §f$sourceName",
+            "§7层数: §f$floor",
+            "§e使用 §6/rogue identify §e进行鉴定"
+        )
+        item.itemMeta = meta
+        return item
     }
 
     private fun buildRolledLoot(
@@ -971,6 +1170,455 @@ object DungeonLootManager {
         return getAffixes(item).firstOrNull { it.id.equals(lockedId, ignoreCase = true) }?.name
     }
 
+    fun isForgeBook(item: ItemStack?): Boolean {
+        if (item == null || item.type == Material.AIR) {
+            return false
+        }
+        val meta = item.itemMeta ?: return false
+        return meta.persistentDataContainer.has(forgeBookKey, PersistentDataType.BYTE)
+    }
+
+    fun getForgeBookInventorySlots(player: Player): List<Int> {
+        return player.inventory.storageContents.mapIndexedNotNull { index, item ->
+            if (isForgeBook(item)) index else null
+        }
+    }
+
+    fun getForgeBookInfo(item: ItemStack?): ForgeBookInfo? {
+        if (!isForgeBook(item)) {
+            return null
+        }
+        val meta = item?.itemMeta ?: return null
+        val lootId = meta.persistentDataContainer.get(forgeBookLootIdKey, PersistentDataType.STRING) ?: return null
+        val qualityId = meta.persistentDataContainer.get(forgeBookQualityKey, PersistentDataType.STRING)?.lowercase() ?: return null
+        val quality = forgeBookQualities[qualityId] ?: return null
+        val source = meta.persistentDataContainer.get(forgeBookSourceKey, PersistentDataType.STRING)
+            ?.let { runCatching { DungeonLootSource.valueOf(it.uppercase()) }.getOrNull() }
+            ?: DungeonLootSource.CHEST
+        val floor = meta.persistentDataContainer.get(forgeBookFloorKey, PersistentDataType.INTEGER) ?: 1
+        return ForgeBookInfo(lootId, source, floor, quality)
+    }
+
+    fun buildForgeBookResultForPlayer(
+        player: Player,
+        lootId: String,
+        source: DungeonLootSource,
+        floor: Int,
+        qualityId: String
+    ): IdentifyClaimResult {
+        val quality = forgeBookQualities[qualityId.lowercase()]
+            ?: return IdentifyClaimResult(false, null, "§c锻造失败：锻造书品质不存在。")
+        val definition = definitions.firstOrNull { it.id == lootId }
+            ?: return IdentifyClaimResult(false, null, "§c锻造失败：装备模板不存在。")
+        val rarity = rarities.firstOrNull { it.id.equals(quality.rarityId, ignoreCase = true) }
+            ?: fallbackRarity()
+        val rolled = buildRolledLoot(
+            definition,
+            source,
+            "锻造书打造",
+            floor,
+            0,
+            0,
+            0,
+            0.0,
+            forcedRarity = rarity
+        ) ?: return IdentifyClaimResult(false, null, "§c锻造失败，请检查装备配置。")
+        makePermanent(rolled.item, player)
+        return IdentifyClaimResult(true, rolled.item, "§6锻造完成: §f${definition.name}")
+    }
+
+    fun isUnidentifiedLoot(item: ItemStack?): Boolean {
+        if (item == null || item.type == Material.AIR) {
+            return false
+        }
+        val meta = item.itemMeta ?: return false
+        return meta.persistentDataContainer.has(unidentifiedKey, PersistentDataType.BYTE)
+    }
+
+    fun getUnidentifiedInventorySlots(player: Player): List<Int> {
+        return player.inventory.storageContents.mapIndexedNotNull { index, item ->
+            if (isUnidentifiedLoot(item)) index else null
+        }
+    }
+
+    fun getIdentificationPrice(item: ItemStack?): Int {
+        return getUnidentifiedLootInfo(item)?.price ?: 0
+    }
+
+    fun getIdentificationPrice(player: Player, item: ItemStack?): Int {
+        return (getIdentificationPrice(item) * UnlockManager.getIdentificationPriceMultiplier(player))
+            .roundToInt()
+            .coerceAtLeast(0)
+    }
+
+    fun getUnidentifiedLootInfo(item: ItemStack?): UnidentifiedLootInfo? {
+        if (!isUnidentifiedLoot(item)) {
+            return null
+        }
+        val meta = item?.itemMeta ?: return null
+        val lootId = meta.persistentDataContainer.get(unidentifiedLootIdKey, PersistentDataType.STRING) ?: return null
+        val floor = meta.persistentDataContainer.get(unidentifiedFloorKey, PersistentDataType.INTEGER) ?: 1
+        val source = meta.persistentDataContainer.get(unidentifiedSourceKey, PersistentDataType.STRING)
+            ?.let { runCatching { DungeonLootSource.valueOf(it.uppercase()) }.getOrNull() }
+            ?: DungeonLootSource.CHEST
+        val extra = when (source) {
+            DungeonLootSource.BOSS -> identificationBossExtraPrice
+            DungeonLootSource.HIDDEN -> identificationHiddenExtraPrice
+            else -> 0
+        }
+        val price = (identificationBasePrice + floor.coerceAtLeast(1) * identificationFloorPrice + extra).coerceAtLeast(0)
+        return UnidentifiedLootInfo(lootId, source, floor, price)
+    }
+
+    fun buildIdentifiedLootForPlayer(player: Player, lootId: String, source: DungeonLootSource, floor: Int): IdentifyClaimResult {
+        val definition = definitions.firstOrNull { it.id == lootId }
+            ?: return IdentifyClaimResult(false, null, "§c鉴定失败：装备模板不存在。")
+        val rolled = buildRolledLoot(definition, source, "装备鉴定", floor, 0, 0, 0, 0.0)
+            ?: return IdentifyClaimResult(false, null, "§c鉴定失败，请检查装备配置。")
+        makePermanent(rolled.item, player)
+        return IdentifyClaimResult(true, rolled.item, "§6鉴定完成: §f${definition.name}")
+    }
+
+    fun isPermanentLoot(item: ItemStack?): Boolean {
+        if (item == null || item.type == Material.AIR) {
+            return false
+        }
+        val meta = item.itemMeta ?: return false
+        return meta.persistentDataContainer.has(permanentLootKey, PersistentDataType.BYTE)
+    }
+
+    fun getLootEquipmentSlot(item: ItemStack?): EquipmentSlot? {
+        return getDefinition(item)?.equipmentSlot
+    }
+
+    fun isFavorite(item: ItemStack?): Boolean {
+        if (!isPermanentLoot(item)) {
+            return false
+        }
+        val meta = item?.itemMeta ?: return false
+        return meta.persistentDataContainer.get(favoriteKey, PersistentDataType.BYTE)?.toInt() == 1
+    }
+
+    fun setFavorite(item: ItemStack?, favorite: Boolean): Boolean {
+        if (item == null || item.type == Material.AIR || !isPermanentLoot(item)) {
+            return false
+        }
+        val meta = item.itemMeta ?: return false
+        if (favorite) {
+            meta.persistentDataContainer.set(favoriteKey, PersistentDataType.BYTE, 1)
+        } else {
+            meta.persistentDataContainer.remove(favoriteKey)
+        }
+        item.itemMeta = meta
+        refreshPermanentLore(item, getPermanentOwnerName(item))
+        return true
+    }
+
+    fun toggleFavorite(item: ItemStack?): Boolean? {
+        if (item == null || item.type == Material.AIR || !isPermanentLoot(item)) {
+            return null
+        }
+        val next = !isFavorite(item)
+        setFavorite(item, next)
+        return next
+    }
+
+    fun getPermanentOwnerUuid(item: ItemStack?): UUID? {
+        if (item == null || item.type == Material.AIR) {
+            return null
+        }
+        val raw = item.itemMeta?.persistentDataContainer?.get(ownerUuidKey, PersistentDataType.STRING) ?: return null
+        return runCatching { UUID.fromString(raw) }.getOrNull()
+    }
+
+    fun getPermanentOwnerName(item: ItemStack?): String? {
+        if (item == null || item.type == Material.AIR) {
+            return null
+        }
+        return item.itemMeta?.persistentDataContainer?.get(ownerNameKey, PersistentDataType.STRING)
+    }
+
+    fun isPermanentLootOwnedBy(item: ItemStack?, player: Player): Boolean {
+        if (!isPermanentLoot(item)) {
+            return false
+        }
+        val owner = getPermanentOwnerUuid(item)
+        return owner == null || owner == player.uniqueId
+    }
+
+    fun ensurePermanentOwner(item: ItemStack?, player: Player): Boolean {
+        if (item == null || item.type == Material.AIR || !isPermanentLoot(item)) {
+            return false
+        }
+        if (getPermanentOwnerUuid(item) != null) {
+            return getPermanentOwnerUuid(item) == player.uniqueId
+        }
+        val meta = item.itemMeta ?: return false
+        meta.persistentDataContainer.set(ownerUuidKey, PersistentDataType.STRING, player.uniqueId.toString())
+        meta.persistentDataContainer.set(ownerNameKey, PersistentDataType.STRING, player.name)
+        item.itemMeta = meta
+        refreshPermanentLore(item, player.name)
+        return true
+    }
+
+    fun getPermanentEquippedLoot(player: Player, slot: EquipmentSlot): EquippedLootView? {
+        val item = getEquippedItem(player, slot) ?: return null
+        if (!isPermanentLoot(item) || DungeonBoundItem.hasTag(item)) {
+            return null
+        }
+        if (!ensurePermanentOwner(item, player)) {
+            return null
+        }
+        val definition = getDefinition(item) ?: return null
+        return EquippedLootView(
+            slot = slot,
+            definition = definition,
+            item = item.clone(),
+            forgeLevel = getForgeLevel(item),
+            forgeHeat = 0,
+            score = getScore(item)
+        )
+    }
+
+    fun convertEquippedToPermanent(player: Player, slot: EquipmentSlot): LootActionResult {
+        val item = getEquippedItem(player, slot)
+            ?: return LootActionResult(false, "§c该部位没有可铭刻的临时装备。")
+        val definition = getDefinition(item)
+            ?: return LootActionResult(false, "§c该部位没有可铭刻的临时装备。")
+        if (!DungeonBoundItem.hasTag(item)) {
+            return LootActionResult(false, "§c只有副本临时装备可以进行灵魂铭刻。")
+        }
+
+        makePermanent(item, player)
+        refreshEquippedSetBonuses(player)
+        return LootActionResult(true, "§6灵魂铭刻完成: §f${definition.name} §7已转为永久装备。")
+    }
+
+    fun upgradePermanentEquipped(
+        player: Player,
+        slot: EquipmentSlot,
+        maxLevel: Int,
+        attributeBonusPerLevel: Double
+    ): LootActionResult {
+        val currentItem = getEquippedItem(player, slot)
+        val current = getPermanentEquippedLoot(player, slot)
+            ?: return LootActionResult(false, "§c该部位没有可升阶的永久装备。")
+        if (current.forgeLevel >= maxLevel) {
+            return LootActionResult(false, "§c这件永久装备已达到局外锻造上限。")
+        }
+
+        val newLevel = current.forgeLevel + 1
+        val source = current.definition.sources.first()
+        val currentRarity = getRarity(currentItem) ?: fallbackRarity()
+        val currentAffixes = getAffixes(currentItem)
+        val lockedAffixId = getLockedAffixId(currentItem)
+        val favorite = isFavorite(currentItem)
+        val upgraded = buildRolledLoot(
+            current.definition,
+            source,
+            "局外升阶",
+            current.definition.minFloor,
+            newLevel,
+            0,
+            0,
+            attributeBonusPerLevel,
+            currentRarity,
+            currentAffixes,
+            lockedAffixId
+        ) ?: return LootActionResult(false, "§c局外升阶失败，请检查装备配置。")
+        makePermanent(upgraded.item, player)
+        setFavorite(upgraded.item, favorite)
+        if (currentItem != null && currentItem.amount > 1) {
+            upgraded.item.amount = currentItem.amount
+        }
+        setEquippedItem(player, slot, upgraded.item)
+        refreshEquippedSetBonuses(player)
+        return LootActionResult(true, "§6局外升阶完成: §f${current.definition.name} §7已提升至 §6+$newLevel")
+    }
+
+    fun rerollPermanentAffixes(
+        player: Player,
+        slot: EquipmentSlot,
+        attributeBonusPerLevel: Double
+    ): LootActionResult {
+        val currentItem = getEquippedItem(player, slot)
+        val current = getPermanentEquippedLoot(player, slot)
+            ?: return LootActionResult(false, "§c该部位没有可重铸的永久装备。")
+        val source = current.definition.sources.first()
+        val currentRarity = getRarity(currentItem) ?: fallbackRarity()
+        val lockedAffixId = getLockedAffixId(currentItem)
+        val favorite = isFavorite(currentItem)
+        val rolled = buildRolledLoot(
+            current.definition,
+            source,
+            "局外重铸",
+            current.definition.minFloor,
+            current.forgeLevel,
+            0,
+            0,
+            attributeBonusPerLevel,
+            currentRarity,
+            lockedAffixId = lockedAffixId
+        ) ?: return LootActionResult(false, "§c局外重铸失败，请检查装备配置。")
+        makePermanent(rolled.item, player)
+        setFavorite(rolled.item, favorite)
+        setEquippedItem(player, slot, rolled.item)
+        refreshEquippedSetBonuses(player)
+        return LootActionResult(true, "§6局外重铸完成: §f${current.definition.name} §7的词条已更新。")
+    }
+
+    fun clearPermanentLockedAffix(player: Player, slot: EquipmentSlot): LootActionResult {
+        val item = getEquippedItem(player, slot)
+            ?: return LootActionResult(false, "§c该部位没有永久装备。")
+        val definition = getDefinition(item)
+            ?: return LootActionResult(false, "§c该部位没有永久装备。")
+        if (!isPermanentLoot(item)) {
+            return LootActionResult(false, "§c只有永久装备可以进行局外清锁。")
+        }
+        val meta = item.itemMeta ?: return LootActionResult(false, "§c清锁失败，请稍后再试。")
+        meta.persistentDataContainer.remove(lockedAffixKey)
+        item.itemMeta = meta
+        refreshSingleItemLore(item)
+        refreshEquippedSetBonuses(player)
+        return LootActionResult(true, "§7已清除 §f${definition.name} §7的锁定词条。")
+    }
+
+    fun getPermanentRarityUpgradeStep(player: Player, slot: EquipmentSlot): Int? {
+        val item = getEquippedItem(player, slot) ?: return null
+        if (!isPermanentLoot(item)) return null
+        val rarity = getRarity(item) ?: return null
+        val index = rarities.indexOfFirst { it.id.equals(rarity.id, ignoreCase = true) }
+        return index.takeIf { it >= 0 && it < rarities.lastIndex }
+    }
+
+    fun getPermanentRarityName(player: Player, slot: EquipmentSlot): String? {
+        val item = getEquippedItem(player, slot) ?: return null
+        if (!isPermanentLoot(item)) return null
+        return getRarity(item)?.displayName
+    }
+
+    fun getNextPermanentRarityName(player: Player, slot: EquipmentSlot): String? {
+        val step = getPermanentRarityUpgradeStep(player, slot) ?: return null
+        return rarities.getOrNull(step + 1)?.displayName
+    }
+
+    fun getNextPermanentRarityId(player: Player, slot: EquipmentSlot): String? {
+        val step = getPermanentRarityUpgradeStep(player, slot) ?: return null
+        return rarities.getOrNull(step + 1)?.id
+    }
+
+    fun getPermanentRarityId(player: Player, slot: EquipmentSlot): String? {
+        val item = getEquippedItem(player, slot) ?: return null
+        if (!isPermanentLoot(item)) return null
+        return getRarity(item)?.id
+    }
+
+    fun upgradePermanentRarity(
+        player: Player,
+        slot: EquipmentSlot,
+        attributeBonusPerLevel: Double
+    ): LootActionResult {
+        val currentItem = getEquippedItem(player, slot)
+        val current = getPermanentEquippedLoot(player, slot)
+            ?: return LootActionResult(false, "§c该部位没有可升品的永久装备。")
+        val step = getPermanentRarityUpgradeStep(player, slot)
+            ?: return LootActionResult(false, "§c这件永久装备已经是最高稀有度。")
+        val nextRarity = rarities.getOrNull(step + 1)
+            ?: return LootActionResult(false, "§c这件永久装备已经是最高稀有度。")
+        val source = current.definition.sources.first()
+        val lockedAffixId = getLockedAffixId(currentItem)
+        val favorite = isFavorite(currentItem)
+        val upgraded = buildRolledLoot(
+            current.definition,
+            source,
+            "局外升品",
+            current.definition.minFloor,
+            current.forgeLevel,
+            0,
+            0,
+            attributeBonusPerLevel,
+            forcedRarity = nextRarity,
+            lockedAffixId = lockedAffixId
+        ) ?: return LootActionResult(false, "§c局外升品失败，请检查装备配置。")
+        makePermanent(upgraded.item, player)
+        setFavorite(upgraded.item, favorite)
+        setEquippedItem(player, slot, upgraded.item)
+        refreshEquippedSetBonuses(player)
+        return LootActionResult(true, "§6局外升品完成: §f${current.definition.name} §7已提升为 ${nextRarity.color}${nextRarity.displayName}")
+    }
+
+    fun getPermanentSalvageReward(
+        player: Player,
+        slot: EquipmentSlot,
+        baseReturn: Int,
+        scoreScale: Double,
+        forgeLevelReturn: Int,
+        rarityReturn: Map<String, Int>
+    ): Int {
+        val equipped = getPermanentEquippedLoot(player, slot) ?: return 0
+        val item = getEquippedItem(player, slot)
+        val rarityId = getRarity(item)?.id?.lowercase() ?: "common"
+        val rarityBonus = rarityReturn[rarityId] ?: 0
+        return (baseReturn + (equipped.score * scoreScale).roundToInt() + equipped.forgeLevel * forgeLevelReturn + rarityBonus)
+            .coerceAtLeast(0)
+    }
+
+    fun salvagePermanentEquipped(
+        player: Player,
+        slot: EquipmentSlot,
+        baseReturn: Int,
+        scoreScale: Double,
+        forgeLevelReturn: Int,
+        rarityReturn: Map<String, Int>
+    ): LootSalvageResult {
+        val equipped = getPermanentEquippedLoot(player, slot)
+            ?: return LootSalvageResult(false, 0, "§c该部位没有可分解的永久装备。")
+        val reward = getPermanentSalvageReward(player, slot, baseReturn, scoreScale, forgeLevelReturn, rarityReturn)
+        setEquippedItem(player, slot, ItemStack(Material.AIR))
+        refreshEquippedSetBonuses(player)
+        return LootSalvageResult(true, reward, "§6永久分解完成: §f${equipped.definition.name} §7→ §6+$reward §e灵魂碎片")
+    }
+
+    private fun makePermanent(item: ItemStack, owner: Player? = null) {
+        val meta = item.itemMeta ?: return
+        if (owner != null && permanentGearBindOnConvert) {
+            meta.persistentDataContainer.set(ownerUuidKey, PersistentDataType.STRING, owner.uniqueId.toString())
+            meta.persistentDataContainer.set(ownerNameKey, PersistentDataType.STRING, owner.name)
+        }
+        meta.persistentDataContainer.set(permanentLootKey, PersistentDataType.BYTE, 1)
+        meta.persistentDataContainer.remove(forgeHeatKey)
+        item.itemMeta = meta
+        refreshPermanentLore(item, owner?.name ?: getPermanentOwnerName(item))
+        DungeonBoundItem.unmark(item)
+    }
+
+    private fun refreshPermanentLore(item: ItemStack, ownerName: String?) {
+        val meta = item.itemMeta ?: return
+        val baseLore = getBaseLore(item)
+        val permanentLore = buildList {
+            addAll(baseLore.filterNot { line ->
+                line.contains("离开副本后消失") ||
+                    line.startsWith("§c锻造热度: ") ||
+                    line.startsWith("§6灵魂铭刻: ") ||
+                    line.startsWith("§6★ ") ||
+                    line.startsWith("§7绑定者: ") ||
+                    line.contains("由一次副本冒险保留下来的战利品")
+            })
+            add("")
+            add("§6灵魂铭刻: 永久装备")
+            if (isFavorite(item)) {
+                add("§6★ 已收藏")
+            }
+            if (!ownerName.isNullOrBlank()) {
+                add("§7绑定者: §f$ownerName")
+            }
+            add("§8由一次副本冒险保留下来的战利品")
+        }
+        meta.persistentDataContainer.set(baseLoreKey, PersistentDataType.STRING, permanentLore.joinToString("\n"))
+        meta.lore = permanentLore
+        item.itemMeta = meta
+    }
+
     private fun getEquippedDefinitions(player: Player): List<EquippedDefinitionView> {
         return listOf(
             EquipmentSlot.HEAD,
@@ -981,7 +1629,7 @@ object DungeonLootManager {
             EquipmentSlot.OFF_HAND
         ).mapNotNull { slot ->
             val item = getEquippedItem(player, slot) ?: return@mapNotNull null
-            if (!DungeonBoundItem.hasTag(item)) {
+            if (!DungeonBoundItem.hasTag(item) && !isPermanentLoot(item)) {
                 return@mapNotNull null
             }
             val definition = getDefinition(item) ?: return@mapNotNull null

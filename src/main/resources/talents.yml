@@ -8,50 +8,244 @@
 #   BOON_LUCK — 稀有 Boon 概率提升（百分比，value-per-level）
 
 talents:
+  # ===== 生存系 =====
   hp_talent:
     name: "生命强化"
     description: "进入副本时生命上限 +{value}"
     icon: GOLDEN_APPLE
-    max-level: 3
-    cost: [50, 120, 250]
+    max-level: 10
+    cost: [100, 180, 300, 460, 680, 980, 1360, 1840, 2400, 3100]
     effect-type: ATTRIBUTE
     attribute: "生命上限"
-    value-per-level: 10.0
+    value-per-level: 22.0
 
+  defense_talent:
+    name: "铁骨防线"
+    description: "进入副本时物理防御 +{value}"
+    icon: IRON_CHESTPLATE
+    max-level: 8
+    cost: [80, 140, 220, 340, 520, 780, 1120, 1560]
+    effect-type: ATTRIBUTE
+    attribute: "物理防御"
+    value-per-level: 6.0
+
+  damage_reduce_talent:
+    name: "坚壁减伤"
+    description: "进入副本时减伤比例 +{value}%"
+    icon: SHIELD
+    max-level: 8
+    cost: [100, 170, 270, 420, 640, 920, 1280, 1760]
+    effect-type: ATTRIBUTE
+    attribute: "减伤比例"
+    value-per-level: 2.0
+
+  shield_talent:
+    name: "魂盾增幅"
+    description: "进入副本时护盾强度 +{value}"
+    icon: TOTEM_OF_UNDYING
+    max-level: 8
+    cost: [90, 160, 250, 390, 600, 860, 1200, 1660]
+    effect-type: ATTRIBUTE
+    attribute: "护盾强度"
+    value-per-level: 7.0
+
+  restore_talent:
+    name: "战后复苏"
+    description: "进入副本时生命恢复 +{value}"
+    icon: HONEY_BOTTLE
+    max-level: 8
+    cost: [80, 140, 220, 340, 520, 780, 1120, 1560]
+    effect-type: ATTRIBUTE
+    attribute: "生命恢复"
+    value-per-level: 5.0
+
+  heal_bonus_talent:
+    name: "疗愈回响"
+    description: "进入副本时治疗加成 +{value}%"
+    icon: GLISTERING_MELON_SLICE
+    max-level: 8
+    cost: [90, 160, 260, 400, 620, 900, 1260, 1720]
+    effect-type: ATTRIBUTE
+    attribute: "治疗加成"
+    value-per-level: 3.0
+
+  # ===== 进攻系 =====
   atk_talent:
     name: "攻击强化"
     description: "进入副本时物理攻击 +{value}"
     icon: IRON_SWORD
-    max-level: 3
-    cost: [50, 120, 250]
+    max-level: 10
+    cost: [100, 180, 300, 460, 680, 980, 1360, 1840, 2400, 3100]
     effect-type: ATTRIBUTE
     attribute: "物理攻击"
-    value-per-level: 3.0
+    value-per-level: 6.0
 
-  def_talent:
-    name: "防御强化"
-    description: "进入副本时物理防御 +{value}"
-    icon: IRON_CHESTPLATE
-    max-level: 3
-    cost: [50, 120, 250]
+  crit_talent:
+    name: "锐眼暴击"
+    description: "进入副本时暴击几率 +{value}%"
+    icon: SPYGLASS
+    max-level: 8
+    cost: [100, 170, 270, 420, 640, 920, 1280, 1760]
     effect-type: ATTRIBUTE
-    attribute: "物理防御"
+    attribute: "暴击几率"
+    value-per-level: 2.5
+
+  crit_damage_talent:
+    name: "裂心重击"
+    description: "进入副本时暴击伤害 +{value}%"
+    icon: DIAMOND_SWORD
+    max-level: 8
+    cost: [110, 190, 310, 480, 720, 1040, 1440, 1960]
+    effect-type: ATTRIBUTE
+    attribute: "暴击伤害"
+    value-per-level: 5.0
+
+  attack_speed_talent:
+    name: "疾风连斩"
+    description: "进入副本时攻击速度 +{value}%"
+    icon: FEATHER
+    max-level: 8
+    cost: [90, 160, 260, 400, 620, 900, 1260, 1720]
+    effect-type: ATTRIBUTE
+    attribute: "攻击速度"
     value-per-level: 3.0
 
+  armor_break_talent:
+    name: "破甲训练"
+    description: "进入副本时破甲 +{value}%"
+    icon: IRON_AXE
+    max-level: 8
+    cost: [100, 170, 270, 420, 640, 920, 1280, 1760]
+    effect-type: ATTRIBUTE
+    attribute: "破甲"
+    value-per-level: 3.5
+
+  boss_damage_talent:
+    name: "弑王专精"
+    description: "进入副本时首领伤害 +{value}%"
+    icon: NETHERITE_SWORD
+    max-level: 6
+    cost: [180, 320, 560, 900, 1380, 2040]
+    effect-type: ATTRIBUTE
+    attribute: "首领伤害"
+    value-per-level: 7.0
+
+  # ===== 收益系 =====
   shard_talent:
     name: "灵魂亲和"
     description: "灵魂碎片获取 +{value}%"
     icon: AMETHYST_SHARD
-    max-level: 3
-    cost: [80, 200, 400]
+    max-level: 8
+    cost: [120, 220, 360, 560, 840, 1220, 1700, 2320]
     effect-type: SHARD_BONUS
-    value-per-level: 10.0
+    value-per-level: 8.0
 
   boon_talent:
     name: "神恩眷顾"
     description: "稀有神恩概率 +{value}%"
     icon: NETHER_STAR
-    max-level: 3
-    cost: [100, 250, 500]
+    max-level: 8
+    cost: [140, 260, 430, 660, 980, 1420, 1980, 2700]
     effect-type: BOON_LUCK
     value-per-level: 5.0
+
+  luck_talent:
+    name: "秘宝直觉"
+    description: "进入副本时幸运 +{value}"
+    icon: EMERALD
+    max-level: 8
+    cost: [120, 220, 360, 560, 840, 1220, 1700, 2320]
+    effect-type: ATTRIBUTE
+    attribute: "幸运"
+    value-per-level: 5.0
+
+  elite_damage_talent:
+    name: "精英猎手"
+    description: "进入副本时精英伤害 +{value}%"
+    icon: CROSSBOW
+    max-level: 6
+    cost: [160, 300, 520, 840, 1280, 1880]
+    effect-type: ATTRIBUTE
+    attribute: "精英伤害"
+    value-per-level: 7.0
+
+  movement_talent:
+    name: "远征步法"
+    description: "进入副本时移动速度 +{value}%"
+    icon: RABBIT_FOOT
+    max-level: 8
+    cost: [80, 140, 220, 340, 520, 780, 1120, 1560]
+    effect-type: ATTRIBUTE
+    attribute: "移动速度"
+    value-per-level: 2.5
+
+  lifesteal_talent:
+    name: "战利汲取"
+    description: "进入副本时生命偷取 +{value}%"
+    icon: REDSTONE
+    max-level: 8
+    cost: [110, 190, 310, 480, 720, 1040, 1440, 1960]
+    effect-type: ATTRIBUTE
+    attribute: "生命偷取"
+    value-per-level: 2.5
+
+  # ===== 特殊流派系 =====
+  thunder_talent:
+    name: "雷霆刻印"
+    description: "进入副本时雷霆伤害 +{value}"
+    icon: LIGHTNING_ROD
+    max-level: 8
+    cost: [100, 170, 270, 420, 640, 920, 1280, 1760]
+    effect-type: ATTRIBUTE
+    attribute: "雷霆伤害"
+    value-per-level: 6.0
+
+  frost_talent:
+    name: "霜寒回路"
+    description: "进入副本时冰霜伤害 +{value}"
+    icon: PACKED_ICE
+    max-level: 8
+    cost: [100, 170, 270, 420, 640, 920, 1280, 1760]
+    effect-type: ATTRIBUTE
+    attribute: "冰霜伤害"
+    value-per-level: 6.0
+
+  abyss_talent:
+    name: "深渊凝视"
+    description: "进入副本时深渊伤害 +{value}"
+    icon: CRYING_OBSIDIAN
+    max-level: 8
+    cost: [120, 220, 360, 560, 840, 1220, 1700, 2320]
+    effect-type: ATTRIBUTE
+    attribute: "深渊伤害"
+    value-per-level: 7.0
+
+  radiance_talent:
+    name: "圣辉祷印"
+    description: "进入副本时圣辉伤害 +{value}"
+    icon: BEACON
+    max-level: 8
+    cost: [120, 220, 360, 560, 840, 1220, 1700, 2320]
+    effect-type: ATTRIBUTE
+    attribute: "圣辉伤害"
+    value-per-level: 7.0
+
+  skill_damage_talent:
+    name: "秘术增幅"
+    description: "进入副本时技能伤害 +{value}%"
+    icon: ENCHANTED_BOOK
+    max-level: 8
+    cost: [120, 220, 360, 560, 840, 1220, 1700, 2320]
+    effect-type: ATTRIBUTE
+    attribute: "技能伤害"
+    value-per-level: 5.0
+
+  cooldown_talent:
+    name: "冷却掌控"
+    description: "进入副本时冷却缩减 +{value}%"
+    icon: CLOCK
+    max-level: 8
+    cost: [120, 220, 360, 560, 840, 1220, 1700, 2320]
+    effect-type: ATTRIBUTE
+    attribute: "冷却缩减"
+    value-per-level: 3.0

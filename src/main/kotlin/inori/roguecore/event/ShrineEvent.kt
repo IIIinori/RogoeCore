@@ -6,6 +6,9 @@ import inori.roguecore.curse.RunCurseManager
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.room.RoomType
+import inori.roguecore.modifier.RunModifierManager
+import inori.roguecore.modifier.RunModifierType
+import inori.roguecore.relic.RelicEffectHandler
 import inori.roguecore.relic.RelicSelectManager
 import inori.roguecore.ui.DungeonGuiGuard
 import inori.roguecore.unlock.UnlockManager
@@ -34,12 +37,22 @@ object ShrineEvent {
         val shardReward = EventScaling.reward(instance, config.getInt("shrine.sacrifice-shard-reward", 28))
         val hasSanctifiedPrayer = UnlockManager.hasSanctifiedPrayer(player)
         val shrinePower = EventAffixManager.getFamilyPower(instance, RoomType.SHRINE, "SHRINE")
-        val twinnedFaith = shrinePower > 0
+        val healPower = EventAffixManager.getFamilyPower(instance, RoomType.SHRINE, "SHRINE_HEAL")
+        val purifyPower = EventAffixManager.getFamilyPower(instance, RoomType.SHRINE, "SHRINE_PURIFY")
+        val relicPower = EventAffixManager.getFamilyPower(instance, RoomType.SHRINE, "SHRINE_RELIC")
+        val relicBoost = RelicEffectHandler.getShrineRelicBoost(player)
+        val twinnedFaith = shrinePower + healPower + purifyPower + relicPower + relicBoost > 0
         val hasTwinPrayer = twinnedFaith || instance.config.floorNumber >= config.getInt("event-variants.shrine.twin-prayer-floor", 8)
-        val twinPrice = (EventScaling.price(instance, config.getInt("event-variants.shrine.twin-prayer-price", 44)) - shrinePower * 2).coerceAtLeast(0)
-        val bonusHeal = (shrinePower * 0.03).coerceAtMost(0.35)
+        val twinPrice = (EventScaling.price(instance, config.getInt("event-variants.shrine.twin-prayer-price", 44)) - (shrinePower + purifyPower) * 2).coerceAtLeast(0)
+        val bonusHeal = ((shrinePower + healPower) * 0.03).coerceAtMost(0.35)
         val effectiveHealPercent = (healPercent + bonusHeal).coerceAtMost(1.0)
         val twinHealPercent = (config.getDouble("event-variants.shrine.twin-prayer-heal-percent", 0.45) + bonusHeal).coerceAtLeast(effectiveHealPercent)
+        val blessingModifierEnabled = RunModifierManager.isEnabled(RunModifierType.SHRINE_BLESSING)
+        val blessingDuration = RunModifierManager.shrineBlessingDuration(twin = false)
+        val blessingReward = RunModifierManager.shrineBlessingReward(instance, shrinePower + healPower, twin = false)
+        val twinDuration = RunModifierManager.shrineBlessingDuration(twin = true)
+        val twinReward = RunModifierManager.shrineBlessingReward(instance, shrinePower + healPower, twin = true, relicPower = relicPower)
+        val blessingHeal = (RunModifierManager.shrineBlessingHealPercent() * 100).toInt()
         val title = "§f§l古老神龛"
 
         DungeonGuiGuard.lock(player, title) { target -> trigger(target, instance) }
@@ -89,14 +102,20 @@ object ShrineEvent {
             val blessingItem = XMaterial.END_CRYSTAL.parseItem()!!.apply {
                 itemMeta = itemMeta?.also { meta ->
                         meta.setDisplayName("§b虔诚祈祷")
-                        meta.lore = listOf(
-                            "",
-                            "§7消耗 §e$blessingCost §7本局碎片",
-                            "§7回复 §a${(effectiveHealPercent * 100).toInt()}% §7最大生命",
-                            "§7并获得一次 §d神恩选择",
-                            "",
-                            "§e点击接受赐福"
-                    )
+                        meta.lore = buildList {
+                            add("")
+                            add("§7消耗 §e$blessingCost §7本局碎片")
+                            add("§7回复 §a${(effectiveHealPercent * 100).toInt()}% §7最大生命")
+                            add("§7并获得一次 §d神恩选择")
+                            if (blessingModifierEnabled) {
+                                add("")
+                                add("§7附加本局修正: §b${RunModifierType.SHRINE_BLESSING.displayName}")
+                                add("§7持续 §b$blessingDuration §7个房间")
+                                add("§7每次清房回复 §a$blessingHeal% §7最大生命并获得 §6$blessingReward §7碎片")
+                            }
+                            add("")
+                            add("§e点击接受赐福")
+                    }
                 }
             }
             set(blessingSlot, blessingItem)
@@ -137,15 +156,21 @@ object ShrineEvent {
                 val twinItem = XMaterial.BEACON.parseItem()!!.apply {
                     itemMeta = itemMeta?.also { meta ->
                         meta.setDisplayName("§d双生祷文")
-                        meta.lore = listOf(
-                            "",
-                            "§7消耗 §e$twinPrice §7本局碎片",
-                            "§7回复 §a${(twinHealPercent * 100).toInt()}% §7最大生命",
-                            "§7额外获得 1 份随机神恩",
-                            "§7并净化一条诅咒，若没有诅咒则改为遗物选择",
-                            "",
-                            "§e点击献上更昂贵的祷词"
-                        )
+                        meta.lore = buildList {
+                            add("")
+                            add("§7消耗 §e$twinPrice §7本局碎片")
+                            add("§7回复 §a${(twinHealPercent * 100).toInt()}% §7最大生命")
+                            add("§7额外获得 1 份随机神恩")
+                            add(if (relicPower > 0) "§7圣像额外提高遗物祈愿候选" else "§7并净化一条诅咒，若没有诅咒则改为遗物选择")
+                            if (blessingModifierEnabled) {
+                                add("")
+                                add("§7附加本局修正: §b${RunModifierType.SHRINE_BLESSING.displayName}")
+                                add("§7持续 §b$twinDuration §7个房间")
+                                add("§7每次清房回复 §a$blessingHeal% §7最大生命并获得 §6$twinReward §7碎片")
+                            }
+                            add("")
+                            add("§e点击献上更昂贵的祷词")
+                        }
                     }
                 }
                 set(twinSlot, twinItem)
@@ -164,6 +189,17 @@ object ShrineEvent {
                         val maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH)?.value ?: 20.0
                         player.health = (player.health + maxHealth * effectiveHealPercent).coerceAtMost(maxHealth)
                         player.sendMessage("§b神龛回应了你的祈祷。")
+                        if (RunModifierManager.isEnabled(RunModifierType.SHRINE_BLESSING)) {
+                            val duration = RunModifierManager.shrineBlessingDuration(twin = false)
+                            RunModifierManager.addModifier(
+                                player,
+                                RunModifierType.SHRINE_BLESSING,
+                                duration,
+                                duration,
+                                RunModifierManager.shrineBlessingReward(instance, shrinePower + healPower, twin = false).toDouble(),
+                                "虔诚祈祷"
+                            )
+                        }
                         BoonSelectManager.offerBoonSelection(player, EventScaling.boonOfferCount(instance))
                     }
 
@@ -179,7 +215,7 @@ object ShrineEvent {
                         val removed = RunCurseManager.getCurses(player).randomOrNull()?.let { RunCurseManager.removeCurse(player, it) } == true
                         if (!removed) {
                             player.sendMessage("§7你身上没有可净化的诅咒，神龛赐下了一次遗物选择。")
-                            if (!RelicSelectManager.offerRelicSelection(player, EventScaling.relicOfferCount(instance, 3, UnlockManager.getRelicOfferBonus(player)))) {
+                            if (!RelicSelectManager.offerRelicSelection(player, EventScaling.relicOfferCount(instance, 3, UnlockManager.getRelicOfferBonus(player) + relicPower.coerceAtMost(3) + relicBoost))) {
                                 BoonSelectManager.offerBoonSelection(player, EventScaling.boonOfferCount(instance))
                             }
                         }
@@ -194,6 +230,17 @@ object ShrineEvent {
                         }
                         val maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH)?.value ?: 20.0
                         player.health = (player.health + maxHealth * twinHealPercent).coerceAtMost(maxHealth)
+                        if (RunModifierManager.isEnabled(RunModifierType.SHRINE_BLESSING)) {
+                            val duration = RunModifierManager.shrineBlessingDuration(twin = true)
+                            RunModifierManager.addModifier(
+                                player,
+                                RunModifierType.SHRINE_BLESSING,
+                                duration,
+                                duration,
+                                RunModifierManager.shrineBlessingReward(instance, shrinePower + healPower, twin = true, relicPower = relicPower).toDouble(),
+                                "双生祷文"
+                            )
+                        }
                         val boon = BoonSelectManager.rollBoons(1, player).firstOrNull()
                         if (boon != null) {
                             PlayerBoonData.addBoon(player, boon)
@@ -202,7 +249,7 @@ object ShrineEvent {
                         val removed = RunCurseManager.getCurses(player).randomOrNull()?.let { RunCurseManager.removeCurse(player, it) } == true
                         if (!removed) {
                             player.sendMessage("§7没有可净化的诅咒，双生祷文转化为一次遗物选择。")
-                            if (!RelicSelectManager.offerRelicSelection(player, EventScaling.relicOfferCount(instance, 3, UnlockManager.getRelicOfferBonus(player)))) {
+                            if (!RelicSelectManager.offerRelicSelection(player, EventScaling.relicOfferCount(instance, 3, UnlockManager.getRelicOfferBonus(player) + relicPower.coerceAtMost(3) + relicBoost))) {
                                 BoonSelectManager.offerBoonSelection(player, EventScaling.boonOfferCount(instance))
                             }
                         }

@@ -4,6 +4,8 @@ import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.DungeonManager
 import inori.roguecore.dungeon.room.RoomType
+import inori.roguecore.summary.RunEndReason
+import inori.roguecore.summary.RunSummaryManager
 import inori.roguecore.ui.DungeonGuiGuard
 import org.bukkit.entity.Player
 import taboolib.library.xseries.XMaterial
@@ -102,6 +104,7 @@ object ExtractionEvent {
                         DungeonGuiGuard.unlock(player)
                         player.closeInventory()
                         player.sendMessage("§a你选择安全撤离，本次冒险到此结束。")
+                        RunSummaryManager.markEndReason(player.uniqueId, RunEndReason.EXTRACT)
                         DungeonManager.leaveDungeon(player)
                     }
 

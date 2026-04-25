@@ -180,3 +180,138 @@ unlocks:
     slot: 20
     required-best-floor: 8
     requires: ["void_contract"]
+
+  gear_storage_i:
+    name: "灵械仓储 I"
+    description: "装备仓库容量提升 9 格，适合保留更多永久装备胚子。"
+    icon: CHEST
+    cost: 240
+    slot: 45
+    required-best-floor: 5
+    requires: ["advanced_relics"]
+
+  gear_storage_ii:
+    name: "灵械仓储 II"
+    description: "装备仓库总容量提升 18 格，让多套装配有长期整理空间。"
+    icon: TRAPPED_CHEST
+    cost: 520
+    slot: 46
+    required-best-floor: 8
+    requires: ["gear_storage_i"]
+
+  gear_storage_iii:
+    name: "灵械仓储 III"
+    description: "装备仓库总容量提升 27 格，开放完整秘库级装备陈列。"
+    icon: ENDER_CHEST
+    cost: 960
+    slot: 47
+    required-best-floor: 12
+    requires: ["gear_storage_ii"]
+
+  rapid_identification:
+    name: "快速鉴定"
+    description: "鉴定耗时降低 15%，离线期间同样享受该研究加速。"
+    icon: CLOCK
+    cost: 300
+    slot: 48
+    required-best-floor: 5
+    requires: ["treasure_cipher"]
+
+  batch_identification:
+    name: "批量鉴定"
+    description: "鉴定队列容量提升 1，可同时处理更多未鉴定装备。"
+    icon: SPYGLASS
+    cost: 560
+    slot: 49
+    required-best-floor: 8
+    requires: ["rapid_identification"]
+
+  identification_discount:
+    name: "鉴定折扣"
+    description: "鉴定灵魂碎片消耗降低 15%，降低长期筛装成本。"
+    icon: EMERALD
+    cost: 760
+    slot: 50
+    required-best-floor: 10
+    requires: ["batch_identification"]
+
+  forge_queue_expansion:
+    name: "炉位扩容"
+    description: "锻造书打造队列容量提升 1，可并行打造更多永久装备。"
+    icon: FURNACE
+    cost: 620
+    slot: 51
+    required-best-floor: 8
+    requires: ["black_market_network"]
+
+  furnace_acceleration:
+    name: "炉火加速"
+    description: "锻造书打造耗时降低 15%，离线锻造也会按加速后的时间结算。"
+    icon: BLAST_FURNACE
+    cost: 680
+    slot: 52
+    required-best-floor: 9
+    requires: ["forge_queue_expansion", "soul_tempering"]
+
+  forge_book_hunt:
+    name: "图谱搜寻"
+    description: "副本中锻造书掉率提升 20%，宝箱、精英、Boss 与隐藏宝藏均生效。"
+    icon: WRITABLE_BOOK
+    cost: 700
+    slot: 53
+    required-best-floor: 9
+    requires: ["treasure_cipher"]
+
+  high_tier_schematics:
+    name: "高阶图谱"
+    description: "提高史诗与传说锻造书权重，让高品质打造书更常出现。"
+    icon: ENCHANTED_BOOK
+    cost: 1100
+    slot: 54
+    required-best-floor: 12
+    requires: ["furnace_acceleration", "forge_book_hunt", "legendary_relics"]
+
+  permanent_forge_cap_i:
+    name: "局外锻造上限 I"
+    description: "永久装备局外锻造等级上限提升 3 级。"
+    icon: ANVIL
+    cost: 720
+    slot: 55
+    required-best-floor: 8
+    requires: ["soul_tempering"]
+
+  permanent_forge_cap_ii:
+    name: "局外锻造上限 II"
+    description: "永久装备局外锻造等级总上限提升 5 级，释放高阶装备成长空间。"
+    icon: SMITHING_TABLE
+    cost: 1300
+    slot: 56
+    required-best-floor: 14
+    requires: ["permanent_forge_cap_i", "refined_reforge"]
+
+  inscription_saving:
+    name: "铭刻节省"
+    description: "局外升阶、重铸与锁词的灵魂碎片消耗降低 10%。"
+    icon: NAME_TAG
+    cost: 840
+    slot: 57
+    required-best-floor: 10
+    requires: ["inscription_mastery"]
+
+  rarity_upgrade_discount:
+    name: "升品折扣"
+    description: "永久装备升稀有度的灵魂碎片消耗降低 12%。"
+    icon: NETHER_STAR
+    cost: 1250
+    slot: 58
+    required-best-floor: 14
+    requires: ["permanent_forge_cap_i", "legendary_relics"]
+
+  salvage_accounting:
+    name: "回收精算"
+    description: "永久装备分解时，每种可返还锻造材料额外 +1。"
+    icon: GRINDSTONE
+    cost: 680
+    slot: 59
+    required-best-floor: 8
+    requires: ["sealed_vault"]

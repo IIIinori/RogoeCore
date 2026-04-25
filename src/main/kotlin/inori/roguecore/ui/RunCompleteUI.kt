@@ -30,7 +30,7 @@ object RunCompleteUI {
         }
 
         player.openMenu<Chest>(title) {
-            rows(4)
+            rows(6)
             handLocked(true)
 
             val routes = NextFloorRoute.entries.filter { route ->
@@ -40,16 +40,18 @@ object RunCompleteUI {
                 1 -> listOf(13)
                 2 -> listOf(12, 14)
                 3 -> listOf(11, 13, 15)
-                else -> listOf(10, 12, 14, 16)
+                4 -> listOf(10, 12, 14, 16)
+                5 -> listOf(10, 12, 14, 16, 28)
+                else -> listOf(10, 12, 14, 16, 28, 30)
             }
             val routeSlots = routePositions.mapIndexedNotNull { index, slot ->
                 routes.getOrNull(index)?.let { slot to it }
             }.toMap(linkedMapOf())
-            val optionSlots = routeSlots.keys + setOf(4, 22, 31)
+            val optionSlots = routeSlots.keys + setOf(4, 22, 24, 49)
             val glass = XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()!!.apply {
                 itemMeta = itemMeta?.also { it.setDisplayName(" ") }
             }
-            for (slot in 0 until 36) {
+            for (slot in 0 until 54) {
                 if (slot !in optionSlots) {
                     set(slot, glass)
                 }
@@ -57,6 +59,7 @@ object RunCompleteUI {
 
             set(4, buildRunSummary(player, instance, party))
             set(22, buildBuildSummary(player))
+            set(24, buildRoutePreviewHint())
 
             for ((slot, route) in routeSlots) {
                 set(slot, (route.icon.parseItem() ?: XMaterial.MAP.parseItem()!!).apply {
@@ -70,6 +73,19 @@ object RunCompleteUI {
                             add("§7下一楼层: §a$nextFloor")
                             add("")
                             addAll(route.description)
+                            add("")
+                            add("§7风险等级: ${bars(route.riskLevel, "§c")}")
+                            add("§7收益等级: ${bars(route.rewardLevel, "§6")}")
+                            add("§7房间倾向: ${describeRouteBonus(route.roomWeightModifiers)}")
+                            if (route.affixWeightModifiers.isNotEmpty()) {
+                                add("§7词缀倾向: ${describeAffixBonus(route.affixWeightModifiers)}")
+                            }
+                            if (route.eventFamilyModifiers.isNotEmpty()) {
+                                add("§7事件倾向: ${describeFamilyBonus(route.eventFamilyModifiers)}")
+                            }
+                            if (route.hiddenRoomChanceBonus > 0.0) {
+                                add("§7隐藏房基础加成: §a+${(route.hiddenRoomChanceBonus * 100).toInt()}%")
+                            }
                             if (routeBonus.isNotEmpty() || hiddenBonus > 0.0) {
                                 add("")
                                 add("§d研究强化:")
@@ -100,7 +116,7 @@ object RunCompleteUI {
                     )
                 }
             }
-            set(31, leaveItem)
+            set(49, leaveItem)
 
             onClick { event ->
                 event.isCancelled = true
@@ -111,7 +127,7 @@ object RunCompleteUI {
                     DungeonManager.advanceDungeon(instance.id, player.uniqueId, route)
                     return@onClick
                 }
-                if (event.rawSlot == 31) {
+                if (event.rawSlot == 49) {
                     DungeonGuiGuard.unlock(player)
                     player.closeInventory()
                     DungeonManager.finishDungeon(instance.id, player.uniqueId)
@@ -164,7 +180,47 @@ object RunCompleteUI {
         }
     }
 
+    private fun buildRoutePreviewHint() = XMaterial.FILLED_MAP.parseItem()!!.apply {
+        itemMeta = itemMeta?.also { meta ->
+            meta.setDisplayName("§a路线预览说明")
+            meta.lore = listOf(
+                "",
+                "§7路线会影响下一层的房间权重、",
+                "§7隐藏房概率、副本词缀和事件词缀倾向。",
+                "",
+                "§7建议先用 §e/rogue build §7确认当前构筑，",
+                "§7再选择能放大主流派收益的路线。"
+            )
+        }
+    }
+
     private fun describeRouteBonus(modifiers: Map<RoomType, Int>): String {
-        return modifiers.entries.joinToString(" / ") { "${it.key.displayName}+${it.value}" }
+        return modifiers.entries
+            .sortedByDescending { kotlin.math.abs(it.value) }
+            .take(4)
+            .joinToString(" / ") { "${it.key.displayName}${signed(it.value)}" }
+    }
+
+    private fun describeAffixBonus(modifiers: Map<inori.roguecore.affix.AffixType, Int>): String {
+        return modifiers.entries
+            .sortedByDescending { kotlin.math.abs(it.value) }
+            .take(3)
+            .joinToString(" / ") { "${it.key.name}${signed(it.value)}" }
+    }
+
+    private fun describeFamilyBonus(modifiers: Map<String, Int>): String {
+        return modifiers.entries
+            .sortedByDescending { kotlin.math.abs(it.value) }
+            .take(3)
+            .joinToString(" / ") { "${it.key}${signed(it.value)}" }
+    }
+
+    private fun signed(value: Int): String {
+        return if (value >= 0) "+$value" else value.toString()
+    }
+
+    private fun bars(value: Int, color: String): String {
+        val clamped = value.coerceIn(0, 5)
+        return color + "■".repeat(clamped) + "§8" + "■".repeat(5 - clamped)
     }
 }

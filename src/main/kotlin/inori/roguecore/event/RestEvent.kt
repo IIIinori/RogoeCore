@@ -23,10 +23,13 @@ object RestEvent {
 
     fun trigger(player: Player, instance: DungeonInstance) {
         val restPower = EventAffixManager.getFamilyPower(instance, RoomType.REST, "REST")
-        val restfulEcho = restPower > 0
+        val recoveryPower = EventAffixManager.getFamilyPower(instance, RoomType.REST, "REST_RECOVERY")
+        val trainingPower = EventAffixManager.getFamilyPower(instance, RoomType.REST, "REST_TRAINING")
+        val restfulEcho = restPower + recoveryPower + trainingPower > 0
         val healPercent = config.getDouble("rest.heal-percent", 1.0)
-        val effectiveHealPercent = (healPercent + restPower * 0.04).coerceAtMost(1.0)
-        val boonHealPercent = (restPower * 0.05).coerceAtMost(0.45)
+        val effectiveHealPercent = (healPercent + (restPower + recoveryPower) * 0.04).coerceAtMost(1.0)
+        val boonHealPercent = ((restPower + trainingPower) * 0.05).coerceAtMost(0.45)
+        val upgradeTimes = 1 + (trainingPower / 5).coerceAtMost(2)
         val boons = PlayerBoonData.getBoons(player)
         val upgradeable = boons.firstOrNull { it.canUpgrade }
         val optionSlots = setOf(11, 15)
@@ -73,7 +76,7 @@ object RestEvent {
                         meta.lore = buildList {
                             add("")
                             add("§7升级 ${upgradeable.boon.rarity.color}${upgradeable.boon.name}")
-                            add("§7Lv.${upgradeable.level} → Lv.${upgradeable.level + 1}")
+                            add("§7Lv.${upgradeable.level} → Lv.${(upgradeable.level + upgradeTimes).coerceAtMost(upgradeable.boon.maxLevel)}")
                             if (restfulEcho) {
                                 add("§7并恢复 §a${(boonHealPercent * 100).toInt()}% §7最大生命")
                             }
@@ -109,7 +112,11 @@ object RestEvent {
                         DungeonGuiGuard.unlock(player)
                         player.closeInventory()
                         if (upgradeable != null && upgradeable.canUpgrade) {
-                            PlayerBoonData.addBoon(player, upgradeable.boon)
+                            repeat(upgradeTimes) {
+                                if (upgradeable.canUpgrade) {
+                                    PlayerBoonData.addBoon(player, upgradeable.boon)
+                                }
+                            }
                             if (boonHealPercent > 0.0) {
                                 val maxHp = player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH)?.value ?: 20.0
                                 player.health = (player.health + maxHp * boonHealPercent).coerceAtMost(maxHp)

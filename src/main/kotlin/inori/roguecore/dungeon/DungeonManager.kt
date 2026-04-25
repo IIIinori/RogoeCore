@@ -13,6 +13,11 @@ import inori.roguecore.dungeon.route.NextFloorRoute
 import inori.roguecore.event.EventAffixManager
 import inori.roguecore.item.DungeonBoundItem
 import inori.roguecore.item.DungeonLootManager
+import inori.roguecore.milestone.RunMilestoneManager
+import inori.roguecore.modifier.RunModifierManager
+import inori.roguecore.stats.BalanceStatsManager
+import inori.roguecore.summary.RunEndReason
+import inori.roguecore.summary.RunSummaryManager
 import inori.roguecore.relic.PlayerRelicData
 import inori.roguecore.ui.DungeonGuiGuard
 import inori.roguecore.ui.DungeonHudManager
@@ -65,8 +70,8 @@ object DungeonManager {
 
         // 在世界原点生成地牢
         val origin = Location(world, 0.0, config.floorLevel.toDouble(), 0.0)
-        val affixes = AffixManager.rollAffixes(config.floorNumber)
-        val eventAffixes = EventAffixManager.rollAffixes(config.floorNumber)
+        val affixes = AffixManager.rollAffixes(config.floorNumber, config.route)
+        val eventAffixes = EventAffixManager.rollAffixes(config.floorNumber, config.route)
         val generator = DungeonGenerator(world, origin, config)
         val instance = generator.generate(instanceId, affixes, eventAffixes)
 
@@ -128,6 +133,8 @@ object DungeonManager {
         if (startRun) {
             // 记录运行 + 应用天赋，仅在新 run 生效。
             PlayerDataManager.recordRunStart(player.uniqueId)
+            BalanceStatsManager.recordFloorEntered(instance.config.floorNumber)
+            RunSummaryManager.startRun(player, instance.config.floorNumber)
             TalentManager.applyTalents(player)
         }
 
@@ -172,6 +179,8 @@ object DungeonManager {
         PlayerBoonData.clearBoons(player)
         RunCurseManager.clear(player)
         PlayerRelicData.clearRelics(player)
+        RunMilestoneManager.clear(player.uniqueId)
+        RunModifierManager.clear(player.uniqueId)
         DungeonBoundItem.clearFromPlayer(player)
         DungeonGuiGuard.unlock(player)
         DungeonHudManager.detach(player)
@@ -243,6 +252,14 @@ object DungeonManager {
             return false
         }
 
+        if (route != null) {
+            for (uuid in current.players) {
+                Bukkit.getPlayer(uuid)?.let { RunMilestoneManager.onRouteSelected(it, route) }
+                RunSummaryManager.onRouteSelected(uuid, route)
+                BalanceStatsManager.recordRouteSelected(route)
+            }
+        }
+
         val nextFloor = current.config.floorNumber + 1
         val routeWeightBonus = if (requestedBy != null && route != null) {
             UnlockManager.getRouteWeightBonus(requestedBy, route)
@@ -269,6 +286,8 @@ object DungeonManager {
             current.players.remove(uuid)
             nextInstance.players.add(uuid)
             playerDungeonMap[uuid] = nextInstance.id
+            BalanceStatsManager.recordFloorEntered(nextConfig.floorNumber)
+            RunSummaryManager.onFloorEntered(uuid, nextConfig.floorNumber)
             player.teleport(nextInstance.getSpawnLocation())
             notifyAffixes(player, nextInstance)
             DungeonLootManager.refreshEquippedSetBonuses(player)
@@ -302,6 +321,9 @@ object DungeonManager {
 
         val targets = current.players.toList()
         for (uuid in targets) {
+            RunSummaryManager.markEndReason(uuid, RunEndReason.CLEAR)
+        }
+        for (uuid in targets) {
             val player = Bukkit.getPlayer(uuid) ?: continue
             if (isInDungeon(player)) {
                 leaveDungeon(player)
@@ -322,18 +344,23 @@ object DungeonManager {
         instance?.players?.remove(player.uniqueId)
         PartyManager.onDungeonMemberRemoved(player.uniqueId, dungeonId)
         RoomCombatManager.onPlayerLeave(player)
-        PlayerBoonData.clearBoons(player)
-        RunCurseManager.clear(player)
-        PlayerRelicData.clearRelics(player)
-        TalentManager.removeTalents(player)
-        DungeonBoundItem.clearFromPlayer(player)
-        ForgeMaterialManager.clear(player.uniqueId)
 
-        // 结算碎片（如果通关时已结算过，这里 settle 返回 0）
+        // 结算碎片（如果死亡时已结算过，这里 settle 返回 0）
         val shards = ShardRewardManager.settle(player.uniqueId)
+        RunSummaryManager.finish(player, instance)
         if (shards > 0) {
             player.sendMessage("§e本次冒险结算 §6$shards §e灵魂碎片")
         }
+        player.sendMessage("§7输入 §e/rogue summary §7查看本次冒险报告。")
+
+        PlayerBoonData.clearBoons(player)
+        RunCurseManager.clear(player)
+        PlayerRelicData.clearRelics(player)
+        RunMilestoneManager.clear(player.uniqueId)
+        RunModifierManager.clear(player.uniqueId)
+        TalentManager.removeTalents(player)
+        DungeonBoundItem.clearFromPlayer(player)
+        ForgeMaterialManager.clear(player.uniqueId)
 
         DungeonGuiGuard.unlock(player)
         DungeonHudManager.detach(player)
@@ -395,12 +422,17 @@ object DungeonManager {
             playerDungeonMap.remove(uuid)
             ShardRewardManager.settle(uuid)
             ForgeMaterialManager.clear(uuid)
+            RunMilestoneManager.clear(uuid)
+            RunModifierManager.clear(uuid)
             val returnLoc = returnLocations.remove(uuid)
             val player = Bukkit.getPlayer(uuid)
             if (player != null) {
+                RunSummaryManager.finish(player, instance)
                 PlayerBoonData.clearBoons(player)
                 RunCurseManager.clear(player)
                 PlayerRelicData.clearRelics(player)
+                RunMilestoneManager.clear(uuid)
+                RunModifierManager.clear(uuid)
                 TalentManager.removeTalents(player)
                 DungeonBoundItem.clearFromPlayer(player)
                 DungeonGuiGuard.unlock(player)

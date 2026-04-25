@@ -1,0 +1,126 @@
+# ================================
+# RogueCore 局外材料工坊
+# ================================
+# type:
+#   CRAFT    正向合成
+#   DISMANTLE 反向拆解
+#   PURCHASE 灵魂碎片补料
+
+recipes:
+  soul_iron_to_dust:
+    name: "魂铁研磨"
+    description: "将多余魂铁研磨为铭刻粉尘。"
+    type: CRAFT
+    icon: RAW_IRON
+    slot: 10
+    cost:
+      soul_iron: 10
+    reward:
+      inscription_dust: 2
+
+  dust_to_fragment:
+    name: "铭刻凝聚"
+    description: "将铭刻粉尘凝成遗物残片。"
+    type: CRAFT
+    icon: GLOWSTONE_DUST
+    slot: 11
+    cost:
+      inscription_dust: 8
+    reward:
+      relic_fragment: 1
+
+  fragment_to_crown:
+    name: "残片铸冠"
+    description: "用遗物残片铸成王冠碎片。"
+    type: CRAFT
+    icon: AMETHYST_SHARD
+    slot: 12
+    cost:
+      relic_fragment: 6
+    reward:
+      crown_shard: 1
+
+  crown_to_core:
+    name: "王冠聚星"
+    description: "将王冠碎片压缩为星界核心。"
+    type: CRAFT
+    icon: NETHER_STAR
+    slot: 13
+    cost:
+      crown_shard: 5
+    reward:
+      astral_core: 1
+
+  core_to_crown:
+    name: "星核拆解"
+    description: "拆解星界核心，返还王冠碎片。"
+    type: DISMANTLE
+    icon: NETHER_STAR
+    slot: 19
+    cost:
+      astral_core: 1
+    reward:
+      crown_shard: 2
+
+  crown_to_fragment:
+    name: "王冠碎解"
+    description: "拆解王冠碎片，返还遗物残片。"
+    type: DISMANTLE
+    icon: GOLD_NUGGET
+    slot: 20
+    cost:
+      crown_shard: 1
+    reward:
+      relic_fragment: 3
+
+  fragment_to_dust:
+    name: "残片析尘"
+    description: "拆解遗物残片，返还铭刻粉尘。"
+    type: DISMANTLE
+    icon: AMETHYST_SHARD
+    slot: 21
+    cost:
+      relic_fragment: 1
+    reward:
+      inscription_dust: 3
+
+  dust_to_iron:
+    name: "粉尘还原"
+    description: "将铭刻粉尘还原为魂铁。"
+    type: DISMANTLE
+    icon: GLOWSTONE_DUST
+    slot: 22
+    cost:
+      inscription_dust: 1
+    reward:
+      soul_iron: 3
+
+  buy_soul_iron:
+    name: "采购魂铁"
+    description: "使用灵魂碎片购买基础魂铁。"
+    type: PURCHASE
+    icon: RAW_IRON
+    slot: 28
+    soul-shards: 120
+    reward:
+      soul_iron: 5
+
+  buy_dust:
+    name: "采购铭刻粉尘"
+    description: "使用灵魂碎片购买少量铭刻粉尘。"
+    type: PURCHASE
+    icon: GLOWSTONE_DUST
+    slot: 29
+    soul-shards: 220
+    reward:
+      inscription_dust: 3
+
+  buy_fragment:
+    name: "采购遗物残片"
+    description: "使用灵魂碎片购买一枚遗物残片。"
+    type: PURCHASE
+    icon: AMETHYST_SHARD
+    slot: 30
+    soul-shards: 480
+    reward:
+      relic_fragment: 1

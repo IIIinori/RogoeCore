@@ -2,6 +2,8 @@ package inori.roguecore.boon
 
 import inori.roguecore.dependency.DependencySelfCheckManager
 import inori.roguecore.dungeon.RunPersistenceManager
+import inori.roguecore.milestone.RunMilestoneManager
+import inori.roguecore.stats.BalanceStatsManager
 import org.bukkit.entity.Player
 import org.serverct.ersha.api.AttributeAPI
 import taboolib.common.platform.function.warning
@@ -50,6 +52,7 @@ object PlayerBoonData {
             existing.upgrade()
             applyBoonToAP(player, existing)
             RunPersistenceManager.markDirty()
+            BalanceStatsManager.recordBoonUpgraded(boon)
             player.sendMessage("§6${boon.rarity.color}${boon.name} §e升级到 Lv.${existing.level}!")
         } else {
             // 新增
@@ -57,8 +60,10 @@ object PlayerBoonData {
             boons.add(instance)
             applyBoonToAP(player, instance)
             RunPersistenceManager.markDirty()
+            BalanceStatsManager.recordBoonAcquired(boon)
             player.sendMessage("§a获得 ${boon.rarity.color}${boon.name} §aLv.1!")
         }
+        RunMilestoneManager.onBoonChanged(player)
     }
 
     /**

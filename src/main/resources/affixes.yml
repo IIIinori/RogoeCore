@@ -1,7 +1,7 @@
 # ================================
 # RogueCore 副本词缀配置
 # ================================
-# 赛季级副本词缀池：120 个词缀。
+# 扩容版：允许同类压力/奖励在不同楼层和数值下复用，但避免完整效果签名重复。
 
 rules:
   "1-5": [0, 1]
@@ -14,1059 +14,420 @@ rules:
   "91-100": [7, 8]
 
 affixes:
-  danger_001:
-    name: "§c苍白尸潮"
-    description: "怪物生命值 x1.23"
+  crypt_thick_blood:
+    name: "§c墓窟厚血"
+    description: "怪物生命值 x1.32"
     type: MOB_HP_MULTIPLY
-    value: 1.23
-    difficulty: true
-    min-floor: 1
-    weight: 30
-  danger_002:
-    name: "§c黑铁巨躯"
-    description: "怪物数量 x1.26"
-    type: MOB_COUNT_MULTIPLY
-    value: 1.26
-    difficulty: true
-    min-floor: 1
-    weight: 30
-  danger_003:
-    name: "§c裂骨蜂群"
-    description: "怪物移速 +34%"
-    type: MOB_SPEED
-    value: 0.34
-    difficulty: true
-    min-floor: 1
-    weight: 30
-  danger_004:
-    name: "§c猩红奔袭"
-    description: "地板周期性灼烧，强度 1.32"
-    type: FLOOR_FIRE
     value: 1.32
     difficulty: true
     min-floor: 1
     weight: 30
-  danger_005:
+  iron_tide:
+    name: "§c铁潮增援"
+    description: "怪物数量 x1.35"
+    type: MOB_COUNT_MULTIPLY
+    value: 1.35
+    difficulty: true
+    min-floor: 3
+    weight: 28
+  red_rush:
+    name: "§c猩红急行"
+    description: "怪物移速 +28%"
+    type: MOB_SPEED
+    value: 0.28
+    difficulty: true
+    min-floor: 4
+    weight: 26
+  burning_floor:
+    name: "§c余烬地脉"
+    description: "战斗房地面周期性灼烧"
+    type: FLOOR_FIRE
+    value: 3.2
+    difficulty: true
+    min-floor: 6
+    weight: 24
+  no_rest:
     name: "§c焦土禁愈"
-    description: "禁止自然回复"
+    description: "禁止自然与饱食回复"
     type: NO_HEAL
-    value: 1.00
+    value: 1
     difficulty: true
-    min-floor: 1
-    weight: 30
-  danger_006:
-    name: "§c雾墙压境"
-    description: "怪物生命值 x1.23"
-    type: MOB_HP_MULTIPLY
-    value: 1.23
+    min-floor: 8
+    weight: 22
+  black_blade:
+    name: "§c黑刃压迫"
+    description: "怪物伤害 x1.18"
+    type: MOB_DAMAGE_MULTIPLY
+    value: 1.18
     difficulty: true
-    min-floor: 1
-    weight: 30
-  danger_007:
-    name: "§c锈刃回廊"
-    description: "怪物数量 x1.26"
-    type: MOB_COUNT_MULTIPLY
-    value: 1.26
-    difficulty: true
-    min-floor: 1
-    weight: 30
-  danger_008:
-    name: "§c寒狱脉动"
-    description: "怪物移速 +34%"
-    type: MOB_SPEED
-    value: 0.34
-    difficulty: true
-    min-floor: 1
-    weight: 30
-  danger_009:
-    name: "§c雷鸣围猎"
-    description: "地板周期性灼烧，强度 1.32"
-    type: FLOOR_FIRE
-    value: 1.32
-    difficulty: true
-    min-floor: 1
-    weight: 30
-  danger_010:
-    name: "§c深渊重压"
-    description: "禁止自然回复"
-    type: NO_HEAL
-    value: 1.00
-    difficulty: true
-    min-floor: 1
-    weight: 30
-  danger_011:
-    name: "§c群鸦啃噬"
-    description: "怪物生命值 x1.23"
-    type: MOB_HP_MULTIPLY
-    value: 1.23
-    difficulty: true
-    min-floor: 1
-    weight: 30
-  danger_012:
-    name: "§c火线封锁"
-    description: "怪物数量 x1.26"
-    type: MOB_COUNT_MULTIPLY
-    value: 1.26
-    difficulty: true
-    min-floor: 1
-    weight: 30
-  danger_013:
-    name: "§c空洞咆哮"
-    description: "怪物移速 +34%"
-    type: MOB_SPEED
-    value: 0.34
-    difficulty: true
-    min-floor: 1
-    weight: 30
-  danger_014:
-    name: "§c腐花蔓延"
-    description: "地板周期性灼烧，强度 1.32"
-    type: FLOOR_FIRE
-    value: 1.32
-    difficulty: true
-    min-floor: 1
-    weight: 30
-  danger_015:
-    name: "§c王庭追兵"
-    description: "禁止自然回复"
-    type: NO_HEAL
-    value: 1.00
-    difficulty: true
-    min-floor: 1
-    weight: 30
-  danger_016:
-    name: "§c镜影重生"
-    description: "怪物生命值 x1.58"
-    type: MOB_HP_MULTIPLY
-    value: 1.58
-    difficulty: true
-    min-floor: 21
-    weight: 28
-    advanced: true
-  danger_017:
-    name: "§c毒沼喘息"
-    description: "怪物数量 x1.61"
-    type: MOB_COUNT_MULTIPLY
-    value: 1.61
-    difficulty: true
-    min-floor: 21
-    weight: 28
-    advanced: true
-  danger_018:
-    name: "§c黄沙迷阵"
-    description: "怪物移速 +69%"
-    type: MOB_SPEED
-    value: 0.69
-    difficulty: true
-    min-floor: 21
-    weight: 28
-    advanced: true
-  danger_019:
-    name: "§c灵魂谢幕"
-    description: "地板周期性灼烧，强度 1.67"
-    type: FLOOR_FIRE
-    value: 1.67
-    difficulty: true
-    min-floor: 21
-    weight: 28
-    advanced: true
-  danger_020:
-    name: "§c机械狂奏"
-    description: "禁止自然回复"
-    type: NO_HEAL
-    value: 1.00
-    difficulty: true
-    min-floor: 21
-    weight: 28
-    advanced: true
-  danger_021:
-    name: "§c月蚀低语"
-    description: "怪物生命值 x1.58"
-    type: MOB_HP_MULTIPLY
-    value: 1.58
-    difficulty: true
-    min-floor: 21
-    weight: 28
-    advanced: true
-  danger_022:
-    name: "§c混沌回转"
-    description: "怪物数量 x1.61"
-    type: MOB_COUNT_MULTIPLY
-    value: 1.61
-    difficulty: true
-    min-floor: 21
-    weight: 28
-    advanced: true
-  danger_023:
-    name: "§c终焉凝视"
-    description: "怪物移速 +69%"
-    type: MOB_SPEED
-    value: 0.69
-    difficulty: true
-    min-floor: 21
-    weight: 28
-    advanced: true
-  danger_024:
-    name: "§c万兽暴动"
-    description: "地板周期性灼烧，强度 1.67"
-    type: FLOOR_FIRE
-    value: 1.67
-    difficulty: true
-    min-floor: 21
-    weight: 28
-    advanced: true
-  danger_025:
-    name: "§c群星坠落"
-    description: "禁止自然回复"
-    type: NO_HEAL
-    value: 1.00
-    difficulty: true
-    min-floor: 21
-    weight: 28
-    advanced: true
-  danger_026:
-    name: "§c白骨增殖"
-    description: "怪物生命值 x1.58"
-    type: MOB_HP_MULTIPLY
-    value: 1.58
-    difficulty: true
-    min-floor: 21
-    weight: 28
-    advanced: true
-  danger_027:
-    name: "§c血月急行"
-    description: "怪物数量 x1.61"
-    type: MOB_COUNT_MULTIPLY
-    value: 1.61
-    difficulty: true
-    min-floor: 21
-    weight: 28
-    advanced: true
-  danger_028:
-    name: "§c黑潮禁疗"
-    description: "怪物移速 +69%"
-    type: MOB_SPEED
-    value: 0.69
-    difficulty: true
-    min-floor: 21
-    weight: 28
-    advanced: true
-  danger_029:
-    name: "§c永夜灼场"
-    description: "地板周期性灼烧，强度 1.67"
-    type: FLOOR_FIRE
-    value: 1.67
-    difficulty: true
-    min-floor: 21
-    weight: 28
-    advanced: true
-  danger_030:
-    name: "§c霜棘围猎"
-    description: "禁止自然回复"
-    type: NO_HEAL
-    value: 1.00
-    difficulty: true
-    min-floor: 21
-    weight: 28
-    advanced: true
-  danger_031:
-    name: "§c雷塔警戒·深层"
-    description: "怪物生命值 x1.93"
-    type: MOB_HP_MULTIPLY
-    value: 1.93
-    difficulty: true
-    min-floor: 41
-    weight: 26
-    advanced: true
-  danger_032:
-    name: "§c沉海压迫·深层"
-    description: "怪物数量 x1.96"
-    type: MOB_COUNT_MULTIPLY
-    value: 1.96
-    difficulty: true
-    min-floor: 41
-    weight: 26
-    advanced: true
-  danger_033:
-    name: "§c沙王征税·深层"
-    description: "怪物移速 +104%"
-    type: MOB_SPEED
-    value: 1.04
-    difficulty: true
-    min-floor: 41
-    weight: 26
-    advanced: true
-  danger_034:
-    name: "§c齿轮增压·深层"
-    description: "地板周期性灼烧，强度 2.02"
-    type: FLOOR_FIRE
-    value: 2.02
-    difficulty: true
-    min-floor: 41
-    weight: 26
-    advanced: true
-  danger_035:
-    name: "§c剧场谢幕·深层"
-    description: "禁止自然回复"
-    type: NO_HEAL
-    value: 1.00
-    difficulty: true
-    min-floor: 41
-    weight: 26
-    advanced: true
-  danger_036:
-    name: "§c空蚀鼓点·深层"
-    description: "怪物生命值 x1.93"
-    type: MOB_HP_MULTIPLY
-    value: 1.93
-    difficulty: true
-    min-floor: 41
-    weight: 26
-    advanced: true
-  danger_037:
-    name: "§c赤炉过载·深层"
-    description: "怪物数量 x1.96"
-    type: MOB_COUNT_MULTIPLY
-    value: 1.96
-    difficulty: true
-    min-floor: 41
-    weight: 26
-    advanced: true
-  danger_038:
-    name: "§c苍雷疾驰·深层"
-    description: "怪物移速 +104%"
-    type: MOB_SPEED
-    value: 1.04
-    difficulty: true
-    min-floor: 41
-    weight: 26
-    advanced: true
-  danger_039:
-    name: "§c虚界合围·深层"
-    description: "地板周期性灼烧，强度 2.02"
-    type: FLOOR_FIRE
-    value: 2.02
-    difficulty: true
-    min-floor: 41
-    weight: 26
-    advanced: true
-  danger_040:
-    name: "§c终王审判·深层"
-    description: "禁止自然回复"
-    type: NO_HEAL
-    value: 1.00
-    difficulty: true
-    min-floor: 41
-    weight: 26
-    advanced: true
-  danger_041:
-    name: "§c苍白尸潮·深层"
-    description: "怪物生命值 x1.93"
-    type: MOB_HP_MULTIPLY
-    value: 1.93
-    difficulty: true
-    min-floor: 41
-    weight: 26
-    advanced: true
-  danger_042:
-    name: "§c黑铁巨躯·深层"
-    description: "怪物数量 x1.96"
-    type: MOB_COUNT_MULTIPLY
-    value: 1.96
-    difficulty: true
-    min-floor: 41
-    weight: 26
-    advanced: true
-  danger_043:
-    name: "§c裂骨蜂群·深层"
-    description: "怪物移速 +104%"
-    type: MOB_SPEED
-    value: 1.04
-    difficulty: true
-    min-floor: 41
-    weight: 26
-    advanced: true
-  danger_044:
-    name: "§c猩红奔袭·深层"
-    description: "地板周期性灼烧，强度 2.02"
-    type: FLOOR_FIRE
-    value: 2.02
-    difficulty: true
-    min-floor: 41
-    weight: 26
-    advanced: true
-  danger_045:
-    name: "§c焦土禁愈·深层"
-    description: "禁止自然回复"
-    type: NO_HEAL
-    value: 1.00
-    difficulty: true
-    min-floor: 41
-    weight: 26
-    advanced: true
-  danger_046:
-    name: "§c雾墙压境·末段"
-    description: "怪物生命值 x2.28"
-    type: MOB_HP_MULTIPLY
-    value: 2.28
-    difficulty: true
-    min-floor: 61
+    min-floor: 10
     weight: 24
     advanced: true
-  danger_047:
-    name: "§c锈刃回廊·末段"
-    description: "怪物数量 x2.31"
-    type: MOB_COUNT_MULTIPLY
-    value: 2.31
+  last_pressure:
+    name: "§c濒死追猎"
+    description: "玩家低血时受到额外 18% 伤害"
+    type: LOW_HEALTH_PRESSURE
+    value: 0.18
     difficulty: true
-    min-floor: 61
-    weight: 24
+    min-floor: 12
+    weight: 20
     advanced: true
-  danger_048:
-    name: "§c寒狱脉动·末段"
-    description: "怪物移速 +139%"
-    type: MOB_SPEED
-    value: 1.39
+  deep_regrowth:
+    name: "§c深层再生"
+    description: "怪物每轮获得 4% 最大生命恢复"
+    type: MOB_REGEN
+    value: 0.04
     difficulty: true
-    min-floor: 61
-    weight: 24
+    min-floor: 18
+    weight: 18
     advanced: true
-  danger_049:
-    name: "§c雷鸣围猎·末段"
-    description: "地板周期性灼烧，强度 2.37"
-    type: FLOOR_FIRE
-    value: 2.37
+  bone_shell:
+    name: "§c白骨硬壳"
+    description: "怪物生成时获得吸收护盾 8"
+    type: MOB_SPAWN_SHIELD
+    value: 8
     difficulty: true
-    min-floor: 61
-    weight: 24
+    min-floor: 22
+    weight: 18
     advanced: true
-  danger_050:
-    name: "§c深渊重压·末段"
-    description: "禁止自然回复"
-    type: NO_HEAL
-    value: 1.00
+  void_executioner:
+    name: "§c虚空处刑者"
+    description: "怪物低血时造成额外 35% 伤害"
+    type: MOB_LOW_HEALTH_RAGE
+    value: 0.35
     difficulty: true
-    min-floor: 61
-    weight: 24
+    min-floor: 28
+    weight: 16
     advanced: true
-  danger_051:
-    name: "§c群鸦啃噬·末段"
-    description: "怪物生命值 x2.28"
-    type: MOB_HP_MULTIPLY
-    value: 2.28
+  ember_fangs:
+    name: "§c余烬獠牙"
+    description: "怪物攻击会点燃玩家 4 秒"
+    type: MOB_FIRE_ATTACK
+    value: 4
     difficulty: true
-    min-floor: 61
-    weight: 24
+    min-floor: 32
+    weight: 16
     advanced: true
-  danger_052:
-    name: "§c火线封锁·末段"
-    description: "怪物数量 x2.31"
-    type: MOB_COUNT_MULTIPLY
-    value: 2.31
+  void_field:
+    name: "§c虚界脉冲"
+    description: "战斗房周期性虚空脉冲造成伤害并短暂缓速"
+    type: VOID_FIELD
+    value: 2.5
     difficulty: true
-    min-floor: 61
-    weight: 24
+    min-floor: 38
+    weight: 15
     advanced: true
-  danger_053:
-    name: "§c空洞咆哮·末段"
-    description: "怪物移速 +139%"
-    type: MOB_SPEED
-    value: 1.39
+  royal_wither:
+    name: "§c王庭枯竭"
+    description: "所有治疗量降低 45%"
+    type: HEALING_REDUCE
+    value: 0.45
     difficulty: true
-    min-floor: 61
-    weight: 24
+    min-floor: 44
+    weight: 14
     advanced: true
-  danger_054:
-    name: "§c腐花蔓延·末段"
-    description: "地板周期性灼烧，强度 2.37"
-    type: FLOOR_FIRE
-    value: 2.37
+  hunger_fangs:
+    name: "§c饥渴獠牙"
+    description: "怪物攻击时按伤害的 16% 回复生命"
+    type: MOB_LIFESTEAL
+    value: 0.16
     difficulty: true
-    min-floor: 61
-    weight: 24
+    min-floor: 52
+    weight: 12
     advanced: true
-  danger_055:
-    name: "§c王庭追兵·末段"
-    description: "禁止自然回复"
-    type: NO_HEAL
-    value: 1.00
-    difficulty: true
-    min-floor: 61
-    weight: 24
-    advanced: true
-  danger_056:
-    name: "§c镜影重生·末段"
-    description: "怪物生命值 x2.28"
-    type: MOB_HP_MULTIPLY
-    value: 2.28
-    difficulty: true
-    min-floor: 61
-    weight: 24
-    advanced: true
-  danger_057:
-    name: "§c毒沼喘息·末段"
-    description: "怪物数量 x2.31"
-    type: MOB_COUNT_MULTIPLY
-    value: 2.31
-    difficulty: true
-    min-floor: 61
-    weight: 24
-    advanced: true
-  danger_058:
-    name: "§c黄沙迷阵·末段"
-    description: "怪物移速 +139%"
-    type: MOB_SPEED
-    value: 1.39
-    difficulty: true
-    min-floor: 61
-    weight: 24
-    advanced: true
-  danger_059:
-    name: "§c灵魂谢幕·末段"
-    description: "地板周期性灼烧，强度 2.37"
-    type: FLOOR_FIRE
-    value: 2.37
-    difficulty: true
-    min-floor: 61
-    weight: 24
-    advanced: true
-  danger_060:
-    name: "§c机械狂奏·末段"
-    description: "禁止自然回复"
-    type: NO_HEAL
-    value: 1.00
-    difficulty: true
-    min-floor: 61
-    weight: 24
-    advanced: true
-  danger_061:
-    name: "§c月蚀低语·终局"
-    description: "怪物生命值 x2.63"
-    type: MOB_HP_MULTIPLY
-    value: 2.63
-    difficulty: true
-    min-floor: 81
-    weight: 22
-    advanced: true
-  danger_062:
-    name: "§c混沌回转·终局"
-    description: "怪物数量 x2.66"
-    type: MOB_COUNT_MULTIPLY
-    value: 2.66
-    difficulty: true
-    min-floor: 81
-    weight: 22
-    advanced: true
-  danger_063:
-    name: "§c终焉凝视·终局"
-    description: "怪物移速 +174%"
-    type: MOB_SPEED
-    value: 1.74
-    difficulty: true
-    min-floor: 81
-    weight: 22
-    advanced: true
-  danger_064:
-    name: "§c万兽暴动·终局"
-    description: "地板周期性灼烧，强度 2.72"
-    type: FLOOR_FIRE
-    value: 2.72
-    difficulty: true
-    min-floor: 81
-    weight: 22
-    advanced: true
-  danger_065:
-    name: "§c群星坠落·终局"
-    description: "禁止自然回复"
-    type: NO_HEAL
-    value: 1.00
-    difficulty: true
-    min-floor: 81
-    weight: 22
-    advanced: true
-  danger_066:
-    name: "§c白骨增殖·终局"
-    description: "怪物生命值 x2.63"
-    type: MOB_HP_MULTIPLY
-    value: 2.63
-    difficulty: true
-    min-floor: 81
-    weight: 22
-    advanced: true
-  danger_067:
-    name: "§c血月急行·终局"
-    description: "怪物数量 x2.66"
-    type: MOB_COUNT_MULTIPLY
-    value: 2.66
-    difficulty: true
-    min-floor: 81
-    weight: 22
-    advanced: true
-  danger_068:
-    name: "§c黑潮禁疗·终局"
-    description: "怪物移速 +174%"
-    type: MOB_SPEED
-    value: 1.74
-    difficulty: true
-    min-floor: 81
-    weight: 22
-    advanced: true
-  danger_069:
-    name: "§c永夜灼场·终局"
-    description: "地板周期性灼烧，强度 2.72"
-    type: FLOOR_FIRE
-    value: 2.72
-    difficulty: true
-    min-floor: 81
-    weight: 22
-    advanced: true
-  danger_070:
-    name: "§c霜棘围猎·终局"
-    description: "禁止自然回复"
-    type: NO_HEAL
-    value: 1.00
-    difficulty: true
-    min-floor: 81
-    weight: 22
-    advanced: true
-  danger_071:
-    name: "§c雷塔警戒·终局"
-    description: "怪物生命值 x2.63"
-    type: MOB_HP_MULTIPLY
-    value: 2.63
-    difficulty: true
-    min-floor: 81
-    weight: 22
-    advanced: true
-  danger_072:
-    name: "§c沉海压迫·终局"
-    description: "怪物数量 x2.66"
-    type: MOB_COUNT_MULTIPLY
-    value: 2.66
-    difficulty: true
-    min-floor: 81
-    weight: 22
-    advanced: true
-  danger_073:
-    name: "§c沙王征税·终局"
-    description: "怪物移速 +174%"
-    type: MOB_SPEED
-    value: 1.74
-    difficulty: true
-    min-floor: 81
-    weight: 22
-    advanced: true
-  danger_074:
-    name: "§c齿轮增压·终局"
-    description: "地板周期性灼烧，强度 2.72"
-    type: FLOOR_FIRE
-    value: 2.72
-    difficulty: true
-    min-floor: 81
-    weight: 22
-    advanced: true
-  danger_075:
-    name: "§c剧场谢幕·终局"
-    description: "禁止自然回复"
-    type: NO_HEAL
-    value: 1.00
-    difficulty: true
-    min-floor: 81
-    weight: 22
-    advanced: true
-  reward_001:
-    name: "§6秘银富脉"
-    description: "灵魂碎片 x1.55"
-    type: SHARD_MULTIPLY
+  crown_execution:
+    name: "§c王冠处刑"
+    description: "Boss 房怪物伤害 x1.55"
+    type: BOSS_DAMAGE_MULTIPLY
     value: 1.55
+    difficulty: true
+    min-floor: 68
+    weight: 10
+    advanced: true
+  soul_tax:
+    name: "§6魂税回廊"
+    description: "战斗房通关额外 +5 本局碎片"
+    type: COMBAT_SHARD_FLAT
+    value: 5
     difficulty: false
     min-floor: 1
+    weight: 26
+  treasure_echo:
+    name: "§6秘宝回声"
+    description: "碎片奖励 x1.15"
+    type: SHARD_MULTIPLY
+    value: 1.15
+    difficulty: false
+    min-floor: 4
     weight: 24
-  reward_002:
-    name: "§6金辉赐福"
-    description: "通关房间额外神恩 +1"
+  boon_whisper:
+    name: "§d神谕低语"
+    description: "通关后额外获得 1 次神恩选择"
     type: EXTRA_BOON
     value: 1
     difficulty: false
-    min-floor: 1
-    weight: 24
-  reward_003:
-    name: "§6军械开仓"
-    description: "武器掉率 x1.5"
+    min-floor: 8
+    weight: 18
+  weapon_omen:
+    name: "§b兵装预兆"
+    description: "装备掉落倍率 x1.25"
     type: WEAPON_LUCK
-    value: 1.5
+    value: 1.25
     difficulty: false
-    min-floor: 1
+    min-floor: 8
+    weight: 18
+  elite_key_scent:
+    name: "§9钥匙气味"
+    description: "精英房额外隐藏钥匙概率 +12%"
+    type: ELITE_KEY_CHANCE
+    value: 0.12
+    difficulty: false
+    min-floor: 10
+    weight: 18
+    advanced: true
+  boss_ember_vein:
+    name: "§6炉心矿脉"
+    description: "Boss 额外炉核余烬 +1"
+    type: BOSS_EMBER_BONUS
+    value: 1
+    difficulty: false
+    min-floor: 15
+    weight: 16
+    advanced: true
+  golden_blood:
+    name: "§6镀金血战"
+    description: "战斗房通关额外产出炉核余烬"
+    type: COMBAT_EMBER_FLAT
+    value: 1
+    difficulty: false
+    min-floor: 22
+    weight: 16
+    advanced: true
+  hidden_plunder:
+    name: "§9秘库掠影"
+    description: "精英/Boss 有 18% 概率额外掉落隐藏战利品"
+    type: HIDDEN_LOOT_CHANCE
+    value: 0.18
+    difficulty: false
+    min-floor: 28
+    weight: 14
+    advanced: true
+  oracle_wind:
+    name: "§d谕风偏转"
+    description: "提高高稀有神恩权重 +25%"
+    type: BOON_LUCK
+    value: 25
+    difficulty: false
+    min-floor: 32
+    weight: 12
+    advanced: true
+  astral_invitation:
+    name: "§d星界邀请"
+    description: "Boss 通关时 18% 概率获得遗物祈愿"
+    type: BOSS_RELIC_CHANCE
+    value: 0.18
+    difficulty: false
+    min-floor: 42
+    weight: 11
+    advanced: true
+  chest_gold_vein:
+    name: "§6宝箱金脉"
+    description: "宝箱房额外碎片 +10~20"
+    type: CHEST_SHARD_BONUS
+    value: 10
+    difficulty: false
+    min-floor: 48
+    weight: 10
+    advanced: true
+
+  exp_lean_blood:
+    name: "§c稀血薄雾"
+    description: "怪物生命值 x1.18"
+    type: MOB_HP_MULTIPLY
+    value: 1.18
+    difficulty: true
+    min-floor: 2
     weight: 24
-  reward_004:
-    name: "§6遗物潮汐"
-    description: "灵魂碎片 x1.55"
+  exp_swarm_nest:
+    name: "§c群巢回声"
+    description: "怪物数量 x1.18"
+    type: MOB_COUNT_MULTIPLY
+    value: 1.18
+    difficulty: true
+    min-floor: 5
+    weight: 23
+  exp_quick_ash:
+    name: "§c疾灰步"
+    description: "怪物移速 +16%"
+    type: MOB_SPEED
+    value: 0.16
+    difficulty: true
+    min-floor: 6
+    weight: 22
+  exp_ember_floor:
+    name: "§c余烬踏痕"
+    description: "战斗房周期灼烧地面"
+    type: FLOOR_FIRE
+    value: 1
+    difficulty: true
+    min-floor: 8
+    weight: 20
+    advanced: true
+  exp_dry_sanctum:
+    name: "§c干涸圣所"
+    description: "禁止自然回复"
+    type: NO_HEAL
+    value: 1
+    difficulty: true
+    min-floor: 9
+    weight: 18
+    advanced: true
+  exp_soul_tide:
+    name: "§6魂潮回廊"
+    description: "本层碎片奖励 x1.12"
     type: SHARD_MULTIPLY
-    value: 1.55
+    value: 1.12
     difficulty: false
-    min-floor: 1
-    weight: 24
-  reward_005:
-    name: "§6猎团分红"
-    description: "通关房间额外神恩 +1"
+    min-floor: 4
+    weight: 20
+  exp_boon_mirror:
+    name: "§d神恩镜面"
+    description: "额外神恩选择 +1"
     type: EXTRA_BOON
     value: 1
     difficulty: false
-    min-floor: 1
-    weight: 24
-  reward_006:
-    name: "§6圣杯满溢"
-    description: "武器掉率 x1.5"
+    min-floor: 12
+    weight: 16
+    advanced: true
+  exp_armory_echo:
+    name: "§9武库回响"
+    description: "装备掉落权重 x1.18"
     type: WEAPON_LUCK
-    value: 1.5
+    value: 1.18
     difficulty: false
-    min-floor: 1
-    weight: 24
-  reward_007:
-    name: "§6宝库松动"
-    description: "灵魂碎片 x1.55"
-    type: SHARD_MULTIPLY
-    value: 1.55
+    min-floor: 7
+    weight: 18
+  exp_cruel_echo:
+    name: "§c残响重击"
+    description: "怪物伤害 x1.16"
+    type: MOB_DAMAGE_MULTIPLY
+    value: 1.16
+    difficulty: true
+    min-floor: 10
+    weight: 20
+  exp_room_tax:
+    name: "§6清场税印"
+    description: "战斗房通关额外本局碎片 +8"
+    type: COMBAT_SHARD_FLAT
+    value: 8
     difficulty: false
-    min-floor: 1
-    weight: 24
-  reward_008:
-    name: "§6星砂馈赠"
-    description: "通关房间额外神恩 +1"
-    type: EXTRA_BOON
+    min-floor: 6
+    weight: 17
+  exp_elite_lockpick:
+    name: "§9精英撬锁"
+    description: "精英房额外隐藏钥匙概率 +10%"
+    type: ELITE_KEY_CHANCE
+    value: 0.1
+    difficulty: false
+    min-floor: 14
+    weight: 15
+    advanced: true
+  exp_boss_cinder:
+    name: "§6首领炉灰"
+    description: "Boss 房额外炉核余烬 +2"
+    type: BOSS_EMBER_BONUS
+    value: 2
+    difficulty: false
+    min-floor: 20
+    weight: 14
+    advanced: true
+  exp_panic_drums:
+    name: "§c惊惧鼓点"
+    description: "低血时压力提高 12%"
+    type: LOW_HEALTH_PRESSURE
+    value: 0.12
+    difficulty: true
+    min-floor: 15
+    weight: 17
+    advanced: true
+  exp_regen_marrow:
+    name: "§c再生骨髓"
+    description: "怪物周期恢复 2.5% 生命"
+    type: MOB_REGEN
+    value: 0.025
+    difficulty: true
+    min-floor: 18
+    weight: 15
+    advanced: true
+  exp_shell_spawn:
+    name: "§c铁壳孵化"
+    description: "怪物生成时获得 5 点护盾"
+    type: MOB_SPAWN_SHIELD
+    value: 5
+    difficulty: true
+    min-floor: 16
+    weight: 16
+    advanced: true
+  exp_last_rage:
+    name: "§c残血狂热"
+    description: "怪物低血伤害提高 18%"
+    type: MOB_LOW_HEALTH_RAGE
+    value: 0.18
+    difficulty: true
+    min-floor: 22
+    weight: 14
+    advanced: true
+  exp_burning_claw:
+    name: "§c燃爪印"
+    description: "怪物攻击点燃玩家"
+    type: MOB_FIRE_ATTACK
     value: 1
-    difficulty: false
-    min-floor: 1
-    weight: 24
-  reward_009:
-    name: "§6锻炉赠礼"
-    description: "武器掉率 x1.5"
-    type: WEAPON_LUCK
-    value: 1.5
-    difficulty: false
-    min-floor: 1
-    weight: 24
-  reward_010:
-    name: "§6王庭赏金"
-    description: "灵魂碎片 x2.1"
-    type: SHARD_MULTIPLY
-    value: 2.1
-    difficulty: false
-    min-floor: 21
-    weight: 22
+    difficulty: true
+    min-floor: 20
+    weight: 15
     advanced: true
-  reward_011:
-    name: "§6月井赐予"
-    description: "通关房间额外神恩 +1"
-    type: EXTRA_BOON
-    value: 1
-    difficulty: false
-    min-floor: 21
-    weight: 22
+  exp_void_tick:
+    name: "§5虚界短潮"
+    description: "战斗房虚空脉冲较弱但更早出现"
+    type: VOID_FIELD
+    value: 0.8
+    difficulty: true
+    min-floor: 18
+    weight: 13
     advanced: true
-  reward_012:
-    name: "§6深井回款"
-    description: "武器掉率 x2.05"
-    type: WEAPON_LUCK
-    value: 2.05
-    difficulty: false
-    min-floor: 21
-    weight: 22
+  exp_wounded_prayer:
+    name: "§c折损祷言"
+    description: "玩家治疗量降低 16%"
+    type: HEALING_REDUCE
+    value: 0.16
+    difficulty: true
+    min-floor: 24
+    weight: 13
     advanced: true
-  reward_013:
-    name: "§6雷塔补给"
-    description: "灵魂碎片 x2.1"
-    type: SHARD_MULTIPLY
-    value: 2.1
-    difficulty: false
-    min-floor: 21
-    weight: 22
+  exp_thirst_fangs:
+    name: "§c饥渴獠牙"
+    description: "怪物攻击吸血 6%"
+    type: MOB_LIFESTEAL
+    value: 0.06
+    difficulty: true
+    min-floor: 26
+    weight: 12
     advanced: true
-  reward_014:
-    name: "§6白塔祝圣"
-    description: "通关房间额外神恩 +1"
-    type: EXTRA_BOON
-    value: 1
-    difficulty: false
-    min-floor: 21
-    weight: 22
+  exp_boss_pressure:
+    name: "§c王座压迫"
+    description: "Boss 房怪物伤害 x1.20"
+    type: BOSS_DAMAGE_MULTIPLY
+    value: 1.2
+    difficulty: true
+    min-floor: 30
+    weight: 11
     advanced: true
-  reward_015:
-    name: "§6黑市分润"
-    description: "武器掉率 x2.05"
-    type: WEAPON_LUCK
-    value: 2.05
+  exp_chest_silver:
+    name: "§6银脉宝箱"
+    description: "宝箱房额外碎片 +16"
+    type: CHEST_SHARD_BONUS
+    value: 16
     difficulty: false
-    min-floor: 21
-    weight: 22
-    advanced: true
-  reward_016:
-    name: "§6黄金远征"
-    description: "灵魂碎片 x2.1"
-    type: SHARD_MULTIPLY
-    value: 2.1
-    difficulty: false
-    min-floor: 21
-    weight: 22
-    advanced: true
-  reward_017:
-    name: "§6终层礼券"
-    description: "通关房间额外神恩 +1"
-    type: EXTRA_BOON
-    value: 1
-    difficulty: false
-    min-floor: 21
-    weight: 22
-    advanced: true
-  reward_018:
-    name: "§6虚空回响"
-    description: "武器掉率 x2.05"
-    type: WEAPON_LUCK
-    value: 2.05
-    difficulty: false
-    min-floor: 21
-    weight: 22
-    advanced: true
-  reward_019:
-    name: "§6晨星馈赠"
-    description: "灵魂碎片 x2.65"
-    type: SHARD_MULTIPLY
-    value: 2.65
-    difficulty: false
-    min-floor: 41
-    weight: 20
-    advanced: true
-  reward_020:
-    name: "§6秘库开缝"
-    description: "通关房间额外神恩 +2"
-    type: EXTRA_BOON
-    value: 2
-    difficulty: false
-    min-floor: 41
-    weight: 20
-    advanced: true
-  reward_021:
-    name: "§6龙骨分账"
-    description: "武器掉率 x2.6"
-    type: WEAPON_LUCK
-    value: 2.6
-    difficulty: false
-    min-floor: 41
-    weight: 20
-    advanced: true
-  reward_022:
-    name: "§6灰烬赏赐"
-    description: "灵魂碎片 x2.65"
-    type: SHARD_MULTIPLY
-    value: 2.65
-    difficulty: false
-    min-floor: 41
-    weight: 20
-    advanced: true
-  reward_023:
-    name: "§6星界遗赠"
-    description: "通关房间额外神恩 +2"
-    type: EXTRA_BOON
-    value: 2
-    difficulty: false
-    min-floor: 41
-    weight: 20
-    advanced: true
-  reward_024:
-    name: "§6圣辉雨露"
-    description: "武器掉率 x2.6"
-    type: WEAPON_LUCK
-    value: 2.6
-    difficulty: false
-    min-floor: 41
-    weight: 20
-    advanced: true
-  reward_025:
-    name: "§6冠冕红利"
-    description: "灵魂碎片 x2.65"
-    type: SHARD_MULTIPLY
-    value: 2.65
-    difficulty: false
-    min-floor: 41
-    weight: 20
-    advanced: true
-  reward_026:
-    name: "§6秘银富脉"
-    description: "通关房间额外神恩 +2"
-    type: EXTRA_BOON
-    value: 2
-    difficulty: false
-    min-floor: 41
-    weight: 20
-    advanced: true
-  reward_027:
-    name: "§6金辉赐福"
-    description: "武器掉率 x2.6"
-    type: WEAPON_LUCK
-    value: 2.6
-    difficulty: false
-    min-floor: 41
-    weight: 20
-    advanced: true
-  reward_028:
-    name: "§6军械开仓·深层"
-    description: "灵魂碎片 x3.2"
-    type: SHARD_MULTIPLY
-    value: 3.2
-    difficulty: false
-    min-floor: 61
-    weight: 18
-    advanced: true
-  reward_029:
-    name: "§6遗物潮汐·深层"
-    description: "通关房间额外神恩 +2"
-    type: EXTRA_BOON
-    value: 2
-    difficulty: false
-    min-floor: 61
-    weight: 18
-    advanced: true
-  reward_030:
-    name: "§6猎团分红·深层"
-    description: "武器掉率 x3.15"
-    type: WEAPON_LUCK
-    value: 3.15
-    difficulty: false
-    min-floor: 61
-    weight: 18
-    advanced: true
-  reward_031:
-    name: "§6圣杯满溢·深层"
-    description: "灵魂碎片 x3.2"
-    type: SHARD_MULTIPLY
-    value: 3.2
-    difficulty: false
-    min-floor: 61
-    weight: 18
-    advanced: true
-  reward_032:
-    name: "§6宝库松动·深层"
-    description: "通关房间额外神恩 +2"
-    type: EXTRA_BOON
-    value: 2
-    difficulty: false
-    min-floor: 61
-    weight: 18
-    advanced: true
-  reward_033:
-    name: "§6星砂馈赠·深层"
-    description: "武器掉率 x3.15"
-    type: WEAPON_LUCK
-    value: 3.15
-    difficulty: false
-    min-floor: 61
-    weight: 18
-    advanced: true
-  reward_034:
-    name: "§6锻炉赠礼·深层"
-    description: "灵魂碎片 x3.2"
-    type: SHARD_MULTIPLY
-    value: 3.2
-    difficulty: false
-    min-floor: 61
-    weight: 18
-    advanced: true
-  reward_035:
-    name: "§6王庭赏金·深层"
-    description: "通关房间额外神恩 +2"
-    type: EXTRA_BOON
-    value: 2
-    difficulty: false
-    min-floor: 61
-    weight: 18
-    advanced: true
-  reward_036:
-    name: "§6月井赐予·深层"
-    description: "武器掉率 x3.15"
-    type: WEAPON_LUCK
-    value: 3.15
-    difficulty: false
-    min-floor: 61
-    weight: 18
-    advanced: true
-  reward_037:
-    name: "§6深井回款·终局"
-    description: "灵魂碎片 x3.75"
-    type: SHARD_MULTIPLY
-    value: 3.75
-    difficulty: false
-    min-floor: 81
-    weight: 16
-    advanced: true
-  reward_038:
-    name: "§6雷塔补给·终局"
-    description: "通关房间额外神恩 +3"
-    type: EXTRA_BOON
-    value: 3
-    difficulty: false
-    min-floor: 81
-    weight: 16
-    advanced: true
-  reward_039:
-    name: "§6白塔祝圣·终局"
-    description: "武器掉率 x3.7"
-    type: WEAPON_LUCK
-    value: 3.7
-    difficulty: false
-    min-floor: 81
-    weight: 16
-    advanced: true
-  reward_040:
-    name: "§6黑市分润·终局"
-    description: "灵魂碎片 x3.75"
-    type: SHARD_MULTIPLY
-    value: 3.75
-    difficulty: false
-    min-floor: 81
-    weight: 16
-    advanced: true
-  reward_041:
-    name: "§6黄金远征·终局"
-    description: "通关房间额外神恩 +3"
-    type: EXTRA_BOON
-    value: 3
-    difficulty: false
-    min-floor: 81
-    weight: 16
-    advanced: true
-  reward_042:
-    name: "§6终层礼券·终局"
-    description: "武器掉率 x3.7"
-    type: WEAPON_LUCK
-    value: 3.7
-    difficulty: false
-    min-floor: 81
-    weight: 16
-    advanced: true
-  reward_043:
-    name: "§6虚空回响·终局"
-    description: "灵魂碎片 x3.75"
-    type: SHARD_MULTIPLY
-    value: 3.75
-    difficulty: false
-    min-floor: 81
-    weight: 16
-    advanced: true
-  reward_044:
-    name: "§6晨星馈赠·终局"
-    description: "通关房间额外神恩 +3"
-    type: EXTRA_BOON
-    value: 3
-    difficulty: false
-    min-floor: 81
-    weight: 16
-    advanced: true
-  reward_045:
-    name: "§6秘库开缝·终局"
-    description: "武器掉率 x3.7"
-    type: WEAPON_LUCK
-    value: 3.7
-    difficulty: false
-    min-floor: 81
-    weight: 16
+    min-floor: 18
+    weight: 15
     advanced: true

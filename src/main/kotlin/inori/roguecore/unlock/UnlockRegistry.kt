@@ -39,7 +39,7 @@ object UnlockRegistry {
                     description = node.getString("description") ?: "",
                     icon = XMaterial.matchXMaterial(node.getString("icon") ?: "PAPER").orElse(XMaterial.PAPER),
                     cost = node.getInt("cost", 100).coerceAtLeast(1),
-                    slot = node.getInt("slot", 13).coerceIn(0, 44),
+                    slot = node.getInt("slot", 13).coerceAtLeast(0),
                     requiredBestFloor = node.getInt("required-best-floor", 0).coerceAtLeast(0),
                     requires = node.getStringList("requires")
                 )

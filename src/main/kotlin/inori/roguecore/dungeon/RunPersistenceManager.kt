@@ -17,6 +17,12 @@ import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.dungeon.route.NextFloorRoute
 import inori.roguecore.event.EventAffixManager
 import inori.roguecore.listener.DungeonListener
+import inori.roguecore.milestone.RunMilestoneManager
+import inori.roguecore.milestone.RunMilestoneType
+import inori.roguecore.modifier.RunModifier
+import inori.roguecore.modifier.RunModifierManager
+import inori.roguecore.modifier.RunModifierType
+import inori.roguecore.summary.RunSummaryManager
 import inori.roguecore.party.PartyManager
 import inori.roguecore.relic.PlayerRelicData
 import inori.roguecore.relic.RelicRegistry
@@ -144,7 +150,19 @@ object RunPersistenceManager {
                 },
                 "relics" to PlayerRelicData.getRelics(uuid).map { it.id },
                 "curses" to RunCurseManager.getCurses(uuid).map(RunCurseType::name),
+                "milestones" to RunMilestoneManager.getSnapshot(uuid).milestones.map(RunMilestoneType::name),
+                "combat-streak" to RunMilestoneManager.getSnapshot(uuid).combatStreak,
+                "modifiers" to RunModifierManager.getModifiers(uuid).map { modifier ->
+                    mapOf(
+                        "type" to modifier.type.name,
+                        "remaining-rooms" to modifier.remainingRooms,
+                        "charges" to modifier.charges,
+                        "value" to modifier.value,
+                        "source" to modifier.source
+                    )
+                },
                 "materials" to ForgeMaterialManager.getAll(uuid).mapKeys { it.key.id },
+                "summary" to RunSummaryManager.getSnapshot(uuid),
                 "return-location" to returnLocations[uuid]?.let(::serializeLocation)
             )
         }
@@ -227,6 +245,26 @@ object RunPersistenceManager {
                 runCatching { RunCurseType.valueOf(id.toString()) }.getOrNull()
             }?.toSet() ?: emptySet()
             RunCurseManager.restore(uuid, curses)
+
+            val milestones = (raw["milestones"] as? List<*>)?.mapNotNull { id ->
+                runCatching { RunMilestoneType.valueOf(id.toString()) }.getOrNull()
+            }?.toSet() ?: emptySet()
+            val combatStreak = raw["combat-streak"]?.toString()?.toIntOrNull() ?: 0
+            RunMilestoneManager.restore(uuid, milestones, combatStreak)
+
+            val modifiers = (raw["modifiers"] as? List<*>)?.mapNotNull { value ->
+                val node = value as? Map<*, *> ?: return@mapNotNull null
+                val type = runCatching { RunModifierType.valueOf(node["type"].toString()) }.getOrNull() ?: return@mapNotNull null
+                RunModifier(
+                    type = type,
+                    remainingRooms = node["remaining-rooms"]?.toString()?.toIntOrNull() ?: 0,
+                    charges = node["charges"]?.toString()?.toIntOrNull() ?: 0,
+                    value = node["value"]?.toString()?.toDoubleOrNull() ?: 0.0,
+                    source = node["source"]?.toString() ?: type.displayName
+                )
+            } ?: emptyList()
+            RunModifierManager.restore(uuid, modifiers)
+            RunSummaryManager.restore(uuid, raw["summary"] as? Map<*, *>)
 
             val materials = (raw["materials"] as? Map<*, *>)?.mapNotNull { (key, value) ->
                 val type = ForgeMaterialType.entries.firstOrNull { it.id.equals(key?.toString(), ignoreCase = true) } ?: return@mapNotNull null

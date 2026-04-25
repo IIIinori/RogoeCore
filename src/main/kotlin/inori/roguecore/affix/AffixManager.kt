@@ -1,6 +1,7 @@
 package inori.roguecore.affix
 
 import inori.roguecore.dungeon.DungeonInstance
+import inori.roguecore.dungeon.route.NextFloorRoute
 import kotlin.random.Random
 
 /**
@@ -11,7 +12,7 @@ object AffixManager {
     /**
      * 为副本随机选取词缀
      */
-    fun rollAffixes(floorNumber: Int): List<DungeonAffix> {
+    fun rollAffixes(floorNumber: Int, route: NextFloorRoute? = null): List<DungeonAffix> {
         val range = AffixRegistry.getAffixCountRange(floorNumber)
         val minCount = range[0]
         val maxCount = range[1]
@@ -30,7 +31,7 @@ object AffixManager {
 
         // 楼层 10+ 保证至少一个高级词缀，让后期战斗层气质明显拉开。
         if (floorNumber >= 10 && advancedPool.isNotEmpty()) {
-            val picked = weightedRandom(advancedPool)
+            val picked = weightedRandom(advancedPool, route)
             if (picked != null) {
                 result.add(picked)
                 usedTypes.add(picked.type)
@@ -41,7 +42,7 @@ object AffixManager {
 
         // 楼层 4+ 保证至少一个难度词缀
         if (floorNumber >= 4 && result.none { it.difficulty } && diffPool.isNotEmpty()) {
-            val picked = weightedRandom(diffPool)
+            val picked = weightedRandom(diffPool, route)
             if (picked != null) {
                 result.add(picked)
                 usedTypes.add(picked.type)
@@ -52,7 +53,7 @@ object AffixManager {
         // 剩余名额从全池随机
         val allPool = (diffPool + rewardPool).filter { it.type !in usedTypes }.toMutableList()
         while (result.size < count && allPool.isNotEmpty()) {
-            val picked = weightedRandom(allPool) ?: break
+            val picked = weightedRandom(allPool, route) ?: break
             result.add(picked)
             usedTypes.add(picked.type)
             allPool.removeAll { it.type == picked.type }
@@ -117,6 +118,75 @@ object AffixManager {
             .sumOf { it.value.toInt().coerceAtLeast(0) }
     }
 
+    fun getMobDamageMultiplier(instance: DungeonInstance): Double {
+        return instance.affixes
+            .filter { it.type == AffixType.MOB_DAMAGE_MULTIPLY }
+            .fold(1.0) { acc, affix -> acc * affix.value.coerceAtLeast(0.0) }
+    }
+
+    fun getCombatShardFlat(instance: DungeonInstance): Int {
+        return instance.affixes
+            .filter { it.type == AffixType.COMBAT_SHARD_FLAT }
+            .sumOf { it.value.toInt().coerceAtLeast(0) }
+    }
+
+    fun getEliteKeyChance(instance: DungeonInstance): Double {
+        return instance.affixes
+            .filter { it.type == AffixType.ELITE_KEY_CHANCE }
+            .sumOf { it.value }
+            .coerceAtLeast(0.0)
+    }
+
+    fun getBossEmberBonus(instance: DungeonInstance): Int {
+        return instance.affixes
+            .filter { it.type == AffixType.BOSS_EMBER_BONUS }
+            .sumOf { it.value.toInt().coerceAtLeast(0) }
+    }
+
+    fun getLowHealthPressure(instance: DungeonInstance): Double {
+        return instance.affixes
+            .filter { it.type == AffixType.LOW_HEALTH_PRESSURE }
+            .sumOf { it.value }
+            .coerceAtLeast(0.0)
+    }
+
+    fun getMobRegenPercent(instance: DungeonInstance): Double = sum(AffixType.MOB_REGEN, instance)
+
+    fun getMobSpawnShield(instance: DungeonInstance): Double = sum(AffixType.MOB_SPAWN_SHIELD, instance)
+
+    fun getMobLowHealthRage(instance: DungeonInstance): Double = sum(AffixType.MOB_LOW_HEALTH_RAGE, instance)
+
+    fun getMobLifesteal(instance: DungeonInstance): Double = sum(AffixType.MOB_LIFESTEAL, instance)
+
+    fun getBossDamageMultiplier(instance: DungeonInstance): Double {
+        return instance.affixes
+            .filter { it.type == AffixType.BOSS_DAMAGE_MULTIPLY }
+            .fold(1.0) { acc, affix -> acc * affix.value.coerceAtLeast(0.0) }
+    }
+
+    fun getCombatEmberFlat(instance: DungeonInstance): Int = intSum(AffixType.COMBAT_EMBER_FLAT, instance)
+
+    fun getHiddenLootChance(instance: DungeonInstance): Double = sum(AffixType.HIDDEN_LOOT_CHANCE, instance)
+
+    fun getBoonLuckBonus(instance: DungeonInstance): Double = sum(AffixType.BOON_LUCK, instance)
+
+    fun getBossRelicChance(instance: DungeonInstance): Double = sum(AffixType.BOSS_RELIC_CHANCE, instance)
+
+    fun getChestShardBonus(instance: DungeonInstance): Int = intSum(AffixType.CHEST_SHARD_BONUS, instance)
+
+    fun getHealingMultiplier(instance: DungeonInstance): Double {
+        val reduction = sum(AffixType.HEALING_REDUCE, instance).coerceIn(0.0, 0.9)
+        return 1.0 - reduction
+    }
+
+    private fun sum(type: AffixType, instance: DungeonInstance): Double {
+        return instance.affixes.filter { it.type == type }.sumOf { it.value }.coerceAtLeast(0.0)
+    }
+
+    private fun intSum(type: AffixType, instance: DungeonInstance): Int {
+        return instance.affixes.filter { it.type == type }.sumOf { it.value.toInt().coerceAtLeast(0) }
+    }
+
     /**
      * 是否有某种词缀
      */
@@ -133,14 +203,17 @@ object AffixManager {
 
     // ========== 工具方法 ==========
 
-    private fun weightedRandom(pool: List<DungeonAffix>): DungeonAffix? {
+    private fun weightedRandom(pool: List<DungeonAffix>, route: NextFloorRoute? = null): DungeonAffix? {
         if (pool.isEmpty()) return null
-        val totalWeight = pool.sumOf { it.weight }
+        val weighted = pool.map { affix ->
+            affix to (affix.weight + (route?.affixWeightModifiers?.get(affix.type) ?: 0)).coerceAtLeast(1)
+        }
+        val totalWeight = weighted.sumOf { it.second }
         var roll = Random.nextInt(totalWeight)
-        for (affix in pool) {
-            roll -= affix.weight
+        for ((affix, weight) in weighted) {
+            roll -= weight
             if (roll < 0) return affix
         }
-        return pool.last()
+        return weighted.last().first
     }
 }

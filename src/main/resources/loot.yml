@@ -30,6 +30,130 @@ rules:
       extra-affixes: 1
       rarity-upgrade-chance: 0.35
 
+identification:
+  enabled: true
+  queue-size: 3
+  time-by-source:
+    CHEST: 15
+    ELITE: 30
+    BOSS: 60
+    HIDDEN: 45
+  drop-as-unidentified-chance:
+    CHEST: 0.35
+    ELITE: 0.5
+    BOSS: 0.75
+    HIDDEN: 0.65
+  base-price: 80
+  floor-price: 6
+  boss-extra-price: 120
+  hidden-extra-price: 80
+  acceleration:
+    enabled: true
+    reduce-percent-of-remaining: 0.35
+    min-reduce-seconds: 5
+    soul-shards: 45
+    materials:
+      inscription_dust: 1
+
+forge-books:
+  enabled: true
+  queue-size: 2
+  drop-chance:
+    CHEST: 0.12
+    ELITE: 0.22
+    BOSS: 0.45
+    HIDDEN: 0.35
+  quality-weight:
+    rough: 55
+    refined: 28
+    rare: 12
+    epic: 4
+    legendary: 1
+  acceleration:
+    enabled: true
+    reduce-percent-of-remaining: 0.25
+    min-reduce-seconds: 60
+    soul-shards: 160
+    materials:
+      soul_iron: 3
+      inscription_dust: 1
+  qualities:
+    rough:
+      name: "粗糙"
+      color: "§f"
+      rarity: common
+      time-seconds: 60
+      soul-shards: 120
+      materials:
+        soul_iron: 2
+    refined:
+      name: "精制"
+      color: "§b"
+      rarity: magic
+      time-seconds: 180
+      soul-shards: 260
+      materials:
+        soul_iron: 5
+        inscription_dust: 2
+    rare:
+      name: "稀有"
+      color: "§d"
+      rarity: rare
+      time-seconds: 600
+      soul-shards: 700
+      materials:
+        soul_iron: 12
+        inscription_dust: 6
+        relic_fragment: 1
+    epic:
+      name: "史诗"
+      color: "§6"
+      rarity: epic
+      time-seconds: 1800
+      soul-shards: 1800
+      materials:
+        relic_fragment: 8
+        crown_shard: 2
+    legendary:
+      name: "传说"
+      color: "§e"
+      rarity: legendary
+      time-seconds: 7200
+      soul-shards: 5000
+      materials:
+        crown_shard: 8
+        astral_core: 2
+
+permanent-materials:
+  salvage:
+    common:
+      soul_iron: [1, 2]
+      inscription_dust: [0, 1]
+    magic:
+      soul_iron: [2, 4]
+      inscription_dust: [1, 2]
+    rare:
+      soul_iron: [4, 6]
+      inscription_dust: [2, 4]
+      relic_fragment: [1, 2]
+    epic:
+      relic_fragment: [3, 5]
+      crown_shard: [1, 2]
+    legendary:
+      crown_shard: [3, 5]
+      astral_core: [1, 2]
+
+gear-storage:
+  enabled: true
+  base-size: 27
+
+permanent-gear:
+  bind-on-convert: true
+  allow-drop: false
+  allow-container: false
+  allow-pickup-by-others: false
+  allow-use-by-others: false
+
 rarities:
   common:
     name: "普通"

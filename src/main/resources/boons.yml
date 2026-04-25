@@ -1,2207 +1,1512 @@
 # ================================
 # RogueCore 神恩(Boon)配置
 # ================================
-# 赛季级大内容池：8 个流派共 200 个神恩。
-# 属性名可对应 AttributePlus 自定义属性；请在 AP 侧注册后由 RogueCore 自检确认。
+# 机制化神恩池：按流派标签、触发条件和事件收益区分，不再堆换皮属性。
+# 同标签达到 3/5/7 个会激活 I/II/III 阶流派共鸣。
 
 boons:
-  # ===== 狩猎系 =====
-  hunt_001:
-    name: "鹰眼初誓"
-    description: "狩猎共鸣强化：物理攻击与移动速度随神恩等级成长"
+  hunt_mark:
+    name: "鹰眼猎印"
+    description: "标记弱点：暴击与破甲成长，适合快速处理精英"
     rarity: COMMON
-    icon: DIAMOND_SWORD
+    icon: SPYGLASS
     max-level: 3
     tags: ["狩猎"]
     attributes:
-      "物理攻击": [2.5, 2.5]
-      "移动速度": [1.3, 1.3]
-  hunt_002:
-    name: "裂喉锋芒"
-    description: "狩猎共鸣强化：暴击几率与暴击伤害随神恩等级成长"
-    rarity: COMMON
-    icon: FEATHER
-    max-level: 3
-    tags: ["狩猎"]
-    attributes:
-      "暴击几率": [2.9, 2.9]
-      "暴击伤害": [1.5, 1.5]
-  hunt_003:
-    name: "迅羽步伐"
-    description: "狩猎共鸣强化：攻击速度与精英伤害随神恩等级成长"
-    rarity: COMMON
-    icon: SPIDER_EYE
-    max-level: 3
-    tags: ["狩猎"]
-    attributes:
-      "攻击速度": [3.4, 3.4]
-      "精英伤害": [1.8, 1.8]
-  hunt_004:
+      "暴击几率": [2.4, 2.4]
+      "破甲": [2, 2]
+  hunt_bloodtrail:
     name: "血迹追踪"
-    description: "狩猎共鸣在击杀后抽回血气"
-    rarity: COMMON
-    icon: GOLDEN_APPLE
-    max-level: 3
-    tags: ["狩猎"]
-    effects:
-      effect_04:
-        type: KILL_HEAL
-        value-per-level: 6.6
-        threshold: 55.0
-        tag: "狩猎"
-        per-tag: 2.2
-  hunt_005:
-    name: "月下伏击"
-    description: "狩猎共鸣强化：暴击伤害与破甲随神恩等级成长"
-    rarity: COMMON
-    icon: IRON_CHESTPLATE
-    max-level: 3
-    tags: ["狩猎"]
-    attributes:
-      "暴击伤害": [4.3, 4.3]
-      "破甲": [2.3, 2.3]
-  hunt_006:
-    name: "穿林箭息"
-    description: "狩猎共鸣强化：精英伤害与物理攻击随神恩等级成长"
-    rarity: COMMON
-    icon: ENDER_PEARL
-    max-level: 3
-    tags: ["狩猎"]
-    attributes:
-      "精英伤害": [4.7, 4.7]
-      "物理攻击": [2.5, 2.5]
-  hunt_007:
-    name: "猎王号令"
-    description: "狩猎共鸣强化：首领伤害与暴击几率随神恩等级成长"
+    description: "击杀后回复生命，狩猎标签越多回复越高"
     rarity: COMMON
     icon: REDSTONE
     max-level: 3
-    tags: ["狩猎"]
-    attributes:
-      "首领伤害": [5.2, 5.2]
-      "暴击几率": [2.8, 2.8]
-  hunt_008:
-    name: "灰狼围猎"
-    description: "狩猎共鸣在受击后反刺敌人"
-    rarity: COMMON
-    icon: SHIELD
-    max-level: 4
-    tags: ["狩猎"]
+    tags: ["狩猎", "鲜血"]
     effects:
-      effect_08:
-        type: RETALIATE
-        value-per-level: 10.2
-        threshold: 50.0
-        tag: "狩猎"
-        per-tag: 1.5
-  hunt_009:
-    name: "断筋一击"
-    description: "狩猎共鸣强化：物理攻击与移动速度随神恩等级成长"
-    rarity: COMMON
-    icon: GHAST_TEAR
-    max-level: 3
-    tags: ["狩猎"]
-    attributes:
-      "物理攻击": [6.0, 6.0]
-      "移动速度": [3.3, 3.3]
-  hunt_010:
-    name: "疾影连袭"
-    description: "狩猎共鸣强化：暴击几率与暴击伤害随神恩等级成长"
-    rarity: RARE
-    icon: RABBIT_FOOT
-    max-level: 3
-    tags: ["狩猎", "壁垒"]
-    attributes:
-      "暴击几率": [6.5, 6.5]
-      "暴击伤害": [3.5, 3.5]
-  hunt_011:
-    name: "猎鹰俯冲"
-    description: "狩猎共鸣强化：攻击速度与精英伤害随神恩等级成长"
-    rarity: RARE
-    icon: FIRE_CHARGE
-    max-level: 3
-    tags: ["狩猎"]
-    attributes:
-      "攻击速度": [7.0, 7.0]
-      "精英伤害": [3.8, 3.8]
-  hunt_012:
-    name: "兽牙印记"
-    description: "狩猎共鸣在清理房间后修复伤势"
-    rarity: RARE
-    icon: BLAZE_POWDER
-    max-level: 3
-    tags: ["狩猎"]
-    effects:
-      effect_12:
-        type: ROOM_HEAL
-        value-per-level: 13.8
-        threshold: 45.0
+      effect_1:
+        type: KILL_HEAL
+        value-per-level: 4
         tag: "狩猎"
         per-tag: 0.8
-  hunt_013:
-    name: "破甲猎刃"
-    description: "狩猎共鸣强化：暴击伤害与破甲随神恩等级成长"
+  hunt_swift_kill:
+    name: "迅羽处决"
+    description: "击杀后短暂加速，适合连战房间"
     rarity: RARE
-    icon: AMETHYST_SHARD
-    max-level: 3
-    tags: ["狩猎"]
-    attributes:
-      "暴击伤害": [7.9, 7.9]
-      "破甲": [4.3, 4.3]
-  hunt_014:
-    name: "赤羽狂欢"
-    description: "狩猎共鸣强化：精英伤害与物理攻击随神恩等级成长"
-    rarity: RARE
-    icon: PACKED_ICE
-    max-level: 3
-    tags: ["狩猎"]
-    attributes:
-      "精英伤害": [8.3, 8.3]
-      "物理攻击": [4.5, 4.5]
-  hunt_015:
-    name: "夜枭凝视"
-    description: "狩猎共鸣强化：首领伤害与暴击几率随神恩等级成长"
-    rarity: RARE
-    icon: CRYING_OBSIDIAN
-    max-level: 3
-    tags: ["狩猎"]
-    attributes:
-      "首领伤害": [8.8, 8.8]
-      "暴击几率": [4.8, 4.8]
-  hunt_016:
-    name: "逐鹿长歌"
-    description: "狩猎共鸣会在敌人虚弱时追加终结伤害"
-    rarity: RARE
-    icon: BEACON
-    max-level: 4
-    tags: ["狩猎"]
-    effects:
-      effect_16:
-        type: EXECUTE
-        value-per-level: 17.4
-        threshold: 40.0
-        tag: "狩猎"
-        per-tag: 2.2
-  hunt_017:
-    name: "剥皮者礼赞"
-    description: "狩猎共鸣强化：物理攻击与移动速度随神恩等级成长"
-    rarity: RARE
-    icon: NETHER_STAR
-    max-level: 3
-    tags: ["狩猎"]
-    attributes:
-      "物理攻击": [9.7, 9.7]
-      "移动速度": [5.3, 5.3]
-  hunt_018:
-    name: "凛风投矛"
-    description: "狩猎共鸣强化：暴击几率与暴击伤害随神恩等级成长"
-    rarity: EPIC
-    icon: TOTEM_OF_UNDYING
-    max-level: 3
-    tags: ["狩猎"]
-    attributes:
-      "暴击几率": [10.1, 10.1]
-      "暴击伤害": [5.5, 5.5]
-  hunt_019:
-    name: "尾随之影"
-    description: "狩猎共鸣强化：攻击速度与精英伤害随神恩等级成长"
-    rarity: EPIC
-    icon: ECHO_SHARD
-    max-level: 3
-    tags: ["狩猎"]
-    attributes:
-      "攻击速度": [10.6, 10.6]
-      "精英伤害": [5.8, 5.8]
-  hunt_020:
-    name: "狩魂缰绳"
-    description: "狩猎共鸣在击杀后抽回血气"
-    rarity: EPIC
-    icon: IRON_SWORD
-    max-level: 3
-    tags: ["狩猎", "壁垒"]
-    effects:
-      effect_20:
-        type: KILL_HEAL
-        value-per-level: 21.0
-        threshold: 35.0
-        tag: "狩猎"
-        per-tag: 1.5
-  hunt_021:
-    name: "瞄心瞬杀"
-    description: "狩猎共鸣强化：暴击伤害与破甲随神恩等级成长"
-    rarity: EPIC
-    icon: DIAMOND_SWORD
-    max-level: 3
-    tags: ["狩猎"]
-    attributes:
-      "暴击伤害": [11.5, 11.5]
-      "破甲": [6.3, 6.3]
-  hunt_022:
-    name: "林间回响"
-    description: "狩猎共鸣强化：精英伤害与物理攻击随神恩等级成长"
-    rarity: EPIC
     icon: FEATHER
     max-level: 3
     tags: ["狩猎"]
-    attributes:
-      "精英伤害": [11.9, 11.9]
-      "物理攻击": [6.5, 6.5]
-  hunt_023:
-    name: "黄金猎潮"
-    description: "狩猎共鸣强化：首领伤害与暴击几率随神恩等级成长"
-    rarity: EPIC
-    icon: SPIDER_EYE
-    max-level: 3
-    tags: ["狩猎"]
-    attributes:
-      "首领伤害": [12.3, 12.3]
-      "暴击几率": [6.8, 6.8]
-  hunt_024:
+    effects:
+      effect_1:
+        type: KILL_SPEED
+        value-per-level: 10
+        cooldown-seconds: 1
+        duration-seconds: 4
+        tag: "狩猎"
+        per-tag: 1
+  hunt_execute:
     name: "终猎宣告"
-    description: "狩猎共鸣在受击后反刺敌人"
-    rarity: LEGENDARY
-    icon: GOLDEN_APPLE
-    max-level: 5
+    description: "敌人低血时追加终结伤害"
+    rarity: RARE
+    icon: IRON_SWORD
+    max-level: 3
     tags: ["狩猎"]
     effects:
-      effect_24:
-        type: RETALIATE
-        value-per-level: 24.6
-        threshold: 55.0
+      effect_1:
+        type: EXECUTE
+        value-per-level: 12
+        threshold: 35
+        tag: "狩猎"
+        per-tag: 1.5
+  hunt_chain_arrow:
+    name: "群鸦连矢"
+    description: "攻击时概率把伤害传导给附近敌人"
+    rarity: EPIC
+    icon: CROSSBOW
+    max-level: 3
+    tags: ["狩猎", "风暴"]
+    effects:
+      effect_1:
+        type: CHAIN_DAMAGE
+        value-per-level: 8
+        chance: 0.22
+        cooldown-seconds: 1.5
+        radius: 4
+        limit: 3
         tag: "狩猎"
         per-tag: 0.8
-  hunt_025:
+  hunt_alpha:
     name: "万兽归弦"
-    description: "狩猎共鸣强化：物理攻击与移动速度随神恩等级成长"
+    description: "物理攻击、首领伤害与移动速度全面成长"
     rarity: LEGENDARY
-    icon: IRON_CHESTPLATE
+    icon: NETHER_STAR
     max-level: 4
     tags: ["狩猎"]
     attributes:
-      "物理攻击": [13.3, 13.3]
-      "移动速度": [7.3, 7.3]
-  # ===== 壁垒系 =====
-  bulwark_001:
-    name: "古墙余温"
-    description: "壁垒共鸣强化：生命上限与反伤比例随神恩等级成长"
-    rarity: COMMON
-    icon: GOLDEN_APPLE
-    max-level: 3
-    tags: ["壁垒"]
-    attributes:
-      "生命上限": [3.0, 3.0]
-      "反伤比例": [1.3, 1.3]
-  bulwark_002:
-    name: "铁山誓约"
-    description: "壁垒共鸣强化：物理防御与护盾强度随神恩等级成长"
-    rarity: COMMON
-    icon: IRON_CHESTPLATE
-    max-level: 3
-    tags: ["壁垒"]
-    attributes:
-      "物理防御": [3.4, 3.4]
-      "护盾强度": [1.5, 1.5]
-  bulwark_003:
-    name: "盾卫晨祷"
-    description: "壁垒共鸣强化：减伤比例与生命恢复随神恩等级成长"
-    rarity: COMMON
-    icon: ENDER_PEARL
-    max-level: 3
-    tags: ["壁垒"]
-    attributes:
-      "减伤比例": [3.9, 3.9]
-      "生命恢复": [1.8, 1.8]
-  bulwark_004:
-    name: "不动石心"
-    description: "壁垒共鸣在受击后反刺敌人"
-    rarity: COMMON
-    icon: REDSTONE
-    max-level: 3
-    tags: ["壁垒"]
-    effects:
-      effect_04:
-        type: RETALIATE
-        value-per-level: 7.0
-        threshold: 55.0
-        tag: "壁垒"
-        per-tag: 2.2
-  bulwark_005:
-    name: "壁垒回廊"
-    description: "壁垒共鸣强化：护盾强度与闪避几率随神恩等级成长"
+      "物理攻击": [7, 7]
+      "首领伤害": [5, 5]
+      "移动速度": [2.2, 2.2]
+  bulwark_oath:
+    name: "古墙誓约"
+    description: "提高生命和防御，稳定承接伤害"
     rarity: COMMON
     icon: SHIELD
     max-level: 3
     tags: ["壁垒"]
     attributes:
-      "护盾强度": [4.8, 4.8]
-      "闪避几率": [2.3, 2.3]
-  bulwark_006:
-    name: "青铜脊梁"
-    description: "壁垒共鸣强化：生命恢复与生命上限随神恩等级成长"
-    rarity: COMMON
-    icon: GHAST_TEAR
-    max-level: 3
-    tags: ["壁垒"]
-    attributes:
-      "生命恢复": [5.2, 5.2]
-      "生命上限": [2.5, 2.5]
-  bulwark_007:
-    name: "守夜钟声"
-    description: "壁垒共鸣强化：治疗加成与物理防御随神恩等级成长"
-    rarity: COMMON
-    icon: RABBIT_FOOT
-    max-level: 3
-    tags: ["壁垒"]
-    attributes:
-      "治疗加成": [5.7, 5.7]
-      "物理防御": [2.8, 2.8]
-  bulwark_008:
-    name: "沉默堡垒"
-    description: "壁垒共鸣在清理房间后修复伤势"
-    rarity: COMMON
-    icon: FIRE_CHARGE
-    max-level: 4
-    tags: ["壁垒"]
-    effects:
-      effect_08:
-        type: ROOM_HEAL
-        value-per-level: 10.6
-        threshold: 50.0
-        tag: "壁垒"
-        per-tag: 1.5
-  bulwark_009:
-    name: "巨门锁链"
-    description: "壁垒共鸣强化：生命上限与反伤比例随神恩等级成长"
-    rarity: COMMON
-    icon: BLAZE_POWDER
-    max-level: 3
-    tags: ["壁垒"]
-    attributes:
-      "生命上限": [6.5, 6.5]
-      "反伤比例": [3.3, 3.3]
-  bulwark_010:
-    name: "磐岩血脉"
-    description: "壁垒共鸣强化：物理防御与护盾强度随神恩等级成长"
-    rarity: RARE
-    icon: AMETHYST_SHARD
-    max-level: 3
-    tags: ["壁垒", "鲜血"]
-    attributes:
-      "物理防御": [7.0, 7.0]
-      "护盾强度": [3.5, 3.5]
-  bulwark_011:
-    name: "灰塔坚守"
-    description: "壁垒共鸣强化：减伤比例与生命恢复随神恩等级成长"
-    rarity: RARE
-    icon: PACKED_ICE
-    max-level: 3
-    tags: ["壁垒"]
-    attributes:
-      "减伤比例": [7.5, 7.5]
-      "生命恢复": [3.8, 3.8]
-  bulwark_012:
-    name: "圣盾回音"
-    description: "壁垒共鸣会在敌人虚弱时追加终结伤害"
-    rarity: RARE
-    icon: CRYING_OBSIDIAN
-    max-level: 3
-    tags: ["壁垒"]
-    effects:
-      effect_12:
-        type: EXECUTE
-        value-per-level: 14.2
-        threshold: 45.0
-        tag: "壁垒"
-        per-tag: 0.8
-  bulwark_013:
-    name: "棱堡行军"
-    description: "壁垒共鸣强化：护盾强度与闪避几率随神恩等级成长"
-    rarity: RARE
-    icon: BEACON
-    max-level: 3
-    tags: ["壁垒"]
-    attributes:
-      "护盾强度": [8.4, 8.4]
-      "闪避几率": [4.3, 4.3]
-  bulwark_014:
+      "生命上限": [18, 18]
+      "物理防御": [3, 3]
+  bulwark_retaliate:
     name: "铁律回敬"
-    description: "壁垒共鸣强化：生命恢复与生命上限随神恩等级成长"
-    rarity: RARE
-    icon: NETHER_STAR
+    description: "受击后反刺敌人，壁垒越厚反击越强"
+    rarity: COMMON
+    icon: IRON_CHESTPLATE
     max-level: 3
     tags: ["壁垒"]
-    attributes:
-      "生命恢复": [8.8, 8.8]
-      "生命上限": [4.5, 4.5]
-  bulwark_015:
-    name: "寒铁披风"
-    description: "壁垒共鸣强化：治疗加成与物理防御随神恩等级成长"
+    effects:
+      effect_1:
+        type: RETALIATE
+        value-per-level: 5.5
+        tag: "壁垒"
+        per-tag: 0.9
+  bulwark_last_wall:
+    name: "残血壁障"
+    description: "低血受击时获得吸收护盾，有冷却"
     rarity: RARE
     icon: TOTEM_OF_UNDYING
     max-level: 3
     tags: ["壁垒"]
-    attributes:
-      "治疗加成": [9.3, 9.3]
-      "物理防御": [4.8, 4.8]
-  bulwark_016:
-    name: "王城残壁"
-    description: "壁垒共鸣在击杀后抽回血气"
-    rarity: RARE
-    icon: ECHO_SHARD
-    max-level: 4
-    tags: ["壁垒"]
     effects:
-      effect_16:
-        type: KILL_HEAL
-        value-per-level: 17.8
-        threshold: 40.0
+      effect_1:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 6
+        threshold: 35
+        cooldown-seconds: 24
+        duration-seconds: 8
         tag: "壁垒"
-        per-tag: 2.2
-  bulwark_017:
-    name: "盾阵号角"
-    description: "壁垒共鸣强化：生命上限与反伤比例随神恩等级成长"
-    rarity: RARE
-    icon: IRON_SWORD
-    max-level: 3
-    tags: ["壁垒"]
-    attributes:
-      "生命上限": [10.2, 10.2]
-      "反伤比例": [5.3, 5.3]
-  bulwark_018:
-    name: "不屈旗影"
-    description: "壁垒共鸣强化：物理防御与护盾强度随神恩等级成长"
-    rarity: EPIC
-    icon: DIAMOND_SWORD
-    max-level: 3
-    tags: ["壁垒"]
-    attributes:
-      "物理防御": [10.6, 10.6]
-      "护盾强度": [5.5, 5.5]
-  bulwark_019:
-    name: "重甲礼赞"
-    description: "壁垒共鸣强化：减伤比例与生命恢复随神恩等级成长"
-    rarity: EPIC
-    icon: FEATHER
-    max-level: 3
-    tags: ["壁垒"]
-    attributes:
-      "减伤比例": [11.1, 11.1]
-      "生命恢复": [5.8, 5.8]
-  bulwark_020:
-    name: "铸墙者梦"
-    description: "壁垒共鸣在受击后反刺敌人"
-    rarity: EPIC
-    icon: SPIDER_EYE
-    max-level: 3
-    tags: ["壁垒", "鲜血"]
-    effects:
-      effect_20:
-        type: RETALIATE
-        value-per-level: 21.4
-        threshold: 35.0
-        tag: "壁垒"
-        per-tag: 1.5
-  bulwark_021:
-    name: "城垛星火"
-    description: "壁垒共鸣强化：护盾强度与闪避几率随神恩等级成长"
-    rarity: EPIC
-    icon: GOLDEN_APPLE
-    max-level: 3
-    tags: ["壁垒"]
-    attributes:
-      "护盾强度": [12.0, 12.0]
-      "闪避几率": [6.3, 6.3]
-  bulwark_022:
-    name: "坚壁长歌"
-    description: "壁垒共鸣强化：生命恢复与生命上限随神恩等级成长"
-    rarity: EPIC
-    icon: IRON_CHESTPLATE
-    max-level: 3
-    tags: ["壁垒"]
-    attributes:
-      "生命恢复": [12.4, 12.4]
-      "生命上限": [6.5, 6.5]
-  bulwark_023:
-    name: "千盾归一"
-    description: "壁垒共鸣强化：治疗加成与物理防御随神恩等级成长"
-    rarity: EPIC
-    icon: ENDER_PEARL
-    max-level: 3
-    tags: ["壁垒"]
-    attributes:
-      "治疗加成": [12.8, 12.8]
-      "物理防御": [6.8, 6.8]
-  bulwark_024:
-    name: "终垒圣印"
-    description: "壁垒共鸣在清理房间后修复伤势"
-    rarity: LEGENDARY
-    icon: REDSTONE
-    max-level: 5
-    tags: ["壁垒"]
-    effects:
-      effect_24:
-        type: ROOM_HEAL
-        value-per-level: 25.0
-        threshold: 55.0
-        tag: "壁垒"
-        per-tag: 0.8
-  bulwark_025:
-    name: "山脉不倒"
-    description: "壁垒共鸣强化：生命上限与反伤比例随神恩等级成长"
-    rarity: LEGENDARY
-    icon: SHIELD
-    max-level: 4
-    tags: ["壁垒"]
-    attributes:
-      "生命上限": [13.8, 13.8]
-      "反伤比例": [7.3, 7.3]
-  # ===== 鲜血系 =====
-  blood_001:
-    name: "血杯低语"
-    description: "鲜血共鸣强化：生命偷取与生命恢复随神恩等级成长"
-    rarity: COMMON
-    icon: REDSTONE
-    max-level: 3
-    tags: ["鲜血"]
-    attributes:
-      "生命偷取": [3.5, 3.5]
-      "生命恢复": [1.3, 1.3]
-  blood_002:
-    name: "猩红契约"
-    description: "鲜血共鸣强化：物理攻击与深渊伤害随神恩等级成长"
-    rarity: COMMON
-    icon: SHIELD
-    max-level: 3
-    tags: ["鲜血"]
-    attributes:
-      "物理攻击": [3.9, 3.9]
-      "深渊伤害": [1.5, 1.5]
-  blood_003:
-    name: "裂脉狂欢"
-    description: "鲜血共鸣强化：暴击伤害与治疗加成随神恩等级成长"
-    rarity: COMMON
-    icon: GHAST_TEAR
-    max-level: 3
-    tags: ["鲜血"]
-    attributes:
-      "暴击伤害": [4.3, 4.3]
-      "治疗加成": [1.8, 1.8]
-  blood_004:
-    name: "赤潮回流"
-    description: "鲜血共鸣在清理房间后修复伤势"
-    rarity: COMMON
-    icon: RABBIT_FOOT
-    max-level: 3
-    tags: ["鲜血"]
-    effects:
-      effect_04:
-        type: ROOM_HEAL
-        value-per-level: 7.4
-        threshold: 55.0
-        tag: "鲜血"
-        per-tag: 2.2
-  blood_005:
-    name: "饮血铭文"
-    description: "鲜血共鸣强化：深渊伤害与破甲随神恩等级成长"
-    rarity: COMMON
-    icon: FIRE_CHARGE
-    max-level: 3
-    tags: ["鲜血"]
-    attributes:
-      "深渊伤害": [5.3, 5.3]
-      "破甲": [2.3, 2.3]
-  blood_006:
-    name: "心脏祭礼"
-    description: "鲜血共鸣强化：治疗加成与生命偷取随神恩等级成长"
-    rarity: COMMON
-    icon: BLAZE_POWDER
-    max-level: 3
-    tags: ["鲜血"]
-    attributes:
-      "治疗加成": [5.7, 5.7]
-      "生命偷取": [2.5, 2.5]
-  blood_007:
-    name: "血月余烬"
-    description: "鲜血共鸣强化：首领伤害与物理攻击随神恩等级成长"
-    rarity: COMMON
-    icon: AMETHYST_SHARD
-    max-level: 3
-    tags: ["鲜血"]
-    attributes:
-      "首领伤害": [6.2, 6.2]
-      "物理攻击": [2.8, 2.8]
-  blood_008:
-    name: "伤口花冠"
-    description: "鲜血共鸣会在敌人虚弱时追加终结伤害"
-    rarity: COMMON
-    icon: PACKED_ICE
-    max-level: 4
-    tags: ["鲜血"]
-    effects:
-      effect_08:
-        type: EXECUTE
-        value-per-level: 11.0
-        threshold: 50.0
-        tag: "鲜血"
-        per-tag: 1.5
-  blood_009:
-    name: "脉搏战鼓"
-    description: "鲜血共鸣强化：生命偷取与生命恢复随神恩等级成长"
-    rarity: COMMON
-    icon: CRYING_OBSIDIAN
-    max-level: 3
-    tags: ["鲜血"]
-    attributes:
-      "生命偷取": [7.0, 7.0]
-      "生命恢复": [3.3, 3.3]
-  blood_010:
-    name: "红泪圣餐"
-    description: "鲜血共鸣强化：物理攻击与深渊伤害随神恩等级成长"
+        per-tag: 1
+  bulwark_sentinel:
+    name: "哨卫阵列"
+    description: "壁垒哨卫会在通关后修复伤势"
     rarity: RARE
     icon: BEACON
     max-level: 3
-    tags: ["鲜血", "雷霆"]
+    tags: ["壁垒", "圣辉"]
+    effects:
+      effect_1:
+        type: ROOM_HEAL
+        value-per-level: 5
+        tag: "壁垒"
+        per-tag: 0.4
+  bulwark_march:
+    name: "棱堡行军"
+    description: "减伤、护盾与治疗加成成长"
+    rarity: EPIC
+    icon: ANVIL
+    max-level: 3
+    tags: ["壁垒"]
     attributes:
-      "物理攻击": [7.5, 7.5]
+      "减伤比例": [2, 2]
+      "护盾强度": [5, 5]
+      "治疗加成": [2.5, 2.5]
+  bulwark_king_gate:
+    name: "王城巨门"
+    description: "战斗通关后概率磨砺一个已有神恩"
+    rarity: LEGENDARY
+    icon: LODESTONE
+    max-level: 4
+    tags: ["壁垒"]
+    effects:
+      effect_1:
+        type: ROOM_UPGRADE_RANDOM
+        value-per-level: 0
+        chance: 0.22
+        cooldown-seconds: 8
+        tag: "壁垒"
+        per-tag: 0.02
+  blood_leech:
+    name: "猩红汲取"
+    description: "生命偷取与物理攻击成长"
+    rarity: COMMON
+    icon: REDSTONE
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "生命偷取": [1.8, 1.8]
+      "物理攻击": [3, 3]
+  blood_spoils:
+    name: "染血战利"
+    description: "击杀怪物后获得本局碎片"
+    rarity: COMMON
+    icon: GOLD_INGOT
+    max-level: 3
+    tags: ["鲜血", "财宝"]
+    effects:
+      effect_1:
+        type: KILL_SHARD
+        value-per-level: 2
+        tag: "鲜血"
+        per-tag: 0.35
+  blood_reaper:
+    name: "断魂收割"
+    description: "敌人低血时造成更多伤害"
+    rarity: RARE
+    icon: NETHERITE_SWORD
+    max-level: 3
+    tags: ["鲜血"]
+    effects:
+      effect_1:
+        type: EXECUTE
+        value-per-level: 15
+        threshold: 30
+        tag: "鲜血"
+        per-tag: 1.2
+  blood_frenzy:
+    name: "浴血疾走"
+    description: "击杀后获得移速和攻速成长"
+    rarity: RARE
+    icon: RABBIT_FOOT
+    max-level: 3
+    tags: ["鲜血", "狩猎"]
+    attributes:
+      "攻击速度": [3.5, 3.5]
+    effects:
+      effect_1:
+        type: KILL_SPEED
+        value-per-level: 12
+        cooldown-seconds: 1.5
+        duration-seconds: 5
+        tag: "鲜血"
+        per-tag: 0.8
+  blood_pact_shield:
+    name: "薄命血盾"
+    description: "低血受击时获得护盾，偏向风险续航"
+    rarity: EPIC
+    icon: CRIMSON_FUNGUS
+    max-level: 3
+    tags: ["鲜血"]
+    effects:
+      effect_1:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 8
+        threshold: 40
+        cooldown-seconds: 20
+        duration-seconds: 7
+        tag: "鲜血"
+        per-tag: 0.8
+  blood_crown:
+    name: "赤王余冠"
+    description: "击杀收益、生命偷取与暴击伤害成长"
+    rarity: LEGENDARY
+    icon: GOLDEN_HELMET
+    max-level: 4
+    tags: ["鲜血", "财宝"]
+    attributes:
+      "生命偷取": [2.8, 2.8]
+      "暴击伤害": [6, 6]
+    effects:
+      effect_1:
+        type: KILL_SHARD
+        value-per-level: 3
+        tag: "鲜血"
+        per-tag: 0.5
+  storm_spark:
+    name: "雷火花"
+    description: "雷霆伤害与攻击速度成长"
+    rarity: COMMON
+    icon: LIGHTNING_ROD
+    max-level: 3
+    tags: ["风暴"]
+    attributes:
+      "雷霆伤害": [5, 5]
+      "攻击速度": [2.2, 2.2]
+  storm_chain:
+    name: "跳雷回路"
+    description: "攻击时概率连锁伤害附近敌人"
+    rarity: RARE
+    icon: FIRE_CHARGE
+    max-level: 3
+    tags: ["风暴"]
+    effects:
+      effect_1:
+        type: CHAIN_DAMAGE
+        value-per-level: 7
+        chance: 0.26
+        cooldown-seconds: 1.2
+        radius: 4.5
+        limit: 3
+        tag: "风暴"
+        per-tag: 0.9
+  storm_clear_charge:
+    name: "风暴充能"
+    description: "通关后获得本局碎片，风暴标签越多越高"
+    rarity: RARE
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["风暴", "财宝"]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 5
+        tag: "风暴"
+        per-tag: 0.8
+  storm_overload:
+    name: "过载脉冲"
+    description: "雷霆、暴击几率和技能伤害成长"
+    rarity: EPIC
+    icon: ECHO_SHARD
+    max-level: 3
+    tags: ["风暴"]
+    attributes:
+      "雷霆伤害": [8, 8]
+      "暴击几率": [3.2, 3.2]
+      "技能伤害": [4.5, 4.5]
+  storm_blink:
+    name: "电闪猎步"
+    description: "击杀后高速移动，适合连续追击"
+    rarity: EPIC
+    icon: ENDER_PEARL
+    max-level: 3
+    tags: ["风暴", "狩猎"]
+    effects:
+      effect_1:
+        type: KILL_SPEED
+        value-per-level: 18
+        cooldown-seconds: 1
+        duration-seconds: 3.5
+        tag: "风暴"
+        per-tag: 1
+  storm_judgement:
+    name: "雷审天幕"
+    description: "更强的连锁伤害核心神恩"
+    rarity: LEGENDARY
+    icon: TRIDENT
+    max-level: 4
+    tags: ["风暴"]
+    effects:
+      effect_1:
+        type: CHAIN_DAMAGE
+        value-per-level: 13
+        chance: 0.32
+        cooldown-seconds: 1
+        radius: 5.5
+        limit: 5
+        tag: "风暴"
+        per-tag: 1.2
+  frost_edge:
+    name: "霜刃刻纹"
+    description: "冰霜伤害和减伤成长"
+    rarity: COMMON
+    icon: PACKED_ICE
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "冰霜伤害": [5, 5]
+      "减伤比例": [1.2, 1.2]
+  frost_shelter:
+    name: "寒室庇护"
+    description: "通关房间后回复生命"
+    rarity: COMMON
+    icon: SNOWBALL
+    max-level: 3
+    tags: ["霜寒", "壁垒"]
+    effects:
+      effect_1:
+        type: ROOM_HEAL
+        value-per-level: 4
+        tag: "霜寒"
+        per-tag: 0.5
+  frost_crystal:
+    name: "晶壁反照"
+    description: "受击反刺并提升护盾强度"
+    rarity: RARE
+    icon: BLUE_ICE
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "护盾强度": [4, 4]
+    effects:
+      effect_1:
+        type: RETALIATE
+        value-per-level: 6
+        tag: "霜寒"
+        per-tag: 0.7
+  frost_last_breath:
+    name: "极寒余息"
+    description: "低血时获得吸收护盾"
+    rarity: RARE
+    icon: ICE
+    max-level: 3
+    tags: ["霜寒"]
+    effects:
+      effect_1:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 7
+        threshold: 38
+        cooldown-seconds: 22
+        duration-seconds: 9
+        tag: "霜寒"
+        per-tag: 0.9
+  frost_lockstep:
+    name: "冻土步阵"
+    description: "冰霜、生命恢复和冷却缩减成长"
+    rarity: EPIC
+    icon: CLOCK
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "冰霜伤害": [8, 8]
+      "生命恢复": [4, 4]
+      "冷却缩减": [2, 2]
+  frost_whiteout:
+    name: "白霜终幕"
+    description: "清房后概率升级已有神恩"
+    rarity: LEGENDARY
+    icon: NETHER_STAR
+    max-level: 4
+    tags: ["霜寒"]
+    effects:
+      effect_1:
+        type: ROOM_UPGRADE_RANDOM
+        value-per-level: 0
+        chance: 0.24
+        cooldown-seconds: 8
+        tag: "霜寒"
+        per-tag: 0.02
+  abyss_gaze:
+    name: "深渊凝视"
+    description: "深渊伤害与首领伤害成长"
+    rarity: COMMON
+    icon: CRYING_OBSIDIAN
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "深渊伤害": [6, 6]
+      "首领伤害": [2.5, 2.5]
+  abyss_hollow_coin:
+    name: "空洞铸币"
+    description: "通关后获得额外本局碎片"
+    rarity: COMMON
+    icon: GOLD_NUGGET
+    max-level: 3
+    tags: ["深渊", "财宝"]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 4
+        tag: "深渊"
+        per-tag: 0.7
+  abyss_rebuke:
+    name: "虚界回敬"
+    description: "受击反刺，深渊标签越多伤害越高"
+    rarity: RARE
+    icon: ENDER_EYE
+    max-level: 3
+    tags: ["深渊"]
+    effects:
+      effect_1:
+        type: RETALIATE
+        value-per-level: 7
+        tag: "深渊"
+        per-tag: 1
+  abyss_devour:
+    name: "吞光裂口"
+    description: "攻击低血敌人时追加伤害"
+    rarity: RARE
+    icon: BLACKSTONE
+    max-level: 3
+    tags: ["深渊"]
+    effects:
+      effect_1:
+        type: EXECUTE
+        value-per-level: 16
+        threshold: 32
+        tag: "深渊"
+        per-tag: 1.2
+  abyss_chain:
+    name: "虚空裂触"
+    description: "概率向附近敌人扩散深渊伤害"
+    rarity: EPIC
+    icon: ENDER_PEARL
+    max-level: 3
+    tags: ["深渊"]
+    effects:
+      effect_1:
+        type: CHAIN_DAMAGE
+        value-per-level: 10
+        chance: 0.24
+        cooldown-seconds: 1.6
+        radius: 4.5
+        limit: 4
+        tag: "深渊"
+        per-tag: 1.1
+  abyss_covenant:
+    name: "无底契印"
+    description: "高额深渊、技能与首领伤害成长"
+    rarity: LEGENDARY
+    icon: DRAGON_EGG
+    max-level: 4
+    tags: ["深渊"]
+    attributes:
+      "深渊伤害": [10, 10]
+      "技能伤害": [6, 6]
+      "首领伤害": [5, 5]
+  radiance_prayer:
+    name: "圣辉晨祷"
+    description: "圣辉伤害与治疗加成成长"
+    rarity: COMMON
+    icon: BEACON
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "圣辉伤害": [5.5, 5.5]
+      "治疗加成": [2.2, 2.2]
+  radiance_room_heal:
+    name: "白烛回响"
+    description: "通关房间后回复最大生命"
+    rarity: COMMON
+    icon: CANDLE
+    max-level: 3
+    tags: ["圣辉"]
+    effects:
+      effect_1:
+        type: ROOM_HEAL
+        value-per-level: 5
+        tag: "圣辉"
+        per-tag: 0.5
+  radiance_mercy:
+    name: "仁慈赦令"
+    description: "清房后概率升级一个已有神恩"
+    rarity: RARE
+    icon: ENCHANTED_BOOK
+    max-level: 3
+    tags: ["圣辉"]
+    effects:
+      effect_1:
+        type: ROOM_UPGRADE_RANDOM
+        value-per-level: 0
+        chance: 0.16
+        cooldown-seconds: 10
+        tag: "圣辉"
+        per-tag: 0.015
+  radiance_guard:
+    name: "圣像护命"
+    description: "低血受击时获得护盾"
+    rarity: RARE
+    icon: TOTEM_OF_UNDYING
+    max-level: 3
+    tags: ["圣辉", "壁垒"]
+    effects:
+      effect_1:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 7.5
+        threshold: 42
+        cooldown-seconds: 24
+        duration-seconds: 8
+        tag: "圣辉"
+        per-tag: 0.8
+  radiance_smite:
+    name: "灼圣裁决"
+    description: "圣辉、暴击伤害和精英伤害成长"
+    rarity: EPIC
+    icon: BLAZE_POWDER
+    max-level: 3
+    tags: ["圣辉"]
+    attributes:
+      "圣辉伤害": [8.5, 8.5]
+      "暴击伤害": [5, 5]
+      "精英伤害": [4, 4]
+  radiance_corona:
+    name: "日冕圣座"
+    description: "清房回血、神恩成长与治疗加成的核心"
+    rarity: LEGENDARY
+    icon: NETHER_STAR
+    max-level: 4
+    tags: ["圣辉"]
+    attributes:
+      "治疗加成": [4, 4]
+    effects:
+      effect_1:
+        type: ROOM_HEAL
+        value-per-level: 7
+        tag: "圣辉"
+        per-tag: 0.6
+      effect_2:
+        type: ROOM_UPGRADE_RANDOM
+        value-per-level: 0
+        chance: 0.18
+        cooldown-seconds: 8
+        tag: "圣辉"
+        per-tag: 0.01
+  treasure_instinct:
+    name: "秘宝直觉"
+    description: "幸运与本局收益成长"
+    rarity: COMMON
+    icon: EMERALD
+    max-level: 3
+    tags: ["财宝"]
+    attributes:
+      "幸运": [4, 4]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 3
+        tag: "财宝"
+        per-tag: 0.6
+  treasure_bounty:
+    name: "悬赏猎令"
+    description: "击杀后获得额外本局碎片"
+    rarity: COMMON
+    icon: GOLD_INGOT
+    max-level: 3
+    tags: ["财宝", "狩猎"]
+    effects:
+      effect_1:
+        type: KILL_SHARD
+        value-per-level: 2.5
+        tag: "财宝"
+        per-tag: 0.4
+  treasure_lucky_step:
+    name: "金币疾行"
+    description: "击杀后加速并提高幸运"
+    rarity: RARE
+    icon: RABBIT_FOOT
+    max-level: 3
+    tags: ["财宝"]
+    attributes:
+      "幸运": [5, 5]
+    effects:
+      effect_1:
+        type: KILL_SPEED
+        value-per-level: 9
+        cooldown-seconds: 1.5
+        duration-seconds: 4
+        tag: "财宝"
+        per-tag: 0.7
+  treasure_gilded_room:
+    name: "镀金房契"
+    description: "通关房间后获得更多本局碎片"
+    rarity: RARE
+    icon: SUNFLOWER
+    max-level: 3
+    tags: ["财宝"]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 7
+        tag: "财宝"
+        per-tag: 0.9
+  treasure_jackpot:
+    name: "黑市彩金"
+    description: "幸运、碎片收益与暴击几率成长"
+    rarity: EPIC
+    icon: CHEST
+    max-level: 3
+    tags: ["财宝"]
+    attributes:
+      "幸运": [7, 7]
+      "暴击几率": [3, 3]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 8
+        tag: "财宝"
+        per-tag: 1
+  treasure_crown:
+    name: "王冠账簿"
+    description: "击杀和清房都能带来收益，是财宝流核心"
+    rarity: LEGENDARY
+    icon: GOLDEN_HELMET
+    max-level: 4
+    tags: ["财宝"]
+    effects:
+      effect_1:
+        type: KILL_SHARD
+        value-per-level: 3
+        tag: "财宝"
+        per-tag: 0.5
+      effect_2:
+        type: ROOM_SHARD
+        value-per-level: 9
+        tag: "财宝"
+        per-tag: 1.1
+
+  exp_hunt_first:
+    name: "狩猎初印·追猎"
+    description: "扩展神恩：围绕狩猎构筑提供EXECUTE收益"
+    rarity: COMMON
+    icon: CROSSBOW
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "暴击几率": [1.6, 1.6]
+    effects:
+      effect_1:
+        type: EXECUTE
+        value-per-level: 3
+        threshold: 25
+        tag: "狩猎"
+        per-tag: 0.20
+  exp_hunt_room:
+    name: "狩猎回廊·余响"
+    description: "扩展神恩：围绕狩猎构筑提供ROOM_SHARD收益"
+    rarity: COMMON
+    icon: EXPERIENCE_BOTTLE
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "破甲": [1.3, 1.3]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 3
+        tag: "狩猎"
+        per-tag: 0.28
+  exp_hunt_kill:
+    name: "狩猎连携·疾势"
+    description: "扩展神恩：围绕狩猎/风暴构筑提供KILL_SPEED收益"
+    rarity: RARE
+    icon: FEATHER
+    max-level: 3
+    tags: ["狩猎", "风暴"]
+    effects:
+      effect_1:
+        type: KILL_SPEED
+        value-per-level: 4
+        duration-seconds: 2.5
+        tag: "狩猎"
+        per-tag: 0.39
+  exp_hunt_bridge:
+    name: "狩猎桥契·风暴"
+    description: "扩展神恩：围绕狩猎/风暴构筑提供ROOM_UPGRADE_RANDOM收益"
+    rarity: RARE
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["狩猎", "风暴"]
+    attributes:
+      "暴击几率": [2.3, 2.3]
+      "破甲": [1.4, 1.4]
+    effects:
+      effect_1:
+        type: ROOM_UPGRADE_RANDOM
+        value-per-level: 5
+        chance: 0.090
+        tag: "风暴"
+        per-tag: 0.14
+  exp_hunt_engine:
+    name: "狩猎引擎·律动"
+    description: "扩展神恩：围绕狩猎构筑提供CHAIN_DAMAGE收益"
+    rarity: EPIC
+    icon: BEACON
+    max-level: 3
+    tags: ["狩猎"]
+    attributes:
+      "暴击几率": [3.4, 3.4]
+    effects:
+      effect_1:
+        type: CHAIN_DAMAGE
+        value-per-level: 7
+        chance: 0.195
+        cooldown-seconds: 7
+        duration-seconds: 3.0
+        radius: 3.2
+        limit: 2
+        tag: "狩猎"
+        per-tag: 0.44
+  exp_hunt_legend:
+    name: "狩猎终章·王印"
+    description: "扩展神恩：围绕狩猎/风暴构筑提供ROOM_SHARD+LOW_HEALTH_SHIELD收益"
+    rarity: LEGENDARY
+    icon: NETHER_STAR
+    max-level: 4
+    tags: ["狩猎", "风暴"]
+    attributes:
+      "暴击几率": [5.4, 5.4]
+      "破甲": [3.3, 3.3]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 6
+        tag: "狩猎"
+        per-tag: 0.55
+      effect_2:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 9
+        threshold: 33
+        cooldown-seconds: 18
+        tag: "风暴"
+        per-tag: 0.38
+  exp_bulwark_first:
+    name: "壁垒初印·守护"
+    description: "扩展神恩：围绕壁垒构筑提供EXECUTE收益"
+    rarity: COMMON
+    icon: SHIELD
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "物理防御": [1.8, 1.8]
+    effects:
+      effect_1:
+        type: EXECUTE
+        value-per-level: 4
+        threshold: 26
+        tag: "壁垒"
+        per-tag: 0.22
+  exp_bulwark_room:
+    name: "壁垒回廊·余响"
+    description: "扩展神恩：围绕壁垒构筑提供ROOM_HEAL收益"
+    rarity: COMMON
+    icon: EXPERIENCE_BOTTLE
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "护盾强度": [1.6, 1.6]
+    effects:
+      effect_1:
+        type: ROOM_HEAL
+        value-per-level: 4
+        tag: "壁垒"
+        per-tag: 0.31
+  exp_bulwark_kill:
+    name: "壁垒连携·疾势"
+    description: "扩展神恩：围绕壁垒/圣辉构筑提供KILL_HEAL收益"
+    rarity: RARE
+    icon: FEATHER
+    max-level: 3
+    tags: ["壁垒", "圣辉"]
+    effects:
+      effect_1:
+        type: KILL_HEAL
+        value-per-level: 5
+        duration-seconds: 2.7
+        tag: "壁垒"
+        per-tag: 0.43
+  exp_bulwark_bridge:
+    name: "壁垒桥契·圣辉"
+    description: "扩展神恩：围绕壁垒/圣辉构筑提供ROOM_UPGRADE_RANDOM收益"
+    rarity: RARE
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["壁垒", "圣辉"]
+    attributes:
+      "物理防御": [2.5, 2.5]
+      "护盾强度": [1.6, 1.6]
+    effects:
+      effect_1:
+        type: ROOM_UPGRADE_RANDOM
+        value-per-level: 6
+        chance: 0.100
+        tag: "圣辉"
+        per-tag: 0.16
+  exp_bulwark_engine:
+    name: "壁垒引擎·律动"
+    description: "扩展神恩：围绕壁垒构筑提供LOW_HEALTH_SHIELD收益"
+    rarity: EPIC
+    icon: BEACON
+    max-level: 3
+    tags: ["壁垒"]
+    attributes:
+      "物理防御": [3.7, 3.7]
+    effects:
+      effect_1:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 8
+        chance: 0.210
+        cooldown-seconds: 8
+        duration-seconds: 3.2
+        radius: 3.4
+        limit: 3
+        tag: "壁垒"
+        per-tag: 0.48
+  exp_bulwark_legend:
+    name: "壁垒终章·王印"
+    description: "扩展神恩：围绕壁垒/圣辉构筑提供ROOM_SHARD+LOW_HEALTH_SHIELD收益"
+    rarity: LEGENDARY
+    icon: NETHER_STAR
+    max-level: 4
+    tags: ["壁垒", "圣辉"]
+    attributes:
+      "物理防御": [5.8, 5.8]
+      "护盾强度": [3.5, 3.5]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 7
+        tag: "壁垒"
+        per-tag: 0.60
+      effect_2:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 10
+        threshold: 34
+        cooldown-seconds: 19
+        tag: "圣辉"
+        per-tag: 0.41
+  exp_blood_first:
+    name: "鲜血初印·血誓"
+    description: "扩展神恩：围绕鲜血构筑提供EXECUTE收益"
+    rarity: COMMON
+    icon: REDSTONE
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "生命偷取": [2.0, 2.0]
+    effects:
+      effect_1:
+        type: EXECUTE
+        value-per-level: 5
+        threshold: 27
+        tag: "鲜血"
+        per-tag: 0.24
+  exp_blood_room:
+    name: "鲜血回廊·余响"
+    description: "扩展神恩：围绕鲜血构筑提供ROOM_SHARD收益"
+    rarity: COMMON
+    icon: EXPERIENCE_BOTTLE
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "生命上限": [1.9, 1.9]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 5
+        tag: "鲜血"
+        per-tag: 0.34
+  exp_blood_kill:
+    name: "鲜血连携·疾势"
+    description: "扩展神恩：围绕鲜血/深渊构筑提供KILL_SHARD收益"
+    rarity: RARE
+    icon: FEATHER
+    max-level: 3
+    tags: ["鲜血", "深渊"]
+    effects:
+      effect_1:
+        type: KILL_SHARD
+        value-per-level: 6
+        duration-seconds: 2.9
+        tag: "鲜血"
+        per-tag: 0.47
+  exp_blood_bridge:
+    name: "鲜血桥契·深渊"
+    description: "扩展神恩：围绕鲜血/深渊构筑提供ROOM_UPGRADE_RANDOM收益"
+    rarity: RARE
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["鲜血", "深渊"]
+    attributes:
+      "生命偷取": [2.8, 2.8]
+      "生命上限": [1.8, 1.8]
+    effects:
+      effect_1:
+        type: ROOM_UPGRADE_RANDOM
+        value-per-level: 7
+        chance: 0.110
+        tag: "深渊"
+        per-tag: 0.18
+  exp_blood_engine:
+    name: "鲜血引擎·律动"
+    description: "扩展神恩：围绕鲜血构筑提供CHAIN_DAMAGE收益"
+    rarity: EPIC
+    icon: BEACON
+    max-level: 3
+    tags: ["鲜血"]
+    attributes:
+      "生命偷取": [4.0, 4.0]
+    effects:
+      effect_1:
+        type: CHAIN_DAMAGE
+        value-per-level: 9
+        chance: 0.225
+        cooldown-seconds: 9
+        duration-seconds: 3.4
+        radius: 3.5
+        limit: 4
+        tag: "鲜血"
+        per-tag: 0.52
+  exp_blood_legend:
+    name: "鲜血终章·王印"
+    description: "扩展神恩：围绕鲜血/深渊构筑提供ROOM_SHARD+LOW_HEALTH_SHIELD收益"
+    rarity: LEGENDARY
+    icon: NETHER_STAR
+    max-level: 4
+    tags: ["鲜血", "深渊"]
+    attributes:
+      "生命偷取": [6.2, 6.2]
+      "生命上限": [3.8, 3.8]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 8
+        tag: "鲜血"
+        per-tag: 0.65
+      effect_2:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 11
+        threshold: 35
+        cooldown-seconds: 20
+        tag: "深渊"
+        per-tag: 0.44
+  exp_storm_first:
+    name: "风暴初印·雷引"
+    description: "扩展神恩：围绕风暴构筑提供EXECUTE收益"
+    rarity: COMMON
+    icon: LIGHTNING_ROD
+    max-level: 3
+    tags: ["风暴"]
+    attributes:
+      "雷霆伤害": [2.2, 2.2]
+    effects:
+      effect_1:
+        type: EXECUTE
+        value-per-level: 6
+        threshold: 28
+        tag: "风暴"
+        per-tag: 0.26
+  exp_storm_room:
+    name: "风暴回廊·余响"
+    description: "扩展神恩：围绕风暴构筑提供ROOM_HEAL收益"
+    rarity: COMMON
+    icon: EXPERIENCE_BOTTLE
+    max-level: 3
+    tags: ["风暴"]
+    attributes:
+      "攻击速度": [2.2, 2.2]
+    effects:
+      effect_1:
+        type: ROOM_HEAL
+        value-per-level: 6
+        tag: "风暴"
+        per-tag: 0.37
+  exp_storm_kill:
+    name: "风暴连携·疾势"
+    description: "扩展神恩：围绕风暴/狩猎构筑提供KILL_SPEED收益"
+    rarity: RARE
+    icon: FEATHER
+    max-level: 3
+    tags: ["风暴", "狩猎"]
+    effects:
+      effect_1:
+        type: KILL_SPEED
+        value-per-level: 7
+        duration-seconds: 3.1
+        tag: "风暴"
+        per-tag: 0.51
+  exp_storm_bridge:
+    name: "风暴桥契·狩猎"
+    description: "扩展神恩：围绕风暴/狩猎构筑提供ROOM_UPGRADE_RANDOM收益"
+    rarity: RARE
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["风暴", "狩猎"]
+    attributes:
+      "雷霆伤害": [3.0, 3.0]
+      "攻击速度": [2.0, 2.0]
+    effects:
+      effect_1:
+        type: ROOM_UPGRADE_RANDOM
+        value-per-level: 8
+        chance: 0.120
+        tag: "狩猎"
+        per-tag: 0.20
+  exp_storm_engine:
+    name: "风暴引擎·律动"
+    description: "扩展神恩：围绕风暴构筑提供LOW_HEALTH_SHIELD收益"
+    rarity: EPIC
+    icon: BEACON
+    max-level: 3
+    tags: ["风暴"]
+    attributes:
+      "雷霆伤害": [4.4, 4.4]
+    effects:
+      effect_1:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 10
+        chance: 0.240
+        cooldown-seconds: 10
+        duration-seconds: 3.6
+        radius: 3.7
+        limit: 2
+        tag: "风暴"
+        per-tag: 0.56
+  exp_storm_legend:
+    name: "风暴终章·王印"
+    description: "扩展神恩：围绕风暴/狩猎构筑提供ROOM_SHARD+LOW_HEALTH_SHIELD收益"
+    rarity: LEGENDARY
+    icon: NETHER_STAR
+    max-level: 4
+    tags: ["风暴", "狩猎"]
+    attributes:
+      "雷霆伤害": [6.6, 6.6]
+      "攻击速度": [4.0, 4.0]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 9
+        tag: "风暴"
+        per-tag: 0.70
+      effect_2:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 12
+        threshold: 36
+        cooldown-seconds: 21
+        tag: "狩猎"
+        per-tag: 0.47
+  exp_frost_first:
+    name: "霜寒初印·霜刻"
+    description: "扩展神恩：围绕霜寒构筑提供EXECUTE收益"
+    rarity: COMMON
+    icon: PACKED_ICE
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "冰霜伤害": [2.4, 2.4]
+    effects:
+      effect_1:
+        type: EXECUTE
+        value-per-level: 7
+        threshold: 29
+        tag: "霜寒"
+        per-tag: 0.28
+  exp_frost_room:
+    name: "霜寒回廊·余响"
+    description: "扩展神恩：围绕霜寒构筑提供ROOM_SHARD收益"
+    rarity: COMMON
+    icon: EXPERIENCE_BOTTLE
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "减速抗性": [2.5, 2.5]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 7
+        tag: "霜寒"
+        per-tag: 0.40
+  exp_frost_kill:
+    name: "霜寒连携·疾势"
+    description: "扩展神恩：围绕霜寒/壁垒构筑提供KILL_HEAL收益"
+    rarity: RARE
+    icon: FEATHER
+    max-level: 3
+    tags: ["霜寒", "壁垒"]
+    effects:
+      effect_1:
+        type: KILL_HEAL
+        value-per-level: 8
+        duration-seconds: 3.3
+        tag: "霜寒"
+        per-tag: 0.55
+  exp_frost_bridge:
+    name: "霜寒桥契·壁垒"
+    description: "扩展神恩：围绕霜寒/壁垒构筑提供ROOM_UPGRADE_RANDOM收益"
+    rarity: RARE
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["霜寒", "壁垒"]
+    attributes:
+      "冰霜伤害": [3.3, 3.3]
+      "减速抗性": [2.2, 2.2]
+    effects:
+      effect_1:
+        type: ROOM_UPGRADE_RANDOM
+        value-per-level: 9
+        chance: 0.130
+        tag: "壁垒"
+        per-tag: 0.22
+  exp_frost_engine:
+    name: "霜寒引擎·律动"
+    description: "扩展神恩：围绕霜寒构筑提供CHAIN_DAMAGE收益"
+    rarity: EPIC
+    icon: BEACON
+    max-level: 3
+    tags: ["霜寒"]
+    attributes:
+      "冰霜伤害": [4.8, 4.8]
+    effects:
+      effect_1:
+        type: CHAIN_DAMAGE
+        value-per-level: 11
+        chance: 0.255
+        cooldown-seconds: 11
+        duration-seconds: 3.8
+        radius: 3.8
+        limit: 3
+        tag: "霜寒"
+        per-tag: 0.60
+  exp_frost_legend:
+    name: "霜寒终章·王印"
+    description: "扩展神恩：围绕霜寒/壁垒构筑提供ROOM_SHARD+LOW_HEALTH_SHIELD收益"
+    rarity: LEGENDARY
+    icon: NETHER_STAR
+    max-level: 4
+    tags: ["霜寒", "壁垒"]
+    attributes:
+      "冰霜伤害": [7.0, 7.0]
+      "减速抗性": [4.3, 4.3]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 10
+        tag: "霜寒"
+        per-tag: 0.75
+      effect_2:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 13
+        threshold: 37
+        cooldown-seconds: 22
+        tag: "壁垒"
+        per-tag: 0.50
+  exp_abyss_first:
+    name: "深渊初印·凝视"
+    description: "扩展神恩：围绕深渊构筑提供EXECUTE收益"
+    rarity: COMMON
+    icon: CRYING_OBSIDIAN
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "深渊伤害": [2.6, 2.6]
+    effects:
+      effect_1:
+        type: EXECUTE
+        value-per-level: 8
+        threshold: 30
+        tag: "深渊"
+        per-tag: 0.30
+  exp_abyss_room:
+    name: "深渊回廊·余响"
+    description: "扩展神恩：围绕深渊构筑提供ROOM_HEAL收益"
+    rarity: COMMON
+    icon: EXPERIENCE_BOTTLE
+    max-level: 3
+    tags: ["深渊"]
+    attributes:
+      "暴击伤害": [2.8, 2.8]
+    effects:
+      effect_1:
+        type: ROOM_HEAL
+        value-per-level: 8
+        tag: "深渊"
+        per-tag: 0.43
+  exp_abyss_kill:
+    name: "深渊连携·疾势"
+    description: "扩展神恩：围绕深渊/鲜血构筑提供KILL_SHARD收益"
+    rarity: RARE
+    icon: FEATHER
+    max-level: 3
+    tags: ["深渊", "鲜血"]
+    effects:
+      effect_1:
+        type: KILL_SHARD
+        value-per-level: 9
+        duration-seconds: 3.5
+        tag: "深渊"
+        per-tag: 0.59
+  exp_abyss_bridge:
+    name: "深渊桥契·鲜血"
+    description: "扩展神恩：围绕深渊/鲜血构筑提供ROOM_UPGRADE_RANDOM收益"
+    rarity: RARE
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["深渊", "鲜血"]
+    attributes:
       "深渊伤害": [3.5, 3.5]
-  blood_011:
-    name: "剜心誓言"
-    description: "鲜血共鸣强化：暴击伤害与治疗加成随神恩等级成长"
-    rarity: RARE
-    icon: NETHER_STAR
-    max-level: 3
-    tags: ["鲜血"]
-    attributes:
-      "暴击伤害": [8.0, 8.0]
-      "治疗加成": [3.8, 3.8]
-  blood_012:
-    name: "血荆缠绕"
-    description: "鲜血共鸣在击杀后抽回血气"
-    rarity: RARE
-    icon: TOTEM_OF_UNDYING
-    max-level: 3
-    tags: ["鲜血"]
+      "暴击伤害": [2.4, 2.4]
     effects:
-      effect_12:
-        type: KILL_HEAL
-        value-per-level: 14.6
-        threshold: 45.0
+      effect_1:
+        type: ROOM_UPGRADE_RANDOM
+        value-per-level: 10
+        chance: 0.140
         tag: "鲜血"
-        per-tag: 0.8
-  blood_013:
-    name: "猩红盛宴"
-    description: "鲜血共鸣强化：深渊伤害与破甲随神恩等级成长"
-    rarity: RARE
-    icon: ECHO_SHARD
+        per-tag: 0.24
+  exp_abyss_engine:
+    name: "深渊引擎·律动"
+    description: "扩展神恩：围绕深渊构筑提供LOW_HEALTH_SHIELD收益"
+    rarity: EPIC
+    icon: BEACON
     max-level: 3
-    tags: ["鲜血"]
+    tags: ["深渊"]
     attributes:
-      "深渊伤害": [8.9, 8.9]
-      "破甲": [4.3, 4.3]
-  blood_014:
-    name: "残躯复燃"
-    description: "鲜血共鸣强化：治疗加成与生命偷取随神恩等级成长"
-    rarity: RARE
-    icon: IRON_SWORD
-    max-level: 3
-    tags: ["鲜血"]
-    attributes:
-      "治疗加成": [9.3, 9.3]
-      "生命偷取": [4.5, 4.5]
-  blood_015:
-    name: "鲜血阶梯"
-    description: "鲜血共鸣强化：首领伤害与物理攻击随神恩等级成长"
-    rarity: RARE
-    icon: DIAMOND_SWORD
-    max-level: 3
-    tags: ["鲜血"]
-    attributes:
-      "首领伤害": [9.8, 9.8]
-      "物理攻击": [4.8, 4.8]
-  blood_016:
-    name: "赤脉王令"
-    description: "鲜血共鸣在受击后反刺敌人"
-    rarity: RARE
-    icon: FEATHER
-    max-level: 4
-    tags: ["鲜血"]
+      "深渊伤害": [5.1, 5.1]
     effects:
-      effect_16:
-        type: RETALIATE
-        value-per-level: 18.2
-        threshold: 40.0
+      effect_1:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 12
+        chance: 0.270
+        cooldown-seconds: 12
+        duration-seconds: 4.0
+        radius: 4.0
+        limit: 4
+        tag: "深渊"
+        per-tag: 0.64
+  exp_abyss_legend:
+    name: "深渊终章·王印"
+    description: "扩展神恩：围绕深渊/鲜血构筑提供ROOM_SHARD+LOW_HEALTH_SHIELD收益"
+    rarity: LEGENDARY
+    icon: NETHER_STAR
+    max-level: 4
+    tags: ["深渊", "鲜血"]
+    attributes:
+      "深渊伤害": [7.4, 7.4]
+      "暴击伤害": [4.5, 4.5]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 11
+        tag: "深渊"
+        per-tag: 0.80
+      effect_2:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 14
+        threshold: 38
+        cooldown-seconds: 23
         tag: "鲜血"
-        per-tag: 2.2
-  blood_017:
-    name: "血誓回响"
-    description: "鲜血共鸣强化：生命偷取与生命恢复随神恩等级成长"
-    rarity: RARE
-    icon: SPIDER_EYE
-    max-level: 3
-    tags: ["鲜血"]
-    attributes:
-      "生命偷取": [10.7, 10.7]
-      "生命恢复": [5.3, 5.3]
-  blood_018:
-    name: "创口赐福"
-    description: "鲜血共鸣强化：物理攻击与深渊伤害随神恩等级成长"
-    rarity: EPIC
-    icon: GOLDEN_APPLE
-    max-level: 3
-    tags: ["鲜血"]
-    attributes:
-      "物理攻击": [11.1, 11.1]
-      "深渊伤害": [5.5, 5.5]
-  blood_019:
-    name: "红海航标"
-    description: "鲜血共鸣强化：暴击伤害与治疗加成随神恩等级成长"
-    rarity: EPIC
-    icon: IRON_CHESTPLATE
-    max-level: 3
-    tags: ["鲜血"]
-    attributes:
-      "暴击伤害": [11.6, 11.6]
-      "治疗加成": [5.8, 5.8]
-  blood_020:
-    name: "噬心余香"
-    description: "鲜血共鸣在清理房间后修复伤势"
-    rarity: EPIC
-    icon: ENDER_PEARL
-    max-level: 3
-    tags: ["鲜血", "雷霆"]
-    effects:
-      effect_20:
-        type: ROOM_HEAL
-        value-per-level: 21.8
-        threshold: 35.0
-        tag: "鲜血"
-        per-tag: 1.5
-  blood_021:
-    name: "血色终章"
-    description: "鲜血共鸣强化：深渊伤害与破甲随神恩等级成长"
-    rarity: EPIC
-    icon: REDSTONE
-    max-level: 3
-    tags: ["鲜血"]
-    attributes:
-      "深渊伤害": [12.5, 12.5]
-      "破甲": [6.3, 6.3]
-  blood_022:
-    name: "心火复苏"
-    description: "鲜血共鸣强化：治疗加成与生命偷取随神恩等级成长"
-    rarity: EPIC
-    icon: SHIELD
-    max-level: 3
-    tags: ["鲜血"]
-    attributes:
-      "治疗加成": [12.9, 12.9]
-      "生命偷取": [6.5, 6.5]
-  blood_023:
-    name: "猩红冠冕"
-    description: "鲜血共鸣强化：首领伤害与物理攻击随神恩等级成长"
-    rarity: EPIC
-    icon: GHAST_TEAR
-    max-level: 3
-    tags: ["鲜血"]
-    attributes:
-      "首领伤害": [13.3, 13.3]
-      "物理攻击": [6.8, 6.8]
-  blood_024:
-    name: "破灭宴飨"
-    description: "鲜血共鸣会在敌人虚弱时追加终结伤害"
-    rarity: LEGENDARY
-    icon: RABBIT_FOOT
-    max-level: 5
-    tags: ["鲜血"]
-    effects:
-      effect_24:
-        type: EXECUTE
-        value-per-level: 25.4
-        threshold: 55.0
-        tag: "鲜血"
-        per-tag: 0.8
-  blood_025:
-    name: "万血归池"
-    description: "鲜血共鸣强化：生命偷取与生命恢复随神恩等级成长"
-    rarity: LEGENDARY
-    icon: FIRE_CHARGE
-    max-level: 4
-    tags: ["鲜血"]
-    attributes:
-      "生命偷取": [14.3, 14.3]
-      "生命恢复": [7.3, 7.3]
-  # ===== 雷霆系 =====
-  thunder_001:
-    name: "雷矛初鸣"
-    description: "雷霆共鸣强化：雷霆伤害与暴击几率随神恩等级成长"
-    rarity: COMMON
-    icon: RABBIT_FOOT
-    max-level: 3
-    tags: ["雷霆"]
-    attributes:
-      "雷霆伤害": [4.0, 4.0]
-      "暴击几率": [1.3, 1.3]
-  thunder_002:
-    name: "电弧跃迁"
-    description: "雷霆共鸣强化：攻击速度与暴击伤害随神恩等级成长"
-    rarity: COMMON
-    icon: FIRE_CHARGE
-    max-level: 3
-    tags: ["雷霆"]
-    attributes:
-      "攻击速度": [4.4, 4.4]
-      "暴击伤害": [1.5, 1.5]
-  thunder_003:
-    name: "风暴之踵"
-    description: "雷霆共鸣强化：移动速度与冷却缩减随神恩等级成长"
-    rarity: COMMON
-    icon: BLAZE_POWDER
-    max-level: 3
-    tags: ["雷霆"]
-    attributes:
-      "移动速度": [4.8, 4.8]
-      "冷却缩减": [1.8, 1.8]
-  thunder_004:
-    name: "云裂鼓点"
-    description: "雷霆共鸣会在敌人虚弱时追加终结伤害"
-    rarity: COMMON
-    icon: AMETHYST_SHARD
-    max-level: 3
-    tags: ["雷霆"]
-    effects:
-      effect_04:
-        type: EXECUTE
-        value-per-level: 7.8
-        threshold: 55.0
-        tag: "雷霆"
-        per-tag: 2.2
-  thunder_005:
-    name: "霆光断刃"
-    description: "雷霆共鸣强化：暴击伤害与破甲随神恩等级成长"
-    rarity: COMMON
-    icon: PACKED_ICE
-    max-level: 3
-    tags: ["雷霆"]
-    attributes:
-      "暴击伤害": [5.8, 5.8]
-      "破甲": [2.3, 2.3]
-  thunder_006:
-    name: "静电王冠"
-    description: "雷霆共鸣强化：冷却缩减与雷霆伤害随神恩等级成长"
-    rarity: COMMON
-    icon: CRYING_OBSIDIAN
-    max-level: 3
-    tags: ["雷霆"]
-    attributes:
-      "冷却缩减": [6.2, 6.2]
-      "雷霆伤害": [2.5, 2.5]
-  thunder_007:
-    name: "雷鹰俯冲"
-    description: "雷霆共鸣强化：技能伤害与攻击速度随神恩等级成长"
-    rarity: COMMON
-    icon: BEACON
-    max-level: 3
-    tags: ["雷霆"]
-    attributes:
-      "技能伤害": [6.7, 6.7]
-      "攻击速度": [2.8, 2.8]
-  thunder_008:
-    name: "暴雨连锁"
-    description: "雷霆共鸣在击杀后抽回血气"
-    rarity: COMMON
-    icon: NETHER_STAR
-    max-level: 4
-    tags: ["雷霆"]
-    effects:
-      effect_08:
-        type: KILL_HEAL
-        value-per-level: 11.4
-        threshold: 50.0
-        tag: "雷霆"
-        per-tag: 1.5
-  thunder_009:
-    name: "震荡脉冲"
-    description: "雷霆共鸣强化：雷霆伤害与暴击几率随神恩等级成长"
+        per-tag: 0.53
+  exp_holy_first:
+    name: "圣辉初印·祈耀"
+    description: "扩展神恩：围绕圣辉构筑提供EXECUTE收益"
     rarity: COMMON
     icon: TOTEM_OF_UNDYING
     max-level: 3
-    tags: ["雷霆"]
-    attributes:
-      "雷霆伤害": [7.5, 7.5]
-      "暴击几率": [3.3, 3.3]
-  thunder_010:
-    name: "银蛇缠腕"
-    description: "雷霆共鸣强化：攻击速度与暴击伤害随神恩等级成长"
-    rarity: RARE
-    icon: ECHO_SHARD
-    max-level: 3
-    tags: ["雷霆", "秘术"]
-    attributes:
-      "攻击速度": [8.0, 8.0]
-      "暴击伤害": [3.5, 3.5]
-  thunder_011:
-    name: "天罚预兆"
-    description: "雷霆共鸣强化：移动速度与冷却缩减随神恩等级成长"
-    rarity: RARE
-    icon: IRON_SWORD
-    max-level: 3
-    tags: ["雷霆"]
-    attributes:
-      "移动速度": [8.4, 8.4]
-      "冷却缩减": [3.8, 3.8]
-  thunder_012:
-    name: "疾雷刻印"
-    description: "雷霆共鸣在受击后反刺敌人"
-    rarity: RARE
-    icon: DIAMOND_SWORD
-    max-level: 3
-    tags: ["雷霆"]
-    effects:
-      effect_12:
-        type: RETALIATE
-        value-per-level: 15.0
-        threshold: 45.0
-        tag: "雷霆"
-        per-tag: 0.8
-  thunder_013:
-    name: "鸣雷步法"
-    description: "雷霆共鸣强化：暴击伤害与破甲随神恩等级成长"
-    rarity: RARE
-    icon: FEATHER
-    max-level: 3
-    tags: ["雷霆"]
-    attributes:
-      "暴击伤害": [9.4, 9.4]
-      "破甲": [4.3, 4.3]
-  thunder_014:
-    name: "闪电审判"
-    description: "雷霆共鸣强化：冷却缩减与雷霆伤害随神恩等级成长"
-    rarity: RARE
-    icon: SPIDER_EYE
-    max-level: 3
-    tags: ["雷霆"]
-    attributes:
-      "冷却缩减": [9.8, 9.8]
-      "雷霆伤害": [4.5, 4.5]
-  thunder_015:
-    name: "云端怒号"
-    description: "雷霆共鸣强化：技能伤害与攻击速度随神恩等级成长"
-    rarity: RARE
-    icon: GOLDEN_APPLE
-    max-level: 3
-    tags: ["雷霆"]
-    attributes:
-      "技能伤害": [10.3, 10.3]
-      "攻击速度": [4.8, 4.8]
-  thunder_016:
-    name: "雷车破阵"
-    description: "雷霆共鸣在清理房间后修复伤势"
-    rarity: RARE
-    icon: IRON_CHESTPLATE
-    max-level: 4
-    tags: ["雷霆"]
-    effects:
-      effect_16:
-        type: ROOM_HEAL
-        value-per-level: 18.6
-        threshold: 40.0
-        tag: "雷霆"
-        per-tag: 2.2
-  thunder_017:
-    name: "风暴脊骨"
-    description: "雷霆共鸣强化：雷霆伤害与暴击几率随神恩等级成长"
-    rarity: RARE
-    icon: ENDER_PEARL
-    max-level: 3
-    tags: ["雷霆"]
-    attributes:
-      "雷霆伤害": [11.2, 11.2]
-      "暴击几率": [5.3, 5.3]
-  thunder_018:
-    name: "电痕重燃"
-    description: "雷霆共鸣强化：攻击速度与暴击伤害随神恩等级成长"
-    rarity: EPIC
-    icon: REDSTONE
-    max-level: 3
-    tags: ["雷霆"]
-    attributes:
-      "攻击速度": [11.6, 11.6]
-      "暴击伤害": [5.5, 5.5]
-  thunder_019:
-    name: "雷火同心"
-    description: "雷霆共鸣强化：移动速度与冷却缩减随神恩等级成长"
-    rarity: EPIC
-    icon: SHIELD
-    max-level: 3
-    tags: ["雷霆"]
-    attributes:
-      "移动速度": [12.1, 12.1]
-      "冷却缩减": [5.8, 5.8]
-  thunder_020:
-    name: "高塔落雷"
-    description: "雷霆共鸣会在敌人虚弱时追加终结伤害"
-    rarity: EPIC
-    icon: GHAST_TEAR
-    max-level: 3
-    tags: ["雷霆", "秘术"]
-    effects:
-      effect_20:
-        type: EXECUTE
-        value-per-level: 22.2
-        threshold: 35.0
-        tag: "雷霆"
-        per-tag: 1.5
-  thunder_021:
-    name: "雷暴合奏"
-    description: "雷霆共鸣强化：暴击伤害与破甲随神恩等级成长"
-    rarity: EPIC
-    icon: RABBIT_FOOT
-    max-level: 3
-    tags: ["雷霆"]
-    attributes:
-      "暴击伤害": [13.0, 13.0]
-      "破甲": [6.3, 6.3]
-  thunder_022:
-    name: "苍穹短歌"
-    description: "雷霆共鸣强化：冷却缩减与雷霆伤害随神恩等级成长"
-    rarity: EPIC
-    icon: FIRE_CHARGE
-    max-level: 3
-    tags: ["雷霆"]
-    attributes:
-      "冷却缩减": [13.4, 13.4]
-      "雷霆伤害": [6.5, 6.5]
-  thunder_023:
-    name: "万钧引线"
-    description: "雷霆共鸣强化：技能伤害与攻击速度随神恩等级成长"
-    rarity: EPIC
-    icon: BLAZE_POWDER
-    max-level: 3
-    tags: ["雷霆"]
-    attributes:
-      "技能伤害": [13.8, 13.8]
-      "攻击速度": [6.8, 6.8]
-  thunder_024:
-    name: "天幕击穿"
-    description: "雷霆共鸣在击杀后抽回血气"
-    rarity: LEGENDARY
-    icon: AMETHYST_SHARD
-    max-level: 5
-    tags: ["雷霆"]
-    effects:
-      effect_24:
-        type: KILL_HEAL
-        value-per-level: 25.8
-        threshold: 55.0
-        tag: "雷霆"
-        per-tag: 0.8
-  thunder_025:
-    name: "诸雷归心"
-    description: "雷霆共鸣强化：雷霆伤害与暴击几率随神恩等级成长"
-    rarity: LEGENDARY
-    icon: PACKED_ICE
-    max-level: 4
-    tags: ["雷霆"]
-    attributes:
-      "雷霆伤害": [14.8, 14.8]
-      "暴击几率": [7.3, 7.3]
-  # ===== 秘术系 =====
-  arcane_001:
-    name: "星盘推演"
-    description: "秘术共鸣强化：技能伤害与幸运随神恩等级成长"
-    rarity: COMMON
-    icon: AMETHYST_SHARD
-    max-level: 3
-    tags: ["秘术"]
-    attributes:
-      "技能伤害": [4.5, 4.5]
-      "幸运": [1.3, 1.3]
-  arcane_002:
-    name: "秘文回路"
-    description: "秘术共鸣强化：元素伤害与暴击几率随神恩等级成长"
-    rarity: COMMON
-    icon: PACKED_ICE
-    max-level: 3
-    tags: ["秘术"]
-    attributes:
-      "元素伤害": [4.9, 4.9]
-      "暴击几率": [1.5, 1.5]
-  arcane_003:
-    name: "银钥咒印"
-    description: "秘术共鸣强化：冷却缩减与暴击伤害随神恩等级成长"
-    rarity: COMMON
-    icon: CRYING_OBSIDIAN
-    max-level: 3
-    tags: ["秘术"]
-    attributes:
-      "冷却缩减": [5.3, 5.3]
-      "暴击伤害": [1.8, 1.8]
-  arcane_004:
-    name: "奥术潮汐"
-    description: "秘术共鸣在击杀后抽回血气"
-    rarity: COMMON
-    icon: BEACON
-    max-level: 3
-    tags: ["秘术"]
-    effects:
-      effect_04:
-        type: KILL_HEAL
-        value-per-level: 8.2
-        threshold: 55.0
-        tag: "秘术"
-        per-tag: 2.2
-  arcane_005:
-    name: "折光符阵"
-    description: "秘术共鸣强化：暴击几率与治疗加成随神恩等级成长"
-    rarity: COMMON
-    icon: NETHER_STAR
-    max-level: 3
-    tags: ["秘术"]
-    attributes:
-      "暴击几率": [6.3, 6.3]
-      "治疗加成": [2.3, 2.3]
-  arcane_006:
-    name: "灵核演算"
-    description: "秘术共鸣强化：暴击伤害与技能伤害随神恩等级成长"
-    rarity: COMMON
-    icon: TOTEM_OF_UNDYING
-    max-level: 3
-    tags: ["秘术"]
-    attributes:
-      "暴击伤害": [6.7, 6.7]
-      "技能伤害": [2.5, 2.5]
-  arcane_007:
-    name: "远星低语"
-    description: "秘术共鸣强化：物理攻击与元素伤害随神恩等级成长"
-    rarity: COMMON
-    icon: ECHO_SHARD
-    max-level: 3
-    tags: ["秘术"]
-    attributes:
-      "物理攻击": [7.2, 7.2]
-      "元素伤害": [2.8, 2.8]
-  arcane_008:
-    name: "蓝火书页"
-    description: "秘术共鸣在受击后反刺敌人"
-    rarity: COMMON
-    icon: IRON_SWORD
-    max-level: 4
-    tags: ["秘术"]
-    effects:
-      effect_08:
-        type: RETALIATE
-        value-per-level: 11.8
-        threshold: 50.0
-        tag: "秘术"
-        per-tag: 1.5
-  arcane_009:
-    name: "穹顶公式"
-    description: "秘术共鸣强化：技能伤害与幸运随神恩等级成长"
-    rarity: COMMON
-    icon: DIAMOND_SWORD
-    max-level: 3
-    tags: ["秘术"]
-    attributes:
-      "技能伤害": [8.1, 8.1]
-      "幸运": [3.3, 3.3]
-  arcane_010:
-    name: "符文学派"
-    description: "秘术共鸣强化：元素伤害与暴击几率随神恩等级成长"
-    rarity: RARE
-    icon: FEATHER
-    max-level: 3
-    tags: ["秘术", "霜寒"]
-    attributes:
-      "元素伤害": [8.5, 8.5]
-      "暴击几率": [3.5, 3.5]
-  arcane_011:
-    name: "魔网裂隙"
-    description: "秘术共鸣强化：冷却缩减与暴击伤害随神恩等级成长"
-    rarity: RARE
-    icon: SPIDER_EYE
-    max-level: 3
-    tags: ["秘术"]
-    attributes:
-      "冷却缩减": [8.9, 8.9]
-      "暴击伤害": [3.8, 3.8]
-  arcane_012:
-    name: "灵视棱镜"
-    description: "秘术共鸣在清理房间后修复伤势"
-    rarity: RARE
-    icon: GOLDEN_APPLE
-    max-level: 3
-    tags: ["秘术"]
-    effects:
-      effect_12:
-        type: ROOM_HEAL
-        value-per-level: 15.4
-        threshold: 45.0
-        tag: "秘术"
-        per-tag: 0.8
-  arcane_013:
-    name: "秘仪钟摆"
-    description: "秘术共鸣强化：暴击几率与治疗加成随神恩等级成长"
-    rarity: RARE
-    icon: IRON_CHESTPLATE
-    max-level: 3
-    tags: ["秘术"]
-    attributes:
-      "暴击几率": [9.9, 9.9]
-      "治疗加成": [4.3, 4.3]
-  arcane_014:
-    name: "无垠抄本"
-    description: "秘术共鸣强化：暴击伤害与技能伤害随神恩等级成长"
-    rarity: RARE
-    icon: ENDER_PEARL
-    max-level: 3
-    tags: ["秘术"]
-    attributes:
-      "暴击伤害": [10.3, 10.3]
-      "技能伤害": [4.5, 4.5]
-  arcane_015:
-    name: "星尘咏唱"
-    description: "秘术共鸣强化：物理攻击与元素伤害随神恩等级成长"
-    rarity: RARE
-    icon: REDSTONE
-    max-level: 3
-    tags: ["秘术"]
-    attributes:
-      "物理攻击": [10.8, 10.8]
-      "元素伤害": [4.8, 4.8]
-  arcane_016:
-    name: "回环法印"
-    description: "秘术共鸣会在敌人虚弱时追加终结伤害"
-    rarity: RARE
-    icon: SHIELD
-    max-level: 4
-    tags: ["秘术"]
-    effects:
-      effect_16:
-        type: EXECUTE
-        value-per-level: 19.0
-        threshold: 40.0
-        tag: "秘术"
-        per-tag: 2.2
-  arcane_017:
-    name: "灵能泉涌"
-    description: "秘术共鸣强化：技能伤害与幸运随神恩等级成长"
-    rarity: RARE
-    icon: GHAST_TEAR
-    max-level: 3
-    tags: ["秘术"]
-    attributes:
-      "技能伤害": [11.7, 11.7]
-      "幸运": [5.3, 5.3]
-  arcane_018:
-    name: "咒式叠代"
-    description: "秘术共鸣强化：元素伤害与暴击几率随神恩等级成长"
-    rarity: EPIC
-    icon: RABBIT_FOOT
-    max-level: 3
-    tags: ["秘术"]
-    attributes:
-      "元素伤害": [12.1, 12.1]
-      "暴击几率": [5.5, 5.5]
-  arcane_019:
-    name: "古卷余辉"
-    description: "秘术共鸣强化：冷却缩减与暴击伤害随神恩等级成长"
-    rarity: EPIC
-    icon: FIRE_CHARGE
-    max-level: 3
-    tags: ["秘术"]
-    attributes:
-      "冷却缩减": [12.6, 12.6]
-      "暴击伤害": [5.8, 5.8]
-  arcane_020:
-    name: "虚数星图"
-    description: "秘术共鸣在击杀后抽回血气"
-    rarity: EPIC
-    icon: BLAZE_POWDER
-    max-level: 3
-    tags: ["秘术", "霜寒"]
-    effects:
-      effect_20:
-        type: KILL_HEAL
-        value-per-level: 22.6
-        threshold: 35.0
-        tag: "秘术"
-        per-tag: 1.5
-  arcane_021:
-    name: "秘术共鸣"
-    description: "秘术共鸣强化：暴击几率与治疗加成随神恩等级成长"
-    rarity: EPIC
-    icon: AMETHYST_SHARD
-    max-level: 3
-    tags: ["秘术"]
-    attributes:
-      "暴击几率": [13.5, 13.5]
-      "治疗加成": [6.3, 6.3]
-  arcane_022:
-    name: "万象译本"
-    description: "秘术共鸣强化：暴击伤害与技能伤害随神恩等级成长"
-    rarity: EPIC
-    icon: PACKED_ICE
-    max-level: 3
-    tags: ["秘术"]
-    attributes:
-      "暴击伤害": [13.9, 13.9]
-      "技能伤害": [6.5, 6.5]
-  arcane_023:
-    name: "终式法环"
-    description: "秘术共鸣强化：物理攻击与元素伤害随神恩等级成长"
-    rarity: EPIC
-    icon: CRYING_OBSIDIAN
-    max-level: 3
-    tags: ["秘术"]
-    attributes:
-      "物理攻击": [14.3, 14.3]
-      "元素伤害": [6.8, 6.8]
-  arcane_024:
-    name: "源点刻录"
-    description: "秘术共鸣在受击后反刺敌人"
-    rarity: LEGENDARY
-    icon: BEACON
-    max-level: 5
-    tags: ["秘术"]
-    effects:
-      effect_24:
-        type: RETALIATE
-        value-per-level: 26.2
-        threshold: 55.0
-        tag: "秘术"
-        per-tag: 0.8
-  arcane_025:
-    name: "群星归档"
-    description: "秘术共鸣强化：技能伤害与幸运随神恩等级成长"
-    rarity: LEGENDARY
-    icon: NETHER_STAR
-    max-level: 4
-    tags: ["秘术"]
-    attributes:
-      "技能伤害": [15.3, 15.3]
-      "幸运": [7.3, 7.3]
-  # ===== 霜寒系 =====
-  frost_001:
-    name: "霜枝轻触"
-    description: "霜寒共鸣强化：冰霜伤害与生命上限随神恩等级成长"
-    rarity: COMMON
-    icon: BEACON
-    max-level: 3
-    tags: ["霜寒"]
-    attributes:
-      "冰霜伤害": [5.0, 5.0]
-      "生命上限": [1.3, 1.3]
-  frost_002:
-    name: "白霜护符"
-    description: "霜寒共鸣强化：物理防御与闪避几率随神恩等级成长"
-    rarity: COMMON
-    icon: NETHER_STAR
-    max-level: 3
-    tags: ["霜寒"]
-    attributes:
-      "物理防御": [5.4, 5.4]
-      "闪避几率": [1.5, 1.5]
-  frost_003:
-    name: "冰镜步伐"
-    description: "霜寒共鸣强化：减伤比例与护盾强度随神恩等级成长"
-    rarity: COMMON
-    icon: TOTEM_OF_UNDYING
-    max-level: 3
-    tags: ["霜寒"]
-    attributes:
-      "减伤比例": [5.8, 5.8]
-      "护盾强度": [1.8, 1.8]
-  frost_004:
-    name: "雪线壁障"
-    description: "霜寒共鸣在受击后反刺敌人"
-    rarity: COMMON
-    icon: ECHO_SHARD
-    max-level: 3
-    tags: ["霜寒"]
-    effects:
-      effect_04:
-        type: RETALIATE
-        value-per-level: 8.6
-        threshold: 55.0
-        tag: "霜寒"
-        per-tag: 2.2
-  frost_005:
-    name: "寒潮脉络"
-    description: "霜寒共鸣强化：闪避几率与元素伤害随神恩等级成长"
-    rarity: COMMON
-    icon: IRON_SWORD
-    max-level: 3
-    tags: ["霜寒"]
-    attributes:
-      "闪避几率": [6.8, 6.8]
-      "元素伤害": [2.3, 2.3]
-  frost_006:
-    name: "冻土誓言"
-    description: "霜寒共鸣强化：护盾强度与冰霜伤害随神恩等级成长"
-    rarity: COMMON
-    icon: DIAMOND_SWORD
-    max-level: 3
-    tags: ["霜寒"]
-    attributes:
-      "护盾强度": [7.2, 7.2]
-      "冰霜伤害": [2.5, 2.5]
-  frost_007:
-    name: "冰棘王冠"
-    description: "霜寒共鸣强化：生命恢复与物理防御随神恩等级成长"
-    rarity: COMMON
-    icon: FEATHER
-    max-level: 3
-    tags: ["霜寒"]
-    attributes:
-      "生命恢复": [7.7, 7.7]
-      "物理防御": [2.8, 2.8]
-  frost_008:
-    name: "凛冬吐息"
-    description: "霜寒共鸣在清理房间后修复伤势"
-    rarity: COMMON
-    icon: SPIDER_EYE
-    max-level: 4
-    tags: ["霜寒"]
-    effects:
-      effect_08:
-        type: ROOM_HEAL
-        value-per-level: 12.2
-        threshold: 50.0
-        tag: "霜寒"
-        per-tag: 1.5
-  frost_009:
-    name: "霜狼守望"
-    description: "霜寒共鸣强化：冰霜伤害与生命上限随神恩等级成长"
-    rarity: COMMON
-    icon: GOLDEN_APPLE
-    max-level: 3
-    tags: ["霜寒"]
-    attributes:
-      "冰霜伤害": [8.6, 8.6]
-      "生命上限": [3.3, 3.3]
-  frost_010:
-    name: "雪盲回廊"
-    description: "霜寒共鸣强化：物理防御与闪避几率随神恩等级成长"
-    rarity: RARE
-    icon: IRON_CHESTPLATE
-    max-level: 3
-    tags: ["霜寒", "深渊"]
-    attributes:
-      "物理防御": [9.0, 9.0]
-      "闪避几率": [3.5, 3.5]
-  frost_011:
-    name: "冻星火花"
-    description: "霜寒共鸣强化：减伤比例与护盾强度随神恩等级成长"
-    rarity: RARE
-    icon: ENDER_PEARL
-    max-level: 3
-    tags: ["霜寒"]
-    attributes:
-      "减伤比例": [9.4, 9.4]
-      "护盾强度": [3.8, 3.8]
-  frost_012:
-    name: "寒铁心室"
-    description: "霜寒共鸣会在敌人虚弱时追加终结伤害"
-    rarity: RARE
-    icon: REDSTONE
-    max-level: 3
-    tags: ["霜寒"]
-    effects:
-      effect_12:
-        type: EXECUTE
-        value-per-level: 15.8
-        threshold: 45.0
-        tag: "霜寒"
-        per-tag: 0.8
-  frost_013:
-    name: "冰河低语"
-    description: "霜寒共鸣强化：闪避几率与元素伤害随神恩等级成长"
-    rarity: RARE
-    icon: SHIELD
-    max-level: 3
-    tags: ["霜寒"]
-    attributes:
-      "闪避几率": [10.4, 10.4]
-      "元素伤害": [4.3, 4.3]
-  frost_014:
-    name: "霜幕垂落"
-    description: "霜寒共鸣强化：护盾强度与冰霜伤害随神恩等级成长"
-    rarity: RARE
-    icon: GHAST_TEAR
-    max-level: 3
-    tags: ["霜寒"]
-    attributes:
-      "护盾强度": [10.8, 10.8]
-      "冰霜伤害": [4.5, 4.5]
-  frost_015:
-    name: "白夜凝霜"
-    description: "霜寒共鸣强化：生命恢复与物理防御随神恩等级成长"
-    rarity: RARE
-    icon: RABBIT_FOOT
-    max-level: 3
-    tags: ["霜寒"]
-    attributes:
-      "生命恢复": [11.3, 11.3]
-      "物理防御": [4.8, 4.8]
-  frost_016:
-    name: "极地行军"
-    description: "霜寒共鸣在击杀后抽回血气"
-    rarity: RARE
-    icon: FIRE_CHARGE
-    max-level: 4
-    tags: ["霜寒"]
-    effects:
-      effect_16:
-        type: KILL_HEAL
-        value-per-level: 19.4
-        threshold: 40.0
-        tag: "霜寒"
-        per-tag: 2.2
-  frost_017:
-    name: "冬眠秘仪"
-    description: "霜寒共鸣强化：冰霜伤害与生命上限随神恩等级成长"
-    rarity: RARE
-    icon: BLAZE_POWDER
-    max-level: 3
-    tags: ["霜寒"]
-    attributes:
-      "冰霜伤害": [12.2, 12.2]
-      "生命上限": [5.3, 5.3]
-  frost_018:
-    name: "冰封旧约"
-    description: "霜寒共鸣强化：物理防御与闪避几率随神恩等级成长"
-    rarity: EPIC
-    icon: AMETHYST_SHARD
-    max-level: 3
-    tags: ["霜寒"]
-    attributes:
-      "物理防御": [12.6, 12.6]
-      "闪避几率": [5.5, 5.5]
-  frost_019:
-    name: "霜痕回声"
-    description: "霜寒共鸣强化：减伤比例与护盾强度随神恩等级成长"
-    rarity: EPIC
-    icon: PACKED_ICE
-    max-level: 3
-    tags: ["霜寒"]
-    attributes:
-      "减伤比例": [13.1, 13.1]
-      "护盾强度": [5.8, 5.8]
-  frost_020:
-    name: "雪墓之门"
-    description: "霜寒共鸣在受击后反刺敌人"
-    rarity: EPIC
-    icon: CRYING_OBSIDIAN
-    max-level: 3
-    tags: ["霜寒", "深渊"]
-    effects:
-      effect_20:
-        type: RETALIATE
-        value-per-level: 23.0
-        threshold: 35.0
-        tag: "霜寒"
-        per-tag: 1.5
-  frost_021:
-    name: "冷月绷带"
-    description: "霜寒共鸣强化：闪避几率与元素伤害随神恩等级成长"
-    rarity: EPIC
-    icon: BEACON
-    max-level: 3
-    tags: ["霜寒"]
-    attributes:
-      "闪避几率": [14.0, 14.0]
-      "元素伤害": [6.3, 6.3]
-  frost_022:
-    name: "永冻羽衣"
-    description: "霜寒共鸣强化：护盾强度与冰霜伤害随神恩等级成长"
-    rarity: EPIC
-    icon: NETHER_STAR
-    max-level: 3
-    tags: ["霜寒"]
-    attributes:
-      "护盾强度": [14.4, 14.4]
-      "冰霜伤害": [6.5, 6.5]
-  frost_023:
-    name: "冰原终歌"
-    description: "霜寒共鸣强化：生命恢复与物理防御随神恩等级成长"
-    rarity: EPIC
-    icon: TOTEM_OF_UNDYING
-    max-level: 3
-    tags: ["霜寒"]
-    attributes:
-      "生命恢复": [14.8, 14.8]
-      "物理防御": [6.8, 6.8]
-  frost_024:
-    name: "霜王敕令"
-    description: "霜寒共鸣在清理房间后修复伤势"
-    rarity: LEGENDARY
-    icon: ECHO_SHARD
-    max-level: 5
-    tags: ["霜寒"]
-    effects:
-      effect_24:
-        type: ROOM_HEAL
-        value-per-level: 26.6
-        threshold: 55.0
-        tag: "霜寒"
-        per-tag: 0.8
-  frost_025:
-    name: "万雪归寂"
-    description: "霜寒共鸣强化：冰霜伤害与生命上限随神恩等级成长"
-    rarity: LEGENDARY
-    icon: IRON_SWORD
-    max-level: 4
-    tags: ["霜寒"]
-    attributes:
-      "冰霜伤害": [15.8, 15.8]
-      "生命上限": [7.3, 7.3]
-  # ===== 深渊系 =====
-  abyss_001:
-    name: "黑潮窥视"
-    description: "深渊共鸣强化：深渊伤害与暴击伤害随神恩等级成长"
-    rarity: COMMON
-    icon: ECHO_SHARD
-    max-level: 3
-    tags: ["深渊"]
-    attributes:
-      "深渊伤害": [5.5, 5.5]
-      "暴击伤害": [1.3, 1.3]
-  abyss_002:
-    name: "深井回音"
-    description: "深渊共鸣强化：物理攻击与首领伤害随神恩等级成长"
-    rarity: COMMON
-    icon: IRON_SWORD
-    max-level: 3
-    tags: ["深渊"]
-    attributes:
-      "物理攻击": [5.9, 5.9]
-      "首领伤害": [1.5, 1.5]
-  abyss_003:
-    name: "无光誓书"
-    description: "深渊共鸣强化：生命偷取与破甲随神恩等级成长"
-    rarity: COMMON
-    icon: DIAMOND_SWORD
-    max-level: 3
-    tags: ["深渊"]
-    attributes:
-      "生命偷取": [6.3, 6.3]
-      "破甲": [1.8, 1.8]
-  abyss_004:
-    name: "坠渊锋刃"
-    description: "深渊共鸣在清理房间后修复伤势"
-    rarity: COMMON
-    icon: FEATHER
-    max-level: 3
-    tags: ["深渊"]
-    effects:
-      effect_04:
-        type: ROOM_HEAL
-        value-per-level: 9.0
-        threshold: 55.0
-        tag: "深渊"
-        per-tag: 2.2
-  abyss_005:
-    name: "空洞凝望"
-    description: "深渊共鸣强化：首领伤害与移动速度随神恩等级成长"
-    rarity: COMMON
-    icon: SPIDER_EYE
-    max-level: 3
-    tags: ["深渊"]
-    attributes:
-      "首领伤害": [7.3, 7.3]
-      "移动速度": [2.3, 2.3]
-  abyss_006:
-    name: "暗涌契记"
-    description: "深渊共鸣强化：破甲与深渊伤害随神恩等级成长"
-    rarity: COMMON
-    icon: GOLDEN_APPLE
-    max-level: 3
-    tags: ["深渊"]
-    attributes:
-      "破甲": [7.7, 7.7]
-      "深渊伤害": [2.5, 2.5]
-  abyss_007:
-    name: "深渊脉冲"
-    description: "深渊共鸣强化：技能伤害与物理攻击随神恩等级成长"
-    rarity: COMMON
-    icon: IRON_CHESTPLATE
-    max-level: 3
-    tags: ["深渊"]
-    attributes:
-      "技能伤害": [8.2, 8.2]
-      "物理攻击": [2.8, 2.8]
-  abyss_008:
-    name: "裂界爪痕"
-    description: "深渊共鸣会在敌人虚弱时追加终结伤害"
-    rarity: COMMON
-    icon: ENDER_PEARL
-    max-level: 4
-    tags: ["深渊"]
-    effects:
-      effect_08:
-        type: EXECUTE
-        value-per-level: 12.6
-        threshold: 50.0
-        tag: "深渊"
-        per-tag: 1.5
-  abyss_009:
-    name: "虚无王冠"
-    description: "深渊共鸣强化：深渊伤害与暴击伤害随神恩等级成长"
-    rarity: COMMON
-    icon: REDSTONE
-    max-level: 3
-    tags: ["深渊"]
-    attributes:
-      "深渊伤害": [9.1, 9.1]
-      "暴击伤害": [3.3, 3.3]
-  abyss_010:
-    name: "沉底星火"
-    description: "深渊共鸣强化：物理攻击与首领伤害随神恩等级成长"
-    rarity: RARE
-    icon: SHIELD
-    max-level: 3
-    tags: ["深渊", "圣辉"]
-    attributes:
-      "物理攻击": [9.5, 9.5]
-      "首领伤害": [3.5, 3.5]
-  abyss_011:
-    name: "黑曜呓语"
-    description: "深渊共鸣强化：生命偷取与破甲随神恩等级成长"
-    rarity: RARE
-    icon: GHAST_TEAR
-    max-level: 3
-    tags: ["深渊"]
-    attributes:
-      "生命偷取": [9.9, 9.9]
-      "破甲": [3.8, 3.8]
-  abyss_012:
-    name: "暗海祷词"
-    description: "深渊共鸣在击杀后抽回血气"
-    rarity: RARE
-    icon: RABBIT_FOOT
-    max-level: 3
-    tags: ["深渊"]
-    effects:
-      effect_12:
-        type: KILL_HEAL
-        value-per-level: 16.2
-        threshold: 45.0
-        tag: "深渊"
-        per-tag: 0.8
-  abyss_013:
-    name: "渊面倒影"
-    description: "深渊共鸣强化：首领伤害与移动速度随神恩等级成长"
-    rarity: RARE
-    icon: FIRE_CHARGE
-    max-level: 3
-    tags: ["深渊"]
-    attributes:
-      "首领伤害": [10.9, 10.9]
-      "移动速度": [4.3, 4.3]
-  abyss_014:
-    name: "无底债契"
-    description: "深渊共鸣强化：破甲与深渊伤害随神恩等级成长"
-    rarity: RARE
-    icon: BLAZE_POWDER
-    max-level: 3
-    tags: ["深渊"]
-    attributes:
-      "破甲": [11.3, 11.3]
-      "深渊伤害": [4.5, 4.5]
-  abyss_015:
-    name: "空蚀花环"
-    description: "深渊共鸣强化：技能伤害与物理攻击随神恩等级成长"
-    rarity: RARE
-    icon: AMETHYST_SHARD
-    max-level: 3
-    tags: ["深渊"]
-    attributes:
-      "技能伤害": [11.8, 11.8]
-      "物理攻击": [4.8, 4.8]
-  abyss_016:
-    name: "深梦枷锁"
-    description: "深渊共鸣在受击后反刺敌人"
-    rarity: RARE
-    icon: PACKED_ICE
-    max-level: 4
-    tags: ["深渊"]
-    effects:
-      effect_16:
-        type: RETALIATE
-        value-per-level: 19.8
-        threshold: 40.0
-        tag: "深渊"
-        per-tag: 2.2
-  abyss_017:
-    name: "黑月沉降"
-    description: "深渊共鸣强化：深渊伤害与暴击伤害随神恩等级成长"
-    rarity: RARE
-    icon: CRYING_OBSIDIAN
-    max-level: 3
-    tags: ["深渊"]
-    attributes:
-      "深渊伤害": [12.7, 12.7]
-      "暴击伤害": [5.3, 5.3]
-  abyss_018:
-    name: "虚空鲸歌"
-    description: "深渊共鸣强化：物理攻击与首领伤害随神恩等级成长"
-    rarity: EPIC
-    icon: BEACON
-    max-level: 3
-    tags: ["深渊"]
-    attributes:
-      "物理攻击": [13.1, 13.1]
-      "首领伤害": [5.5, 5.5]
-  abyss_019:
-    name: "裂隙回舌"
-    description: "深渊共鸣强化：生命偷取与破甲随神恩等级成长"
-    rarity: EPIC
-    icon: NETHER_STAR
-    max-level: 3
-    tags: ["深渊"]
-    attributes:
-      "生命偷取": [13.6, 13.6]
-      "破甲": [5.8, 5.8]
-  abyss_020:
-    name: "吞星旧约"
-    description: "深渊共鸣在清理房间后修复伤势"
-    rarity: EPIC
-    icon: TOTEM_OF_UNDYING
-    max-level: 3
-    tags: ["深渊", "圣辉"]
-    effects:
-      effect_20:
-        type: ROOM_HEAL
-        value-per-level: 23.4
-        threshold: 35.0
-        tag: "深渊"
-        per-tag: 1.5
-  abyss_021:
-    name: "无明灯火"
-    description: "深渊共鸣强化：首领伤害与移动速度随神恩等级成长"
-    rarity: EPIC
-    icon: ECHO_SHARD
-    max-level: 3
-    tags: ["深渊"]
-    attributes:
-      "首领伤害": [14.5, 14.5]
-      "移动速度": [6.3, 6.3]
-  abyss_022:
-    name: "渊王低语"
-    description: "深渊共鸣强化：破甲与深渊伤害随神恩等级成长"
-    rarity: EPIC
-    icon: IRON_SWORD
-    max-level: 3
-    tags: ["深渊"]
-    attributes:
-      "破甲": [14.9, 14.9]
-      "深渊伤害": [6.5, 6.5]
-  abyss_023:
-    name: "暗界馈赠"
-    description: "深渊共鸣强化：技能伤害与物理攻击随神恩等级成长"
-    rarity: EPIC
-    icon: DIAMOND_SWORD
-    max-level: 3
-    tags: ["深渊"]
-    attributes:
-      "技能伤害": [15.3, 15.3]
-      "物理攻击": [6.8, 6.8]
-  abyss_024:
-    name: "终渊召唤"
-    description: "深渊共鸣会在敌人虚弱时追加终结伤害"
-    rarity: LEGENDARY
-    icon: FEATHER
-    max-level: 5
-    tags: ["深渊"]
-    effects:
-      effect_24:
-        type: EXECUTE
-        value-per-level: 27.0
-        threshold: 55.0
-        tag: "深渊"
-        per-tag: 0.8
-  abyss_025:
-    name: "万暗归巢"
-    description: "深渊共鸣强化：深渊伤害与暴击伤害随神恩等级成长"
-    rarity: LEGENDARY
-    icon: SPIDER_EYE
-    max-level: 4
-    tags: ["深渊"]
-    attributes:
-      "深渊伤害": [16.3, 16.3]
-      "暴击伤害": [7.3, 7.3]
-  # ===== 圣辉系 =====
-  radiance_001:
-    name: "晨曦祝文"
-    description: "圣辉共鸣强化：圣辉伤害与生命恢复随神恩等级成长"
-    rarity: COMMON
-    icon: FEATHER
-    max-level: 3
     tags: ["圣辉"]
     attributes:
-      "圣辉伤害": [6.0, 6.0]
-      "生命恢复": [1.3, 1.3]
-  radiance_002:
-    name: "金辉护誓"
-    description: "圣辉共鸣强化：治疗加成与物理防御随神恩等级成长"
-    rarity: COMMON
-    icon: SPIDER_EYE
-    max-level: 3
-    tags: ["圣辉"]
-    attributes:
-      "治疗加成": [6.4, 6.4]
-      "物理防御": [1.5, 1.5]
-  radiance_003:
-    name: "白烛赦令"
-    description: "圣辉共鸣强化：生命上限与减伤比例随神恩等级成长"
-    rarity: COMMON
-    icon: GOLDEN_APPLE
-    max-level: 3
-    tags: ["圣辉"]
-    attributes:
-      "生命上限": [6.8, 6.8]
-      "减伤比例": [1.8, 1.8]
-  radiance_004:
-    name: "圣铃回响"
-    description: "圣辉共鸣会在敌人虚弱时追加终结伤害"
-    rarity: COMMON
-    icon: IRON_CHESTPLATE
-    max-level: 3
-    tags: ["圣辉"]
-    effects:
-      effect_04:
-        type: EXECUTE
-        value-per-level: 9.4
-        threshold: 55.0
-        tag: "圣辉"
-        per-tag: 2.2
-  radiance_005:
-    name: "黎明羽冠"
-    description: "圣辉共鸣强化：物理防御与护盾强度随神恩等级成长"
-    rarity: COMMON
-    icon: ENDER_PEARL
-    max-level: 3
-    tags: ["圣辉"]
-    attributes:
-      "物理防御": [7.8, 7.8]
-      "护盾强度": [2.3, 2.3]
-  radiance_006:
-    name: "辉光圣杯"
-    description: "圣辉共鸣强化：减伤比例与圣辉伤害随神恩等级成长"
-    rarity: COMMON
-    icon: REDSTONE
-    max-level: 3
-    tags: ["圣辉"]
-    attributes:
-      "减伤比例": [8.2, 8.2]
-      "圣辉伤害": [2.5, 2.5]
-  radiance_007:
-    name: "日冕庇护"
-    description: "圣辉共鸣强化：幸运与治疗加成随神恩等级成长"
-    rarity: COMMON
-    icon: SHIELD
-    max-level: 3
-    tags: ["圣辉"]
-    attributes:
-      "幸运": [8.7, 8.7]
       "治疗加成": [2.8, 2.8]
-  radiance_008:
-    name: "圣焰行歌"
-    description: "圣辉共鸣在击杀后抽回血气"
-    rarity: COMMON
-    icon: GHAST_TEAR
-    max-level: 4
-    tags: ["圣辉"]
     effects:
-      effect_08:
-        type: KILL_HEAL
-        value-per-level: 13.0
-        threshold: 50.0
+      effect_1:
+        type: EXECUTE
+        value-per-level: 9
+        threshold: 31
         tag: "圣辉"
-        per-tag: 1.5
-  radiance_009:
-    name: "光棱祷词"
-    description: "圣辉共鸣强化：圣辉伤害与生命恢复随神恩等级成长"
+        per-tag: 0.32
+  exp_holy_room:
+    name: "圣辉回廊·余响"
+    description: "扩展神恩：围绕圣辉构筑提供ROOM_SHARD收益"
     rarity: COMMON
-    icon: RABBIT_FOOT
+    icon: EXPERIENCE_BOTTLE
     max-level: 3
     tags: ["圣辉"]
     attributes:
-      "圣辉伤害": [9.6, 9.6]
-      "生命恢复": [3.3, 3.3]
-  radiance_010:
-    name: "无垢印记"
-    description: "圣辉共鸣强化：治疗加成与物理防御随神恩等级成长"
+      "生命恢复": [3.1, 3.1]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 9
+        tag: "圣辉"
+        per-tag: 0.46
+  exp_holy_kill:
+    name: "圣辉连携·疾势"
+    description: "扩展神恩：围绕圣辉/壁垒构筑提供KILL_SPEED收益"
     rarity: RARE
-    icon: FIRE_CHARGE
+    icon: FEATHER
     max-level: 3
-    tags: ["圣辉", "狩猎"]
-    attributes:
-      "治疗加成": [10.0, 10.0]
-      "物理防御": [3.5, 3.5]
-  radiance_011:
-    name: "曙光披肩"
-    description: "圣辉共鸣强化：生命上限与减伤比例随神恩等级成长"
-    rarity: RARE
-    icon: BLAZE_POWDER
-    max-level: 3
-    tags: ["圣辉"]
-    attributes:
-      "生命上限": [10.4, 10.4]
-      "减伤比例": [3.8, 3.8]
-  radiance_012:
-    name: "圣泉涌流"
-    description: "圣辉共鸣在受击后反刺敌人"
+    tags: ["圣辉", "壁垒"]
+    effects:
+      effect_1:
+        type: KILL_SPEED
+        value-per-level: 10
+        duration-seconds: 3.7
+        tag: "圣辉"
+        per-tag: 0.63
+  exp_holy_bridge:
+    name: "圣辉桥契·壁垒"
+    description: "扩展神恩：围绕圣辉/壁垒构筑提供ROOM_UPGRADE_RANDOM收益"
     rarity: RARE
     icon: AMETHYST_SHARD
     max-level: 3
-    tags: ["圣辉"]
+    tags: ["圣辉", "壁垒"]
+    attributes:
+      "治疗加成": [3.8, 3.8]
+      "生命恢复": [2.6, 2.6]
     effects:
-      effect_12:
-        type: RETALIATE
-        value-per-level: 16.6
-        threshold: 45.0
-        tag: "圣辉"
-        per-tag: 0.8
-  radiance_013:
-    name: "金叶赐福"
-    description: "圣辉共鸣强化：物理防御与护盾强度随神恩等级成长"
-    rarity: RARE
-    icon: PACKED_ICE
-    max-level: 3
-    tags: ["圣辉"]
-    attributes:
-      "物理防御": [11.4, 11.4]
-      "护盾强度": [4.3, 4.3]
-  radiance_014:
-    name: "白塔钟鸣"
-    description: "圣辉共鸣强化：减伤比例与圣辉伤害随神恩等级成长"
-    rarity: RARE
-    icon: CRYING_OBSIDIAN
-    max-level: 3
-    tags: ["圣辉"]
-    attributes:
-      "减伤比例": [11.8, 11.8]
-      "圣辉伤害": [4.5, 4.5]
-  radiance_015:
-    name: "辉翼环绕"
-    description: "圣辉共鸣强化：幸运与治疗加成随神恩等级成长"
-    rarity: RARE
+      effect_1:
+        type: ROOM_UPGRADE_RANDOM
+        value-per-level: 11
+        chance: 0.150
+        tag: "壁垒"
+        per-tag: 0.26
+  exp_holy_engine:
+    name: "圣辉引擎·律动"
+    description: "扩展神恩：围绕圣辉构筑提供CHAIN_DAMAGE收益"
+    rarity: EPIC
     icon: BEACON
     max-level: 3
     tags: ["圣辉"]
     attributes:
-      "幸运": [12.3, 12.3]
-      "治疗加成": [4.8, 4.8]
-  radiance_016:
-    name: "净光长阶"
-    description: "圣辉共鸣在清理房间后修复伤势"
-    rarity: RARE
+      "治疗加成": [5.4, 5.4]
+    effects:
+      effect_1:
+        type: CHAIN_DAMAGE
+        value-per-level: 13
+        chance: 0.285
+        cooldown-seconds: 13
+        duration-seconds: 4.2
+        radius: 4.1
+        limit: 2
+        tag: "圣辉"
+        per-tag: 0.68
+  exp_holy_legend:
+    name: "圣辉终章·王印"
+    description: "扩展神恩：围绕圣辉/壁垒构筑提供ROOM_SHARD+LOW_HEALTH_SHIELD收益"
+    rarity: LEGENDARY
     icon: NETHER_STAR
     max-level: 4
-    tags: ["圣辉"]
+    tags: ["圣辉", "壁垒"]
+    attributes:
+      "治疗加成": [7.8, 7.8]
+      "生命恢复": [4.8, 4.8]
     effects:
-      effect_16:
-        type: ROOM_HEAL
-        value-per-level: 20.2
-        threshold: 40.0
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 12
         tag: "圣辉"
-        per-tag: 2.2
-  radiance_017:
-    name: "祈愿星火"
-    description: "圣辉共鸣强化：圣辉伤害与生命恢复随神恩等级成长"
-    rarity: RARE
-    icon: TOTEM_OF_UNDYING
+        per-tag: 0.85
+      effect_2:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 15
+        threshold: 39
+        cooldown-seconds: 24
+        tag: "壁垒"
+        per-tag: 0.56
+  exp_treasure_first:
+    name: "财宝初印·掘金"
+    description: "扩展神恩：围绕财宝构筑提供EXECUTE收益"
+    rarity: COMMON
+    icon: GOLD_NUGGET
     max-level: 3
-    tags: ["圣辉"]
+    tags: ["财宝"]
     attributes:
-      "圣辉伤害": [13.2, 13.2]
-      "生命恢复": [5.3, 5.3]
-  radiance_018:
-    name: "圣辉回廊"
-    description: "圣辉共鸣强化：治疗加成与物理防御随神恩等级成长"
-    rarity: EPIC
-    icon: ECHO_SHARD
-    max-level: 3
-    tags: ["圣辉"]
-    attributes:
-      "治疗加成": [13.6, 13.6]
-      "物理防御": [5.5, 5.5]
-  radiance_019:
-    name: "晨星引路"
-    description: "圣辉共鸣强化：生命上限与减伤比例随神恩等级成长"
-    rarity: EPIC
-    icon: IRON_SWORD
-    max-level: 3
-    tags: ["圣辉"]
-    attributes:
-      "生命上限": [14.1, 14.1]
-      "减伤比例": [5.8, 5.8]
-  radiance_020:
-    name: "赦罪花冠"
-    description: "圣辉共鸣会在敌人虚弱时追加终结伤害"
-    rarity: EPIC
-    icon: DIAMOND_SWORD
-    max-level: 3
-    tags: ["圣辉", "狩猎"]
+      "幸运": [3.0, 3.0]
     effects:
-      effect_20:
+      effect_1:
         type: EXECUTE
-        value-per-level: 23.8
-        threshold: 35.0
-        tag: "圣辉"
-        per-tag: 1.5
-  radiance_021:
-    name: "日轮余温"
-    description: "圣辉共鸣强化：物理防御与护盾强度随神恩等级成长"
-    rarity: EPIC
+        value-per-level: 10
+        threshold: 32
+        tag: "财宝"
+        per-tag: 0.34
+  exp_treasure_room:
+    name: "财宝回廊·余响"
+    description: "扩展神恩：围绕财宝构筑提供ROOM_HEAL收益"
+    rarity: COMMON
+    icon: EXPERIENCE_BOTTLE
+    max-level: 3
+    tags: ["财宝"]
+    attributes:
+      "暴击几率": [3.4, 3.4]
+    effects:
+      effect_1:
+        type: ROOM_HEAL
+        value-per-level: 10
+        tag: "财宝"
+        per-tag: 0.49
+  exp_treasure_kill:
+    name: "财宝连携·疾势"
+    description: "扩展神恩：围绕财宝/狩猎构筑提供KILL_HEAL收益"
+    rarity: RARE
     icon: FEATHER
     max-level: 3
-    tags: ["圣辉"]
-    attributes:
-      "物理防御": [15.0, 15.0]
-      "护盾强度": [6.3, 6.3]
-  radiance_022:
-    name: "圣域合唱"
-    description: "圣辉共鸣强化：减伤比例与圣辉伤害随神恩等级成长"
-    rarity: EPIC
-    icon: SPIDER_EYE
-    max-level: 3
-    tags: ["圣辉"]
-    attributes:
-      "减伤比例": [15.4, 15.4]
-      "圣辉伤害": [6.5, 6.5]
-  radiance_023:
-    name: "光王敕命"
-    description: "圣辉共鸣强化：幸运与治疗加成随神恩等级成长"
-    rarity: EPIC
-    icon: GOLDEN_APPLE
-    max-level: 3
-    tags: ["圣辉"]
-    attributes:
-      "幸运": [15.8, 15.8]
-      "治疗加成": [6.8, 6.8]
-  radiance_024:
-    name: "终晨礼赞"
-    description: "圣辉共鸣在击杀后抽回血气"
-    rarity: LEGENDARY
-    icon: IRON_CHESTPLATE
-    max-level: 5
-    tags: ["圣辉"]
+    tags: ["财宝", "狩猎"]
     effects:
-      effect_24:
+      effect_1:
         type: KILL_HEAL
-        value-per-level: 27.4
-        threshold: 55.0
-        tag: "圣辉"
-        per-tag: 0.8
-  radiance_025:
-    name: "万辉归堂"
-    description: "圣辉共鸣强化：圣辉伤害与生命恢复随神恩等级成长"
-    rarity: LEGENDARY
-    icon: ENDER_PEARL
-    max-level: 4
-    tags: ["圣辉"]
+        value-per-level: 11
+        duration-seconds: 3.9
+        tag: "财宝"
+        per-tag: 0.67
+  exp_treasure_bridge:
+    name: "财宝桥契·狩猎"
+    description: "扩展神恩：围绕财宝/狩猎构筑提供ROOM_UPGRADE_RANDOM收益"
+    rarity: RARE
+    icon: AMETHYST_SHARD
+    max-level: 3
+    tags: ["财宝", "狩猎"]
     attributes:
-      "圣辉伤害": [16.8, 16.8]
-      "生命恢复": [7.3, 7.3]
+      "幸运": [4.0, 4.0]
+      "暴击几率": [2.8, 2.8]
+    effects:
+      effect_1:
+        type: ROOM_UPGRADE_RANDOM
+        value-per-level: 12
+        chance: 0.160
+        tag: "狩猎"
+        per-tag: 0.28
+  exp_treasure_engine:
+    name: "财宝引擎·律动"
+    description: "扩展神恩：围绕财宝构筑提供LOW_HEALTH_SHIELD收益"
+    rarity: EPIC
+    icon: BEACON
+    max-level: 3
+    tags: ["财宝"]
+    attributes:
+      "幸运": [5.8, 5.8]
+    effects:
+      effect_1:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 14
+        chance: 0.300
+        cooldown-seconds: 14
+        duration-seconds: 4.4
+        radius: 4.3
+        limit: 3
+        tag: "财宝"
+        per-tag: 0.72
+  exp_treasure_legend:
+    name: "财宝终章·王印"
+    description: "扩展神恩：围绕财宝/狩猎构筑提供ROOM_SHARD+LOW_HEALTH_SHIELD收益"
+    rarity: LEGENDARY
+    icon: NETHER_STAR
+    max-level: 4
+    tags: ["财宝", "狩猎"]
+    attributes:
+      "幸运": [8.2, 8.2]
+      "暴击几率": [5.0, 5.0]
+    effects:
+      effect_1:
+        type: ROOM_SHARD
+        value-per-level: 13
+        tag: "财宝"
+        per-tag: 0.90
+      effect_2:
+        type: LOW_HEALTH_SHIELD
+        value-per-level: 16
+        threshold: 40
+        cooldown-seconds: 25
+        tag: "狩猎"
+        per-tag: 0.59

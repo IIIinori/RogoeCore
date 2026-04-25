@@ -1,9 +1,11 @@
 # RogueCore generated MythicMobs config
 # 部署说明:
-# 1. 复制 mythicmobs/Mobs/RogueCore 到 plugins/MythicMobs/Mobs/RogueCore
-# 2. 执行 /mm reload
-# 3. 执行 /rogue admin check 检查缺失怪物 ID
-# 注意: 本配置使用 AttributePlus: 节点写怪物属性，如你的 AP/MM Hook 节点不同，请统一替换该块名称。
+# 1. 复制 mythicmobs/mobs/RogueCore 到 plugins/MythicMobs/mobs/RogueCore
+# 2. 复制 attributeplus/script/RogueCore 到 plugins/AttributePlus/script/RogueCore
+# 3. 重载 AttributePlus 脚本或重启服务器
+# 4. 执行 /mm reload
+# 5. 执行 /rogue admin check 检查缺失怪物 ID
+# 注意: 本配置使用 AttributePlus: 节点写怪物攻防属性；生命请使用 MythicMobs 原生 Health。
 # AP monster attributes are written in the AttributePlus block.
 # If your AttributePlus-MythicMobs hook uses another node name, only this block needs format conversion.
 
@@ -31,11 +33,10 @@ rogue_crypt_boss_floor1:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 181300
-    物理攻击: 1656
+    物理伤害: 1656
     物理防御: 156
     暴击几率: 7
-    暴击伤害: 103
+    暴伤倍率: 103
     命中几率: 130
     闪避几率: 0
   Skills:
@@ -68,11 +69,10 @@ rogue_crypt_boss_floor2:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 317771
-    物理攻击: 2246
+    物理伤害: 2246
     物理防御: 225
     暴击几率: 8
-    暴击伤害: 110
+    暴伤倍率: 110
     命中几率: 131
     闪避几率: 1
   Skills:
@@ -105,11 +105,10 @@ rogue_crypt_boss_floor3:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 588230
-    物理攻击: 3182
+    物理伤害: 3182
     物理防御: 318
     暴击几率: 9
-    暴击伤害: 117
+    暴伤倍率: 117
     命中几率: 131
     闪避几率: 1
   Skills:
@@ -142,11 +141,10 @@ rogue_crypt_boss_floor4:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1013536
-    物理攻击: 4449
+    物理伤害: 4449
     物理防御: 429
     暴击几率: 11
-    暴击伤害: 124
+    暴伤倍率: 124
     命中几率: 131
     闪避几率: 1
   Skills:
@@ -179,11 +177,10 @@ rogue_crypt_boss_floor5:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1610257
-    物理攻击: 6037
+    物理伤害: 6037
     物理防御: 556
     暴击几率: 12
-    暴击伤害: 131
+    暴伤倍率: 131
     命中几率: 131
     闪避几率: 1
   Skills:
@@ -216,11 +213,10 @@ rogue_nether_boss_floor6:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 2392397
-    物理攻击: 7940
+    物理伤害: 7940
     物理防御: 699
     暴击几率: 13
-    暴击伤害: 138
+    暴伤倍率: 138
     命中几率: 132
     闪避几率: 2
   Skills:
@@ -253,11 +249,10 @@ rogue_nether_boss_floor7:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 3372220
-    物理攻击: 10152
+    物理伤害: 10152
     物理防御: 855
     暴击几率: 14
-    暴击伤害: 145
+    暴伤倍率: 145
     命中几率: 132
     闪避几率: 2
   Skills:
@@ -290,11 +285,10 @@ rogue_nether_boss_floor8:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 4560713
-    物理攻击: 12669
+    物理伤害: 12669
     物理防御: 1024
     暴击几率: 16
-    暴击伤害: 152
+    暴伤倍率: 152
     命中几率: 132
     闪避几率: 2
   Skills:
@@ -327,11 +321,10 @@ rogue_nether_boss_floor9:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 5967881
-    物理攻击: 15485
+    物理伤害: 15485
     物理防御: 1205
     暴击几率: 17
-    暴击伤害: 159
+    暴伤倍率: 159
     命中几率: 132
     闪避几率: 3
   Skills:
@@ -364,11 +357,10 @@ rogue_nether_boss_floor10:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 7602941
-    物理攻击: 18597
+    物理伤害: 18597
     物理防御: 1397
     暴击几率: 18
-    暴击伤害: 166
+    暴伤倍率: 166
     命中几率: 133
     闪避几率: 3
   Skills:
@@ -401,11 +393,10 @@ rogue_end_boss_floor11:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 9474465
-    物理攻击: 22004
+    物理伤害: 22004
     物理防御: 1601
     暴击几率: 19
-    暴击伤害: 173
+    暴伤倍率: 173
     命中几率: 133
     闪避几率: 3
   Skills:
@@ -438,11 +429,10 @@ rogue_end_boss_floor12:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 11590480
-    物理攻击: 25700
+    物理伤害: 25700
     物理防御: 1814
     暴击几率: 21
-    暴击伤害: 180
+    暴伤倍率: 180
     命中几率: 133
     闪避几率: 3
   Skills:
@@ -475,11 +465,10 @@ rogue_end_boss_floor13:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 13958554
-    物理攻击: 29685
+    物理伤害: 29685
     物理防御: 2038
     暴击几率: 22
-    暴击伤害: 188
+    暴伤倍率: 188
     命中几率: 133
     闪避几率: 4
   Skills:
@@ -512,11 +501,10 @@ rogue_end_boss_floor14:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 16585854
-    物理攻击: 33956
+    物理伤害: 33956
     物理防御: 2272
     暴击几率: 23
-    暴击伤害: 195
+    暴伤倍率: 195
     命中几率: 134
     闪避几率: 4
   Skills:
@@ -549,11 +537,10 @@ rogue_end_boss_floor15:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 19479195
-    物理攻击: 38510
+    物理伤害: 38510
     物理防御: 2515
     暴击几率: 25
-    暴击伤害: 202
+    暴伤倍率: 202
     命中几率: 134
     闪避几率: 4
   Skills:
@@ -586,11 +573,10 @@ rogue_frost_boss_floor16:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 22645082
-    物理攻击: 43347
+    物理伤害: 43347
     物理防御: 2767
     暴击几率: 26
-    暴击伤害: 209
+    暴伤倍率: 209
     命中几率: 134
     闪避几率: 5
   Skills:
@@ -623,11 +609,10 @@ rogue_frost_boss_floor17:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 26089746
-    物理攻击: 48463
+    物理伤害: 48463
     物理防御: 3027
     暴击几率: 27
-    暴击伤害: 216
+    暴伤倍率: 216
     命中几率: 134
     闪避几率: 5
   Skills:
@@ -660,11 +645,10 @@ rogue_frost_boss_floor18:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 29819166
-    物理攻击: 53857
+    物理伤害: 53857
     物理防御: 3297
     暴击几率: 28
-    暴击伤害: 223
+    暴伤倍率: 223
     命中几率: 135
     闪避几率: 5
   Skills:
@@ -697,11 +681,10 @@ rogue_frost_boss_floor19:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 33839100
-    物理攻击: 59528
+    物理伤害: 59528
     物理防御: 3574
     暴击几率: 30
-    暴击伤害: 230
+    暴伤倍率: 230
     命中几率: 135
     闪避几率: 5
   Skills:
@@ -734,11 +717,10 @@ rogue_frost_boss_floor20:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 38155099
-    物理攻击: 65474
+    物理伤害: 65474
     物理防御: 3860
     暴击几率: 31
-    暴击伤害: 237
+    暴伤倍率: 237
     命中几率: 135
     闪避几率: 6
   Skills:
@@ -767,11 +749,10 @@ rogue_forge_boss_floor21:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 42772527
-    物理攻击: 71694
+    物理伤害: 71694
     物理防御: 4154
     暴击几率: 32
-    暴击伤害: 244
+    暴伤倍率: 244
     命中几率: 135
     闪避几率: 6
   Skills:
@@ -800,11 +781,10 @@ rogue_forge_boss_floor22:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 47696578
-    物理攻击: 78186
+    物理伤害: 78186
     物理防御: 4456
     暴击几率: 33
-    暴击伤害: 251
+    暴伤倍率: 251
     命中几率: 136
     闪避几率: 6
   Skills:
@@ -833,11 +813,10 @@ rogue_forge_boss_floor23:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 52932286
-    物理攻击: 84950
+    物理伤害: 84950
     物理防御: 4765
     暴击几率: 35
-    暴击伤害: 258
+    暴伤倍率: 258
     命中几率: 136
     闪避几率: 7
   Skills:
@@ -866,11 +845,10 @@ rogue_forge_boss_floor24:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 58484538
-    物理攻击: 91983
+    物理伤害: 91983
     物理防御: 5082
     暴击几率: 36
-    暴击伤害: 265
+    暴伤倍率: 265
     命中几率: 136
     闪避几率: 7
   Skills:
@@ -899,11 +877,10 @@ rogue_forge_boss_floor25:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 64358086
-    物理攻击: 99285
+    物理伤害: 99285
     物理防御: 5406
     暴击几率: 37
-    暴击伤害: 272
+    暴伤倍率: 272
     命中几率: 136
     闪避几率: 7
   Skills:
@@ -932,11 +909,10 @@ rogue_astral_boss_floor26:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 70557555
-    物理攻击: 106855
+    物理伤害: 106855
     物理防御: 5737
     暴击几率: 38
-    暴击伤害: 279
+    暴伤倍率: 279
     命中几率: 137
     闪避几率: 7
   Skills:
@@ -965,11 +941,10 @@ rogue_astral_boss_floor27:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 77087450
-    物理攻击: 114692
+    物理伤害: 114692
     物理防御: 6075
     暴击几率: 40
-    暴击伤害: 286
+    暴伤倍率: 286
     命中几率: 137
     闪避几率: 8
   Skills:
@@ -998,11 +973,10 @@ rogue_astral_boss_floor28:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 83952166
-    物理攻击: 122794
+    物理伤害: 122794
     物理防御: 6421
     暴击几率: 41
-    暴击伤害: 293
+    暴伤倍率: 293
     命中几率: 137
     闪避几率: 8
   Skills:
@@ -1031,11 +1005,10 @@ rogue_astral_boss_floor29:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 91155991
-    物理攻击: 131161
+    物理伤害: 131161
     物理防御: 6773
     暴击几率: 42
-    暴击伤害: 300
+    暴伤倍率: 300
     命中几率: 137
     闪避几率: 8
   Skills:
@@ -1064,11 +1037,10 @@ rogue_astral_boss_floor30:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 98703118
-    物理攻击: 139792
+    物理伤害: 139792
     物理防御: 7132
     暴击几率: 43
-    暴击伤害: 307
+    暴伤倍率: 307
     命中几率: 138
     闪避几率: 9
   Skills:
@@ -1101,11 +1073,10 @@ rogue_crimson_boss_floor31:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 106597644
-    物理攻击: 148685
+    物理伤害: 148685
     物理防御: 7498
     暴击几率: 45
-    暴击伤害: 314
+    暴伤倍率: 314
     命中几率: 138
     闪避几率: 9
   Skills:
@@ -1138,11 +1109,10 @@ rogue_crimson_boss_floor32:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 114843580
-    物理攻击: 157841
+    物理伤害: 157841
     物理防御: 7870
     暴击几率: 46
-    暴击伤害: 321
+    暴伤倍率: 321
     命中几率: 138
     闪避几率: 9
   Skills:
@@ -1175,11 +1145,10 @@ rogue_crimson_boss_floor33:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 123444853
-    物理攻击: 167257
+    物理伤害: 167257
     物理防御: 8248
     暴击几率: 47
-    暴击伤害: 328
+    暴伤倍率: 328
     命中几率: 138
     闪避几率: 10
   Skills:
@@ -1212,11 +1181,10 @@ rogue_crimson_boss_floor34:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 132405311
-    物理攻击: 176935
+    物理伤害: 176935
     物理防御: 8633
     暴击几率: 48
-    暴击伤害: 335
+    暴伤倍率: 335
     命中几率: 139
     闪避几率: 10
   Skills:
@@ -1249,11 +1217,10 @@ rogue_crimson_boss_floor35:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 141728727
-    物理攻击: 186871
+    物理伤害: 186871
     物理防御: 9024
     暴击几率: 50
-    暴击伤害: 342
+    暴伤倍率: 342
     命中几率: 139
     闪避几率: 10
   Skills:
@@ -1282,11 +1249,10 @@ rogue_core_boss_floor36:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 151418802
-    物理攻击: 197067
+    物理伤害: 197067
     物理防御: 9422
     暴击几率: 51
-    暴击伤害: 349
+    暴伤倍率: 349
     命中几率: 139
     闪避几率: 10
   Skills:
@@ -1315,11 +1281,10 @@ rogue_core_boss_floor37:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 161479171
-    物理攻击: 207521
+    物理伤害: 207521
     物理防御: 9825
     暴击几率: 52
-    暴击伤害: 356
+    暴伤倍率: 356
     命中几率: 139
     闪避几率: 11
   Skills:
@@ -1348,11 +1313,10 @@ rogue_core_boss_floor38:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 171913400
-    物理攻击: 218232
+    物理伤害: 218232
     物理防御: 10235
     暴击几率: 53
-    暴击伤害: 364
+    暴伤倍率: 364
     命中几率: 140
     闪避几率: 11
   Skills:
@@ -1381,11 +1345,10 @@ rogue_core_boss_floor39:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 182724997
-    物理攻击: 229200
+    物理伤害: 229200
     物理防御: 10651
     暴击几率: 55
-    暴击伤害: 371
+    暴伤倍率: 371
     命中几率: 140
     闪避几率: 11
   Skills:
@@ -1414,11 +1377,10 @@ rogue_core_boss_floor40:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 193917408
-    物理攻击: 240423
+    物理伤害: 240423
     物理防御: 11072
     暴击几率: 56
-    暴击伤害: 378
+    暴伤倍率: 378
     命中几率: 140
     闪避几率: 12
   Skills:
@@ -1451,11 +1413,10 @@ rogue_rotwood_boss_floor41:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 205494023
-    物理攻击: 251903
+    物理伤害: 251903
     物理防御: 11499
     暴击几率: 57
-    暴击伤害: 385
+    暴伤倍率: 385
     命中几率: 140
     闪避几率: 12
   Skills:
@@ -1488,11 +1449,10 @@ rogue_rotwood_boss_floor42:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 217458177
-    物理攻击: 263637
+    物理伤害: 263637
     物理防御: 11932
     暴击几率: 59
-    暴击伤害: 392
+    暴伤倍率: 392
     命中几率: 141
     闪避几率: 12
   Skills:
@@ -1525,11 +1485,10 @@ rogue_rotwood_boss_floor43:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 229813153
-    物理攻击: 275625
+    物理伤害: 275625
     物理防御: 12371
     暴击几率: 60
-    暴击伤害: 399
+    暴伤倍率: 399
     命中几率: 141
     闪避几率: 12
   Skills:
@@ -1562,11 +1521,10 @@ rogue_rotwood_boss_floor44:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 242562182
-    物理攻击: 287867
+    物理伤害: 287867
     物理防御: 12816
     暴击几率: 61
-    暴击伤害: 406
+    暴伤倍率: 406
     命中几率: 141
     闪避几率: 13
   Skills:
@@ -1599,11 +1557,10 @@ rogue_rotwood_boss_floor45:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 255708448
-    物理攻击: 300362
+    物理伤害: 300362
     物理防御: 13266
     暴击几率: 62
-    暴击伤害: 413
+    暴伤倍率: 413
     命中几率: 141
     闪避几率: 13
   Skills:
@@ -1632,11 +1589,10 @@ rogue_stormspire_boss_floor46:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 269255089
-    物理攻击: 313109
+    物理伤害: 313109
     物理防御: 13721
     暴击几率: 64
-    暴击伤害: 420
+    暴伤倍率: 420
     命中几率: 142
     闪避几率: 13
   Skills:
@@ -1665,11 +1621,10 @@ rogue_stormspire_boss_floor47:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 283205196
-    物理攻击: 326108
+    物理伤害: 326108
     物理防御: 14182
     暴击几率: 65
-    暴击伤害: 427
+    暴伤倍率: 427
     命中几率: 142
     闪避几率: 14
   Skills:
@@ -1698,11 +1653,10 @@ rogue_stormspire_boss_floor48:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 297561817
-    物理攻击: 339359
+    物理伤害: 339359
     物理防御: 14649
     暴击几率: 66
-    暴击伤害: 434
+    暴伤倍率: 434
     命中几率: 142
     闪避几率: 14
   Skills:
@@ -1731,11 +1685,10 @@ rogue_stormspire_boss_floor49:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 312327961
-    物理攻击: 352860
+    物理伤害: 352860
     物理防御: 15121
     暴击几率: 67
-    暴击伤害: 441
+    暴伤倍率: 441
     命中几率: 142
     闪避几率: 14
   Skills:
@@ -1764,11 +1717,10 @@ rogue_stormspire_boss_floor50:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 327506592
-    物理攻击: 366611
+    物理伤害: 366611
     物理防御: 15598
     暴击几率: 69
-    暴击伤害: 448
+    暴伤倍率: 448
     命中几率: 143
     闪避几率: 14
   Skills:
@@ -1797,11 +1749,10 @@ rogue_sunken_boss_floor51:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 343100638
-    物理攻击: 380613
+    物理伤害: 380613
     物理防御: 16080
     暴击几率: 70
-    暴击伤害: 455
+    暴伤倍率: 455
     命中几率: 143
     闪避几率: 15
   Skills:
@@ -1830,11 +1781,10 @@ rogue_sunken_boss_floor52:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 359112988
-    物理攻击: 394863
+    物理伤害: 394863
     物理防御: 16568
     暴击几率: 71
-    暴击伤害: 462
+    暴伤倍率: 462
     命中几率: 143
     闪避几率: 15
   Skills:
@@ -1863,11 +1813,10 @@ rogue_sunken_boss_floor53:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 375546495
-    物理攻击: 409363
+    物理伤害: 409363
     物理防御: 17061
     暴击几率: 72
-    暴击伤害: 469
+    暴伤倍率: 469
     命中几率: 143
     闪避几率: 15
   Skills:
@@ -1896,11 +1845,10 @@ rogue_sunken_boss_floor54:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 392403976
-    物理攻击: 424110
+    物理伤害: 424110
     物理防御: 17559
     暴击几率: 74
-    暴击伤害: 476
+    暴伤倍率: 476
     命中几率: 144
     闪避几率: 16
   Skills:
@@ -1929,11 +1877,10 @@ rogue_sunken_boss_floor55:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 409688215
-    物理攻击: 439106
+    物理伤害: 439106
     物理防御: 18062
     暴击几率: 75
-    暴击伤害: 483
+    暴伤倍率: 483
     命中几率: 144
     闪避几率: 16
   Skills:
@@ -1966,11 +1913,10 @@ rogue_bonewaste_boss_floor56:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 427401960
-    物理攻击: 454349
+    物理伤害: 454349
     物理防御: 18570
     暴击几率: 76
-    暴击伤害: 490
+    暴伤倍率: 490
     命中几率: 144
     闪避几率: 16
   Skills:
@@ -2003,11 +1949,10 @@ rogue_bonewaste_boss_floor57:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 445547930
-    物理攻击: 469839
+    物理伤害: 469839
     物理防御: 19083
     暴击几率: 77
-    暴击伤害: 497
+    暴伤倍率: 497
     命中几率: 144
     闪避几率: 16
   Skills:
@@ -2040,11 +1985,10 @@ rogue_bonewaste_boss_floor58:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 464128810
-    物理攻击: 485576
+    物理伤害: 485576
     物理防御: 19601
     暴击几率: 79
-    暴击伤害: 504
+    暴伤倍率: 504
     命中几率: 145
     闪避几率: 17
   Skills:
@@ -2077,11 +2021,10 @@ rogue_bonewaste_boss_floor59:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 483147255
-    物理攻击: 501558
+    物理伤害: 501558
     物理防御: 20124
     暴击几率: 80
-    暴击伤害: 511
+    暴伤倍率: 511
     命中几率: 145
     闪避几率: 17
   Skills:
@@ -2114,11 +2057,10 @@ rogue_bonewaste_boss_floor60:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 502605892
-    物理攻击: 517786
+    物理伤害: 517786
     物理防御: 20652
     暴击几率: 81
-    暴击伤害: 518
+    暴伤倍率: 518
     命中几率: 145
     闪避几率: 17
   Skills:
@@ -2151,11 +2093,10 @@ rogue_mirror_boss_floor61:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 522507318
-    物理攻击: 534260
+    物理伤害: 534260
     物理防御: 21185
     暴击几率: 82
-    暴击伤害: 525
+    暴伤倍率: 525
     命中几率: 145
     闪避几率: 18
   Skills:
@@ -2188,11 +2129,10 @@ rogue_mirror_boss_floor62:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 542854101
-    物理攻击: 550978
+    物理伤害: 550978
     物理防御: 21723
     暴击几率: 84
-    暴击伤害: 532
+    暴伤倍率: 532
     命中几率: 146
     闪避几率: 18
   Skills:
@@ -2225,11 +2165,10 @@ rogue_mirror_boss_floor63:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 563648784
-    物理攻击: 567941
+    物理伤害: 567941
     物理防御: 22265
     暴击几率: 85
-    暴击伤害: 540
+    暴伤倍率: 540
     命中几率: 146
     闪避几率: 18
   Skills:
@@ -2262,11 +2201,10 @@ rogue_mirror_boss_floor64:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 584893882
-    物理攻击: 585148
+    物理伤害: 585148
     物理防御: 22812
     暴击几率: 86
-    暴击伤害: 547
+    暴伤倍率: 547
     命中几率: 146
     闪避几率: 18
   Skills:
@@ -2299,11 +2237,10 @@ rogue_mirror_boss_floor65:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 606591886
-    物理攻击: 602599
+    物理伤害: 602599
     物理防御: 23364
     暴击几率: 88
-    暴击伤害: 554
+    暴伤倍率: 554
     命中几率: 146
     闪避几率: 19
   Skills:
@@ -2332,11 +2269,10 @@ rogue_mire_boss_floor66:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 628745258
-    物理攻击: 620293
+    物理伤害: 620293
     物理防御: 23921
     暴击几率: 89
-    暴击伤害: 561
+    暴伤倍率: 561
     命中几率: 147
     闪避几率: 19
   Skills:
@@ -2365,11 +2301,10 @@ rogue_mire_boss_floor67:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 651356439
-    物理攻击: 638229
+    物理伤害: 638229
     物理防御: 24482
     暴击几率: 90
-    暴击伤害: 568
+    暴伤倍率: 568
     命中几率: 147
     闪避几率: 19
   Skills:
@@ -2398,11 +2333,10 @@ rogue_mire_boss_floor68:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 674427845
-    物理攻击: 656409
+    物理伤害: 656409
     物理防御: 25048
     暴击几率: 91
-    暴击伤害: 575
+    暴伤倍率: 575
     命中几率: 147
     闪避几率: 20
   Skills:
@@ -2431,11 +2365,10 @@ rogue_mire_boss_floor69:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 697961869
-    物理攻击: 674831
+    物理伤害: 674831
     物理防御: 25619
     暴击几率: 93
-    暴击伤害: 582
+    暴伤倍率: 582
     命中几率: 147
     闪避几率: 20
   Skills:
@@ -2464,11 +2397,10 @@ rogue_mire_boss_floor70:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 721960880
-    物理攻击: 693494
+    物理伤害: 693494
     物理防御: 26194
     暴击几率: 94
-    暴击伤害: 589
+    暴伤倍率: 589
     命中几率: 148
     闪避几率: 20
   Skills:
@@ -2501,11 +2433,10 @@ rogue_dune_boss_floor71:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 746427227
-    物理攻击: 712399
+    物理伤害: 712399
     物理防御: 26773
     暴击几率: 95
-    暴击伤害: 596
+    暴伤倍率: 596
     命中几率: 148
     闪避几率: 20
   Skills:
@@ -2538,11 +2469,10 @@ rogue_dune_boss_floor72:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 771363235
-    物理攻击: 731545
+    物理伤害: 731545
     物理防御: 27358
     暴击几率: 96
-    暴击伤害: 603
+    暴伤倍率: 603
     命中几率: 148
     闪避几率: 21
   Skills:
@@ -2575,11 +2505,10 @@ rogue_dune_boss_floor73:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 796771208
-    物理攻击: 750932
+    物理伤害: 750932
     物理防御: 27946
     暴击几率: 98
-    暴击伤害: 610
+    暴伤倍率: 610
     命中几率: 148
     闪避几率: 21
   Skills:
@@ -2612,11 +2541,10 @@ rogue_dune_boss_floor74:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 822653432
-    物理攻击: 770560
+    物理伤害: 770560
     物理防御: 28539
     暴击几率: 99
-    暴击伤害: 617
+    暴伤倍率: 617
     命中几率: 149
     闪避几率: 21
   Skills:
@@ -2649,11 +2577,10 @@ rogue_dune_boss_floor75:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 849012170
-    物理攻击: 790428
+    物理伤害: 790428
     物理防御: 29137
     暴击几率: 100
-    暴击伤害: 624
+    暴伤倍率: 624
     命中几率: 149
     闪避几率: 22
   Skills:
@@ -2682,11 +2609,10 @@ rogue_theater_boss_floor76:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 875849665
-    物理攻击: 810535
+    物理伤害: 810535
     物理防御: 29739
     暴击几率: 101
-    暴击伤害: 631
+    暴伤倍率: 631
     命中几率: 149
     闪避几率: 22
   Skills:
@@ -2715,11 +2641,10 @@ rogue_theater_boss_floor77:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 903168142
-    物理攻击: 830882
+    物理伤害: 830882
     物理防御: 30345
     暴击几率: 103
-    暴击伤害: 638
+    暴伤倍率: 638
     命中几率: 149
     闪避几率: 22
   Skills:
@@ -2748,11 +2673,10 @@ rogue_theater_boss_floor78:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 930969808
-    物理攻击: 851469
+    物理伤害: 851469
     物理防御: 30955
     暴击几率: 104
-    暴击伤害: 645
+    暴伤倍率: 645
     命中几率: 150
     闪避几率: 22
   Skills:
@@ -2781,11 +2705,10 @@ rogue_theater_boss_floor79:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 959256849
-    物理攻击: 872294
+    物理伤害: 872294
     物理防御: 31570
     暴击几率: 105
-    暴击伤害: 652
+    暴伤倍率: 652
     命中几率: 150
     闪避几率: 23
   Skills:
@@ -2814,11 +2737,10 @@ rogue_theater_boss_floor80:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 988031434
-    物理攻击: 893358
+    物理伤害: 893358
     物理防御: 32189
     暴击几率: 106
-    暴击伤害: 659
+    暴伤倍率: 659
     命中几率: 150
     闪避几率: 23
   Skills:
@@ -2847,11 +2769,10 @@ rogue_machine_boss_floor81:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 1017295715
-    物理攻击: 914660
+    物理伤害: 914660
     物理防御: 32813
     暴击几率: 108
-    暴击伤害: 666
+    暴伤倍率: 666
     命中几率: 150
     闪避几率: 23
   Skills:
@@ -2880,11 +2801,10 @@ rogue_machine_boss_floor82:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 1047051825
-    物理攻击: 936200
+    物理伤害: 936200
     物理防御: 33441
     暴击几率: 109
-    暴击伤害: 673
+    暴伤倍率: 673
     命中几率: 151
     闪避几率: 24
   Skills:
@@ -2913,11 +2833,10 @@ rogue_machine_boss_floor83:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 1077301881
-    物理攻击: 957978
+    物理伤害: 957978
     物理防御: 34073
     暴击几率: 110
-    暴击伤害: 680
+    暴伤倍率: 680
     命中几率: 151
     闪避几率: 24
   Skills:
@@ -2946,11 +2865,10 @@ rogue_machine_boss_floor84:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 1108047983
-    物理攻击: 979993
+    物理伤害: 979993
     物理防御: 34709
     暴击几率: 111
-    暴击伤害: 687
+    暴伤倍率: 687
     命中几率: 151
     闪避几率: 24
   Skills:
@@ -2979,11 +2897,10 @@ rogue_machine_boss_floor85:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 1139292215
-    物理攻击: 1002246
+    物理伤害: 1002246
     物理防御: 35349
     暴击几率: 113
-    暴击伤害: 694
+    暴伤倍率: 694
     命中几率: 151
     闪避几率: 24
   Skills:
@@ -3016,11 +2933,10 @@ rogue_eclipse_boss_floor86:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1171036644
-    物理攻击: 1024735
+    物理伤害: 1024735
     物理防御: 35994
     暴击几率: 114
-    暴击伤害: 701
+    暴伤倍率: 701
     命中几率: 152
     闪避几率: 25
   Skills:
@@ -3053,11 +2969,10 @@ rogue_eclipse_boss_floor87:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1203283322
-    物理攻击: 1047461
+    物理伤害: 1047461
     物理防御: 36642
     暴击几率: 115
-    暴击伤害: 708
+    暴伤倍率: 708
     命中几率: 152
     闪避几率: 25
   Skills:
@@ -3090,11 +3005,10 @@ rogue_eclipse_boss_floor88:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1236034286
-    物理攻击: 1070423
+    物理伤害: 1070423
     物理防御: 37295
     暴击几率: 116
-    暴击伤害: 716
+    暴伤倍率: 716
     命中几率: 152
     闪避几率: 25
   Skills:
@@ -3127,11 +3041,10 @@ rogue_eclipse_boss_floor89:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1269291556
-    物理攻击: 1093621
+    物理伤害: 1093621
     物理防御: 37952
     暴击几率: 118
-    暴击伤害: 723
+    暴伤倍率: 723
     命中几率: 152
     闪避几率: 26
   Skills:
@@ -3164,11 +3077,10 @@ rogue_eclipse_boss_floor90:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1303057140
-    物理攻击: 1117055
+    物理伤害: 1117055
     物理防御: 38613
     暴击几率: 119
-    暴击伤害: 730
+    暴伤倍率: 730
     命中几率: 153
     闪避几率: 26
   Skills:
@@ -3201,11 +3113,10 @@ rogue_chaos_boss_floor91:
     - NETHERITE_HELMET HEAD
     - NETHERITE_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1337333028
-    物理攻击: 1140725
+    物理伤害: 1140725
     物理防御: 39278
     暴击几率: 120
-    暴击伤害: 737
+    暴伤倍率: 737
     命中几率: 153
     闪避几率: 26
   Skills:
@@ -3238,11 +3149,10 @@ rogue_chaos_boss_floor92:
     - NETHERITE_HELMET HEAD
     - NETHERITE_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1372121199
-    物理攻击: 1164630
+    物理伤害: 1164630
     物理防御: 39947
     暴击几率: 122
-    暴击伤害: 744
+    暴伤倍率: 744
     命中几率: 153
     闪避几率: 26
   Skills:
@@ -3275,11 +3185,10 @@ rogue_chaos_boss_floor93:
     - NETHERITE_HELMET HEAD
     - NETHERITE_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1407423616
-    物理攻击: 1188770
+    物理伤害: 1188770
     物理防御: 40620
     暴击几率: 123
-    暴击伤害: 751
+    暴伤倍率: 751
     命中几率: 153
     闪避几率: 27
   Skills:
@@ -3312,11 +3221,10 @@ rogue_chaos_boss_floor94:
     - NETHERITE_HELMET HEAD
     - NETHERITE_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1443242227
-    物理攻击: 1213144
+    物理伤害: 1213144
     物理防御: 41297
     暴击几率: 124
-    暴击伤害: 758
+    暴伤倍率: 758
     命中几率: 154
     闪避几率: 27
   Skills:
@@ -3349,11 +3257,10 @@ rogue_chaos_boss_floor95:
     - NETHERITE_HELMET HEAD
     - NETHERITE_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1479578970
-    物理攻击: 1237753
+    物理伤害: 1237753
     物理防御: 41978
     暴击几率: 125
-    暴击伤害: 765
+    暴伤倍率: 765
     命中几率: 154
     闪避几率: 27
   Skills:
@@ -3382,11 +3289,10 @@ rogue_throne_boss_floor96:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 1516435767
-    物理攻击: 1262597
+    物理伤害: 1262597
     物理防御: 42662
     暴击几率: 127
-    暴击伤害: 772
+    暴伤倍率: 772
     命中几率: 154
     闪避几率: 28
   Skills:
@@ -3415,11 +3321,10 @@ rogue_throne_boss_floor97:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 1553814526
-    物理攻击: 1287674
+    物理伤害: 1287674
     物理防御: 43351
     暴击几率: 128
-    暴击伤害: 779
+    暴伤倍率: 779
     命中几率: 154
     闪避几率: 28
   Skills:
@@ -3448,11 +3353,10 @@ rogue_throne_boss_floor98:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 1591717146
-    物理攻击: 1312985
+    物理伤害: 1312985
     物理防御: 44044
     暴击几率: 129
-    暴击伤害: 786
+    暴伤倍率: 786
     命中几率: 155
     闪避几率: 28
   Skills:
@@ -3481,11 +3385,10 @@ rogue_throne_boss_floor99:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 1630145509
-    物理攻击: 1338530
+    物理伤害: 1338530
     物理防御: 44741
     暴击几率: 130
-    暴击伤害: 793
+    暴伤倍率: 793
     命中几率: 155
     闪避几率: 29
   Skills:
@@ -3514,11 +3417,10 @@ rogue_throne_boss_floor100:
     MovementSpeed: 0.27
     KnockbackResistance: 0.88
   AttributePlus:
-    生命上限: 1669101488
-    物理攻击: 1364308
+    物理伤害: 1364308
     物理防御: 45441
     暴击几率: 132
-    暴击伤害: 800
+    暴伤倍率: 800
     命中几率: 155
     闪避几率: 29
   Skills:

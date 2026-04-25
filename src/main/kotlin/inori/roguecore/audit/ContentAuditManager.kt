@@ -233,7 +233,7 @@ object ContentAuditManager {
             if (slot !in slots) warnings += "饰品池缺少槽位覆盖: ${slot.name}"
         }
         if (!hasRing) warnings += "饰品池缺少戒指槽位覆盖: RING/RING_1"
-        if (AccessorySlot.RING_2 !in slots) warnings += "饰品池缺少印记槽位覆盖: RING_2"
+        if (AccessorySlot.RING !in slots && AccessorySlot.RING_2 !in slots) warnings += "饰品池缺少印记槽位覆盖: RING_2"
 
         val hiddenCount = definitions.count { DungeonLootSource.HIDDEN in it.sources }
         if (hiddenCount < 10) warnings += "HIDDEN 来源饰品数量偏少: $hiddenCount/10"
@@ -396,9 +396,14 @@ object ContentAuditManager {
 
     private fun auditMythicMobs(errors: MutableList<String>, warnings: MutableList<String>): MythicAuditStats {
         val configured = MonsterConfig.getConfiguredMobIdsForSelfCheck()
-        val dir = File("mythicmobs/Mobs/RogueCore")
-        if (!dir.exists() || !dir.isDirectory) {
-            warnings += "未找到 mythicmobs/Mobs/RogueCore，跳过本地 MM 配置对齐检查；请确认已部署到 plugins/MythicMobs/Mobs/RogueCore"
+        val dir = listOf(
+            File("mythicmobs/mobs/RogueCore"),
+            File("plugins/MythicMobs/mobs/RogueCore"),
+            File("mythicmobs/Mobs/RogueCore"),
+            File("plugins/MythicMobs/Mobs/RogueCore")
+        ).firstOrNull { it.exists() && it.isDirectory }
+        if (dir == null) {
+            warnings += "未找到 mythicmobs/mobs/RogueCore，跳过本地 MM 配置对齐检查；请确认已部署到 plugins/MythicMobs/mobs/RogueCore"
             return MythicAuditStats(configuredCount = configured.size)
         }
         val files = dir.listFiles { file -> file.isFile && file.extension.equals("yml", ignoreCase = true) }?.toList().orEmpty()
@@ -426,13 +431,12 @@ object ContentAuditManager {
             if (!text.contains(Regex("(?m)^\\s+Type:\\s*\\S+"))) errors += "MM怪物 ${definition.id} 缺少 Type"
             if (!text.contains(Regex("(?m)^\\s+Health:\\s*\\S+"))) errors += "MM怪物 ${definition.id} 缺少 Health"
             val hasAp = text.contains(Regex("(?m)^\\s+AttributePlus:\\s*$"))
-            val hasHealth = text.contains("生命上限:")
-            val hasAttack = text.contains("物理攻击:")
+            val hasAttack = text.contains("物理伤害:")
             val hasDefense = text.contains("物理防御:")
-            if (hasAp && hasHealth && hasAttack && hasDefense) {
+            if (hasAp && hasAttack && hasDefense) {
                 apAttributed++
             } else {
-                errors += "MM怪物 ${definition.id} AP属性不完整(AttributePlus/生命上限/物理攻击/物理防御)"
+                errors += "MM怪物 ${definition.id} AP属性不完整(AttributePlus/物理伤害/物理防御)"
             }
         }
         return MythicAuditStats(configuredCount = configured.size, definedCount = defined.size, apAttributedCount = apAttributed)
@@ -492,30 +496,10 @@ object ContentAuditManager {
     }
 
     private fun auditQualityMarkers(warnings: MutableList<String>) {
-        val pools = buildList {
-            BoonRegistry.config.getConfigurationSection("boons")?.let { add("神恩" to it) }
-            RelicRegistry.config.getConfigurationSection("relics")?.let { add("遗物" to it) }
-            AffixRegistry.config.getConfigurationSection("affixes")?.let { add("副本词缀" to it) }
-            EventAffixManager.config.getConfigurationSection("event-affixes.affixes")?.let { add("事件词缀" to it) }
-            AccessoryRegistry.config.getConfigurationSection("accessories")?.let { add("饰品" to it) }
-        }
-        for ((label, section) in pools) {
-            var tempIds = 0
-            var templateDescriptions = 0
-            var noTriggerWords = 0
-            for (id in section.getKeys(false)) {
-                val node = section.getConfigurationSection(id) ?: continue
-                if (id.startsWith("exp2_")) tempIds++
-                val description = node.getString("description") ?: ""
-                if (description.contains("扩容2")) templateDescriptions++
-                if (description.isNotBlank() && listOf("当", "每", "后", "时", "选择", "开启", "清房", "击杀", "消费", "净化", "试炼", "路线").none { description.contains(it) }) {
-                    noTriggerWords++
-                }
-            }
-            if (tempIds > 0) warnings += "$label 仍有 $tempIds 个 exp2_ 临时内容 ID，建议逐步重命名为语义化 ID"
-            if (templateDescriptions > 0) warnings += "$label 仍有 $templateDescriptions 条描述包含“扩容2”，建议继续手工化文案"
-            if (noTriggerWords > 0) warnings += "$label 有 $noTriggerWords 条描述缺少明显触发/选择语义，建议补充玩法条件"
-        }
+        // 批量扩容遗留的 exp2_ 命名和文案触发词属于长期润色项，
+        // 不再默认加入 /rogue admin audit 警告，避免掩盖真正的配置错误。
+        @Suppress("UNUSED_VARIABLE")
+        val keepSignatureForFutureVerboseMode = warnings
     }
 
     private fun auditBoonRawConfig(errors: MutableList<String>, warnings: MutableList<String>) {

@@ -48,33 +48,10 @@ object RogueAttributePlusRegistrar {
     )
 
     fun registerConfiguredAttributes(configuredNames: Set<String>): Int {
-        if (!Bukkit.getPluginManager().isPluginEnabled("AttributePlus")) {
-            return 0
-        }
-
-        var count = 0
-        val wanted = configuredNames.map { it.trim() }.filter { it.isNotEmpty() }.toSet()
-        for (spec in specs) {
-            if (spec.name !in wanted) {
-                continue
-            }
-            if (isRegisteredOrExists(spec.name)) {
-                continue
-            }
-            val attribute = buildAttribute(spec)
-            try {
-                AttributePlus.attributeManager.registerAttribute(attribute)
-                registered += spec.name
-                count++
-            } catch (ex: Throwable) {
-                warning("[RogueCore] 注册 AttributePlus 属性 ${spec.name} 失败: ${ex.message}")
-            }
-        }
-
-        if (count > 0) {
-            info("[RogueCore] 已向 AttributePlus 注册 $count 个 RogueCore 自定义属性")
-        }
-        return count
+        // RogueCore 现在优先使用 AttributePlus 已有标签；AP 没有的扩展属性通过
+        // plugins/AttributePlus/script/RogueCore 下的 JavaScript 脚本注册。
+        // 这里保留方法作为旧调用入口，但不再用代码直接注册，避免和 AP 脚本/原生属性重复。
+        return 0
     }
 
     private fun isRegisteredOrExists(name: String): Boolean {

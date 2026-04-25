@@ -146,7 +146,7 @@ accessories:
     lore:
       - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      生命上限: [31, 313]
+      生命力: [31, 313]
       物理防御: [4, 54]
     effects:
       effect_1:
@@ -164,7 +164,7 @@ accessories:
     lore:
       - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      生命上限: [31, 313]
+      生命力: [31, 313]
       物理防御: [4, 54]
     effects:
       effect_1:
@@ -182,7 +182,7 @@ accessories:
     lore:
       - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [7, 73]
+      物理伤害: [7, 73]
       暴击几率%: [2, 32]
     effects:
       effect_1:
@@ -200,7 +200,7 @@ accessories:
     lore:
       - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [7, 73]
+      物理伤害: [7, 73]
       暴击几率%: [2, 32]
     effects:
       effect_1:
@@ -218,7 +218,7 @@ accessories:
     lore:
       - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [7, 73]
+      物理伤害: [7, 73]
       暴击几率%: [2, 32]
     effects:
       effect_1:
@@ -236,7 +236,7 @@ accessories:
     lore:
       - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [7, 73]
+      物理伤害: [7, 73]
       暴击几率%: [2, 32]
     effects:
       effect_1:
@@ -254,7 +254,7 @@ accessories:
     lore:
       - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      移动速度%: [2, 32]
+      移速加成%: [2, 32]
       闪避几率%: [2, 25]
     effects:
       effect_1:
@@ -272,7 +272,7 @@ accessories:
     lore:
       - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      移动速度%: [2, 32]
+      移速加成%: [2, 32]
       闪避几率%: [2, 25]
     effects:
       effect_1:
@@ -290,8 +290,8 @@ accessories:
     lore:
       - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      暴击伤害%: [9, 77]
-      生命偷取%: [2, 25]
+      暴伤倍率%: [9, 77]
+      吸血倍率%: [2, 25]
     effects:
       effect_1:
         type: SOUL_DEBT_INTEREST_REDUCTION
@@ -308,8 +308,8 @@ accessories:
     lore:
       - "§7墓誓遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      暴击伤害%: [9, 77]
-      生命偷取%: [2, 25]
+      暴伤倍率%: [9, 77]
+      吸血倍率%: [2, 25]
     effects:
       effect_1:
         type: PROPHECY_REWARD_BONUS_PERCENT
@@ -326,7 +326,7 @@ accessories:
     lore:
       - "§7霜契遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      生命上限: [60, 657]
+      生命力: [60, 657]
       物理防御: [11, 112]
     effects:
       effect_1:
@@ -344,7 +344,7 @@ accessories:
     lore:
       - "§7霜契遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      生命上限: [60, 657]
+      生命力: [60, 657]
       物理防御: [11, 112]
     effects:
       effect_1:
@@ -362,7 +362,7 @@ accessories:
     lore:
       - "§7霜契遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [12, 149]
+      物理伤害: [12, 149]
       暴击几率%: [5, 66]
     effects:
       effect_1:
@@ -380,7 +380,7 @@ accessories:
     lore:
       - "§7霜契遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [12, 149]
+      物理伤害: [12, 149]
       暴击几率%: [5, 66]
     effects:
       effect_1:
@@ -398,7 +398,7 @@ accessories:
     lore:
       - "§7霜契遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [12, 149]
+      物理伤害: [12, 149]
       暴击几率%: [5, 66]
     effects:
       effect_1:
@@ -416,7 +416,7 @@ accessories:
     lore:
       - "§7霜契遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [12, 149]
+      物理伤害: [12, 149]
       暴击几率%: [5, 66]
     effects:
       effect_1:
@@ -434,7 +434,7 @@ accessories:
     lore:
       - "§7霜契遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      移动速度%: [5, 66]
+      移速加成%: [5, 66]
       闪避几率%: [5, 51]
     effects:
       effect_1:
@@ -452,7 +452,7 @@ accessories:
     lore:
       - "§7霜契遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      移动速度%: [5, 66]
+      移速加成%: [5, 66]
       闪避几率%: [5, 51]
     effects:
       effect_1:
@@ -470,8 +470,8 @@ accessories:
     lore:
       - "§7霜契遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      暴击伤害%: [15, 161]
-      生命偷取%: [5, 51]
+      暴伤倍率%: [15, 161]
+      吸血倍率%: [5, 51]
     effects:
       effect_1:
         type: SOUL_DEBT_INTEREST_REDUCTION
@@ -488,8 +488,8 @@ accessories:
     lore:
       - "§7霜契遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      暴击伤害%: [15, 161]
-      生命偷取%: [5, 51]
+      暴伤倍率%: [15, 161]
+      吸血倍率%: [5, 51]
     effects:
       effect_1:
         type: PROPHECY_REWARD_BONUS_PERCENT
@@ -506,7 +506,7 @@ accessories:
     lore:
       - "§7王庭遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      生命上限: [102, 1186]
+      生命力: [102, 1186]
       物理防御: [15, 217]
     effects:
       effect_1:
@@ -524,7 +524,7 @@ accessories:
     lore:
       - "§7王庭遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      生命上限: [102, 1186]
+      生命力: [102, 1186]
       物理防御: [15, 217]
     effects:
       effect_1:
@@ -542,7 +542,7 @@ accessories:
     lore:
       - "§7王庭遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [20, 284]
+      物理伤害: [20, 284]
       暴击几率%: [8, 125]
     effects:
       effect_1:
@@ -560,7 +560,7 @@ accessories:
     lore:
       - "§7王庭遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [20, 284]
+      物理伤害: [20, 284]
       暴击几率%: [8, 125]
     effects:
       effect_1:
@@ -578,7 +578,7 @@ accessories:
     lore:
       - "§7王庭遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [20, 284]
+      物理伤害: [20, 284]
       暴击几率%: [8, 125]
     effects:
       effect_1:
@@ -596,7 +596,7 @@ accessories:
     lore:
       - "§7王庭遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [20, 284]
+      物理伤害: [20, 284]
       暴击几率%: [8, 125]
     effects:
       effect_1:
@@ -614,7 +614,7 @@ accessories:
     lore:
       - "§7王庭遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      移动速度%: [8, 125]
+      移速加成%: [8, 125]
       闪避几率%: [8, 90]
     effects:
       effect_1:
@@ -632,7 +632,7 @@ accessories:
     lore:
       - "§7王庭遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      移动速度%: [8, 125]
+      移速加成%: [8, 125]
       闪避几率%: [8, 90]
     effects:
       effect_1:
@@ -650,8 +650,8 @@ accessories:
     lore:
       - "§7王庭遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      暴击伤害%: [26, 284]
-      生命偷取%: [8, 90]
+      暴伤倍率%: [26, 284]
+      吸血倍率%: [8, 90]
     effects:
       effect_1:
         type: SOUL_DEBT_INTEREST_REDUCTION
@@ -668,8 +668,8 @@ accessories:
     lore:
       - "§7王庭遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      暴击伤害%: [26, 284]
-      生命偷取%: [8, 90]
+      暴伤倍率%: [26, 284]
+      吸血倍率%: [8, 90]
     effects:
       effect_1:
         type: PROPHECY_REWARD_BONUS_PERCENT
@@ -686,7 +686,7 @@ accessories:
     lore:
       - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      生命上限: [160, 1993]
+      生命力: [160, 1993]
       物理防御: [24, 353]
     effects:
       effect_1:
@@ -704,7 +704,7 @@ accessories:
     lore:
       - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      生命上限: [160, 1993]
+      生命力: [160, 1993]
       物理防御: [24, 353]
     effects:
       effect_1:
@@ -722,7 +722,7 @@ accessories:
     lore:
       - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [34, 463]
+      物理伤害: [34, 463]
       暴击几率%: [12, 195]
     effects:
       effect_1:
@@ -740,7 +740,7 @@ accessories:
     lore:
       - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [34, 463]
+      物理伤害: [34, 463]
       暴击几率%: [12, 195]
     effects:
       effect_1:
@@ -758,7 +758,7 @@ accessories:
     lore:
       - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [34, 463]
+      物理伤害: [34, 463]
       暴击几率%: [12, 195]
     effects:
       effect_1:
@@ -776,7 +776,7 @@ accessories:
     lore:
       - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [34, 463]
+      物理伤害: [34, 463]
       暴击几率%: [12, 195]
     effects:
       effect_1:
@@ -794,7 +794,7 @@ accessories:
     lore:
       - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      移动速度%: [12, 195]
+      移速加成%: [12, 195]
       闪避几率%: [12, 165]
     effects:
       effect_1:
@@ -812,7 +812,7 @@ accessories:
     lore:
       - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      移动速度%: [12, 195]
+      移速加成%: [12, 195]
       闪避几率%: [12, 165]
     effects:
       effect_1:
@@ -830,8 +830,8 @@ accessories:
     lore:
       - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      暴击伤害%: [38, 475]
-      生命偷取%: [12, 165]
+      暴伤倍率%: [38, 475]
+      吸血倍率%: [12, 165]
     effects:
       effect_1:
         type: SOUL_DEBT_INTEREST_REDUCTION
@@ -848,8 +848,8 @@ accessories:
     lore:
       - "§7雷塔遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      暴击伤害%: [38, 475]
-      生命偷取%: [12, 165]
+      暴伤倍率%: [38, 475]
+      吸血倍率%: [12, 165]
     effects:
       effect_1:
         type: PROPHECY_REWARD_BONUS_PERCENT
@@ -866,7 +866,7 @@ accessories:
     lore:
       - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      生命上限: [242, 3211]
+      生命力: [242, 3211]
       物理防御: [38, 561]
     effects:
       effect_1:
@@ -884,7 +884,7 @@ accessories:
     lore:
       - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      生命上限: [242, 3211]
+      生命力: [242, 3211]
       物理防御: [38, 561]
     effects:
       effect_1:
@@ -902,7 +902,7 @@ accessories:
     lore:
       - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [48, 765]
+      物理伤害: [48, 765]
       暴击几率%: [18, 308]
     effects:
       effect_1:
@@ -920,7 +920,7 @@ accessories:
     lore:
       - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [48, 765]
+      物理伤害: [48, 765]
       暴击几率%: [18, 308]
     effects:
       effect_1:
@@ -938,7 +938,7 @@ accessories:
     lore:
       - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [48, 765]
+      物理伤害: [48, 765]
       暴击几率%: [18, 308]
     effects:
       effect_1:
@@ -956,7 +956,7 @@ accessories:
     lore:
       - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [48, 765]
+      物理伤害: [48, 765]
       暴击几率%: [18, 308]
     effects:
       effect_1:
@@ -974,7 +974,7 @@ accessories:
     lore:
       - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      移动速度%: [18, 308]
+      移速加成%: [18, 308]
       闪避几率%: [18, 248]
     effects:
       effect_1:
@@ -992,7 +992,7 @@ accessories:
     lore:
       - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      移动速度%: [18, 308]
+      移速加成%: [18, 308]
       闪避几率%: [18, 248]
     effects:
       effect_1:
@@ -1010,8 +1010,8 @@ accessories:
     lore:
       - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      暴击伤害%: [55, 728]
-      生命偷取%: [18, 248]
+      暴伤倍率%: [55, 728]
+      吸血倍率%: [18, 248]
     effects:
       effect_1:
         type: SOUL_DEBT_INTEREST_REDUCTION
@@ -1028,8 +1028,8 @@ accessories:
     lore:
       - "§7镜砂遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      暴击伤害%: [55, 728]
-      生命偷取%: [18, 248]
+      暴伤倍率%: [55, 728]
+      吸血倍率%: [18, 248]
     effects:
       effect_1:
         type: PROPHECY_REWARD_BONUS_PERCENT
@@ -1046,7 +1046,7 @@ accessories:
     lore:
       - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      生命上限: [353, 4954]
+      生命力: [353, 4954]
       物理防御: [52, 888]
     effects:
       effect_1:
@@ -1064,7 +1064,7 @@ accessories:
     lore:
       - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      生命上限: [353, 4954]
+      生命力: [353, 4954]
       物理防御: [52, 888]
     effects:
       effect_1:
@@ -1082,7 +1082,7 @@ accessories:
     lore:
       - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [71, 1161]
+      物理伤害: [71, 1161]
       暴击几率%: [28, 468]
     effects:
       effect_1:
@@ -1100,7 +1100,7 @@ accessories:
     lore:
       - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [71, 1161]
+      物理伤害: [71, 1161]
       暴击几率%: [28, 468]
     effects:
       effect_1:
@@ -1118,7 +1118,7 @@ accessories:
     lore:
       - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [71, 1161]
+      物理伤害: [71, 1161]
       暴击几率%: [28, 468]
     effects:
       effect_1:
@@ -1136,7 +1136,7 @@ accessories:
     lore:
       - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [71, 1161]
+      物理伤害: [71, 1161]
       暴击几率%: [28, 468]
     effects:
       effect_1:
@@ -1154,7 +1154,7 @@ accessories:
     lore:
       - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      移动速度%: [28, 468]
+      移速加成%: [28, 468]
       闪避几率%: [28, 370]
     effects:
       effect_1:
@@ -1172,7 +1172,7 @@ accessories:
     lore:
       - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      移动速度%: [28, 468]
+      移速加成%: [28, 468]
       闪避几率%: [28, 370]
     effects:
       effect_1:
@@ -1190,8 +1190,8 @@ accessories:
     lore:
       - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      暴击伤害%: [80, 1109]
-      生命偷取%: [28, 370]
+      暴伤倍率%: [80, 1109]
+      吸血倍率%: [28, 370]
     effects:
       effect_1:
         type: SOUL_DEBT_INTEREST_REDUCTION
@@ -1208,8 +1208,8 @@ accessories:
     lore:
       - "§7月蚀遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      暴击伤害%: [80, 1109]
-      生命偷取%: [28, 370]
+      暴伤倍率%: [80, 1109]
+      吸血倍率%: [28, 370]
     effects:
       effect_1:
         type: PROPHECY_REWARD_BONUS_PERCENT
@@ -1226,7 +1226,7 @@ accessories:
     lore:
       - "§7终座遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      生命上限: [524, 7636]
+      生命力: [524, 7636]
       物理防御: [78, 1361]
     effects:
       effect_1:
@@ -1244,7 +1244,7 @@ accessories:
     lore:
       - "§7终座遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      生命上限: [524, 7636]
+      生命力: [524, 7636]
       物理防御: [78, 1361]
     effects:
       effect_1:
@@ -1262,7 +1262,7 @@ accessories:
     lore:
       - "§7终座遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [103, 1777]
+      物理伤害: [103, 1777]
       暴击几率%: [41, 720]
     effects:
       effect_1:
@@ -1280,7 +1280,7 @@ accessories:
     lore:
       - "§7终座遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [103, 1777]
+      物理伤害: [103, 1777]
       暴击几率%: [41, 720]
     effects:
       effect_1:
@@ -1298,7 +1298,7 @@ accessories:
     lore:
       - "§7终座遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [103, 1777]
+      物理伤害: [103, 1777]
       暴击几率%: [41, 720]
     effects:
       effect_1:
@@ -1316,7 +1316,7 @@ accessories:
     lore:
       - "§7终座遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      物理攻击: [103, 1777]
+      物理伤害: [103, 1777]
       暴击几率%: [41, 720]
     effects:
       effect_1:
@@ -1334,7 +1334,7 @@ accessories:
     lore:
       - "§7终座遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      移动速度%: [41, 720]
+      移速加成%: [41, 720]
       闪避几率%: [41, 559]
     effects:
       effect_1:
@@ -1352,7 +1352,7 @@ accessories:
     lore:
       - "§7终座遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      移动速度%: [41, 720]
+      移速加成%: [41, 720]
       闪避几率%: [41, 559]
     effects:
       effect_1:
@@ -1370,8 +1370,8 @@ accessories:
     lore:
       - "§7终座遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      暴击伤害%: [115, 1705]
-      生命偷取%: [41, 559]
+      暴伤倍率%: [115, 1705]
+      吸血倍率%: [41, 559]
     effects:
       effect_1:
         type: SOUL_DEBT_INTEREST_REDUCTION
@@ -1388,8 +1388,8 @@ accessories:
     lore:
       - "§7终座遗留的小型饰物，会在关键选择时回应。"
     attributes:
-      暴击伤害%: [115, 1705]
-      生命偷取%: [41, 559]
+      暴伤倍率%: [115, 1705]
+      吸血倍率%: [41, 559]
     effects:
       effect_1:
         type: PROPHECY_REWARD_BONUS_PERCENT

@@ -11,12 +11,12 @@ talents:
   # ===== 生存系 =====
   hp_talent:
     name: "生命强化"
-    description: "进入副本时生命上限 +{value}"
+    description: "进入副本时生命力 +{value}"
     icon: GOLDEN_APPLE
     max-level: 10
     cost: [100, 180, 300, 460, 680, 980, 1360, 1840, 2400, 3100]
     effect-type: ATTRIBUTE
-    attribute: "生命上限"
+    attribute: "生命力"
     value-per-level: 22.0
 
   defense_talent:
@@ -72,12 +72,12 @@ talents:
   # ===== 进攻系 =====
   atk_talent:
     name: "攻击强化"
-    description: "进入副本时物理攻击 +{value}"
+    description: "进入副本时物理伤害 +{value}"
     icon: IRON_SWORD
     max-level: 10
     cost: [100, 180, 300, 460, 680, 980, 1360, 1840, 2400, 3100]
     effect-type: ATTRIBUTE
-    attribute: "物理攻击"
+    attribute: "物理伤害"
     value-per-level: 6.0
 
   crit_talent:
@@ -92,12 +92,12 @@ talents:
 
   crit_damage_talent:
     name: "裂心重击"
-    description: "进入副本时暴击伤害 +{value}%"
+    description: "进入副本时暴伤倍率 +{value}%"
     icon: DIAMOND_SWORD
     max-level: 8
     cost: [110, 190, 310, 480, 720, 1040, 1440, 1960]
     effect-type: ATTRIBUTE
-    attribute: "暴击伤害"
+    attribute: "暴伤倍率"
     value-per-level: 5.0
 
   attack_speed_talent:
@@ -111,13 +111,13 @@ talents:
     value-per-level: 3.0
 
   armor_break_talent:
-    name: "破甲训练"
-    description: "进入副本时破甲 +{value}%"
+    name: "护甲穿透训练"
+    description: "进入副本时护甲穿透 +{value}%"
     icon: IRON_AXE
     max-level: 8
     cost: [100, 170, 270, 420, 640, 920, 1280, 1760]
     effect-type: ATTRIBUTE
-    attribute: "破甲"
+    attribute: "护甲穿透"
     value-per-level: 3.5
 
   boss_damage_talent:
@@ -171,33 +171,33 @@ talents:
 
   movement_talent:
     name: "远征步法"
-    description: "进入副本时移动速度 +{value}%"
+    description: "进入副本时移速加成 +{value}%"
     icon: RABBIT_FOOT
     max-level: 8
     cost: [80, 140, 220, 340, 520, 780, 1120, 1560]
     effect-type: ATTRIBUTE
-    attribute: "移动速度"
+    attribute: "移速加成"
     value-per-level: 2.5
 
   lifesteal_talent:
     name: "战利汲取"
-    description: "进入副本时生命偷取 +{value}%"
+    description: "进入副本时吸血倍率 +{value}%"
     icon: REDSTONE
     max-level: 8
     cost: [110, 190, 310, 480, 720, 1040, 1440, 1960]
     effect-type: ATTRIBUTE
-    attribute: "生命偷取"
+    attribute: "吸血倍率"
     value-per-level: 2.5
 
   # ===== 特殊流派系 =====
   thunder_talent:
     name: "雷霆刻印"
-    description: "进入副本时雷霆伤害 +{value}"
+    description: "进入副本时雷击伤害 +{value}"
     icon: LIGHTNING_ROD
     max-level: 8
     cost: [100, 170, 270, 420, 640, 920, 1280, 1760]
     effect-type: ATTRIBUTE
-    attribute: "雷霆伤害"
+    attribute: "雷击伤害"
     value-per-level: 6.0
 
   frost_talent:

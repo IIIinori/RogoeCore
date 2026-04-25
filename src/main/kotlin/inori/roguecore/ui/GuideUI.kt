@@ -49,10 +49,10 @@ object GuideUI {
                 "§7Boss 首杀会自动点亮并给一次奖励。"
             )))
             set(15, pageItem(XMaterial.SPAWNER, "§c怪物配置", listOf(
-                "§7已生成 MythicMobs 配置: mythicmobs/Mobs/RogueCore。",
-                "§7复制到 plugins/MythicMobs/Mobs/RogueCore。",
-                "§7执行 /mm reload 后再执行 /rogue admin check。",
-                "§7怪物属性写在 AttributePlus 节点。"
+                "§7已生成 MythicMobs 配置: mythicmobs/mobs/RogueCore。",
+                "§7复制到 plugins/MythicMobs/mobs/RogueCore。",
+                "§7复制 attributeplus/script/RogueCore 到 AP 脚本目录。",
+                "§7重载 AP/MM 后再执行 /rogue admin check。"
             )))
             set(16, pageItem(XMaterial.COMPASS, "§b常用命令", listOf(
                 "§7/rogue menu §f主菜单",

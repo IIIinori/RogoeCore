@@ -215,11 +215,11 @@ relics:
     value: 7
   exp_boss_ember_jar:
     name: "首领余烬罐"
-    description: "Boss 额外余烬收益"
+    description: "Boss 额外余烬收益提高，适合专门刷首领资源"
     rarity: EPIC
     icon: BLAZE_POWDER
     effect-type: BOSS_EMBER_BONUS
-    value: 2
+    value: 3
   exp_hidden_tuning_key:
     name: "暗门调音钥"
     description: "额外隐藏钥匙概率"
@@ -624,11 +624,11 @@ relics:
     value: 45.5
   exp2_relic_32:
     name: "冷铁马刺"
-    description: "冷铁马刺会改变本局资源节奏，提供COMBAT_START_SHIELD相关收益"
+    description: "进入战斗时获得更厚的冷铁护盾，适合高压开局"
     rarity: COMMON
     icon: SHIELD
     effect-type: COMBAT_START_SHIELD
-    value: 7
+    value: 9
   exp2_relic_33:
     name: "群星罗盘"
     description: "群星罗盘会改变本局资源节奏，提供ELITE_LOOT_CHANCE相关收益"
@@ -749,5 +749,8 @@ relics:
     description: "每清理 2 个房间充满一次，让下一次神恩复制，适合路线连锁爆发"
     rarity: LEGENDARY
     icon: END_CRYSTAL
+    effect-type: RELIC_CHARGE_ON_ROOM
+    value: 2
+
     effect-type: RELIC_CHARGE_ON_ROOM
     value: 2

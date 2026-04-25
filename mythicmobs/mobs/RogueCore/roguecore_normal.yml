@@ -1,9 +1,11 @@
 # RogueCore generated MythicMobs config
 # 部署说明:
-# 1. 复制 mythicmobs/Mobs/RogueCore 到 plugins/MythicMobs/Mobs/RogueCore
-# 2. 执行 /mm reload
-# 3. 执行 /rogue admin check 检查缺失怪物 ID
-# 注意: 本配置使用 AttributePlus: 节点写怪物属性，如你的 AP/MM Hook 节点不同，请统一替换该块名称。
+# 1. 复制 mythicmobs/mobs/RogueCore 到 plugins/MythicMobs/mobs/RogueCore
+# 2. 复制 attributeplus/script/RogueCore 到 plugins/AttributePlus/script/RogueCore
+# 3. 重载 AttributePlus 脚本或重启服务器
+# 4. 执行 /mm reload
+# 5. 执行 /rogue admin check 检查缺失怪物 ID
+# 注意: 本配置使用 AttributePlus: 节点写怪物攻防属性；生命请使用 MythicMobs 原生 Health。
 # AP monster attributes are written in the AttributePlus block.
 # If your AttributePlus-MythicMobs hook uses another node name, only this block needs format conversion.
 
@@ -25,11 +27,10 @@ rogue_crypt_bonewalker:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1029
-    物理攻击: 138
+    物理伤害: 138
     物理防御: 26
     暴击几率: 2
-    暴击伤害: 32
+    暴伤倍率: 32
     命中几率: 95
     闪避几率: 0
   Skills:
@@ -50,11 +51,10 @@ rogue_crypt_grave_hound:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 1237
-    物理攻击: 365
+    物理伤害: 365
     物理防御: 24
     暴击几率: 4
-    暴击伤害: 34
+    暴伤倍率: 34
     命中几率: 96
     闪避几率: 1
   Skills:
@@ -79,11 +79,10 @@ rogue_crypt_dust_acolyte:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 2480
-    物理攻击: 430
+    物理伤害: 430
     物理防御: 38
     暴击几率: 5
-    暴击伤害: 37
+    暴伤倍率: 37
     命中几率: 96
     闪避几率: 1
   Skills:
@@ -104,11 +103,10 @@ rogue_crypt_crypt_lurker:
     MovementSpeed: 0.24
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 4931
-    物理攻击: 489
+    物理伤害: 489
     物理防御: 56
     暴击几率: 5
-    暴击伤害: 39
+    暴伤倍率: 39
     命中几率: 96
     闪避几率: 1
   Skills:
@@ -133,11 +131,10 @@ rogue_crypt_tomb_guard:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 19584
-    物理攻击: 392
+    物理伤害: 392
     物理防御: 199
     暴击几率: 3
-    暴击伤害: 41
+    暴伤倍率: 41
     命中几率: 96
     闪避几率: 0
   Skills:
@@ -162,11 +159,10 @@ rogue_crypt_reaver:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 9139
-    物理攻击: 503
+    物理伤害: 503
     物理防御: 93
     暴击几率: 4
-    暴击伤害: 41
+    暴伤倍率: 41
     命中几率: 96
     闪避几率: 1
   Skills:
@@ -187,11 +183,10 @@ rogue_crypt_bulwark:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 6267
-    物理攻击: 981
+    物理伤害: 981
     物理防御: 60
     暴击几率: 7
-    暴击伤害: 41
+    暴伤倍率: 41
     命中几率: 96
     闪避几率: 2
   Skills:
@@ -216,11 +211,10 @@ rogue_crypt_hexer:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 6789
-    物理攻击: 815
+    物理伤害: 815
     物理防御: 67
     暴击几率: 6
-    暴击伤害: 41
+    暴伤倍率: 41
     命中几率: 96
     闪避几率: 1
   Skills:
@@ -241,11 +235,10 @@ rogue_crypt_skirmisher:
     MovementSpeed: 0.24
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 7834
-    物理攻击: 664
+    物理伤害: 664
     物理防御: 72
     暴击几率: 5
-    暴击伤害: 41
+    暴伤倍率: 41
     命中几率: 96
     闪避几率: 1
   Skills:
@@ -270,11 +263,10 @@ rogue_crypt_warden:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 19584
-    物理攻击: 392
+    物理伤害: 392
     物理防御: 199
     暴击几率: 3
-    暴击伤害: 41
+    暴伤倍率: 41
     命中几率: 96
     闪避几率: 0
   Skills:
@@ -299,11 +291,10 @@ rogue_nether_ember_imp:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 13578
-    物理攻击: 662
+    物理伤害: 662
     物理防御: 116
     暴击几率: 5
-    暴击伤害: 43
+    暴伤倍率: 43
     命中几率: 97
     闪避几率: 1
   Skills:
@@ -328,11 +319,10 @@ rogue_nether_ash_piglin:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 13124
-    物理攻击: 1650
+    物理伤害: 1650
     物理防御: 93
     暴击几率: 8
-    暴击伤害: 45
+    暴伤倍率: 45
     命中几率: 97
     闪避几率: 2
   Skills:
@@ -357,11 +347,10 @@ rogue_nether_blaze_cultist:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 19229
-    物理攻击: 1710
+    物理伤害: 1710
     物理防御: 123
     暴击几率: 8
-    暴击伤害: 48
+    暴伤倍率: 48
     命中几率: 97
     闪避几率: 2
   Skills:
@@ -382,11 +371,10 @@ rogue_nether_magma_hound:
     MovementSpeed: 0.24
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 29033
-    物理攻击: 1703
+    物理伤害: 1703
     物理防御: 157
     暴击几率: 7
-    暴击伤害: 50
+    暴伤倍率: 50
     命中几率: 97
     闪避几率: 2
   Skills:
@@ -411,11 +399,10 @@ rogue_nether_wither_scout:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 92468
-    物理攻击: 1209
+    物理伤害: 1209
     物理防御: 501
     暴击几率: 5
-    暴击伤害: 52
+    暴伤倍率: 52
     命中几率: 98
     闪避几率: 1
   Skills:
@@ -440,11 +427,10 @@ rogue_nether_reaver:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 43152
-    物理攻击: 1550
+    物理伤害: 1550
     物理防御: 233
     暴击几率: 7
-    暴击伤害: 52
+    暴伤倍率: 52
     命中几率: 98
     闪避几率: 2
   Skills:
@@ -469,11 +455,10 @@ rogue_nether_bulwark:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 29590
-    物理攻击: 3022
+    物理伤害: 3022
     物理防御: 151
     暴击几率: 10
-    暴击伤害: 52
+    暴伤倍率: 52
     命中几率: 98
     闪避几率: 3
   Skills:
@@ -498,11 +483,10 @@ rogue_nether_hexer:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 32056
-    物理攻击: 2511
+    物理伤害: 2511
     物理防御: 168
     暴击几率: 9
-    暴击伤害: 52
+    暴伤倍率: 52
     命中几率: 98
     闪避几率: 2
   Skills:
@@ -523,11 +507,10 @@ rogue_nether_skirmisher:
     MovementSpeed: 0.24
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 36987
-    物理攻击: 2046
+    物理伤害: 2046
     物理防御: 182
     暴击几率: 8
-    暴击伤害: 52
+    暴伤倍率: 52
     命中几率: 98
     闪避几率: 2
   Skills:
@@ -552,11 +535,10 @@ rogue_nether_warden:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 92468
-    物理攻击: 1209
+    物理伤害: 1209
     物理防御: 501
     暴击几率: 5
-    暴击伤害: 52
+    暴伤倍率: 52
     命中几率: 98
     闪避几率: 1
   Skills:
@@ -581,11 +563,10 @@ rogue_end_voidling:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 53774
-    物理攻击: 1834
+    物理伤害: 1834
     物理防御: 267
     暴击几率: 7
-    暴击伤害: 54
+    暴伤倍率: 54
     命中几率: 98
     闪避几率: 2
   Skills:
@@ -606,11 +587,10 @@ rogue_end_end_sentinel:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 45109
-    物理攻击: 4176
+    物理伤害: 4176
     物理防御: 197
     暴击几率: 11
-    暴击伤害: 56
+    暴伤倍率: 56
     命中几率: 98
     闪避几率: 4
   Skills:
@@ -631,11 +611,10 @@ rogue_end_shulker_wisp:
     MovementSpeed: 0.23
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 58852
-    物理攻击: 4008
+    物理伤害: 4008
     物理防御: 245
     暴击几率: 11
-    暴击伤害: 59
+    暴伤倍率: 59
     命中几率: 98
     闪避几率: 2
   Skills:
@@ -660,11 +639,10 @@ rogue_end_chorus_stalker:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 80688
-    物理攻击: 3735
+    物理伤害: 3735
     物理防御: 295
     暴击几率: 10
-    暴击伤害: 61
+    暴伤倍率: 61
     命中几率: 99
     闪避几率: 3
   Skills:
@@ -689,11 +667,10 @@ rogue_end_pearl_hunter:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 236909
-    物理攻击: 2503
+    物理伤害: 2503
     物理防御: 901
     暴击几率: 6
-    暴击伤害: 63
+    暴伤倍率: 63
     命中几率: 99
     闪避几率: 1
   Skills:
@@ -718,11 +695,10 @@ rogue_end_reaver:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 110558
-    物理攻击: 3209
+    物理伤害: 3209
     物理防御: 419
     暴击几率: 9
-    暴击伤害: 63
+    暴伤倍率: 63
     命中几率: 99
     闪避几率: 3
   Skills:
@@ -743,11 +719,10 @@ rogue_end_bulwark:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 75811
-    物理攻击: 6258
+    物理伤害: 6258
     物理防御: 272
     暴击几率: 14
-    暴击伤害: 63
+    暴伤倍率: 63
     命中几率: 99
     闪避几率: 5
   Skills:
@@ -768,11 +743,10 @@ rogue_end_hexer:
     MovementSpeed: 0.23
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 82128
-    物理攻击: 5199
+    物理伤害: 5199
     物理防御: 302
     暴击几率: 12
-    暴击伤害: 63
+    暴伤倍率: 63
     命中几率: 99
     闪避几率: 3
   Skills:
@@ -797,11 +771,10 @@ rogue_end_skirmisher:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 94764
-    物理攻击: 4236
+    物理伤害: 4236
     物理防御: 327
     暴击几率: 11
-    暴击伤害: 63
+    暴伤倍率: 63
     命中几率: 99
     闪避几率: 3
   Skills:
@@ -826,11 +799,10 @@ rogue_end_warden:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 236909
-    物理攻击: 2503
+    物理伤害: 2503
     物理防御: 901
     暴击几率: 6
-    暴击伤害: 63
+    暴伤倍率: 63
     命中几率: 99
     闪避几率: 1
   Skills:
@@ -855,11 +827,10 @@ rogue_frost_ice_crawler:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 128526
-    物理攻击: 3612
+    物理伤害: 3612
     物理防御: 461
     暴击几率: 9
-    暴击伤害: 65
+    暴伤倍率: 65
     命中几率: 99
     闪避几率: 3
   Skills:
@@ -880,11 +851,10 @@ rogue_frost_frost_skeleton:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 101538
-    物理攻击: 7875
+    物理伤害: 7875
     物理防御: 328
     暴击几率: 15
-    暴击伤害: 67
+    暴伤倍率: 67
     命中几率: 99
     闪避几率: 6
   Skills:
@@ -909,11 +879,10 @@ rogue_frost_glacier_witch:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 125724
-    物理攻击: 7271
+    物理伤害: 7271
     物理防御: 396
     暴击几率: 14
-    暴击伤害: 70
+    暴伤倍率: 70
     命中几率: 100
     闪避几率: 3
   Skills:
@@ -938,11 +907,10 @@ rogue_frost_snowbound_guard:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 164623
-    物理攻击: 6548
+    物理伤害: 6548
     物理防御: 465
     暴击几率: 13
-    暴击伤害: 72
+    暴伤倍率: 72
     命中几率: 100
     闪避几率: 4
   Skills:
@@ -963,11 +931,10 @@ rogue_frost_rime_spider:
     MovementSpeed: 0.19
     KnockbackResistance: 0.55
   AttributePlus:
-    生命上限: 464049
-    物理攻击: 4256
+    物理伤害: 4256
     物理防御: 1383
     暴击几率: 8
-    暴击伤害: 74
+    暴伤倍率: 74
     命中几率: 100
     闪避几率: 2
   Skills:
@@ -992,11 +959,10 @@ rogue_frost_reaver:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 216556
-    物理攻击: 5456
+    物理伤害: 5456
     物理防御: 643
     暴击几率: 11
-    暴击伤害: 74
+    暴伤倍率: 74
     命中几率: 100
     闪避几率: 4
   Skills:
@@ -1017,11 +983,10 @@ rogue_frost_bulwark:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 148496
-    物理攻击: 10640
+    物理伤害: 10640
     物理防御: 418
     暴击几率: 17
-    暴击伤害: 74
+    暴伤倍率: 74
     命中几率: 100
     闪避几率: 6
   Skills:
@@ -1046,11 +1011,10 @@ rogue_frost_hexer:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 160870
-    物理攻击: 8839
+    物理伤害: 8839
     物理防御: 463
     暴击几率: 15
-    暴击伤害: 74
+    暴伤倍率: 74
     命中几率: 100
     闪避几率: 4
   Skills:
@@ -1075,11 +1039,10 @@ rogue_frost_skirmisher:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 185619
-    物理攻击: 7202
+    物理伤害: 7202
     物理防御: 502
     暴击几率: 13
-    暴击伤害: 74
+    暴伤倍率: 74
     命中几率: 100
     闪避几率: 4
   Skills:
@@ -1100,11 +1063,10 @@ rogue_frost_warden:
     MovementSpeed: 0.19
     KnockbackResistance: 0.55
   AttributePlus:
-    生命上限: 464049
-    物理攻击: 4256
+    物理伤害: 4256
     物理防御: 1383
     暴击几率: 8
-    暴击伤害: 74
+    暴伤倍率: 74
     命中几率: 100
     闪避几率: 2
   Skills:
@@ -1125,11 +1087,10 @@ rogue_forge_slag_golem:
     MovementSpeed: 0.24
     KnockbackResistance: 0.18
   AttributePlus:
-    生命上限: 242763
-    物理攻击: 5974
+    物理伤害: 5974
     物理防御: 692
     暴击几率: 11
-    暴击伤害: 76
+    暴伤倍率: 76
     命中几率: 100
     闪避几率: 4
   Skills:
@@ -1154,11 +1115,10 @@ rogue_forge_cinder_guard:
     - IRON_HELMET HEAD
     - IRON_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 185630
-    物理攻击: 12705
+    物理伤害: 12705
     物理防御: 483
     暴击几率: 18
-    暴击伤害: 78
+    暴伤倍率: 78
     命中几率: 101
     闪避几率: 7
   Skills:
@@ -1183,11 +1143,10 @@ rogue_forge_obsidian_hound:
     - IRON_HELMET HEAD
     - IRON_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 223174
-    物理攻击: 11468
+    物理伤害: 11468
     物理防御: 572
     暴击几率: 17
-    暴击伤害: 81
+    暴伤倍率: 81
     命中几率: 101
     闪避几率: 4
   Skills:
@@ -1212,11 +1171,10 @@ rogue_forge_anvil_thrall:
     - IRON_HELMET HEAD
     - IRON_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 284519
-    物理攻击: 10118
+    物理伤害: 10118
     物理防御: 661
     暴击几率: 15
-    暴击伤害: 83
+    暴伤倍率: 83
     命中几率: 101
     闪避几率: 5
   Skills:
@@ -1241,11 +1199,10 @@ rogue_forge_blast_mage:
     - IRON_HELMET HEAD
     - IRON_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 782733
-    物理攻击: 6454
+    物理伤害: 6454
     物理防御: 1937
     暴击几率: 9
-    暴击伤害: 85
+    暴伤倍率: 85
     命中几率: 101
     闪避几率: 2
   Skills:
@@ -1266,11 +1223,10 @@ rogue_forge_reaver:
     MovementSpeed: 0.24
     KnockbackResistance: 0.18
   AttributePlus:
-    生命上限: 365276
-    物理攻击: 8274
+    物理伤害: 8274
     物理防御: 901
     暴击几率: 13
-    暴击伤害: 85
+    暴伤倍率: 85
     命中几率: 101
     闪避几率: 5
   Skills:
@@ -1295,11 +1251,10 @@ rogue_forge_bulwark:
     - IRON_HELMET HEAD
     - IRON_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 250475
-    物理攻击: 16134
+    物理伤害: 16134
     物理防御: 586
     暴击几率: 21
-    暴击伤害: 85
+    暴伤倍率: 85
     命中几率: 101
     闪避几率: 8
   Skills:
@@ -1324,11 +1279,10 @@ rogue_forge_hexer:
     - IRON_HELMET HEAD
     - IRON_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 271348
-    物理攻击: 13404
+    物理伤害: 13404
     物理防御: 649
     暴击几率: 18
-    暴击伤害: 85
+    暴伤倍率: 85
     命中几率: 101
     闪避几率: 5
   Skills:
@@ -1353,11 +1307,10 @@ rogue_forge_skirmisher:
     - IRON_HELMET HEAD
     - IRON_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 313093
-    物理攻击: 10921
+    物理伤害: 10921
     物理防御: 703
     暴击几率: 16
-    暴击伤害: 85
+    暴伤倍率: 85
     命中几率: 101
     闪避几率: 5
   Skills:
@@ -1382,11 +1335,10 @@ rogue_forge_warden:
     - IRON_HELMET HEAD
     - IRON_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 782733
-    物理攻击: 6454
+    物理伤害: 6454
     物理防御: 1937
     暴击几率: 9
-    暴击伤害: 85
+    暴伤倍率: 85
     命中几率: 101
     闪避几率: 2
   Skills:
@@ -1411,11 +1363,10 @@ rogue_astral_star_wraith:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 400462
-    物理攻击: 8905
+    物理伤害: 8905
     物理防御: 956
     暴击几率: 14
-    暴击伤害: 87
+    暴伤倍率: 87
     命中几率: 102
     闪避几率: 5
   Skills:
@@ -1436,11 +1387,10 @@ rogue_astral_astral_knight:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 300016
-    物理攻击: 18637
+    物理伤害: 18637
     物理防御: 658
     暴击几率: 22
-    暴击伤害: 89
+    暴伤倍率: 89
     命中几率: 102
     闪避几率: 9
   Skills:
@@ -1461,11 +1411,10 @@ rogue_astral_nebula_eye:
     MovementSpeed: 0.23
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 353960
-    物理攻击: 16577
+    物理伤害: 16577
     物理防御: 770
     暴击几率: 20
-    暴击伤害: 92
+    暴伤倍率: 92
     命中几率: 102
     闪避几率: 5
   Skills:
@@ -1490,11 +1439,10 @@ rogue_astral_comet_shard:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 443462
-    物理攻击: 14428
+    物理伤害: 14428
     物理防御: 880
     暴击几率: 18
-    暴击伤害: 94
+    暴伤倍率: 94
     命中几率: 102
     闪避几率: 6
   Skills:
@@ -1519,11 +1467,10 @@ rogue_astral_lunar_adept:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1200443
-    物理攻击: 9086
+    物理伤害: 9086
     物理防御: 2556
     暴击几率: 11
-    暴击伤害: 96
+    暴伤倍率: 96
     命中几率: 103
     闪避几率: 3
   Skills:
@@ -1548,11 +1495,10 @@ rogue_astral_reaver:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 560207
-    物理攻击: 11649
+    物理伤害: 11649
     物理防御: 1189
     暴击几率: 16
-    暴击伤害: 96
+    暴伤倍率: 96
     命中几率: 103
     闪避几率: 5
   Skills:
@@ -1573,11 +1519,10 @@ rogue_astral_bulwark:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 384142
-    物理攻击: 22716
+    物理伤害: 22716
     物理防御: 773
     暴击几率: 24
-    暴击伤害: 96
+    暴伤倍率: 96
     命中几率: 103
     闪避几率: 10
   Skills:
@@ -1598,11 +1543,10 @@ rogue_astral_hexer:
     MovementSpeed: 0.23
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 416154
-    物理攻击: 18872
+    物理伤害: 18872
     物理防御: 856
     暴击几率: 21
-    暴击伤害: 96
+    暴伤倍率: 96
     命中几率: 103
     闪避几率: 6
   Skills:
@@ -1627,11 +1571,10 @@ rogue_astral_skirmisher:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 480177
-    物理攻击: 15377
+    物理伤害: 15377
     物理防御: 927
     暴击几率: 19
-    暴击伤害: 96
+    暴伤倍率: 96
     命中几率: 103
     闪避几率: 6
   Skills:
@@ -1656,11 +1599,10 @@ rogue_astral_warden:
     - DIAMOND_HELMET HEAD
     - DIAMOND_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1200443
-    物理攻击: 9086
+    物理伤害: 9086
     物理防御: 2556
     暴击几率: 11
-    暴击伤害: 96
+    暴伤倍率: 96
     命中几率: 103
     闪避几率: 3
   Skills:
@@ -1685,11 +1627,10 @@ rogue_crimson_blood_page:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 605014
-    物理攻击: 12390
+    物理伤害: 12390
     物理防御: 1250
     暴击几率: 16
-    暴击伤害: 98
+    暴伤倍率: 98
     命中几率: 103
     闪避几率: 6
   Skills:
@@ -1714,11 +1655,10 @@ rogue_crimson_court_duelist:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 446959
-    物理攻击: 25649
+    物理伤害: 25649
     物理防御: 853
     暴击几率: 25
-    暴击伤害: 100
+    暴伤倍率: 100
     命中几率: 103
     闪避几率: 10
   Skills:
@@ -1743,11 +1683,10 @@ rogue_crimson_crimson_hound:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 520470
-    物理攻击: 22580
+    物理伤害: 22580
     物理防御: 990
     暴击几率: 23
-    暴击伤害: 103
+    暴伤倍率: 103
     命中几率: 103
     闪避几率: 6
   Skills:
@@ -1772,11 +1711,10 @@ rogue_crimson_vessel_monk:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 644134
-    物理攻击: 19463
+    物理伤害: 19463
     物理防御: 1122
     暴击几率: 21
-    暴击伤害: 105
+    暴伤倍率: 105
     命中几率: 104
     闪避几率: 7
   Skills:
@@ -1797,11 +1735,10 @@ rogue_crimson_vein_walker:
     MovementSpeed: 0.19
     KnockbackResistance: 0.55
   AttributePlus:
-    生命上限: 1723728
-    物理攻击: 12147
+    物理伤害: 12147
     物理防御: 3234
     暴击几率: 12
-    暴击伤害: 107
+    暴伤倍率: 107
     命中几率: 104
     闪避几率: 3
   Skills:
@@ -1826,11 +1763,10 @@ rogue_crimson_reaver:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 804406
-    物理攻击: 15573
+    物理伤害: 15573
     物理防御: 1504
     暴击几率: 18
-    暴击伤害: 107
+    暴伤倍率: 107
     命中几率: 104
     闪避几率: 6
   Skills:
@@ -1855,11 +1791,10 @@ rogue_crimson_bulwark:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 551593
-    物理攻击: 30367
+    物理伤害: 30367
     物理防御: 978
     暴击几率: 28
-    暴击伤害: 107
+    暴伤倍率: 107
     命中几率: 104
     闪避几率: 11
   Skills:
@@ -1884,11 +1819,10 @@ rogue_crimson_hexer:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 597559
-    物理攻击: 25228
+    物理伤害: 25228
     物理防御: 1083
     暴击几率: 24
-    暴击伤害: 107
+    暴伤倍率: 107
     命中几率: 104
     闪避几率: 7
   Skills:
@@ -1913,11 +1847,10 @@ rogue_crimson_skirmisher:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 689491
-    物理攻击: 20556
+    物理伤害: 20556
     物理防御: 1173
     暴击几率: 21
-    暴击伤害: 107
+    暴伤倍率: 107
     命中几率: 104
     闪避几率: 7
   Skills:
@@ -1938,11 +1871,10 @@ rogue_crimson_warden:
     MovementSpeed: 0.19
     KnockbackResistance: 0.55
   AttributePlus:
-    生命上限: 1723728
-    物理攻击: 12147
+    物理伤害: 12147
     物理防御: 3234
     暴击几率: 12
-    暴击伤害: 107
+    暴伤倍率: 107
     命中几率: 104
     闪避几率: 3
   Skills:
@@ -1963,11 +1895,10 @@ rogue_core_night_core:
     MovementSpeed: 0.24
     KnockbackResistance: 0.18
   AttributePlus:
-    生命上限: 859404
-    物理攻击: 16422
+    物理伤害: 16422
     物理防御: 1570
     暴击几率: 18
-    暴击伤害: 109
+    暴伤倍率: 109
     命中几率: 104
     闪避几率: 6
   Skills:
@@ -1992,11 +1923,10 @@ rogue_core_soul_reaver:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 628459
-    物理攻击: 33722
+    物理伤害: 33722
     物理防御: 1064
     暴击几率: 29
-    暴击伤害: 111
+    暴伤倍率: 111
     命中几率: 104
     闪避几率: 12
   Skills:
@@ -2021,11 +1951,10 @@ rogue_core_deep_echo:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 724824
-    物理攻击: 29461
+    物理伤害: 29461
     物理防御: 1228
     暴击几率: 26
-    暴击伤害: 114
+    暴伤倍率: 114
     命中几率: 105
     闪避几率: 7
   Skills:
@@ -2050,11 +1979,10 @@ rogue_core_sculk_wardenling:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 888932
-    物理攻击: 25212
+    物理伤害: 25212
     物理防御: 1385
     暴击几率: 23
-    暴击伤害: 116
+    暴伤倍率: 116
     命中几率: 105
     闪避几率: 8
   Skills:
@@ -2079,11 +2007,10 @@ rogue_core_gloom_priest:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 2358455
-    物理攻击: 15628
+    物理伤害: 15628
     物理防御: 3967
     暴击几率: 14
-    暴击伤害: 118
+    暴伤倍率: 118
     命中几率: 105
     闪避几率: 4
   Skills:
@@ -2104,11 +2031,10 @@ rogue_core_reaver:
     MovementSpeed: 0.24
     KnockbackResistance: 0.18
   AttributePlus:
-    生命上限: 1100612
-    物理攻击: 20035
+    物理伤害: 20035
     物理防御: 1845
     暴击几率: 20
-    暴击伤害: 118
+    暴伤倍率: 118
     命中几率: 105
     闪避几率: 7
   Skills:
@@ -2133,11 +2059,10 @@ rogue_core_bulwark:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 754706
-    物理攻击: 39069
+    物理伤害: 39069
     物理防御: 1199
     暴击几率: 31
-    暴击伤害: 118
+    暴伤倍率: 118
     命中几率: 105
     闪避几率: 13
   Skills:
@@ -2162,11 +2087,10 @@ rogue_core_hexer:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 817598
-    物理攻击: 32457
+    物理伤害: 32457
     物理防御: 1329
     暴击几率: 27
-    暴击伤害: 118
+    暴伤倍率: 118
     命中几率: 105
     闪避几率: 8
   Skills:
@@ -2191,11 +2115,10 @@ rogue_core_skirmisher:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 943382
-    物理攻击: 26447
+    物理伤害: 26447
     物理防御: 1439
     暴击几率: 24
-    暴击伤害: 118
+    暴伤倍率: 118
     命中几率: 105
     闪避几率: 8
   Skills:
@@ -2220,11 +2143,10 @@ rogue_core_warden:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 2358455
-    物理攻击: 15628
+    物理伤害: 15628
     物理防御: 3967
     暴击几率: 14
-    暴击伤害: 118
+    暴伤倍率: 118
     命中几率: 105
     闪避几率: 4
   Skills:
@@ -2249,11 +2171,10 @@ rogue_rotwood_rot_sprite:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1166317
-    物理攻击: 20992
+    物理伤害: 20992
     物理防御: 1917
     暴击几率: 20
-    暴击伤害: 120
+    暴伤倍率: 120
     命中几率: 105
     闪避几率: 7
   Skills:
@@ -2274,11 +2195,10 @@ rogue_rotwood_moss_husk:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 846324
-    物理攻击: 42841
+    物理伤害: 42841
     物理防御: 1293
     暴击几率: 32
-    暴击伤害: 122
+    暴伤倍率: 122
     命中几率: 106
     闪避几率: 14
   Skills:
@@ -2303,11 +2223,10 @@ rogue_rotwood_thorn_beast:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 968942
-    物理攻击: 37209
+    物理伤害: 37209
     物理防御: 1485
     暴击几率: 29
-    暴击伤害: 125
+    暴伤倍率: 125
     命中几率: 106
     闪避几率: 8
   Skills:
@@ -2328,11 +2247,10 @@ rogue_rotwood_fungal_mage:
     MovementSpeed: 0.24
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 1180032
-    物理攻击: 31665
+    物理伤害: 31665
     物理防御: 1666
     暴击几率: 26
-    暴击伤害: 127
+    暴伤倍率: 127
     命中几率: 106
     闪避几率: 9
   Skills:
@@ -2357,11 +2275,10 @@ rogue_rotwood_bog_wolf:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 3109968
-    物理攻击: 19524
+    物理伤害: 19524
     物理防御: 4754
     暴击几率: 16
-    暴击伤害: 129
+    暴伤倍率: 129
     命中几率: 106
     闪避几率: 4
   Skills:
@@ -2386,11 +2303,10 @@ rogue_rotwood_reaver:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1451318
-    物理攻击: 25030
+    物理伤害: 25030
     物理防御: 2211
     暴击几率: 22
-    暴击伤害: 129
+    暴伤倍率: 129
     命中几率: 106
     闪避几率: 8
   Skills:
@@ -2411,11 +2327,10 @@ rogue_rotwood_bulwark:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 995190
-    物理攻击: 48809
+    物理伤害: 48809
     物理防御: 1437
     暴击几率: 34
-    暴击伤害: 129
+    暴伤倍率: 129
     命中几率: 106
     闪避几率: 15
   Skills:
@@ -2440,11 +2355,10 @@ rogue_rotwood_hexer:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1078122
-    物理攻击: 40549
+    物理伤害: 40549
     物理防御: 1592
     暴击几率: 30
-    暴击伤害: 129
+    暴伤倍率: 129
     命中几率: 106
     闪避几率: 9
   Skills:
@@ -2465,11 +2379,10 @@ rogue_rotwood_skirmisher:
     MovementSpeed: 0.24
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 1243987
-    物理攻击: 33040
+    物理伤害: 33040
     物理防御: 1725
     暴击几率: 27
-    暴击伤害: 129
+    暴伤倍率: 129
     命中几率: 106
     闪避几率: 9
   Skills:
@@ -2494,11 +2407,10 @@ rogue_rotwood_warden:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 3109968
-    物理攻击: 19524
+    物理伤害: 19524
     物理防御: 4754
     暴击几率: 16
-    暴击伤害: 129
+    暴伤倍率: 129
     命中几率: 106
     闪避几率: 4
   Skills:
@@ -2523,11 +2435,10 @@ rogue_stormspire_volt_wisp:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1528205
-    物理攻击: 26092
+    物理伤害: 26092
     物理防御: 2287
     暴击几率: 23
-    暴击伤害: 131
+    暴伤倍率: 131
     命中几率: 107
     闪避几率: 8
   Skills:
@@ -2548,11 +2459,10 @@ rogue_stormspire_copper_guard:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 1102204
-    物理攻击: 52993
+    物理伤害: 52993
     物理防御: 1536
     暴击几率: 36
-    暴击伤害: 133
+    暴伤倍率: 133
     命中几率: 107
     闪避几率: 15
   Skills:
@@ -2573,11 +2483,10 @@ rogue_stormspire_storm_archer:
     MovementSpeed: 0.23
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 1254585
-    物理攻击: 45813
+    物理伤害: 45813
     物理防御: 1758
     暴击几率: 32
-    暴击伤害: 136
+    暴伤倍率: 136
     命中几率: 107
     闪避几率: 9
   Skills:
@@ -2602,11 +2511,10 @@ rogue_stormspire_thunder_monk:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1519433
-    物理攻击: 38815
+    物理伤害: 38815
     物理防御: 1966
     暴击几率: 29
-    暴击伤害: 138
+    暴伤倍率: 138
     命中几率: 107
     闪避几率: 10
   Skills:
@@ -2631,11 +2539,10 @@ rogue_stormspire_coil_construct:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 3983188
-    物理攻击: 23830
+    物理伤害: 23830
     物理防御: 5589
     暴击几率: 17
-    暴击伤害: 140
+    暴伤倍率: 140
     命中几率: 108
     闪避几率: 5
   Skills:
@@ -2660,11 +2567,10 @@ rogue_stormspire_reaver:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1858821
-    物理攻击: 30551
+    物理伤害: 30551
     物理防御: 2600
     暴击几率: 25
-    暴击伤害: 140
+    暴伤倍率: 140
     命中几率: 108
     闪避几率: 9
   Skills:
@@ -2685,11 +2591,10 @@ rogue_stormspire_bulwark:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 1274620
-    物理攻击: 59574
+    物理伤害: 59574
     物理防御: 1690
     暴击几率: 38
-    暴击伤害: 140
+    暴伤倍率: 140
     命中几率: 108
     闪避几率: 16
   Skills:
@@ -2710,11 +2615,10 @@ rogue_stormspire_hexer:
     MovementSpeed: 0.23
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 1380839
-    物理攻击: 49493
+    物理伤害: 49493
     物理防御: 1872
     暴击几率: 33
-    暴击伤害: 140
+    暴伤倍率: 140
     命中几率: 108
     闪避几率: 9
   Skills:
@@ -2739,11 +2643,10 @@ rogue_stormspire_skirmisher:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1593275
-    物理攻击: 40327
+    物理伤害: 40327
     物理防御: 2028
     暴击几率: 29
-    暴击伤害: 140
+    暴伤倍率: 140
     命中几率: 108
     闪避几率: 10
   Skills:
@@ -2768,11 +2671,10 @@ rogue_stormspire_warden:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 3983188
-    物理攻击: 23830
+    物理伤害: 23830
     物理防御: 5589
     暴击几率: 17
-    暴击伤害: 140
+    暴伤倍率: 140
     命中几率: 108
     闪避几率: 5
   Skills:
@@ -2797,11 +2699,10 @@ rogue_sunken_drowned_cultist:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1947328
-    物理攻击: 31718
+    物理伤害: 31718
     物理防御: 2680
     暴击几率: 25
-    暴击伤害: 142
+    暴伤倍率: 142
     命中几率: 108
     闪避几率: 9
   Skills:
@@ -2822,11 +2723,10 @@ rogue_sunken_reef_guard:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 1397629
-    物理攻击: 64165
+    物理伤害: 64165
     物理防御: 1795
     暴击几率: 39
-    暴击伤害: 144
+    暴伤倍率: 144
     命中几率: 108
     闪避几率: 17
   Skills:
@@ -2847,11 +2747,10 @@ rogue_sunken_prismarine_witch:
     MovementSpeed: 0.23
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 1583385
-    物理攻击: 55264
+    物理伤害: 55264
     物理防御: 2047
     暴击几率: 35
-    暴击伤害: 147
+    暴伤倍率: 147
     命中几率: 108
     闪避几率: 10
   Skills:
@@ -2876,11 +2775,10 @@ rogue_sunken_tide_hunter:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1908992
-    物理攻击: 46652
+    物理伤害: 46652
     物理防御: 2283
     暴击几率: 32
-    暴击伤害: 149
+    暴伤倍率: 149
     命中几率: 109
     闪避几率: 11
   Skills:
@@ -2901,11 +2799,10 @@ rogue_sunken_abyss_fishman:
     MovementSpeed: 0.19
     KnockbackResistance: 0.55
   AttributePlus:
-    生命上限: 4982695
-    物理攻击: 28542
+    物理伤害: 28542
     物理防御: 6472
     暴击几率: 19
-    暴击伤害: 151
+    暴伤倍率: 151
     命中几率: 109
     闪避几率: 5
   Skills:
@@ -2930,11 +2827,10 @@ rogue_sunken_reaver:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 2325257
-    物理攻击: 36592
+    物理伤害: 36592
     物理防御: 3010
     暴击几率: 27
-    暴击伤害: 151
+    暴伤倍率: 151
     命中几率: 109
     闪避几率: 10
   Skills:
@@ -2955,11 +2851,10 @@ rogue_sunken_bulwark:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 1594462
-    物理攻击: 71355
+    物理伤害: 71355
     物理防御: 1957
     暴击几率: 41
-    暴击伤害: 151
+    暴伤倍率: 151
     命中几率: 109
     闪避几率: 18
   Skills:
@@ -2980,11 +2875,10 @@ rogue_sunken_hexer:
     MovementSpeed: 0.23
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 1727334
-    物理攻击: 59279
+    物理伤害: 59279
     物理防御: 2167
     暴击几率: 36
-    暴击伤害: 151
+    暴伤倍率: 151
     命中几率: 109
     闪避几率: 10
   Skills:
@@ -3009,11 +2903,10 @@ rogue_sunken_skirmisher:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1993078
-    物理攻击: 48302
+    物理伤害: 48302
     物理防御: 2348
     暴击几率: 32
-    暴击伤害: 151
+    暴伤倍率: 151
     命中几率: 109
     闪避几率: 11
   Skills:
@@ -3034,11 +2927,10 @@ rogue_sunken_warden:
     MovementSpeed: 0.19
     KnockbackResistance: 0.55
   AttributePlus:
-    生命上限: 4982695
-    物理攻击: 28542
+    物理伤害: 28542
     物理防御: 6472
     暴击几率: 19
-    暴击伤害: 151
+    暴伤倍率: 151
     命中几率: 109
     闪避几率: 5
   Skills:
@@ -3063,11 +2955,10 @@ rogue_bonewaste_marrow_husk:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 2425795
-    物理攻击: 37862
+    物理伤害: 37862
     物理防御: 3095
     暴击几率: 27
-    暴击伤害: 153
+    暴伤倍率: 153
     命中几率: 109
     闪避几率: 10
   Skills:
@@ -3092,11 +2983,10 @@ rogue_bonewaste_bone_slinger:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1734024
-    物理攻击: 76349
+    物理伤害: 76349
     物理防御: 2067
     暴击几率: 43
-    暴击伤害: 155
+    暴伤倍率: 155
     命中几率: 109
     闪避几率: 18
   Skills:
@@ -3121,11 +3011,10 @@ rogue_bonewaste_dust_knight:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1956867
-    物理攻击: 65553
+    物理伤害: 65553
     物理防御: 2352
     暴击几率: 38
-    暴击伤害: 158
+    暴伤倍率: 158
     命中几率: 110
     闪避几率: 11
   Skills:
@@ -3150,11 +3039,10 @@ rogue_bonewaste_skull_oracle:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 2350446
-    物理攻击: 55171
+    物理伤害: 55171
     物理防御: 2616
     暴击几率: 34
-    暴击伤害: 160
+    暴伤倍率: 160
     命中几率: 110
     闪避几率: 12
   Skills:
@@ -3175,11 +3063,10 @@ rogue_bonewaste_rib_golem:
     MovementSpeed: 0.19
     KnockbackResistance: 0.55
   AttributePlus:
-    生命上限: 6112774
-    物理攻击: 33656
+    物理伤害: 33656
     物理防御: 7400
     暴击几率: 20
-    暴击伤害: 162
+    暴伤倍率: 162
     命中几率: 110
     闪避几率: 6
   Skills:
@@ -3204,11 +3091,10 @@ rogue_bonewaste_reaver:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 2852628
-    物理攻击: 43149
+    物理伤害: 43149
     物理防御: 3442
     暴击几率: 29
-    暴击伤害: 162
+    暴伤倍率: 162
     命中几率: 110
     闪避几率: 11
   Skills:
@@ -3233,11 +3119,10 @@ rogue_bonewaste_bulwark:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 1956088
-    物理攻击: 84140
+    物理伤害: 84140
     物理防御: 2237
     暴击几率: 45
-    暴击伤害: 162
+    暴伤倍率: 162
     命中几率: 110
     闪避几率: 19
   Skills:
@@ -3262,11 +3147,10 @@ rogue_bonewaste_hexer:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 2119095
-    物理攻击: 69901
+    物理伤害: 69901
     物理防御: 2478
     暴击几率: 39
-    暴击伤害: 162
+    暴伤倍率: 162
     命中几率: 110
     闪避几率: 11
   Skills:
@@ -3291,11 +3175,10 @@ rogue_bonewaste_skirmisher:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 2445110
-    物理攻击: 56957
+    物理伤害: 56957
     物理防御: 2685
     暴击几率: 35
-    暴击伤害: 162
+    暴伤倍率: 162
     命中几率: 110
     闪避几率: 12
   Skills:
@@ -3316,11 +3199,10 @@ rogue_bonewaste_warden:
     MovementSpeed: 0.19
     KnockbackResistance: 0.55
   AttributePlus:
-    生命上限: 6112774
-    物理攻击: 33656
+    物理伤害: 33656
     物理防御: 7400
     暴击几率: 20
-    暴击伤害: 162
+    暴伤倍率: 162
     命中几率: 110
     闪避几率: 6
   Skills:
@@ -3345,11 +3227,10 @@ rogue_mirror_glass_echo:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 2965582
-    物理攻击: 44522
+    物理伤害: 44522
     物理防御: 3531
     暴击几率: 29
-    暴击伤害: 164
+    暴伤倍率: 164
     命中几率: 110
     闪避几率: 11
   Skills:
@@ -3370,11 +3251,10 @@ rogue_mirror_mirror_duelist:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 2112729
-    物理攻击: 89534
+    物理伤害: 89534
     物理防御: 2353
     暴击几率: 46
-    暴击伤害: 166
+    暴伤倍率: 166
     命中几率: 111
     闪避几率: 20
   Skills:
@@ -3399,11 +3279,10 @@ rogue_mirror_quartz_phantom:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 2376465
-    物理攻击: 76672
+    物理伤害: 76672
     物理防御: 2672
     暴击几率: 41
-    暴击伤害: 169
+    暴伤倍率: 169
     命中几率: 111
     闪避几率: 12
   Skills:
@@ -3428,11 +3307,10 @@ rogue_mirror_split_soul:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 2845430
-    物理攻击: 64366
+    物理伤害: 64366
     物理防御: 2966
     暴击几率: 37
-    暴击伤害: 171
+    暴伤倍率: 171
     命中几率: 111
     闪避几率: 13
   Skills:
@@ -3457,11 +3335,10 @@ rogue_mirror_silver_acolyte:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 7377469
-    物理攻击: 39169
+    物理伤害: 39169
     物理防御: 8372
     暴击几率: 22
-    暴击伤害: 173
+    暴伤倍率: 173
     命中几率: 111
     闪避几率: 6
   Skills:
@@ -3486,11 +3363,10 @@ rogue_mirror_reaver:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 3442819
-    物理攻击: 50217
+    物理伤害: 50217
     物理防御: 3894
     暴击几率: 31
-    暴击伤害: 173
+    暴伤倍率: 173
     命中几率: 111
     闪避几率: 12
   Skills:
@@ -3511,11 +3387,10 @@ rogue_mirror_bulwark:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 2360790
-    物理攻击: 97922
+    物理伤害: 97922
     物理防御: 2531
     暴击几率: 48
-    暴击伤害: 173
+    暴伤倍率: 173
     命中几率: 111
     闪避几率: 21
   Skills:
@@ -3540,11 +3415,10 @@ rogue_mirror_hexer:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 2557523
-    物理攻击: 81351
+    物理伤害: 81351
     物理防御: 2804
     暴击几率: 42
-    暴击伤害: 173
+    暴伤倍率: 173
     命中几率: 111
     闪避几率: 12
   Skills:
@@ -3569,11 +3443,10 @@ rogue_mirror_skirmisher:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 2950988
-    物理攻击: 66286
+    物理伤害: 66286
     物理防御: 3037
     暴击几率: 38
-    暴击伤害: 173
+    暴伤倍率: 173
     命中几率: 111
     闪避几率: 13
   Skills:
@@ -3598,11 +3471,10 @@ rogue_mirror_warden:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 7377469
-    物理攻击: 39169
+    物理伤害: 39169
     物理防御: 8372
     暴击几率: 22
-    暴击伤害: 173
+    暴伤倍率: 173
     命中几率: 111
     闪避几率: 6
   Skills:
@@ -3623,11 +3495,10 @@ rogue_mire_toxic_slime:
     MovementSpeed: 0.24
     KnockbackResistance: 0.18
   AttributePlus:
-    生命上限: 3568554
-    物理攻击: 51691
+    物理伤害: 51691
     物理防御: 3987
     暴击几率: 32
-    暴击伤害: 175
+    暴伤倍率: 175
     命中几率: 112
     闪避几率: 12
   Skills:
@@ -3652,11 +3523,10 @@ rogue_mire_mire_husk:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 2535009
-    物理攻击: 103712
+    物理伤害: 103712
     物理防御: 2652
     暴击几率: 50
-    暴击伤害: 177
+    暴伤倍率: 177
     命中几率: 112
     闪避几率: 22
   Skills:
@@ -3681,11 +3551,10 @@ rogue_mire_venom_witch:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 2843534
-    物理攻击: 88615
+    物理伤害: 88615
     物理防御: 3006
     暴击几率: 44
-    暴击伤害: 180
+    暴伤倍率: 180
     命中几率: 112
     闪避几率: 13
   Skills:
@@ -3706,11 +3575,10 @@ rogue_mire_bog_stalker:
     MovementSpeed: 0.24
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 3395490
-    物理攻击: 74231
+    物理伤害: 74231
     物理防御: 3330
     暴击几率: 40
-    暴击伤害: 182
+    暴伤倍率: 182
     命中几率: 112
     闪避几率: 14
   Skills:
@@ -3735,11 +3603,10 @@ rogue_mire_spore_knight:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 8780605
-    物理攻击: 45077
+    物理伤害: 45077
     物理防御: 9386
     暴击几率: 23
-    暴击伤害: 184
+    暴伤倍率: 184
     命中几率: 113
     闪避几率: 7
   Skills:
@@ -3760,11 +3627,10 @@ rogue_mire_reaver:
     MovementSpeed: 0.24
     KnockbackResistance: 0.18
   AttributePlus:
-    生命上限: 4097616
-    物理攻击: 57791
+    物理伤害: 57791
     物理防御: 4366
     暴击几率: 34
-    暴击伤害: 184
+    暴伤倍率: 184
     命中几率: 113
     闪避几率: 13
   Skills:
@@ -3789,11 +3655,10 @@ rogue_mire_bulwark:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 2809794
-    物理攻击: 112693
+    物理伤害: 112693
     物理防御: 2838
     暴击几率: 52
-    暴击伤害: 184
+    暴伤倍率: 184
     命中几率: 113
     闪避几率: 23
   Skills:
@@ -3818,11 +3683,10 @@ rogue_mire_hexer:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 3043943
-    物理攻击: 93622
+    物理伤害: 93622
     物理防御: 3143
     暴击几率: 45
-    暴击伤害: 184
+    暴伤倍率: 184
     命中几率: 113
     闪避几率: 13
   Skills:
@@ -3843,11 +3707,10 @@ rogue_mire_skirmisher:
     MovementSpeed: 0.24
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 3512242
-    物理攻击: 76284
+    物理伤害: 76284
     物理防御: 3405
     暴击几率: 40
-    暴击伤害: 184
+    暴伤倍率: 184
     命中几率: 113
     闪避几率: 14
   Skills:
@@ -3872,11 +3735,10 @@ rogue_mire_warden:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 8780605
-    物理攻击: 45077
+    物理伤害: 45077
     物理防御: 9386
     暴击几率: 23
-    暴击伤害: 184
+    暴伤倍率: 184
     命中几率: 113
     闪避几率: 7
   Skills:
@@ -3901,11 +3763,10 @@ rogue_dune_sand_bandit:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 4236479
-    物理攻击: 59367
+    物理伤害: 59367
     物理防御: 4462
     暴击几率: 34
-    暴击伤害: 186
+    暴伤倍率: 186
     命中几率: 113
     闪避几率: 13
   Skills:
@@ -3926,11 +3787,10 @@ rogue_dune_gold_scarab:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 3002062
-    物理攻击: 118876
+    物理伤害: 118876
     物理防御: 2964
     暴击几率: 53
-    暴击伤害: 188
+    暴伤倍率: 188
     命中几率: 113
     闪避几率: 23
   Skills:
@@ -3955,11 +3815,10 @@ rogue_dune_sun_adept:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 3359360
-    物理攻击: 101376
+    物理伤害: 101376
     物理防御: 3354
     暴击几率: 47
-    暴击伤害: 191
+    暴伤倍率: 191
     命中几率: 113
     闪避几率: 14
   Skills:
@@ -3984,11 +3843,10 @@ rogue_dune_dune_guard:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 4002098
-    物理攻击: 84762
+    物理伤害: 84762
     物理防御: 3710
     暴击几率: 42
-    暴击伤害: 193
+    暴伤倍率: 193
     命中几率: 114
     闪避几率: 15
   Skills:
@@ -4013,11 +3871,10 @@ rogue_dune_mirage_stalker:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 10325824
-    物理攻击: 51378
+    物理伤害: 51378
     物理防御: 10441
     暴击几率: 25
-    暴击伤害: 195
+    暴伤倍率: 195
     命中几率: 114
     闪避几率: 7
   Skills:
@@ -4042,11 +3899,10 @@ rogue_dune_reaver:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 4818718
-    物理攻击: 65869
+    物理伤害: 65869
     物理防御: 4856
     暴击几率: 36
-    暴击伤害: 195
+    暴伤倍率: 195
     命中几率: 114
     闪避几率: 14
   Skills:
@@ -4067,11 +3923,10 @@ rogue_dune_bulwark:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 3304264
-    物理攻击: 128444
+    物理伤害: 128444
     物理防御: 3156
     暴击几率: 55
-    暴击伤害: 195
+    暴伤倍率: 195
     命中几率: 114
     闪避几率: 24
   Skills:
@@ -4096,11 +3951,10 @@ rogue_dune_hexer:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 3579619
-    物理攻击: 106708
+    物理伤害: 106708
     物理防御: 3496
     暴击几率: 48
-    暴击伤害: 195
+    暴伤倍率: 195
     命中几率: 114
     闪避几率: 14
   Skills:
@@ -4125,11 +3979,10 @@ rogue_dune_skirmisher:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 4130329
-    物理攻击: 86947
+    物理伤害: 86947
     物理防御: 3788
     暴击几率: 43
-    暴击伤害: 195
+    暴伤倍率: 195
     命中几率: 114
     闪避几率: 15
   Skills:
@@ -4154,11 +4007,10 @@ rogue_dune_warden:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 10325824
-    物理攻击: 51378
+    物理伤害: 51378
     物理防御: 10441
     暴击几率: 25
-    暴击伤害: 195
+    暴伤倍率: 195
     命中几率: 114
     闪避几率: 7
   Skills:
@@ -4179,11 +4031,10 @@ rogue_theater_mask_actor:
     MovementSpeed: 0.24
     KnockbackResistance: 0.18
   AttributePlus:
-    生命上限: 4971039
-    物理攻击: 67545
+    物理伤害: 67545
     物理防御: 4956
     暴击几率: 36
-    暴击伤害: 197
+    暴伤倍率: 197
     命中几率: 114
     闪避几率: 14
   Skills:
@@ -4204,11 +4055,10 @@ rogue_theater_soul_violinist:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 3515033
-    物理攻击: 135018
+    物理伤害: 135018
     物理防御: 3287
     暴击几率: 57
-    暴击伤害: 199
+    暴伤倍率: 199
     命中几率: 114
     闪避几率: 25
   Skills:
@@ -4233,11 +4083,10 @@ rogue_theater_stage_knight:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 3925170
-    物理攻击: 114948
+    物理伤害: 114948
     物理防御: 3715
     暴击几率: 50
-    暴击伤害: 202
+    暴伤倍率: 202
     命中几率: 115
     闪避几率: 15
   Skills:
@@ -4262,11 +4111,10 @@ rogue_theater_curtain_wraith:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 4666655
-    物理攻击: 95952
+    物理伤害: 95952
     物理防御: 4104
     暴击几率: 45
-    暴击伤害: 204
+    暴伤倍率: 204
     命中几率: 115
     闪避几率: 16
   Skills:
@@ -4291,11 +4139,10 @@ rogue_theater_opera_mage:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 12016599
-    物理攻击: 58068
+    物理伤害: 58068
     物理防御: 11535
     暴击几率: 27
-    暴击伤害: 206
+    暴伤倍率: 206
     命中几率: 115
     闪避几率: 8
   Skills:
@@ -4316,11 +4163,10 @@ rogue_theater_reaver:
     MovementSpeed: 0.24
     KnockbackResistance: 0.18
   AttributePlus:
-    生命上限: 5607746
-    物理攻击: 74446
+    物理伤害: 74446
     物理防御: 5365
     暴击几率: 38
-    暴击伤害: 206
+    暴伤倍率: 206
     命中几率: 115
     闪避几率: 14
   Skills:
@@ -4341,11 +4187,10 @@ rogue_theater_bulwark:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 3845312
-    物理攻击: 145171
+    物理伤害: 145171
     物理防御: 3487
     暴击几率: 59
-    暴击伤害: 206
+    暴伤倍率: 206
     命中几率: 115
     闪避几率: 26
   Skills:
@@ -4370,11 +4215,10 @@ rogue_theater_hexer:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 4165754
-    物理攻击: 120603
+    物理伤害: 120603
     物理防御: 3863
     暴击几率: 51
-    暴击伤害: 206
+    暴伤倍率: 206
     命中几率: 115
     闪避几率: 15
   Skills:
@@ -4399,11 +4243,10 @@ rogue_theater_skirmisher:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 4806639
-    物理攻击: 98269
+    物理伤害: 98269
     物理防御: 4185
     暴击几率: 46
-    暴击伤害: 206
+    暴伤倍率: 206
     命中几率: 115
     闪避几率: 16
   Skills:
@@ -4428,11 +4271,10 @@ rogue_theater_warden:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 12016599
-    物理攻击: 58068
+    物理伤害: 58068
     物理防御: 11535
     暴击几率: 27
-    暴击伤害: 206
+    暴伤倍率: 206
     命中几率: 115
     闪避几率: 8
   Skills:
@@ -4453,11 +4295,10 @@ rogue_machine_gearling:
     MovementSpeed: 0.24
     KnockbackResistance: 0.18
   AttributePlus:
-    生命上限: 5773841
-    物理攻击: 76222
+    物理伤害: 76222
     物理防御: 5469
     暴击几率: 38
-    暴击伤害: 208
+    暴伤倍率: 208
     命中几率: 115
     闪避几率: 15
   Skills:
@@ -4482,11 +4323,10 @@ rogue_machine_iron_seraph:
     - IRON_HELMET HEAD
     - IRON_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 4075013
-    物理攻击: 152132
+    物理伤害: 152132
     物理防御: 3623
     暴击几率: 60
-    暴击伤害: 210
+    暴伤倍率: 210
     命中几率: 116
     闪避几率: 27
   Skills:
@@ -4511,11 +4351,10 @@ rogue_machine_redstone_sapper:
     - IRON_HELMET HEAD
     - IRON_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 4542138
-    物理攻击: 129327
+    物理伤害: 129327
     物理防御: 4089
     暴击几率: 53
-    暴击伤害: 213
+    暴伤倍率: 213
     命中几率: 116
     闪避几率: 16
   Skills:
@@ -4540,11 +4379,10 @@ rogue_machine_servo_guard:
     - IRON_HELMET HEAD
     - IRON_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 5390504
-    物理攻击: 107799
+    物理伤害: 107799
     物理防御: 4512
     暴击几率: 48
-    暴击伤害: 215
+    暴伤倍率: 215
     命中几率: 116
     闪避几率: 17
   Skills:
@@ -4569,11 +4407,10 @@ rogue_machine_clockwork_mage:
     - IRON_HELMET HEAD
     - IRON_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 13856257
-    物理攻击: 65146
+    物理伤害: 65146
     物理防御: 12667
     暴击几率: 28
-    暴击伤害: 217
+    暴伤倍率: 217
     命中几率: 116
     闪避几率: 8
   Skills:
@@ -4594,11 +4431,10 @@ rogue_machine_reaver:
     MovementSpeed: 0.24
     KnockbackResistance: 0.18
   AttributePlus:
-    生命上限: 6466253
-    物理攻击: 83520
+    物理伤害: 83520
     物理防御: 5892
     暴击几率: 40
-    暴击伤害: 217
+    暴伤倍率: 217
     命中几率: 116
     闪避几率: 15
   Skills:
@@ -4623,11 +4459,10 @@ rogue_machine_bulwark:
     - IRON_HELMET HEAD
     - IRON_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 4434002
-    物理攻击: 162865
+    物理伤害: 162865
     物理防御: 3829
     暴击几率: 62
-    暴击伤害: 217
+    暴伤倍率: 217
     命中几率: 116
     闪避几率: 28
   Skills:
@@ -4652,11 +4487,10 @@ rogue_machine_hexer:
     - IRON_HELMET HEAD
     - IRON_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 4803502
-    物理攻击: 135303
+    物理伤害: 135303
     物理防御: 4242
     暴击几率: 54
-    暴击伤害: 217
+    暴伤倍率: 217
     命中几率: 116
     闪避几率: 16
   Skills:
@@ -4681,11 +4515,10 @@ rogue_machine_skirmisher:
     - IRON_HELMET HEAD
     - IRON_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 5542503
-    物理攻击: 110247
+    物理伤害: 110247
     物理防御: 4595
     暴击几率: 48
-    暴击伤害: 217
+    暴伤倍率: 217
     命中几率: 116
     闪避几率: 17
   Skills:
@@ -4710,11 +4543,10 @@ rogue_machine_warden:
     - IRON_HELMET HEAD
     - IRON_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 13856257
-    物理攻击: 65146
+    物理伤害: 65146
     物理防御: 12667
     暴击几率: 28
-    暴击伤害: 217
+    暴伤倍率: 217
     命中几率: 116
     闪避几率: 8
   Skills:
@@ -4735,11 +4567,10 @@ rogue_eclipse_moonshade:
     MovementSpeed: 0.24
     KnockbackResistance: 0.18
   AttributePlus:
-    生命上限: 6646424
-    物理攻击: 85395
+    物理伤害: 85395
     物理防御: 5999
     暴击几率: 41
-    暴击伤害: 219
+    暴伤倍率: 219
     命中几率: 117
     闪避几率: 15
   Skills:
@@ -4764,11 +4595,10 @@ rogue_eclipse_eclipse_duelist:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 4683049
-    物理攻击: 170212
+    物理伤害: 170212
     物理防御: 3970
     暴击几率: 64
-    暴击伤害: 221
+    暴伤倍率: 221
     命中几率: 117
     闪避几率: 28
   Skills:
@@ -4793,11 +4623,10 @@ rogue_eclipse_night_bloom:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 5211388
-    物理攻击: 144507
+    物理伤害: 144507
     物理防御: 4475
     暴击几率: 56
-    暴击伤害: 224
+    暴伤倍率: 224
     命中几率: 117
     闪避几率: 17
   Skills:
@@ -4822,11 +4651,10 @@ rogue_eclipse_lunar_witch:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 6174932
-    物理攻击: 120298
+    物理伤害: 120298
     物理防御: 4934
     暴击几率: 50
-    暴击伤害: 226
+    暴伤倍率: 226
     命中几率: 117
     闪避几率: 18
   Skills:
@@ -4851,11 +4679,10 @@ rogue_eclipse_umbra_guard:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 15847992
-    物理攻击: 72609
+    物理伤害: 72609
     物理防御: 13836
     暴击几率: 30
-    暴击伤害: 228
+    暴伤倍率: 228
     命中几率: 118
     闪避几率: 9
   Skills:
@@ -4876,11 +4703,10 @@ rogue_eclipse_reaver:
     MovementSpeed: 0.24
     KnockbackResistance: 0.18
   AttributePlus:
-    生命上限: 7395730
-    物理攻击: 93088
+    物理伤害: 93088
     物理防御: 6435
     暴击几率: 43
-    暴击伤害: 228
+    暴伤倍率: 228
     命中几率: 118
     闪避几率: 16
   Skills:
@@ -4905,11 +4731,10 @@ rogue_eclipse_bulwark:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 5071358
-    物理攻击: 181522
+    物理伤害: 181522
     物理防御: 4183
     暴击几率: 66
-    暴击伤害: 228
+    暴伤倍率: 228
     命中几率: 118
     闪避几率: 29
   Skills:
@@ -4934,11 +4759,10 @@ rogue_eclipse_hexer:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 5493971
-    物理攻击: 150802
+    物理伤害: 150802
     物理防御: 4634
     暴击几率: 57
-    暴击伤害: 228
+    暴伤倍率: 228
     命中几率: 118
     闪避几率: 17
   Skills:
@@ -4963,11 +4787,10 @@ rogue_eclipse_skirmisher:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 6339197
-    物理攻击: 122876
+    物理伤害: 122876
     物理防御: 5020
     暴击几率: 51
-    暴击伤害: 228
+    暴伤倍率: 228
     命中几率: 118
     闪避几率: 18
   Skills:
@@ -4992,11 +4815,10 @@ rogue_eclipse_warden:
     - CHAINMAIL_HELMET HEAD
     - CHAINMAIL_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 15847992
-    物理攻击: 72609
+    物理伤害: 72609
     物理防御: 13836
     暴击几率: 30
-    暴击伤害: 228
+    暴伤倍率: 228
     命中几率: 118
     闪避几率: 9
   Skills:
@@ -5021,11 +4843,10 @@ rogue_chaos_rift_spawn:
     - NETHERITE_HELMET HEAD
     - NETHERITE_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 7590269
-    物理攻击: 95060
+    物理伤害: 95060
     物理防御: 6546
     暴击几率: 43
-    暴击伤害: 230
+    暴伤倍率: 230
     命中几率: 118
     闪避几率: 16
   Skills:
@@ -5046,11 +4867,10 @@ rogue_chaos_chaos_hound:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 5340147
-    物理攻击: 189252
+    物理伤害: 189252
     物理防御: 4328
     暴击几率: 67
-    暴击伤害: 232
+    暴伤倍率: 232
     命中几率: 118
     闪避几率: 30
   Skills:
@@ -5071,11 +4891,10 @@ rogue_chaos_warped_cultist:
     MovementSpeed: 0.23
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 5934002
-    物理攻击: 160484
+    物理伤害: 160484
     物理防御: 4874
     暴击几率: 59
-    暴击伤害: 235
+    暴伤倍率: 235
     命中几率: 118
     闪避几率: 18
   Skills:
@@ -5100,11 +4919,10 @@ rogue_chaos_unstable_eye:
     - NETHERITE_HELMET HEAD
     - NETHERITE_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 7021178
-    物理攻击: 133446
+    物理伤害: 133446
     物理防御: 5369
     暴击几率: 53
-    暴击伤害: 237
+    暴伤倍率: 237
     命中几率: 119
     闪避几率: 19
   Skills:
@@ -5125,11 +4943,10 @@ rogue_chaos_fracture_knight:
     MovementSpeed: 0.19
     KnockbackResistance: 0.55
   AttributePlus:
-    生命上限: 17994879
-    物理攻击: 80454
+    物理伤害: 80454
     物理防御: 15042
     暴击几率: 31
-    暴击伤害: 239
+    暴伤倍率: 239
     命中几率: 119
     闪避几率: 9
   Skills:
@@ -5154,11 +4971,10 @@ rogue_chaos_reaver:
     - NETHERITE_HELMET HEAD
     - NETHERITE_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 8397610
-    物理攻击: 103146
+    物理伤害: 103146
     物理防御: 6996
     暴击几率: 45
-    暴击伤害: 239
+    暴伤倍率: 239
     命中几率: 119
     闪避几率: 17
   Skills:
@@ -5179,11 +4995,10 @@ rogue_chaos_bulwark:
     MovementSpeed: 0.31
     KnockbackResistance: 0.08
   AttributePlus:
-    生命上限: 5758361
-    物理攻击: 201135
+    物理伤害: 201135
     物理防御: 4548
     暴击几率: 69
-    暴击伤害: 239
+    暴伤倍率: 239
     命中几率: 119
     闪避几率: 31
   Skills:
@@ -5204,11 +5019,10 @@ rogue_chaos_hexer:
     MovementSpeed: 0.23
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 6238225
-    物理攻击: 167097
+    物理伤害: 167097
     物理防御: 5037
     暴击几率: 60
-    暴击伤害: 239
+    暴伤倍率: 239
     命中几率: 119
     闪避几率: 18
   Skills:
@@ -5233,11 +5047,10 @@ rogue_chaos_skirmisher:
     - NETHERITE_HELMET HEAD
     - NETHERITE_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 7197952
-    物理攻击: 136153
+    物理伤害: 136153
     物理防御: 5457
     暴击几率: 54
-    暴击伤害: 239
+    暴伤倍率: 239
     命中几率: 119
     闪避几率: 19
   Skills:
@@ -5258,11 +5071,10 @@ rogue_chaos_warden:
     MovementSpeed: 0.19
     KnockbackResistance: 0.55
   AttributePlus:
-    生命上限: 17994879
-    物理攻击: 80454
+    物理伤害: 80454
     物理防御: 15042
     暴击几率: 31
-    暴击伤害: 239
+    暴伤倍率: 239
     命中几率: 119
     闪避几率: 9
   Skills:
@@ -5287,11 +5099,10 @@ rogue_throne_final_guard:
     - NETHERITE_HELMET HEAD
     - NETHERITE_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 8606798
-    物理攻击: 105216
+    物理伤害: 105216
     物理防御: 7110
     暴击几率: 45
-    暴击伤害: 241
+    暴伤倍率: 241
     命中几率: 119
     闪避几率: 17
   Skills:
@@ -5316,11 +5127,10 @@ rogue_throne_end_crown:
     - NETHERITE_HELMET HEAD
     - NETHERITE_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 6047278
-    物理攻击: 209247
+    物理伤害: 209247
     物理防御: 4696
     暴击几率: 71
-    暴击伤害: 243
+    暴伤倍率: 243
     命中几率: 119
     闪避几率: 31
   Skills:
@@ -5341,11 +5151,10 @@ rogue_throne_void_champion:
     MovementSpeed: 0.23
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 6711024
-    物理攻击: 177253
+    物理伤害: 177253
     物理防御: 5285
     暴击几率: 62
-    暴击伤害: 246
+    暴伤倍率: 246
     命中几率: 120
     闪避几率: 19
   Skills:
@@ -5370,11 +5179,10 @@ rogue_throne_apex_priest:
     - NETHERITE_HELMET HEAD
     - NETHERITE_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 7930438
-    物理攻击: 147238
+    物理伤害: 147238
     物理防御: 5816
     暴击几率: 56
-    暴击伤害: 248
+    暴伤倍率: 248
     命中几率: 120
     闪避几率: 20
   Skills:
@@ -5399,11 +5207,10 @@ rogue_throne_throne_wraith:
     - NETHERITE_HELMET HEAD
     - NETHERITE_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 20299883
-    物理攻击: 88680
+    物理伤害: 88680
     物理防御: 16283
     暴击几率: 33
-    暴击伤害: 250
+    暴伤倍率: 250
     命中几率: 120
     闪避几率: 10
   Skills:
@@ -5428,11 +5235,10 @@ rogue_throne_reaver:
     - NETHERITE_HELMET HEAD
     - NETHERITE_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 9473279
-    物理攻击: 113692
+    物理伤害: 113692
     物理防御: 7574
     暴击几率: 47
-    暴击伤害: 250
+    暴伤倍率: 250
     命中几率: 120
     闪避几率: 18
   Skills:
@@ -5457,11 +5263,10 @@ rogue_throne_bulwark:
     - NETHERITE_HELMET HEAD
     - NETHERITE_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 6495963
-    物理攻击: 221700
+    物理伤害: 221700
     物理防御: 4923
     暴击几率: 73
-    暴击伤害: 250
+    暴伤倍率: 250
     命中几率: 120
     闪避几率: 32
   Skills:
@@ -5482,11 +5287,10 @@ rogue_throne_hexer:
     MovementSpeed: 0.23
     KnockbackResistance: 0.12
   AttributePlus:
-    生命上限: 7037293
-    物理攻击: 184182
+    物理伤害: 184182
     物理防御: 5453
     暴击几率: 63
-    暴击伤害: 250
+    暴伤倍率: 250
     命中几率: 120
     闪避几率: 19
   Skills:
@@ -5511,11 +5315,10 @@ rogue_throne_skirmisher:
     - NETHERITE_HELMET HEAD
     - NETHERITE_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 8119953
-    物理攻击: 150074
+    物理伤害: 150074
     物理防御: 5907
     暴击几率: 56
-    暴击伤害: 250
+    暴伤倍率: 250
     命中几率: 120
     闪避几率: 20
   Skills:
@@ -5540,11 +5343,10 @@ rogue_throne_warden:
     - NETHERITE_HELMET HEAD
     - NETHERITE_CHESTPLATE CHEST
   AttributePlus:
-    生命上限: 20299883
-    物理攻击: 88680
+    物理伤害: 88680
     物理防御: 16283
     暴击几率: 33
-    暴击伤害: 250
+    暴伤倍率: 250
     命中几率: 120
     闪避几率: 10
   Skills:

@@ -284,9 +284,9 @@ affixes:
     advanced: true
   exp_dry_sanctum:
     name: "§c干涸圣所"
-    description: "禁止自然回复"
-    type: NO_HEAL
-    value: 1
+    description: "治疗与恢复效果降低 35%"
+    type: HEALING_REDUCE
+    value: 0.65
     difficulty: true
     min-floor: 9
     weight: 18
@@ -301,9 +301,9 @@ affixes:
     weight: 20
   exp_boon_mirror:
     name: "§d神恩镜面"
-    description: "额外神恩选择 +1"
-    type: EXTRA_BOON
-    value: 1
+    description: "高稀有神恩权重 +18%"
+    type: BOON_LUCK
+    value: 18
     difficulty: false
     min-floor: 12
     weight: 16
@@ -650,9 +650,9 @@ affixes:
     advanced: true
   exp2_affix_24:
     name: "§6神恩顺风"
-    description: "神恩顺风会改变本层规则，触发BOON_LUCK相关影响"
+    description: "本层高稀有神恩权重 +35%，适合追求核心神恩"
     type: BOON_LUCK
-    value: 25
+    value: 35
     difficulty: false
     min-floor: 49
     weight: 13

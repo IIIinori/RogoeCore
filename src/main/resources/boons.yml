@@ -7,14 +7,14 @@
 boons:
   hunt_mark:
     name: "鹰眼猎印"
-    description: "标记弱点：暴击与破甲成长，适合快速处理精英"
+    description: "标记弱点：暴击与护甲穿透成长，适合快速处理精英"
     rarity: COMMON
     icon: SPYGLASS
     max-level: 3
     tags: ["狩猎"]
     attributes:
       "暴击几率": [2.4, 2.4]
-      "破甲": [2, 2]
+      "护甲穿透": [2, 2]
   hunt_bloodtrail:
     name: "血迹追踪"
     description: "击杀后回复生命，狩猎标签越多回复越高"
@@ -76,15 +76,15 @@ boons:
         per-tag: 0.8
   hunt_alpha:
     name: "万兽归弦"
-    description: "物理攻击、首领伤害与移动速度全面成长"
+    description: "物理伤害、首领伤害与移速加成全面成长"
     rarity: LEGENDARY
     icon: NETHER_STAR
     max-level: 4
     tags: ["狩猎"]
     attributes:
-      "物理攻击": [7, 7]
+      "物理伤害": [7, 7]
       "首领伤害": [5, 5]
-      "移动速度": [2.2, 2.2]
+      "移速加成": [2.2, 2.2]
   bulwark_oath:
     name: "古墙誓约"
     description: "提高生命和防御，稳定承接伤害"
@@ -93,7 +93,7 @@ boons:
     max-level: 3
     tags: ["壁垒"]
     attributes:
-      "生命上限": [18, 18]
+      "生命力": [18, 18]
       "物理防御": [3, 3]
   bulwark_retaliate:
     name: "铁律回敬"
@@ -165,14 +165,14 @@ boons:
         per-tag: 0.02
   blood_leech:
     name: "猩红汲取"
-    description: "生命偷取与物理攻击成长"
+    description: "吸血倍率与物理伤害成长"
     rarity: COMMON
     icon: REDSTONE
     max-level: 3
     tags: ["鲜血"]
     attributes:
-      "生命偷取": [1.8, 1.8]
-      "物理攻击": [3, 3]
+      "吸血倍率": [1.8, 1.8]
+      "物理伤害": [3, 3]
   blood_spoils:
     name: "染血战利"
     description: "击杀怪物后获得本局碎片"
@@ -235,14 +235,14 @@ boons:
         per-tag: 0.8
   blood_crown:
     name: "赤王余冠"
-    description: "击杀收益、生命偷取与暴击伤害成长"
+    description: "击杀收益、吸血倍率与暴伤倍率成长"
     rarity: LEGENDARY
     icon: GOLDEN_HELMET
     max-level: 4
     tags: ["鲜血", "财宝"]
     attributes:
-      "生命偷取": [2.8, 2.8]
-      "暴击伤害": [6, 6]
+      "吸血倍率": [2.8, 2.8]
+      "暴伤倍率": [6, 6]
     effects:
       effect_1:
         type: KILL_SHARD
@@ -251,13 +251,13 @@ boons:
         per-tag: 0.5
   storm_spark:
     name: "雷火花"
-    description: "雷霆伤害与攻击速度成长"
+    description: "雷击伤害与攻击速度成长"
     rarity: COMMON
     icon: LIGHTNING_ROD
     max-level: 3
     tags: ["风暴"]
     attributes:
-      "雷霆伤害": [5, 5]
+      "雷击伤害": [5, 5]
       "攻击速度": [2.2, 2.2]
   storm_chain:
     name: "跳雷回路"
@@ -297,7 +297,7 @@ boons:
     max-level: 3
     tags: ["风暴"]
     attributes:
-      "雷霆伤害": [8, 8]
+      "雷击伤害": [8, 8]
       "暴击几率": [3.2, 3.2]
       "技能伤害": [4.5, 4.5]
   storm_blink:
@@ -546,14 +546,14 @@ boons:
         per-tag: 0.8
   radiance_smite:
     name: "灼圣裁决"
-    description: "圣辉、暴击伤害和精英伤害成长"
+    description: "圣辉、暴伤倍率和精英伤害成长"
     rarity: EPIC
     icon: BLAZE_POWDER
     max-level: 3
     tags: ["圣辉"]
     attributes:
       "圣辉伤害": [8.5, 8.5]
-      "暴击伤害": [5, 5]
+      "暴伤倍率": [5, 5]
       "精英伤害": [4, 4]
   radiance_corona:
     name: "日冕圣座"
@@ -694,7 +694,7 @@ boons:
     max-level: 3
     tags: ["狩猎"]
     attributes:
-      "破甲": [1.3, 1.3]
+      "护甲穿透": [1.3, 1.3]
     effects:
       effect_1:
         type: ROOM_SHARD
@@ -724,7 +724,7 @@ boons:
     tags: ["狩猎", "风暴"]
     attributes:
       "暴击几率": [2.3, 2.3]
-      "破甲": [1.4, 1.4]
+      "护甲穿透": [1.4, 1.4]
     effects:
       effect_1:
         type: ROOM_UPGRADE_RANDOM
@@ -761,7 +761,7 @@ boons:
     tags: ["狩猎", "风暴"]
     attributes:
       "暴击几率": [5.4, 5.4]
-      "破甲": [3.3, 3.3]
+      "护甲穿透": [3.3, 3.3]
     effects:
       effect_1:
         type: ROOM_SHARD
@@ -888,7 +888,7 @@ boons:
     max-level: 3
     tags: ["鲜血"]
     attributes:
-      "生命偷取": [2.0, 2.0]
+      "吸血倍率": [2.0, 2.0]
     effects:
       effect_1:
         type: EXECUTE
@@ -904,7 +904,7 @@ boons:
     max-level: 3
     tags: ["鲜血"]
     attributes:
-      "生命上限": [1.9, 1.9]
+      "生命力": [1.9, 1.9]
     effects:
       effect_1:
         type: ROOM_SHARD
@@ -933,8 +933,8 @@ boons:
     max-level: 3
     tags: ["鲜血", "深渊"]
     attributes:
-      "生命偷取": [2.8, 2.8]
-      "生命上限": [1.8, 1.8]
+      "吸血倍率": [2.8, 2.8]
+      "生命力": [1.8, 1.8]
     effects:
       effect_1:
         type: ROOM_UPGRADE_RANDOM
@@ -950,7 +950,7 @@ boons:
     max-level: 3
     tags: ["鲜血"]
     attributes:
-      "生命偷取": [4.0, 4.0]
+      "吸血倍率": [4.0, 4.0]
     effects:
       effect_1:
         type: CHAIN_DAMAGE
@@ -970,8 +970,8 @@ boons:
     max-level: 4
     tags: ["鲜血", "深渊"]
     attributes:
-      "生命偷取": [6.2, 6.2]
-      "生命上限": [3.8, 3.8]
+      "吸血倍率": [6.2, 6.2]
+      "生命力": [3.8, 3.8]
     effects:
       effect_1:
         type: ROOM_SHARD
@@ -993,7 +993,7 @@ boons:
     max-level: 3
     tags: ["风暴"]
     attributes:
-      "雷霆伤害": [2.2, 2.2]
+      "雷击伤害": [2.2, 2.2]
     effects:
       effect_1:
         type: EXECUTE
@@ -1038,7 +1038,7 @@ boons:
     max-level: 3
     tags: ["风暴", "狩猎"]
     attributes:
-      "雷霆伤害": [3.0, 3.0]
+      "雷击伤害": [3.0, 3.0]
       "攻击速度": [2.0, 2.0]
     effects:
       effect_1:
@@ -1055,7 +1055,7 @@ boons:
     max-level: 3
     tags: ["风暴"]
     attributes:
-      "雷霆伤害": [4.4, 4.4]
+      "雷击伤害": [4.4, 4.4]
     effects:
       effect_1:
         type: LOW_HEALTH_SHIELD
@@ -1075,7 +1075,7 @@ boons:
     max-level: 4
     tags: ["风暴", "狩猎"]
     attributes:
-      "雷霆伤害": [6.6, 6.6]
+      "雷击伤害": [6.6, 6.6]
       "攻击速度": [4.0, 4.0]
     effects:
       effect_1:
@@ -1219,7 +1219,7 @@ boons:
     max-level: 3
     tags: ["深渊"]
     attributes:
-      "暴击伤害": [2.8, 2.8]
+      "暴伤倍率": [2.8, 2.8]
     effects:
       effect_1:
         type: ROOM_HEAL
@@ -1249,7 +1249,7 @@ boons:
     tags: ["深渊", "鲜血"]
     attributes:
       "深渊伤害": [3.5, 3.5]
-      "暴击伤害": [2.4, 2.4]
+      "暴伤倍率": [2.4, 2.4]
     effects:
       effect_1:
         type: ROOM_UPGRADE_RANDOM
@@ -1286,7 +1286,7 @@ boons:
     tags: ["深渊", "鲜血"]
     attributes:
       "深渊伤害": [7.4, 7.4]
-      "暴击伤害": [4.5, 4.5]
+      "暴伤倍率": [4.5, 4.5]
     effects:
       effect_1:
         type: ROOM_SHARD
@@ -1570,8 +1570,8 @@ boons:
     max-level: 3
     tags: ["狩猎"]
     attributes:
-      "破甲": [3.2, 3.2]
-      "暴击伤害": [2.4, 2.4]
+      "护甲穿透": [3.2, 3.2]
+      "暴伤倍率": [2.4, 2.4]
     effects:
       effect_1:
         type: EXECUTE
@@ -1791,7 +1791,7 @@ boons:
     max-level: 3
     tags: ["鲜血", "圣辉"]
     attributes:
-      "生命偷取": [2.1, 2.1]
+      "吸血倍率": [2.1, 2.1]
       "治疗加成": [1.5, 1.5]
     effects:
       effect_1:
@@ -1807,7 +1807,7 @@ boons:
     max-level: 3
     tags: ["鲜血", "狩猎"]
     attributes:
-      "生命偷取": [2.4, 2.4]
+      "吸血倍率": [2.4, 2.4]
       "暴击几率": [1.8, 1.8]
     effects:
       effect_1:
@@ -1823,7 +1823,7 @@ boons:
     max-level: 3
     tags: ["鲜血", "圣辉"]
     attributes:
-      "生命偷取": [2.5, 2.5]
+      "吸血倍率": [2.5, 2.5]
       "治疗加成": [1.8, 1.8]
     effects:
       effect_1:
@@ -1842,7 +1842,7 @@ boons:
     max-level: 3
     tags: ["鲜血", "圣辉"]
     attributes:
-      "生命偷取": [2.8, 2.8]
+      "吸血倍率": [2.8, 2.8]
       "治疗加成": [1.9, 1.9]
     effects:
       effect_1:
@@ -1859,7 +1859,7 @@ boons:
     max-level: 3
     tags: ["鲜血", "圣辉"]
     attributes:
-      "生命偷取": [3, 3]
+      "吸血倍率": [3, 3]
       "治疗加成": [2.1, 2.1]
     effects:
       effect_1:
@@ -1879,7 +1879,7 @@ boons:
     max-level: 3
     tags: ["鲜血", "圣辉"]
     attributes:
-      "生命偷取": [3.2, 3.2]
+      "吸血倍率": [3.2, 3.2]
       "治疗加成": [2.3, 2.3]
     effects:
       effect_1:
@@ -1896,7 +1896,7 @@ boons:
     max-level: 3
     tags: ["鲜血", "圣辉"]
     attributes:
-      "生命偷取": [3.4, 3.4]
+      "吸血倍率": [3.4, 3.4]
       "治疗加成": [2.4, 2.4]
     effects:
       effect_1:
@@ -1912,8 +1912,8 @@ boons:
     max-level: 4
     tags: ["鲜血", "深渊"]
     attributes:
-      "生命偷取": [4.2, 4.2]
-      "暴击伤害": [3.5, 3.5]
+      "吸血倍率": [4.2, 4.2]
+      "暴伤倍率": [3.5, 3.5]
     effects:
       effect_1:
         type: LOW_HEALTH_ROOM_SHARD
@@ -1945,7 +1945,7 @@ boons:
     max-level: 3
     tags: ["风暴", "财宝"]
     attributes:
-      "雷霆伤害": [2.6, 2.6]
+      "雷击伤害": [2.6, 2.6]
       "攻击速度": [1.8, 1.8]
     effects:
       effect_1:
@@ -1961,7 +1961,7 @@ boons:
     max-level: 3
     tags: ["风暴", "财宝"]
     attributes:
-      "雷霆伤害": [2.8, 2.8]
+      "雷击伤害": [2.8, 2.8]
       "攻击速度": [2, 2]
     effects:
       effect_1:
@@ -1980,7 +1980,7 @@ boons:
     max-level: 3
     tags: ["风暴", "财宝"]
     attributes:
-      "雷霆伤害": [3, 3]
+      "雷击伤害": [3, 3]
       "攻击速度": [2.1, 2.1]
     effects:
       effect_1:
@@ -1997,7 +1997,7 @@ boons:
     max-level: 4
     tags: ["风暴", "狩猎"]
     attributes:
-      "雷霆伤害": [4.4, 4.4]
+      "雷击伤害": [4.4, 4.4]
       "攻击速度": [3.0, 3.0]
     effects:
       effect_1:
@@ -2018,7 +2018,7 @@ boons:
     tags: ["风暴", "财宝"]
     attributes:
       "攻击速度": [2.8, 2.8]
-      "雷霆伤害": [3.1, 3.1]
+      "雷击伤害": [3.1, 3.1]
     effects:
       effect_1:
         type: ROOM_STREAK_SHARD
@@ -2033,7 +2033,7 @@ boons:
     max-level: 3
     tags: ["风暴", "财宝"]
     attributes:
-      "雷霆伤害": [3.7, 3.7]
+      "雷击伤害": [3.7, 3.7]
       "攻击速度": [2.6, 2.6]
     effects:
       effect_1:
@@ -2049,7 +2049,7 @@ boons:
     max-level: 4
     tags: ["风暴", "财宝"]
     attributes:
-      "雷霆伤害": [3.9, 3.9]
+      "雷击伤害": [3.9, 3.9]
       "攻击速度": [2.8, 2.8]
     effects:
       effect_1:
@@ -2232,7 +2232,7 @@ boons:
     tags: ["深渊", "鲜血"]
     attributes:
       "深渊伤害": [3.1, 3.1]
-      "暴击伤害": [2.2, 2.2]
+      "暴伤倍率": [2.2, 2.2]
     effects:
       effect_1:
         type: KILL_SHARD
@@ -2248,7 +2248,7 @@ boons:
     tags: ["深渊", "鲜血"]
     attributes:
       "深渊伤害": [3.3, 3.3]
-      "暴击伤害": [2.3, 2.3]
+      "暴伤倍率": [2.3, 2.3]
     effects:
       effect_1:
         type: LOW_HEALTH_SHIELD
@@ -2267,7 +2267,7 @@ boons:
     tags: ["深渊", "鲜血"]
     attributes:
       "深渊伤害": [3.5, 3.5]
-      "暴击伤害": [2.5, 2.5]
+      "暴伤倍率": [2.5, 2.5]
     effects:
       effect_1:
         type: EXECUTE
@@ -2284,7 +2284,7 @@ boons:
     tags: ["深渊", "鲜血"]
     attributes:
       "深渊伤害": [3.7, 3.7]
-      "暴击伤害": [2.6, 2.6]
+      "暴伤倍率": [2.6, 2.6]
     effects:
       effect_1:
         type: CHAIN_DAMAGE
@@ -2304,7 +2304,7 @@ boons:
     tags: ["深渊", "鲜血"]
     attributes:
       "深渊伤害": [4, 4]
-      "暴击伤害": [2.8, 2.8]
+      "暴伤倍率": [2.8, 2.8]
     effects:
       effect_1:
         type: KILL_SPEED
@@ -2321,7 +2321,7 @@ boons:
     tags: ["深渊", "鲜血"]
     attributes:
       "深渊伤害": [4.2, 4.2]
-      "暴击伤害": [3, 3]
+      "暴伤倍率": [3, 3]
     effects:
       effect_1:
         type: ROOM_HEAL
@@ -2751,7 +2751,7 @@ boons:
         per-tag: 1.4
   echo_crown_loop:
     name: "回响王冠"
-    description: "获得后下一次神恩选择会被回响强化，同时提供少量暴击成长"
+    description: "获得后下一次神恩选择会被双重回响强化，同时提供少量暴击成长"
     rarity: LEGENDARY
     icon: GOLDEN_HELMET
     max-level: 4
@@ -2761,7 +2761,7 @@ boons:
     effects:
       effect_1:
         type: NEXT_BOON_ECHO
-        value-per-level: 1
+        value-per-level: 2
   prophecy_grand_design:
     name: "大预言图纸"
     description: "获得后预言铁匠房；兑现后取得大笔碎片用于锻造或偿债"

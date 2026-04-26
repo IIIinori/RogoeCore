@@ -221,7 +221,7 @@ object PermanentForgeUI {
                         }
                         if (DungeonLootManager.isFavorite(equipped.item)) {
                             player.sendMessage("§c这件永久装备已收藏，无法直接分解。")
-                            player.sendMessage("§7请先在 §e/rogue gear §7装备仓库中取消收藏后再分解。")
+                            player.sendMessage("§7请先在 §e/rogue gear storage §7装备仓库中取消收藏后再分解。")
                             return@onClick
                         }
                         val reward = getSalvageReward(player, equipmentSlot)

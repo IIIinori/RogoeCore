@@ -23,7 +23,7 @@ object GuideManager {
         for (line in lines) {
             player.sendMessage(line)
         }
-        player.sendMessage("§7更多说明可输入 §f/rogue guide")
+        player.sendMessage("§7更多说明可输入 §f/rogue progress guide")
     }
 
     fun hasSeen(player: Player, key: String): Boolean {

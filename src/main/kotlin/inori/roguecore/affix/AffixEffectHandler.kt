@@ -9,6 +9,7 @@ import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
+import taboolib.common.platform.event.EventPriority
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityRegainHealthEvent
 import taboolib.common.LifeCycle
@@ -135,7 +136,7 @@ object AffixEffectHandler {
         player.world.playSound(location, Sound.ENTITY_ENDERMAN_AMBIENT, 0.45f, 0.8f)
     }
 
-    @SubscribeEvent(ignoreCancelled = true)
+    @SubscribeEvent(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onEntityDamage(event: EntityDamageByEntityEvent) {
         val player = event.entity as? Player ?: return
         val instance = DungeonManager.getPlayerDungeon(player) ?: return

@@ -13,6 +13,7 @@ import org.bukkit.entity.Entity
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
+import taboolib.common.platform.event.EventPriority
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.potion.PotionEffect
@@ -32,13 +33,14 @@ object BoonEffectHandler {
     private val firstKillClaimed = ConcurrentHashMap<UUID, Boolean>()
     private val roomClearStreak = ConcurrentHashMap<UUID, Int>()
 
-    @SubscribeEvent(ignoreCancelled = true)
+    @SubscribeEvent(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onEntityDamage(event: EntityDamageByEntityEvent) {
         val attacker = resolvePlayerDamager(event.damager)
         val target = event.entity as? LivingEntity
 
         if (attacker != null && target != null && target !is Player && DungeonManager.isInDungeon(attacker)) {
             handleAttackBoons(attacker, target, event)
+            BoonResonanceManager.onPlayerDamageMob(attacker, target, event)
         }
 
         val victim = event.entity as? Player ?: return

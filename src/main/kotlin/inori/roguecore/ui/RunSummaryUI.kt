@@ -46,11 +46,11 @@ object RunSummaryUI {
             set(21, modifierItem(summary))
             set(22, resonanceItem(summary))
             set(23, nextStepItem(summary))
-            set(37, shortcutItem(XMaterial.HOPPER, "§6回收工坊", "/rogue salvage"))
-            set(38, shortcutItem(XMaterial.SPYGLASS, "§e装备鉴定", "/rogue identify"))
-            set(39, shortcutItem(XMaterial.CRAFTING_TABLE, "§d饰品工坊", "/rogue aworkshop"))
-            set(40, shortcutItem(XMaterial.LECTERN, "§5收藏馆", "/rogue collection"))
-            set(41, shortcutItem(XMaterial.ENCHANTED_BOOK, "§d构筑详情", "/rogue build"))
+            set(37, shortcutItem(XMaterial.HOPPER, "§6回收工坊", "/rogue gear storage salvage"))
+            set(38, shortcutItem(XMaterial.SPYGLASS, "§e装备鉴定", "/rogue gear storage identify"))
+            set(39, shortcutItem(XMaterial.CRAFTING_TABLE, "§d饰品工坊", "/rogue accessory workshop"))
+            set(40, shortcutItem(XMaterial.LECTERN, "§5收藏馆", "/rogue progress collection"))
+            set(41, shortcutItem(XMaterial.ENCHANTED_BOOK, "§d构筑详情", "/rogue run build"))
             set(49, closeItem())
 
             onClick { event ->
@@ -289,12 +289,12 @@ object RunSummaryUI {
                 meta.lore = buildList {
                     add("")
                     var suggestions = 0
-                    if ((summary.lootCounts["unidentified_gear"] ?: 0) > 0) { add("§e未鉴定装备 → /rogue identify"); suggestions++ }
-                    if ((summary.lootCounts["forge_book"] ?: 0) > 0) { add("§6锻造书 → /rogue craft"); suggestions++ }
-                    if ((summary.lootCounts["sealed_accessory"] ?: 0) > 0) { add("§d密封饰品 → /rogue aid"); suggestions++ }
-                    if ((summary.lootCounts["accessory_inscription"] ?: 0) > 0) { add("§b饰品刻印书 → /rogue inscribe"); suggestions++ }
-                    if (summary.salvagedCount == 0 && summary.lootCounts.values.sum() > 0) { add("§6低价值物品 → /rogue salvage"); suggestions++ }
-                    if (summary.collectionUnlocks.isNotEmpty()) { add("§5查看收藏进度 → /rogue collection"); suggestions++ }
+                    if ((summary.lootCounts["unidentified_gear"] ?: 0) > 0) { add("§e未鉴定装备 → /rogue gear storage identify"); suggestions++ }
+                    if ((summary.lootCounts["forge_book"] ?: 0) > 0) { add("§6锻造书 → /rogue gear storage craft"); suggestions++ }
+                    if ((summary.lootCounts["sealed_accessory"] ?: 0) > 0) { add("§d密封饰品 → /rogue accessory identify"); suggestions++ }
+                    if ((summary.lootCounts["accessory_inscription"] ?: 0) > 0) { add("§b饰品刻印书 → /rogue accessory inscribe"); suggestions++ }
+                    if (summary.salvagedCount == 0 && summary.lootCounts.values.sum() > 0) { add("§6低价值物品 → /rogue gear storage salvage"); suggestions++ }
+                    if (summary.collectionUnlocks.isNotEmpty()) { add("§5查看收藏进度 → /rogue progress collection"); suggestions++ }
                     if (suggestions == 0) add("§7继续挑战更高层，或整理背包回收材料。")
                 }
             }

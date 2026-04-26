@@ -51,21 +51,21 @@ object AccessoryDropManager {
             give(player, item)
             val displayName = item.itemMeta?.displayName ?: definition.name
             val hint = when {
-                AccessoryItemCodec.isSealedAccessory(item) -> "打开 §e/rogue aid §7鉴定"
-                else -> "打开 §e/rogue accessory §7装备"
+                AccessoryItemCodec.isSealedAccessory(item) -> "打开 §e/rogue accessory identify §7鉴定"
+                else -> "打开 §e/rogue accessory box §7装备"
             }
             player.sendMessage("§d获得饰品物品: §f$displayName §7($hint)")
             if (AccessoryItemCodec.isSealedAccessory(item)) {
                 RunSummaryManager.onLootGained(player.uniqueId, "sealed_accessory")
                 GuideManager.showOnce(player, GuideManager.SEALED_ACCESSORY, listOf(
                     "§e你获得了密封饰品。",
-                    "§7在 §6/rogue aid §7中鉴定后才会变成可装备饰品。"
+                    "§7在 §6/rogue accessory identify §7中鉴定后才会变成可装备饰品。"
                 ))
             } else {
                 RunSummaryManager.onLootGained(player.uniqueId, "accessory")
                 GuideManager.showOnce(player, GuideManager.ACCESSORY, listOf(
                     "§e你获得了饰品。",
-                    "§7打开 §6/rogue accessory §7放入饰品匣后才会生效。"
+                    "§7打开 §6/rogue accessory box §7放入饰品匣后才会生效。"
                 ))
             }
             granted = true
@@ -116,11 +116,11 @@ object AccessoryDropManager {
         val quality = weightedRandom(AccessoryRegistry.getInscriptionQualities(), AccessoryInscriptionQuality::weight) ?: return
         val item = AccessoryItemCodec.buildInscriptionBook(definition, source, floor, quality) ?: return
         give(player, item)
-        player.sendMessage("§b获得饰品刻印书: §f${item.itemMeta?.displayName ?: definition.name} §7(打开 §e/rogue inscribe §7刻印)")
+        player.sendMessage("§b获得饰品刻印书: §f${item.itemMeta?.displayName ?: definition.name} §7(打开 §e/rogue accessory inscribe §7刻印)")
         RunSummaryManager.onLootGained(player.uniqueId, "accessory_inscription")
         GuideManager.showOnce(player, GuideManager.ACCESSORY_INSCRIPTION, listOf(
             "§e你获得了饰品刻印书。",
-            "§7在 §6/rogue inscribe §7中刻印后会生成指定饰品。"
+            "§7在 §6/rogue accessory inscribe §7中刻印后会生成指定饰品。"
         ))
     }
 

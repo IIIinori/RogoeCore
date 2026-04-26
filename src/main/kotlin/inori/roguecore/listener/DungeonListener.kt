@@ -48,15 +48,15 @@ object DungeonListener {
         DungeonManager.processPendingJoinState(player)
         PartyManager.onPlayerJoin(player)
         if (DungeonManager.canRejoinDungeon(uuid)) {
-            player.sendMessage("§e你有一场未结束的冒险，输入 §f/rogue rejoin §e可返回副本。")
+            player.sendMessage("§e你有一场未结束的冒险，输入 §f/rogue run rejoin §e可返回副本。")
         }
         val completedIdentify = IdentificationTaskManager.getCompletedCount(uuid)
         if (completedIdentify > 0) {
-            player.sendMessage("§e你有 §a$completedIdentify §e个已完成的装备鉴定，输入 §f/rogue identify §e可一键领取。")
+            player.sendMessage("§e你有 §a$completedIdentify §e个已完成的装备鉴定，输入 §f/rogue gear identify §e可一键领取。")
         }
         val completedForge = ForgeBookTaskManager.getCompletedCount(uuid)
         if (completedForge > 0) {
-            player.sendMessage("§e你有 §a$completedForge §e个已完成的装备打造，输入 §f/rogue craft §e可一键领取。")
+            player.sendMessage("§e你有 §a$completedForge §e个已完成的装备打造，输入 §f/rogue gear craft §e可一键领取。")
         }
     }
 

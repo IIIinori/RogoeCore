@@ -56,6 +56,14 @@ object GearStorageManager {
 
     fun storeFromInventory(player: Player, inventorySlot: Int): String {
         val item = player.inventory.getItem(inventorySlot)
+        val message = storeItem(player, item)
+        if (message.startsWith("§a")) {
+            player.inventory.setItem(inventorySlot, null)
+        }
+        return message
+    }
+
+    fun storeItem(player: Player, item: ItemStack?): String {
         if (!canStore(player, item)) {
             return "§c只能存入绑定你的 RogueCore 永久装备。"
         }
@@ -63,9 +71,8 @@ object GearStorageManager {
         if (items.size >= getCapacity(player)) {
             return "§c装备仓库已满。"
         }
-        items += item!!.clone()
+        items += item!!.clone().also { it.amount = 1 }
         saveItems(player, items)
-        player.inventory.setItem(inventorySlot, null)
         return "§a已存入装备仓库。"
     }
 

@@ -111,6 +111,12 @@ object DungeonLootManager {
         val message: String
     )
 
+    data class AdminGiveItemResult(
+        val success: Boolean,
+        val item: ItemStack? = null,
+        val message: String
+    )
+
     data class UnidentifiedLootInfo(
         val lootId: String,
         val source: DungeonLootSource,
@@ -439,14 +445,14 @@ object DungeonLootManager {
                 RunSummaryManager.onLootGained(player.uniqueId, "unidentified_gear")
                 GuideManager.showOnce(player, GuideManager.UNIDENTIFIED_LOOT, listOf(
                     "§e你获得了未鉴定装备。",
-                    "§7在 §6/rogue identify §7中鉴定后会变成绑定你的永久装备。"
+                    "§7在 §6/rogue gear storage identify §7中鉴定后会变成绑定你的永久装备。"
                 ))
             } else {
                 RunSummaryManager.onLootGained(player.uniqueId, "temporary_gear")
             }
             GuideManager.showOnce(player, GuideManager.SALVAGE, listOf(
                 "§e不需要的装备、饰品和书类可以回收。",
-                "§7打开 §6/rogue salvage §7可分解低价值物品换材料。"
+                "§7打开 §6/rogue gear storage salvage §7可分解低价值物品换材料。"
             ))
             if (shouldDropForgeBook(player, source)) {
                 val quality = rollForgeBookQuality(player)
@@ -456,7 +462,7 @@ object DungeonLootManager {
                     RunSummaryManager.onLootGained(player.uniqueId, "forge_book")
                     GuideManager.showOnce(player, GuideManager.FORGE_BOOK, listOf(
                         "§e你获得了锻造书。",
-                        "§7在 §6/rogue craft §7中消耗材料和时间打造永久装备。"
+                        "§7在 §6/rogue gear storage craft §7中消耗材料和时间打造永久装备。"
                     ))
                 }
             }
@@ -518,7 +524,7 @@ object DungeonLootManager {
             "§7来源: §f${source.displayName()}",
             "§7层数: §f$floor",
             "",
-            "§e使用 §6/rogue craft §e开始锻造"
+            "§e使用 §6/rogue gear storage craft §e开始锻造"
         )
         item.itemMeta = meta
         return item
@@ -541,7 +547,7 @@ object DungeonLootManager {
             "",
             "§7来源: §f$sourceName",
             "§7层数: §f$floor",
-            "§e使用 §6/rogue identify §e进行鉴定"
+            "§e使用 §6/rogue gear storage identify §e进行鉴定"
         )
         item.itemMeta = meta
         return item
@@ -1217,6 +1223,45 @@ object DungeonLootManager {
             ?: DungeonLootSource.CHEST
         val floor = meta.persistentDataContainer.get(forgeBookFloorKey, PersistentDataType.INTEGER) ?: 1
         return ForgeBookInfo(lootId, source, floor, quality)
+    }
+
+    fun getDefinitionIds(): List<String> = definitions.map { it.id }.sorted()
+
+    fun getForgeBookQualityIds(): List<String> = forgeBookQualities.keys.sorted()
+
+    fun buildAdminGiveItem(
+        player: Player,
+        kind: String,
+        lootId: String,
+        source: DungeonLootSource,
+        floor: Int,
+        extra: String
+    ): AdminGiveItemResult {
+        val definition = definitions.firstOrNull { it.id.equals(lootId, ignoreCase = true) }
+            ?: return AdminGiveItemResult(false, null, "§c装备模板不存在: §f$lootId")
+        return when (kind.lowercase()) {
+            "gear" -> {
+                val rolled = buildRolledLoot(definition, source, "管理员给予", floor.coerceAtLeast(1), 0, 0, 0, 0.0)
+                    ?: return AdminGiveItemResult(false, null, "§c装备生成失败，请检查配置。")
+                if (extra.equals("permanent", ignoreCase = true)) {
+                    makePermanent(rolled.item, player)
+                }
+                AdminGiveItemResult(true, rolled.item, "§a已生成装备: §f${definition.name} §7(${if (isPermanentLoot(rolled.item)) "永久" else "临时"})")
+            }
+            "unidentified" -> {
+                val item = buildUnidentifiedLoot(definition, source, floor.coerceAtLeast(1))
+                    ?: return AdminGiveItemResult(false, null, "§c未鉴定装备生成失败。")
+                AdminGiveItemResult(true, DungeonBoundItem.mark(item) ?: item, "§a已生成未鉴定装备: §f${definition.name}")
+            }
+            "forgebook" -> {
+                val quality = forgeBookQualities[extra.lowercase()] ?: forgeBookQualities["rough"] ?: forgeBookQualities.values.firstOrNull()
+                    ?: return AdminGiveItemResult(false, null, "§c没有可用锻造书品质。")
+                val item = buildForgeBook(definition, source, floor.coerceAtLeast(1), quality)
+                    ?: return AdminGiveItemResult(false, null, "§c锻造书生成失败。")
+                AdminGiveItemResult(true, DungeonBoundItem.mark(item) ?: item, "§a已生成锻造书: §f${definition.name} §7(${quality.name})")
+            }
+            else -> AdminGiveItemResult(false, null, "§c不支持的装备测试物品类型: §f$kind")
+        }
     }
 
     fun buildForgeBookResultForPlayer(

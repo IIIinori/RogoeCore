@@ -185,7 +185,7 @@ object ResearchOverviewUI {
                 "§7局外锻造价格折扣: §a-${percentReduction(UnlockManager.getPermanentForgePriceMultiplier(player))}%",
                 "§7升品价格折扣: §a-${percentReduction(UnlockManager.getRarityUpgradePriceMultiplier(player))}%",
                 "§7分解材料返还: §a+${UnlockManager.getSalvageMaterialBonus(player)}",
-                "§8材料库存请在主菜单或 /rogue materials 查看"
+                "§8材料库存请在主菜单或 /rogue gear storage materials 查看"
             )
         )
     }

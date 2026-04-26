@@ -77,6 +77,7 @@ object RoomCombatManager {
                     world.spawnParticle(Particle.PORTAL, point, 3, 0.12, 0.22, 0.12, 0.01)
                 }
             }
+            enforceActiveRoomMobBounds()
         }
     }
 
@@ -253,6 +254,37 @@ object RoomCombatManager {
         activeRoomSeals[instance.id] = sealPoints
         for (player in instance.getOnlinePlayers()) {
             player.playSound(player.location, Sound.BLOCK_BEACON_ACTIVATE, 0.6f, 1.8f)
+        }
+    }
+
+    private fun enforceActiveRoomMobBounds() {
+        for (instance in DungeonManager.getActiveDungeons()) {
+            if (instance.completed) continue
+            val room = instance.rooms.firstOrNull { it.isCombatRoom && it.state == RoomState.ACTIVE } ?: continue
+            val baseY = instance.config.floorLevel + 1
+            val escaped = mutableListOf<UUID>()
+            for (mobId in room.aliveMobs) {
+                val entity = Bukkit.getEntity(mobId)
+                if (entity == null || entity.isDead || entity.world.uid != instance.world.uid) {
+                    escaped += mobId
+                    continue
+                }
+                val currentRoom = getRoomAtLocation(entity.location, instance)
+                if (currentRoom?.id == room.id) {
+                    continue
+                }
+                val returnLocation = getRandomSpawnLocation(room, instance.origin, baseY)
+                entity.teleport(returnLocation)
+                entity.velocity = entity.velocity.multiply(0.0)
+                entity.world.spawnParticle(Particle.PORTAL, returnLocation.clone().add(0.0, 1.0, 0.0), 18, 0.25, 0.35, 0.25, 0.03)
+            }
+            if (escaped.isNotEmpty()) {
+                room.aliveMobs.removeAll(escaped.toSet())
+                escaped.forEach(mobRoomMap::remove)
+                if (room.aliveMobs.isEmpty() && room.state == RoomState.ACTIVE) {
+                    onRoomCleared(instance, room)
+                }
+            }
         }
     }
 

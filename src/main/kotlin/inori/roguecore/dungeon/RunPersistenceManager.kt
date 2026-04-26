@@ -117,7 +117,7 @@ object RunPersistenceManager {
 
         for (player in Bukkit.getOnlinePlayers()) {
             if (DungeonManager.canRejoinDungeon(player.uniqueId)) {
-                player.sendMessage("§e你有一场未结束的冒险，输入 §f/rogue rejoin §e可返回副本。")
+                player.sendMessage("§e你有一场未结束的冒险，输入 §f/rogue run rejoin §e可返回副本。")
             }
         }
 

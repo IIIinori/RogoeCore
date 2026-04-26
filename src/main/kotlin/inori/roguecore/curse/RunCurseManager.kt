@@ -5,6 +5,7 @@ import inori.roguecore.dungeon.RunPersistenceManager
 import org.bukkit.attribute.Attribute
 import org.bukkit.attribute.AttributeModifier
 import org.bukkit.entity.Player
+import taboolib.common.platform.event.EventPriority
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.EntityRegainHealthEvent
@@ -97,7 +98,7 @@ object RunCurseManager {
         }
     }
 
-    @SubscribeEvent(ignoreCancelled = true)
+    @SubscribeEvent(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onDamage(event: EntityDamageEvent) {
         val player = event.entity as? Player ?: return
         if (!DungeonManager.isInDungeon(player)) {

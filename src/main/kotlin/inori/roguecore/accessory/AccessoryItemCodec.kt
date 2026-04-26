@@ -96,7 +96,7 @@ object AccessoryItemCodec {
             "§7槽位: §d${definition.slot.displayName}",
             "§7来源: §f${sourceDisplay(source)} §8· 第${floor}层",
             "",
-            "§e在 §6/rogue aid §e中鉴定",
+            "§e在 §6/rogue accessory identify §e中鉴定",
             "§c离开副本后消失"
         )
         item.itemMeta = meta
@@ -132,7 +132,7 @@ object AccessoryItemCodec {
             add("§7升品幸运: §b+${format(quality.rarityLuck)}%")
             add("§7数值倍率: §a${format(quality.valueMultiplier * 100.0)}%")
             add("")
-            add("§e在 §6/rogue inscribe §e中刻印")
+            add("§e在 §6/rogue accessory inscribe §e中刻印")
             add("§c离开副本后消失")
         }
         item.itemMeta = meta
@@ -199,7 +199,7 @@ object AccessoryItemCodec {
             if (menuPreview) {
                 add("§e点击取下到背包")
             } else {
-                add("§e在 /rogue accessory 中装备")
+                add("§e在 /rogue accessory box 中装备")
                 add("§c离开副本后消失")
             }
         }

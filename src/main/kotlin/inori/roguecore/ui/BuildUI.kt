@@ -421,8 +421,8 @@ object BuildUI {
             meta.lore = listOf(
                 "",
                 "§7此界面汇总当前 run 的关键构筑状态。",
-                "§7可用命令: §e/rogue build",
-                "§7临时修正: §e/rogue modifiers",
+                "§7可用命令: §e/rogue run build",
+                "§7临时修正: §e/rogue run modifiers",
                 "§7如果发现内容异常，可让管理员执行:",
                 "§c/rogue admin audit"
             )

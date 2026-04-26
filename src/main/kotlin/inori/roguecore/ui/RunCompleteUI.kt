@@ -68,12 +68,12 @@ object RunCompleteUI {
             set(6, buildCollectionSummary(summary))
             set(22, buildRoutePreviewHint())
             set(24, buildNextStepHint(summary))
-            set(36, shortcutItem(XMaterial.HOPPER, "§6回收工坊", "§7处理低价值装备、饰品和书类", "/rogue salvage"))
-            set(37, shortcutItem(XMaterial.SPYGLASS, "§e装备鉴定", "§7鉴定未鉴定装备", "/rogue identify"))
-            set(38, shortcutItem(XMaterial.CRAFTING_TABLE, "§d饰品工坊", "§7鉴定密封饰品或刻印饰品书", "/rogue aworkshop"))
-            set(39, shortcutItem(XMaterial.LECTERN, "§5收藏馆", "§7提交高品质装备和饰品", "/rogue collection"))
-            set(40, shortcutItem(XMaterial.WRITABLE_BOOK, "§e完整报告", "§7查看本局详细报告", "/rogue summary"))
-            set(42, shortcutItem(XMaterial.ENCHANTED_BOOK, "§d构筑详情", "§7查看神恩、遗物、修正和饰品", "/rogue build"))
+            set(36, shortcutItem(XMaterial.HOPPER, "§6回收工坊", "§7处理低价值装备、饰品和书类", "/rogue gear storage salvage"))
+            set(37, shortcutItem(XMaterial.SPYGLASS, "§e装备鉴定", "§7鉴定未鉴定装备", "/rogue gear storage identify"))
+            set(38, shortcutItem(XMaterial.CRAFTING_TABLE, "§d饰品工坊", "§7鉴定密封饰品或刻印饰品书", "/rogue accessory workshop"))
+            set(39, shortcutItem(XMaterial.LECTERN, "§5收藏馆", "§7提交高品质装备和饰品", "/rogue progress collection"))
+            set(40, shortcutItem(XMaterial.WRITABLE_BOOK, "§e完整报告", "§7查看本局详细报告", "/rogue run summary"))
+            set(42, shortcutItem(XMaterial.ENCHANTED_BOOK, "§d构筑详情", "§7查看神恩、遗物、修正和饰品", "/rogue run build"))
 
             for ((slot, route) in routeSlots) {
                 set(slot, (route.icon.parseItem() ?: XMaterial.MAP.parseItem()!!).apply {
@@ -217,7 +217,7 @@ object RunCompleteUI {
                 "§7路线会影响下一层的房间权重、",
                 "§7隐藏房概率、副本词缀和事件词缀倾向。",
                 "",
-                "§7建议先用 §e/rogue build §7确认当前构筑，",
+                "§7建议先用 §e/rogue run build §7确认当前构筑，",
                 "§7再选择能放大主流派收益的路线。"
             )
         }
@@ -273,11 +273,11 @@ object RunCompleteUI {
                 add("")
                 val counts = summary?.lootCounts.orEmpty()
                 var suggestions = 0
-                if ((counts["unidentified_gear"] ?: 0) > 0) { add("§e有未鉴定装备 → /rogue identify"); suggestions++ }
-                if ((counts["forge_book"] ?: 0) > 0) { add("§6有锻造书 → /rogue craft"); suggestions++ }
-                if ((counts["sealed_accessory"] ?: 0) > 0) { add("§d有密封饰品 → /rogue aid"); suggestions++ }
-                if ((counts["accessory_inscription"] ?: 0) > 0) { add("§b有饰品刻印书 → /rogue inscribe"); suggestions++ }
-                if ((summary?.collectionUnlocks?.size ?: 0) > 0) { add("§5本局有收藏点亮 → /rogue collection"); suggestions++ }
+                if ((counts["unidentified_gear"] ?: 0) > 0) { add("§e有未鉴定装备 → /rogue gear storage identify"); suggestions++ }
+                if ((counts["forge_book"] ?: 0) > 0) { add("§6有锻造书 → /rogue gear storage craft"); suggestions++ }
+                if ((counts["sealed_accessory"] ?: 0) > 0) { add("§d有密封饰品 → /rogue accessory identify"); suggestions++ }
+                if ((counts["accessory_inscription"] ?: 0) > 0) { add("§b有饰品刻印书 → /rogue accessory inscribe"); suggestions++ }
+                if ((summary?.collectionUnlocks?.size ?: 0) > 0) { add("§5本局有收藏点亮 → /rogue progress collection"); suggestions++ }
                 if (suggestions == 0) add("§7继续选择路线，或者结算后回收低价值物品。")
                 add("")
                 add("§7下方按钮可快速打开相关系统。")

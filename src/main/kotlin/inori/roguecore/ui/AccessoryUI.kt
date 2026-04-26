@@ -57,6 +57,24 @@ object AccessoryUI {
 
                 val accessorySlot = slotMap.entries.firstOrNull { it.value == raw }?.key
                 if (accessorySlot != null) {
+                    val cursor = event.cursorItem
+                    if (cursor != null && AccessoryItemCodec.isAccessory(cursor)) {
+                        val instance = AccessoryItemCodec.parse(cursor)
+                        if (instance == null) {
+                            player.sendMessage("§c这不是有效饰品。")
+                            return@onClick
+                        }
+                        val message = PlayerAccessoryData.equip(player, accessorySlot, instance)
+                        player.sendMessage(message)
+                        if (message.startsWith("§a")) {
+                            val remaining = cursor.clone()
+                            remaining.amount = remaining.amount - 1
+                            event.cursorItem = if (remaining.amount > 0) remaining else null
+                            open(player)
+                        }
+                        return@onClick
+                    }
+
                     val message = PlayerAccessoryData.unequip(player, accessorySlot)
                     player.sendMessage(message)
                     open(player)
@@ -69,7 +87,7 @@ object AccessoryUI {
                     if (!AccessoryItemCodec.isAccessory(current)) {
                         return@onClick
                     }
-                    val inventorySlot = raw - topSize
+                    val inventorySlot = event.clickEvent().slot
                     val message = PlayerAccessoryData.equipFromInventory(player, inventorySlot)
                     player.sendMessage(message)
                     open(player)

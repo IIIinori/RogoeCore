@@ -411,7 +411,7 @@ object DungeonManager {
         if (shards > 0) {
             player.sendMessage("§e本次冒险结算 §6$shards §e灵魂碎片")
         }
-        player.sendMessage("§7输入 §e/rogue summary §7查看本次冒险报告。")
+        player.sendMessage("§7输入 §e/rogue run summary §7查看本次冒险报告。")
 
         PlayerBoonData.clearBoons(player)
         RunCurseManager.clear(player)

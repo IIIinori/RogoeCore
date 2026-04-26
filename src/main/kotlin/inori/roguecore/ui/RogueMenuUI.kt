@@ -72,7 +72,7 @@ object RogueMenuUI {
                     if (!inDungeon && DungeonManager.canRejoinDungeon(player.uniqueId)) add("§7检测到可重连副本")
                     add(if (party != null) "§7当前队伍: §f${party.size}/${party.maxSize}" else "§8当前未组队")
                     add("")
-                    add(if (inDungeon) "§e点击关闭菜单继续冒险" else if (DungeonManager.canRejoinDungeon(player.uniqueId)) "§e点击执行 /rogue rejoin" else "§e点击执行 /rogue enter")
+                    add(if (inDungeon) "§e点击关闭菜单继续冒险" else if (DungeonManager.canRejoinDungeon(player.uniqueId)) "§e点击执行 /rogue run rejoin" else "§e点击执行 /rogue run enter")
                 }
             ))
 
@@ -138,7 +138,7 @@ object RogueMenuUI {
                     if (inDungeon) "§7结束当前副本并返回原位" else "§8当前不在副本中",
                     if (inDungeon) "§7会结算本局灵魂碎片" else "",
                     "",
-                    if (inDungeon) "§e点击执行 /rogue leave" else "§8暂不可用"
+                    if (inDungeon) "§e点击执行 /rogue run leave" else "§8暂不可用"
                 ).filter { it.isNotEmpty() }
             ))
 
@@ -404,12 +404,12 @@ object RogueMenuUI {
     private fun showPartyHelp(player: Player) {
         player.closeInventory()
         player.sendMessage("§6===== RogueCore 队伍命令 =====")
-        player.sendMessage("§e/rogue create §7- 创建队伍")
-        player.sendMessage("§e/rogue invite <玩家> §7- 邀请玩家")
-        player.sendMessage("§e/rogue accept §7- 接受邀请")
-        player.sendMessage("§e/rogue quit §7- 离开队伍")
-        player.sendMessage("§e/rogue list §7- 查看队伍成员")
-        player.sendMessage("§e/rogue kick <玩家> §7- 踢出队员")
-        player.sendMessage("§e/rogue disband §7- 解散队伍")
+        player.sendMessage("§e/rogue party create §7- 创建队伍")
+        player.sendMessage("§e/rogue party invite <玩家> §7- 邀请玩家")
+        player.sendMessage("§e/rogue party accept §7- 接受邀请")
+        player.sendMessage("§e/rogue party quit §7- 离开队伍")
+        player.sendMessage("§e/rogue party list §7- 查看队伍成员")
+        player.sendMessage("§e/rogue party kick <玩家> §7- 踢出队员")
+        player.sendMessage("§e/rogue party disband §7- 解散队伍")
     }
 }

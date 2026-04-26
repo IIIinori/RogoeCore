@@ -10,6 +10,7 @@ import org.bukkit.entity.Entity
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
+import taboolib.common.platform.event.EventPriority
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.potion.PotionEffect
@@ -18,7 +19,7 @@ import taboolib.common.platform.event.SubscribeEvent
 
 object RelicEffectHandler {
 
-    @SubscribeEvent(ignoreCancelled = true)
+    @SubscribeEvent(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onEntityDamage(event: EntityDamageByEntityEvent) {
         val attacker = resolvePlayerDamager(event.damager) ?: return
         if (!DungeonManager.isInDungeon(attacker)) {

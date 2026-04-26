@@ -60,7 +60,7 @@ object CollectionManager {
     fun submitFromInventory(player: Player, slot: Int): SubmitResult {
         GuideManager.showOnce(player, GuideManager.COLLECTION_READY, listOf(
             "§e高品质物品可以提交收藏馆。",
-            "§7史诗以上装备和传说饰品可在 §6/rogue collection §7中提交，换取长期奖励。"
+            "§7史诗以上装备和传说饰品可在 §6/rogue progress collection §7中提交，换取长期奖励。"
         ))
         val item = player.inventory.getItem(slot) ?: return SubmitResult(false, "§c该槽位没有物品。")
         if (item.type == Material.AIR) return SubmitResult(false, "§c该槽位没有物品。")

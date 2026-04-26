@@ -90,6 +90,15 @@ object GearStorageUI {
                     val localIndex = storageSlots.indexOf(event.rawSlot)
                     val index = offset + localIndex
                     if (index >= items.size) {
+                        val cursor = event.cursorItem ?: return@onClick
+                        val message = GearStorageManager.storeItem(player, cursor)
+                        player.sendMessage(message)
+                        if (message.startsWith("§a")) {
+                            val remaining = cursor.clone()
+                            remaining.amount = remaining.amount - 1
+                            event.cursorItem = if (remaining.amount > 0) remaining else null
+                            open(player, safePage)
+                        }
                         return@onClick
                     }
                     val message = when (event.clickEvent().click) {
@@ -104,7 +113,7 @@ object GearStorageUI {
 
                 if (event.rawSlot >= topSize) {
                     event.currentItem ?: return@onClick
-                    val playerSlot = event.rawSlot - topSize
+                    val playerSlot = event.clickEvent().slot
                     val message = GearStorageManager.storeFromInventory(player, playerSlot)
                     player.sendMessage(message)
                     open(player, safePage)

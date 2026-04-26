@@ -103,7 +103,7 @@ object PartyManager {
     fun invitePlayer(player: Player, targetName: String) {
         val party = getParty(player)
         if (party == null) {
-            player.sendMessage("§c你不在任何队伍中! 使用 /rogue create 创建队伍")
+            player.sendMessage("§c你不在任何队伍中! 使用 /rogue party create 创建队伍")
             return
         }
         if (!party.isLeader(player.uniqueId)) {
@@ -138,7 +138,7 @@ object PartyManager {
 
         player.sendMessage("§a已向 §f${target.name} §a发送邀请")
         target.sendMessage("§e§l[队伍邀请] §f${player.name} §e邀请你加入队伍")
-        target.sendMessage("§e输入 §a/rogue accept §e接受邀请 §7(${inviteTimeout}秒内有效)")
+        target.sendMessage("§e输入 §a/rogue party accept §e接受邀请 §7(${inviteTimeout}秒内有效)")
     }
 
     /**
@@ -315,7 +315,7 @@ object PartyManager {
                 if (memberUuid == player.uniqueId) {
                     continue
                 }
-                Bukkit.getPlayer(memberUuid)?.sendMessage("§e${player.name} §7暂时断开连接，可在回来后使用 §f/rogue rejoin §7回到副本。")
+                Bukkit.getPlayer(memberUuid)?.sendMessage("§e${player.name} §7暂时断开连接，可在回来后使用 §f/rogue run rejoin §7回到副本。")
             }
         }
     }

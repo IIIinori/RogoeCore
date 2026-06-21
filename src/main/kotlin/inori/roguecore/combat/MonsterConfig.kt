@@ -32,6 +32,7 @@ private data class MonsterFloorEntry(
 private data class MonsterWaveRules(
     val normalTypesMin: Int = 3,
     val normalTypesMax: Int = 5,
+    val combatDensityMultiplier: Double = 1.0,
     val eliteAddsEnabled: Boolean = true,
     val eliteAddsTypes: Int = 3,
     val eliteAddsTotal: Int = 6,
@@ -119,6 +120,7 @@ object MonsterConfig {
         waveRules = MonsterWaveRules(
             normalTypesMin = section?.getInt("normal-types-min", 3)?.coerceAtLeast(1) ?: 3,
             normalTypesMax = section?.getInt("normal-types-max", 5)?.coerceAtLeast(1) ?: 5,
+            combatDensityMultiplier = section?.getDouble("combat-density-multiplier", 1.0)?.coerceIn(0.4, 1.0) ?: 1.0,
             eliteAddsEnabled = section?.getBoolean("elite-adds-enabled", true) ?: true,
             eliteAddsTypes = section?.getInt("elite-adds-types", 3)?.coerceAtLeast(0) ?: 3,
             eliteAddsTotal = section?.getInt("elite-adds-total", 6)?.coerceAtLeast(0) ?: 6,
@@ -162,11 +164,12 @@ object MonsterConfig {
     }
 
     private fun getCombatWaves(floor: Int, entry: MonsterFloorEntry): List<MonsterWave> {
-        val totalCount = if (entry.combatCountPerFloors > 0) {
+        val baseCount = if (entry.combatCountPerFloors > 0) {
             (entry.combatBaseCount + floor / entry.combatCountPerFloors).coerceAtMost(entry.combatMaxCount)
         } else {
             entry.combatBaseCount.coerceAtMost(entry.combatMaxCount)
         }.coerceAtLeast(1)
+        val totalCount = (baseCount * waveRules.combatDensityMultiplier).toInt().coerceIn(1, entry.combatMaxCount)
 
         val minTypes = waveRules.normalTypesMin.coerceAtMost(entry.normalMobs.size).coerceAtLeast(1)
         val maxTypes = waveRules.normalTypesMax.coerceAtMost(entry.normalMobs.size).coerceAtLeast(minTypes)
@@ -177,7 +180,8 @@ object MonsterConfig {
 
     private fun getEliteWaves(floor: Int, entry: MonsterFloorEntry): List<MonsterWave> {
         val waves = mutableListOf<MonsterWave>()
-        waves += MonsterWave(entry.eliteMobs.random(), entry.eliteCount.coerceAtLeast(1))
+        val eliteCount = (entry.eliteCount * waveRules.combatDensityMultiplier).toInt().coerceAtLeast(1)
+        waves += MonsterWave(entry.eliteMobs.random(), eliteCount)
         if (waveRules.eliteAddsEnabled && waveRules.eliteAddsTotal > 0 && waveRules.eliteAddsTypes > 0) {
             val adds = pickRotating(entry.normalMobs, floor - entry.minFloor + 2, waveRules.eliteAddsTypes.coerceAtMost(entry.normalMobs.size))
             waves += distributeCount(adds, waveRules.eliteAddsTotal)

@@ -14,7 +14,7 @@ recipes:
     icon: RAW_IRON
     slot: 10
     cost:
-      soul_iron: 10
+      soul_iron: 14
     reward:
       inscription_dust: 2
 
@@ -25,7 +25,7 @@ recipes:
     icon: GLOWSTONE_DUST
     slot: 11
     cost:
-      inscription_dust: 8
+      inscription_dust: 14
     reward:
       relic_fragment: 1
 
@@ -36,7 +36,7 @@ recipes:
     icon: AMETHYST_SHARD
     slot: 12
     cost:
-      relic_fragment: 6
+      relic_fragment: 10
     reward:
       crown_shard: 1
 
@@ -47,7 +47,7 @@ recipes:
     icon: NETHER_STAR
     slot: 13
     cost:
-      crown_shard: 5
+      crown_shard: 8
     reward:
       astral_core: 1
 
@@ -93,7 +93,7 @@ recipes:
     cost:
       inscription_dust: 1
     reward:
-      soul_iron: 3
+      soul_iron: 2
 
   buy_soul_iron:
     name: "采购魂铁"
@@ -101,9 +101,9 @@ recipes:
     type: PURCHASE
     icon: RAW_IRON
     slot: 28
-    soul-shards: 120
+    soul-shards: 220
     reward:
-      soul_iron: 5
+      soul_iron: 4
 
   buy_dust:
     name: "采购铭刻粉尘"
@@ -111,9 +111,9 @@ recipes:
     type: PURCHASE
     icon: GLOWSTONE_DUST
     slot: 29
-    soul-shards: 220
+    soul-shards: 380
     reward:
-      inscription_dust: 3
+      inscription_dust: 2
 
   buy_fragment:
     name: "采购遗物残片"
@@ -121,6 +121,6 @@ recipes:
     type: PURCHASE
     icon: AMETHYST_SHARD
     slot: 30
-    soul-shards: 480
+    soul-shards: 840
     reward:
       relic_fragment: 1

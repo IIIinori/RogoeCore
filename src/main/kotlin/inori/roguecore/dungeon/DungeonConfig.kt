@@ -38,6 +38,8 @@ data class DungeonConfig(
     val hiddenBossKeys: Int = 1,
     /** 下一层路线 */
     val route: NextFloorRoute? = null,
+    /** 目标房间数（用于生成后裁剪） */
+    val targetRoomCount: Int = 10,
     /** 房间类型额外权重修正 */
     val roomWeightModifiers: Map<RoomType, Int> = emptyMap()
 )

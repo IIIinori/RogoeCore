@@ -7,13 +7,22 @@
 # 若属性键以 % 结尾，则会被渲染为百分比属性，例如：
 #   暴击几率%: [3, 5]
 # 会显示为：
-#   暴击几率: +3~5 (%)
+#   暴击几率: +3~5 [percent-mark]
 
 rules:
-  chest-chance: 0.55
+  chest-chance: 0.42
   elite-count: 1
   boss-count: 2
   ap-percentage-mark: "(%)"
+  # 百分比属性仍按百分比处理，但以下属性名/关键词不再追加 "(%)" 文本标记
+  ap-percentage-mark-disabled-attributes:
+    - "暴击几率"
+    - "闪避几率"
+    - "命中几率"
+    - "吸血几率"
+  ap-percentage-mark-disabled-keywords:
+    - "几率"
+    - "概率"
   drop-protection:
     enabled: true
     empty-slot-weight: 3.0
@@ -25,55 +34,55 @@ rules:
   source-bonus:
     BOSS:
       extra-affixes: 1
-      rarity-upgrade-chance: 0.55
+      rarity-upgrade-chance: 0.36
     HIDDEN:
       extra-affixes: 1
-      rarity-upgrade-chance: 0.35
+      rarity-upgrade-chance: 0.22
 
 identification:
   enabled: true
-  queue-size: 3
+  queue-size: 2
   time-by-source:
-    CHEST: 15
-    ELITE: 30
-    BOSS: 60
-    HIDDEN: 45
+    CHEST: 24
+    ELITE: 44
+    BOSS: 82
+    HIDDEN: 64
   drop-as-unidentified-chance:
-    CHEST: 0.35
-    ELITE: 0.5
-    BOSS: 0.75
-    HIDDEN: 0.65
-  base-price: 80
-  floor-price: 6
-  boss-extra-price: 120
-  hidden-extra-price: 80
+    CHEST: 0.45
+    ELITE: 0.62
+    BOSS: 0.84
+    HIDDEN: 0.76
+  base-price: 130
+  floor-price: 10
+  boss-extra-price: 180
+  hidden-extra-price: 130
   acceleration:
     enabled: true
-    reduce-percent-of-remaining: 0.35
+    reduce-percent-of-remaining: 0.25
     min-reduce-seconds: 5
-    soul-shards: 45
+    soul-shards: 72
     materials:
       inscription_dust: 1
 
 forge-books:
   enabled: true
-  queue-size: 2
+  queue-size: 1
   drop-chance:
-    CHEST: 0.12
-    ELITE: 0.22
-    BOSS: 0.45
-    HIDDEN: 0.35
+    CHEST: 0.07
+    ELITE: 0.15
+    BOSS: 0.30
+    HIDDEN: 0.22
   quality-weight:
     rough: 55
     refined: 28
-    rare: 12
-    epic: 4
+    rare: 10
+    epic: 3
     legendary: 1
   acceleration:
     enabled: true
-    reduce-percent-of-remaining: 0.25
+    reduce-percent-of-remaining: 0.18
     min-reduce-seconds: 60
-    soul-shards: 160
+    soul-shards: 240
     materials:
       soul_iron: 3
       inscription_dust: 1
@@ -83,7 +92,7 @@ forge-books:
       color: "§f"
       rarity: common
       time-seconds: 60
-      soul-shards: 120
+      soul-shards: 130
       materials:
         soul_iron: 2
     refined:
@@ -91,7 +100,7 @@ forge-books:
       color: "§b"
       rarity: magic
       time-seconds: 180
-      soul-shards: 260
+      soul-shards: 280
       materials:
         soul_iron: 5
         inscription_dust: 2
@@ -100,7 +109,7 @@ forge-books:
       color: "§d"
       rarity: rare
       time-seconds: 600
-      soul-shards: 700
+      soul-shards: 760
       materials:
         soul_iron: 12
         inscription_dust: 6
@@ -110,7 +119,7 @@ forge-books:
       color: "§6"
       rarity: epic
       time-seconds: 1800
-      soul-shards: 1800
+      soul-shards: 1950
       materials:
         relic_fragment: 8
         crown_shard: 2
@@ -119,7 +128,7 @@ forge-books:
       color: "§e"
       rarity: legendary
       time-seconds: 7200
-      soul-shards: 5000
+      soul-shards: 5600
       materials:
         crown_shard: 8
         astral_core: 2
@@ -158,28 +167,28 @@ rarities:
   common:
     name: "普通"
     color: "§f"
-    weight: 58
+    weight: 60
     multiplier: 0.60
     max-affixes: 0
 
   magic:
     name: "精制"
     color: "§b"
-    weight: 28
+    weight: 27
     multiplier: 1.45
     max-affixes: 2
 
   rare:
     name: "稀有"
     color: "§d"
-    weight: 11
+    weight: 10
     multiplier: 2.50
     max-affixes: 4
 
   epic:
     name: "史诗"
     color: "§6"
-    weight: 3
+    weight: 2
     multiplier: 4.20
     max-affixes: 6
 
@@ -541,7 +550,7 @@ affixes:
     lore:
       - "§8虚空回响让攻防节奏更飘忽。"
     attributes:
-      移速加成%: [5, 39]
+      移速加成%: [5, 35]
       闪避几率%: [2, 22]
 
   executioner:
@@ -600,7 +609,7 @@ affixes:
       - "§8炉心压出的装备才会留下这种烙印。"
     attributes:
       物理伤害: [8, 71]
-      吸血倍率%: [2, 28]
+      吸血倍率%: [2, 22]
 
   abyssal:
     name: "深渊"
@@ -719,7 +728,7 @@ affixes:
       - "§8黑曜炉火把装备的轮廓重新烧定。"
     attributes:
       物理伤害: [26, 258]
-      吸血倍率%: [6, 61]
+      吸血倍率%: [6, 22]
 
   astral:
     name: "星轨"
@@ -733,8 +742,8 @@ affixes:
     lore:
       - "§8星轨在下一次破绽前提前亮起。"
     attributes:
-      暴击几率%: [11, 99]
-      攻击速度%: [10, 88]
+      暴击几率%: [11, 42]
+      攻击速度%: [10, 60]
 
   royal:
     name: "王庭"
@@ -751,7 +760,7 @@ affixes:
       - "§8旧王庭的权柄仍压在装备边缘。"
     attributes:
       生命力: [137, 1368]
-      暴击几率%: [9, 105]
+      暴击几率%: [9, 42]
 
   sculked:
     name: "永夜"
@@ -764,8 +773,8 @@ affixes:
     lore:
       - "§8永夜核心会把受伤和反击都藏进黑暗。"
     attributes:
-      吸血倍率%: [9, 105]
-      反弹倍率%: [9, 105]
+      吸血倍率%: [8, 22]
+      反弹倍率%: [9, 60]
 
   stormbound:
     name: "雷缚"
@@ -781,8 +790,8 @@ affixes:
     lore:
       - "§8雷声被压进关节，推动下一次动作。"
     attributes:
-      攻击速度%: [22, 231]
-      移速加成%: [17, 183]
+      攻击速度%: [21, 60]
+      移速加成%: [12, 35]
 
   drowned:
     name: "沉潮"
@@ -812,8 +821,8 @@ affixes:
     lore:
       - "§8攻击会先撞见一个慢半拍的镜影。"
     attributes:
-      闪避几率%: [20, 235]
-      移速加成%: [24, 254]
+      闪避几率%: [10, 28]
+      移速加成%: [12, 35]
 
   gilded:
     name: "金沙"
@@ -827,8 +836,8 @@ affixes:
     lore:
       - "§8金砂沿着弱点聚拢，像在标记收割时机。"
     attributes:
-      暴击几率%: [26, 277]
-      暴伤倍率%: [59, 635]
+      暴击几率%: [15, 42]
+      暴伤倍率%: [53, 150]
 
   mechanized:
     name: "机心"
@@ -844,7 +853,7 @@ affixes:
       - "§8齿轮咬合声让每一次进攻都更加精确。"
     attributes:
       物理伤害: [115, 1537]
-      攻击速度%: [41, 454]
+      攻击速度%: [21, 60]
 
   apocalyptic:
     name: "终焉"
@@ -1054,7 +1063,7 @@ loot:
     lore:
       - "§7披上后仿佛能撕开空间。"
     attributes:
-      移速加成%: [6, 37]
+      移速加成%: [6, 35]
       生命力: [33, 222]
 
   hidden_relic:
@@ -1114,7 +1123,7 @@ loot:
     lore:
       - "§7每一步都像踏过一条细小裂隙。"
     attributes:
-      移速加成%: [8, 47]
+      移速加成%: [8, 35]
       闪避几率%: [4, 23]
 
   crypt_mace:
@@ -1249,7 +1258,7 @@ loot:
     lore:
       - "§7副核仍在缓慢搏动，像把战意压成了余温。"
     attributes:
-      吸血倍率%: [4, 23]
+      吸血倍率%: [4, 22]
       物理伤害: [5, 44]
 
   nether_scorch_mail:
@@ -1309,7 +1318,7 @@ loot:
     lore:
       - "§7靴底是冷却后的黑玻璃，轻而锋利。"
     attributes:
-      移速加成%: [6, 37]
+      移速加成%: [6, 35]
       闪避几率%: [2, 20]
 
   end_void_edge:
@@ -1339,7 +1348,7 @@ loot:
     lore:
       - "§7腿甲会在移动时错开半拍，像不愿完全停留在此界。"
     attributes:
-      移速加成%: [6, 37]
+      移速加成%: [6, 35]
       物理防御: [9, 55]
 
   end_eventide_plate:
@@ -1384,7 +1393,7 @@ loot:
     lore:
       - "§7符标会把视线牵向空间最薄的位置。"
     attributes:
-      移速加成%: [6, 37]
+      移速加成%: [6, 35]
       暴击几率%: [4, 27]
 
   end_gravity_boots:
@@ -1399,7 +1408,7 @@ loot:
     lore:
       - "§7迈步时脚下会短暂失去重量，像踩在裂隙边缘。"
     attributes:
-      移速加成%: [9, 57]
+      移速加成%: [9, 35]
       闪避几率%: [4, 27]
 
   hidden_pact_blade:
@@ -1415,7 +1424,7 @@ loot:
       - "§7刀身被折断又重新封蜡，似乎只认危险的交易。"
     attributes:
       物理伤害: [10, 79]
-      吸血倍率%: [4, 27]
+      吸血倍率%: [4, 22]
 
   hidden_oath_shield:
     name: "封誓圆盾"
@@ -1444,7 +1453,7 @@ loot:
     lore:
       - "§7面具会吞掉一部分呼吸声，只留下心跳。"
     attributes:
-      闪避几率%: [4, 33]
+      闪避几率%: [4, 28]
       暴击几率%: [2, 23]
 
   hidden_vault_coat:
@@ -1459,7 +1468,7 @@ loot:
     lore:
       - "§7长衣内袋多到数不清，像专为偷走命运准备。"
     attributes:
-      移速加成%: [5, 37]
+      移速加成%: [5, 35]
       生命力: [30, 260]
 
   hidden_thief_steps:
@@ -1474,7 +1483,7 @@ loot:
     lore:
       - "§7鞋底压过尘土后，连脚印都会慢慢合拢。"
     attributes:
-      移速加成%: [6, 47]
+      移速加成%: [6, 35]
       闪避几率%: [4, 27]
 
   hidden_luck_leggings:
@@ -1550,7 +1559,7 @@ loot:
       - "§7刀身里封着一条未完全冻死的裂纹。"
     attributes:
       物理伤害: [26, 194]
-      攻击速度%: [10, 67]
+      攻击速度%: [10, 60]
 
   frost_sentinel_helm:
     name: "冰哨重盔"
@@ -1595,7 +1604,7 @@ loot:
       - "§7腿甲内侧刻着一排防止关节冻死的符号。"
     attributes:
       物理防御: [14, 98]
-      闪避几率%: [4, 37]
+      闪避几率%: [4, 28]
 
   frost_skater_boots:
     name: "霜滑战靴"
@@ -1609,8 +1618,8 @@ loot:
     lore:
       - "§7靴底能在粗糙地面上滑出一道短促冰痕。"
     attributes:
-      移速加成%: [10, 73]
-      闪避几率%: [4, 37]
+      移速加成%: [10, 35]
+      闪避几率%: [4, 28]
 
   frost_mirror_charm:
     name: "霜镜护符"
@@ -1624,7 +1633,7 @@ loot:
     lore:
       - "§7护符折射出的影子总会比你慢半拍。"
     attributes:
-      暴击几率%: [8, 54]
+      暴击几率%: [8, 42]
       生命力: [58, 468]
 
   crimson_duelist_rapier:
@@ -1640,7 +1649,7 @@ loot:
       - "§7细长剑身只为在礼仪结束后刺向要害。"
     attributes:
       物理伤害: [45, 366]
-      暴击几率%: [12, 82]
+      暴击几率%: [12, 42]
 
   crimson_court_crown:
     name: "猩红王冠"
@@ -1654,7 +1663,7 @@ loot:
     lore:
       - "§7冠齿上干涸的红痕像旧王庭最后的签名。"
     attributes:
-      暴伤倍率%: [24, 165]
+      暴伤倍率%: [24, 150]
       生命力: [99, 836]
 
   crimson_lord_plate:
@@ -1684,8 +1693,8 @@ loot:
     lore:
       - "§7腿甲会吞掉一部分脚步声，只留下低沉脉动。"
     attributes:
-      移速加成%: [13, 99]
-      闪避几率%: [8, 61]
+      移速加成%: [12, 35]
+      闪避几率%: [8, 28]
 
   rotwood_root_boots:
     name: "腐根缠靴"
@@ -1700,7 +1709,7 @@ loot:
       - "§7腐根会在站稳时抓住地面，在冲刺时突然松开。"
     attributes:
       物理防御: [19, 162]
-      移速加成%: [11, 75]
+      移速加成%: [11, 35]
 
   core_night_totem:
     name: "永夜图腾"
@@ -1715,7 +1724,7 @@ loot:
       - "§7图腾上的暗纹会在受击前短暂睁开。"
     attributes:
       生命力: [109, 943]
-      反弹倍率%: [11, 75]
+      反弹倍率%: [11, 60]
 
   stormspire_thunder_axe:
     name: "雷塔断斧"
@@ -1730,7 +1739,7 @@ loot:
       - "§7斧背装着一截导雷铜杆，挥动时噼啪作响。"
     attributes:
       物理伤害: [77, 659]
-      攻击速度%: [17, 135]
+      攻击速度%: [17, 60]
 
   stormspire_conductor_helm:
     name: "导雷面盔"
@@ -1744,7 +1753,7 @@ loot:
     lore:
       - "§7面盔会把远处雷声压成一条清晰节拍。"
     attributes:
-      暴击几率%: [17, 135]
+      暴击几率%: [15, 42]
       生命力: [147, 1290]
 
   sunken_warden_shell:
@@ -1775,7 +1784,7 @@ loot:
       - "§7白骨粉末填在关节处，让腿甲诡异地轻。"
     attributes:
       物理防御: [30, 262]
-      吸血倍率%: [10, 78]
+      吸血倍率%: [8, 22]
 
   stormspire_arc_boots:
     name: "弧光疾靴"
@@ -1789,8 +1798,8 @@ loot:
     lore:
       - "§7每一次踏步都会在靴跟后拉出细小电弧。"
     attributes:
-      移速加成%: [22, 174]
-      闪避几率%: [11, 96]
+      移速加成%: [12, 35]
+      闪避几率%: [10, 28]
 
   sunken_pearl_aegis:
     name: "沉珠圣盾"
@@ -1820,7 +1829,7 @@ loot:
       - "§7剑刃会把目标的轮廓折成数个相互错开的影子。"
     attributes:
       物理伤害: [127, 1095]
-      暴击几率%: [26, 202]
+      暴击几率%: [15, 42]
 
   dune_sun_visor:
     name: "日砂面罩"
@@ -1834,8 +1843,8 @@ loot:
     lore:
       - "§7面罩内侧永远有一线金色晨光。"
     attributes:
-      暴伤倍率%: [48, 408]
-      暴击几率%: [20, 168]
+      暴伤倍率%: [48, 150]
+      暴击几率%: [15, 42]
 
   mire_plague_plate:
     name: "毒雾沼铠"
@@ -1850,7 +1859,7 @@ loot:
       - "§7胸甲缝隙里渗出绿色雾气，闻起来像雨后的泥。"
     attributes:
       生命力: [298, 2652]
-      反弹倍率%: [18, 168]
+      反弹倍率%: [18, 60]
 
   mirror_step_leggings:
     name: "镜步腿甲"
@@ -1864,8 +1873,8 @@ loot:
     lore:
       - "§7迈步时，镜中的你似乎已经先一步抵达。"
     attributes:
-      移速加成%: [29, 239]
-      闪避几率%: [18, 157]
+      移速加成%: [12, 35]
+      闪避几率%: [10, 28]
 
   dune_goldspur_boots:
     name: "金沙马刺靴"
@@ -1879,8 +1888,8 @@ loot:
     lore:
       - "§7靴后金刺会在转身时划出明亮弧线。"
     attributes:
-      攻击速度%: [23, 191]
-      移速加成%: [24, 202]
+      攻击速度%: [21, 60]
+      移速加成%: [12, 35]
 
   mire_glass_vial:
     name: "沼镜毒瓶"
@@ -1894,8 +1903,8 @@ loot:
     lore:
       - "§7瓶中毒雾偶尔会拼出一张和你相似的脸。"
     attributes:
-      吸血倍率%: [15, 131]
-      暴击几率%: [18, 157]
+      吸血倍率%: [8, 22]
+      暴击几率%: [15, 42]
 
   theater_finale_scimitar:
     name: "谢幕弯刀"
@@ -1910,7 +1919,7 @@ loot:
       - "§7刀锋像舞台上的最后一道灯，只照亮终结。"
     attributes:
       物理伤害: [197, 1824]
-      暴伤倍率%: [70, 636]
+      暴伤倍率%: [53, 150]
 
   machine_clockwork_helm:
     name: "机芯冠盔"
@@ -1924,8 +1933,8 @@ loot:
     lore:
       - "§7盔内齿轮会替你数清每一次破绽。"
     attributes:
-      暴击几率%: [32, 287]
-      攻击速度%: [26, 243]
+      暴击几率%: [15, 42]
+      攻击速度%: [21, 60]
 
   eclipse_umbral_plate:
     name: "月蚀影甲"
@@ -1940,7 +1949,7 @@ loot:
       - "§7胸甲表面像被月蚀啃掉了一部分光。"
     attributes:
       生命力: [434, 4195]
-      闪避几率%: [19, 195]
+      闪避几率%: [10, 28]
 
   machine_piston_greaves:
     name: "活塞腿甲"
@@ -1955,7 +1964,7 @@ loot:
       - "§7关节处的微型活塞会在受击时反向顶住力道。"
     attributes:
       物理防御: [66, 684]
-      反弹倍率%: [23, 227]
+      反弹倍率%: [21, 60]
 
   theater_soulstep_boots:
     name: "魂幕舞靴"
@@ -1969,8 +1978,8 @@ loot:
     lore:
       - "§7舞靴踩过的地方会短暂浮现观众席的低语。"
     attributes:
-      移速加成%: [41, 362]
-      闪避几率%: [26, 227]
+      移速加成%: [12, 35]
+      闪避几率%: [10, 28]
 
   eclipse_moon_reactor:
     name: "月蚀反应核"
@@ -1985,7 +1994,7 @@ loot:
       - "§7反应核只在你准备冒险时发出冷光。"
     attributes:
       物理伤害: [79, 866]
-      吸血倍率%: [19, 195]
+      吸血倍率%: [8, 22]
 
   chaos_rift_cleaver:
     name: "混沌裂界斧"
@@ -2000,7 +2009,7 @@ loot:
       - "§7斧刃每次抬起都像要把房间边界劈开。"
     attributes:
       物理伤害: [328, 3167]
-      暴击几率%: [48, 469]
+      暴击几率%: [15, 42]
 
   throne_worldend_crown:
     name: "终焉王座冠"
@@ -2014,7 +2023,7 @@ loot:
     lore:
       - "§7它不像冠冕，更像一条允许你继续前进的命令。"
     attributes:
-      暴伤倍率%: [109, 1093]
+      暴伤倍率%: [53, 150]
       生命力: [630, 6699]
 
   throne_last_plate:
@@ -2044,7 +2053,7 @@ loot:
     lore:
       - "§7腿甲会在你停下时仍向前错出一道虚影。"
     attributes:
-      移速加成%: [55, 547]
+      移速加成%: [12, 35]
       物理防御: [101, 1096]
 
   chaos_unbound_boots:
@@ -2059,8 +2068,8 @@ loot:
     lore:
       - "§7靴底没有真正踩在地上，而是踩在即将发生的位置。"
     attributes:
-      移速加成%: [66, 625]
-      闪避几率%: [36, 351]
+      移速加成%: [12, 35]
+      闪避几率%: [10, 28]
 
   throne_oath_beacon:
     name: "王座誓光"
@@ -2075,7 +2084,7 @@ loot:
       - "§7掌心里的光不像希望，更像最后一份债务。"
     attributes:
       生命力: [588, 6394]
-      反弹倍率%: [36, 391]
+      反弹倍率%: [21, 60]
 
   frost_hailbow:
     name: "霜雹机弩"
@@ -2090,7 +2099,7 @@ loot:
       - "§7弩臂每次上弦都会落下一层细碎冰晶。"
     attributes:
       物理伤害: [24, 186]
-      暴击几率%: [9, 60]
+      暴击几率%: [9, 42]
 
   forge_blacksteel_gauntlet:
     name: "黑钢副手甲"
@@ -2119,8 +2128,8 @@ loot:
     lore:
       - "§7额环上微小星屑排列成一条不稳定轨道。"
     attributes:
-      暴击几率%: [12, 82]
-      闪避几率%: [7, 52]
+      暴击几率%: [12, 42]
+      闪避几率%: [7, 28]
 
   frost_shatter_boots:
     name: "碎冰踏靴"
@@ -2134,7 +2143,7 @@ loot:
     lore:
       - "§7急停时靴底会崩出一圈薄冰碎片。"
     attributes:
-      移速加成%: [11, 77]
+      移速加成%: [11, 35]
       攻击速度%: [8, 47]
 
   forge_obsidian_plate:
@@ -2165,7 +2174,7 @@ loot:
       - "§7它曾属于王庭处刑官，刀尖总会指向脖颈。"
     attributes:
       物理伤害: [52, 429]
-      暴伤倍率%: [26, 195]
+      暴伤倍率%: [26, 150]
 
   core_sculk_cowl:
     name: "幽匿兜冠"
@@ -2179,8 +2188,8 @@ loot:
     lore:
       - "§7兜冠内侧会把远处动静放大成心跳。"
     attributes:
-      闪避几率%: [11, 68]
-      暴击几率%: [11, 75]
+      闪避几率%: [10, 28]
+      暴击几率%: [11, 42]
 
   rotwood_barkmail:
     name: "腐木皮甲"
@@ -2195,7 +2204,7 @@ loot:
       - "§7厚树皮仍在缓慢生长，替你合拢被击穿的缝隙。"
     attributes:
       生命力: [132, 1117]
-      移速加成%: [11, 75]
+      移速加成%: [11, 35]
 
   crimson_duelist_boots:
     name: "血礼决斗靴"
@@ -2209,8 +2218,8 @@ loot:
     lore:
       - "§7靴跟会在地面敲出决斗开始的节拍。"
     attributes:
-      攻击速度%: [13, 99]
-      移速加成%: [13, 89]
+      攻击速度%: [13, 60]
+      移速加成%: [12, 35]
 
   core_echo_lantern:
     name: "回音魂灯"
@@ -2225,7 +2234,7 @@ loot:
       - "§7灯芯里传出的不是火声，而是下一间房的回响。"
     attributes:
       生命力: [120, 1029]
-      反弹倍率%: [11, 82]
+      反弹倍率%: [11, 60]
 
   stormspire_ion_trident:
     name: "离子雷叉"
@@ -2240,7 +2249,7 @@ loot:
       - "§7叉尖之间跳动着短促而暴躁的蓝白电弧。"
     attributes:
       物理伤害: [87, 741]
-      暴击几率%: [20, 146]
+      暴击几率%: [15, 42]
 
   sunken_tide_crown:
     name: "潮汐祭冠"
@@ -2255,7 +2264,7 @@ loot:
       - "§7冠上珍珠会随着你的呼吸涨落微光。"
     attributes:
       生命力: [174, 1537]
-      吸血倍率%: [11, 86]
+      吸血倍率%: [8, 22]
 
   bonewaste_ribcage:
     name: "白骨胸笼"
@@ -2270,7 +2279,7 @@ loot:
       - "§7肋骨状护片层层交错，像一具不会倒下的遗骸。"
     attributes:
       物理防御: [36, 329]
-      反弹倍率%: [13, 114]
+      反弹倍率%: [13, 60]
 
   stormspire_copperstride:
     name: "铜塔疾靴"
@@ -2284,8 +2293,8 @@ loot:
     lore:
       - "§7靴面覆着氧化铜纹，越奔跑越像一道避雷线。"
     attributes:
-      移速加成%: [25, 182]
-      攻击速度%: [15, 114]
+      移速加成%: [12, 35]
+      攻击速度%: [15, 60]
 
   sunken_heart_relic:
     name: "深海之心"
@@ -2315,7 +2324,7 @@ loot:
       - "§7短刃反射出的握持姿势总是多出一个。"
     attributes:
       物理伤害: [138, 1204]
-      攻击速度%: [26, 217]
+      攻击速度%: [21, 60]
 
   dune_royal_veil:
     name: "金沙王纱"
@@ -2329,8 +2338,8 @@ loot:
     lore:
       - "§7薄纱会把烈日切成无数细小金线。"
     attributes:
-      闪避几率%: [20, 168]
-      暴击几率%: [18, 157]
+      闪避几率%: [10, 28]
+      暴击几率%: [15, 42]
 
   mire_fenward_legs:
     name: "雾沼护腿"
@@ -2359,8 +2368,8 @@ loot:
     lore:
       - "§7镜甲不会反射你的脸，只反射即将落下的攻击。"
     attributes:
-      反弹倍率%: [20, 180]
-      闪避几率%: [15, 143]
+      反弹倍率%: [20, 60]
+      闪避几率%: [10, 28]
 
   dune_sun_coin:
     name: "日轮金币"
@@ -2374,8 +2383,8 @@ loot:
     lore:
       - "§7金币边缘滚烫，像把一小片正午握在掌心。"
     attributes:
-      暴伤倍率%: [53, 456]
-      吸血倍率%: [15, 131]
+      暴伤倍率%: [53, 150]
+      吸血倍率%: [8, 22]
 
   theater_curtain_saber:
     name: "幕布割刀"
@@ -2390,7 +2399,7 @@ loot:
       - "§7它能切开幕布，也能切开敌人最后的退路。"
     attributes:
       物理伤害: [218, 2006]
-      攻击速度%: [32, 302]
+      攻击速度%: [21, 60]
 
   machine_logic_core:
     name: "逻辑核心"
@@ -2404,8 +2413,8 @@ loot:
     lore:
       - "§7核心不断计算你下一次出手的最短路径。"
     attributes:
-      暴击几率%: [36, 302]
-      攻击速度%: [31, 271]
+      暴击几率%: [15, 42]
+      攻击速度%: [21, 60]
 
   eclipse_nocturne_mask:
     name: "夜曲面罩"
@@ -2419,8 +2428,8 @@ loot:
     lore:
       - "§7面罩里的黑暗像一首只剩低音的曲子。"
     attributes:
-      闪避几率%: [28, 243]
-      吸血倍率%: [19, 183]
+      闪避几率%: [10, 28]
+      吸血倍率%: [8, 22]
 
   theater_velvet_plate:
     name: "绛幕礼甲"
@@ -2449,8 +2458,8 @@ loot:
     lore:
       - "§7每一步都有细小齿轮替你补足力量。"
     attributes:
-      移速加成%: [42, 378]
-      攻击速度%: [28, 258]
+      移速加成%: [12, 35]
+      攻击速度%: [21, 60]
 
   chaos_unmaking_blade:
     name: "解构之刃"
@@ -2465,7 +2474,7 @@ loot:
       - "§7被它划过的东西会短暂忘记自己原本的形状。"
     attributes:
       物理伤害: [353, 3410]
-      暴伤倍率%: [116, 1132]
+      暴伤倍率%: [53, 150]
 
   throne_void_diadem:
     name: "虚冕星环"
@@ -2479,8 +2488,8 @@ loot:
     lore:
       - "§7星环悬在头盔边缘，像一圈拒绝闭合的命运。"
     attributes:
-      暴击几率%: [52, 490]
-      闪避几率%: [39, 373]
+      暴击几率%: [15, 42]
+      闪避几率%: [10, 28]
 
   chaos_paradox_mail:
     name: "悖论锁甲"
@@ -2495,7 +2504,7 @@ loot:
       - "§7它在攻击落下前已经被击中过一次，因此懂得如何承受。"
     attributes:
       生命力: [798, 8526]
-      反弹倍率%: [39, 430]
+      反弹倍率%: [21, 60]
 
   throne_gravity_greaves:
     name: "王座引力腿甲"
@@ -2510,7 +2519,7 @@ loot:
       - "§7腿甲让每一步都像在命令地面靠近你。"
     attributes:
       物理防御: [118, 1218]
-      移速加成%: [55, 508]
+      移速加成%: [12, 35]
 
   chaos_last_step:
     name: "末步长靴"
@@ -2524,8 +2533,8 @@ loot:
     lore:
       - "§7每一步都像当前房间允许你迈出的最后一步。"
     attributes:
-      移速加成%: [73, 664]
-      攻击速度%: [43, 430]
+      移速加成%: [12, 35]
+      攻击速度%: [21, 60]
 
   throne_ending_relic:
     name: "终幕星核"
@@ -2540,7 +2549,7 @@ loot:
       - "§7星核里压着一个还没有发生的结局。"
     attributes:
       物理伤害: [143, 1583]
-      暴击几率%: [48, 469]
+      暴击几率%: [15, 42]
 
   frost_whiteout_leggings:
     name: "白灾腿甲"
@@ -2555,7 +2564,7 @@ loot:
       - "§7白霜会在腿甲边缘翻涌，遮住后撤时的脚步。"
     attributes:
       物理防御: [15, 113]
-      闪避几率%: [6, 43]
+      闪避几率%: [6, 28]
 
   frost_rime_spurs:
     name: "霜刺马刺靴"
@@ -2569,8 +2578,8 @@ loot:
     lore:
       - "§7每次转身都会有短暂冰刺沿靴跟炸开。"
     attributes:
-      移速加成%: [13, 84]
-      暴击几率%: [6, 43]
+      移速加成%: [12, 35]
+      暴击几率%: [6, 42]
 
   forge_cinder_treads:
     name: "余炭踏靴"
@@ -2584,8 +2593,8 @@ loot:
     lore:
       - "§7靴底压着没熄灭的炭火，越靠近危险越亮。"
     attributes:
-      移速加成%: [13, 99]
-      吸血倍率%: [5, 38]
+      移速加成%: [12, 35]
+      吸血倍率%: [5, 22]
 
   astral_orbit_greaves:
     name: "环轨胫甲"
@@ -2599,8 +2608,8 @@ loot:
     lore:
       - "§7胫甲外侧的星线会绕着膝甲缓慢公转。"
     attributes:
-      移速加成%: [13, 99]
-      暴击几率%: [8, 68]
+      移速加成%: [12, 35]
+      暴击几率%: [8, 42]
 
   hidden_frozen_vault_steps:
     name: "冰库无声靴"
@@ -2614,8 +2623,8 @@ loot:
     lore:
       - "§7鞋底冻结了脚步声，连回音都被留在门外。"
     attributes:
-      移速加成%: [15, 97]
-      闪避几率%: [8, 54]
+      移速加成%: [12, 35]
+      闪避几率%: [8, 28]
 
   hidden_starlock_greaves:
     name: "星锁腿束"
@@ -2629,7 +2638,7 @@ loot:
     lore:
       - "§7腿束上的暗扣像一串被藏起来的小星门。"
     attributes:
-      移速加成%: [15, 113]
+      移速加成%: [12, 35]
       暴伤倍率%: [20, 150]
 
   crimson_bloodscribe_leggings:
@@ -2644,8 +2653,8 @@ loot:
     lore:
       - "§7猩红文字沿着腿甲内侧排列，像一份未完成的判决。"
     attributes:
-      暴伤倍率%: [26, 195]
-      移速加成%: [13, 89]
+      暴伤倍率%: [26, 150]
+      移速加成%: [12, 35]
 
   rotwood_mirewalker_boots:
     name: "腐沼行靴"
@@ -2660,7 +2669,7 @@ loot:
       - "§7靴底挂着活根，能从泥沼里借来下一步力量。"
     attributes:
       物理防御: [19, 171]
-      移速加成%: [12, 89]
+      移速加成%: [12, 35]
 
   core_darkstep_boots:
     name: "永夜暗步靴"
@@ -2674,8 +2683,8 @@ loot:
     lore:
       - "§7当你停步时，靴影仍会向前探出一小段黑暗。"
     attributes:
-      闪避几率%: [12, 82]
-      移速加成%: [15, 106]
+      闪避几率%: [10, 28]
+      移速加成%: [12, 35]
 
   hidden_court_shadow_greaves:
     name: "影廷腿甲"
@@ -2689,8 +2698,8 @@ loot:
     lore:
       - "§7腿甲像从王庭柱影中裁下，轻得不合常理。"
     attributes:
-      移速加成%: [17, 120]
-      暴击几率%: [12, 82]
+      移速加成%: [12, 35]
+      暴击几率%: [12, 42]
 
   hidden_sculkstep_boots:
     name: "幽匿藏步靴"
@@ -2704,8 +2713,8 @@ loot:
     lore:
       - "§7靴面会在听见怪物声响时微微收缩。"
     attributes:
-      闪避几率%: [15, 125]
-      吸血倍率%: [10, 78]
+      闪避几率%: [10, 28]
+      吸血倍率%: [8, 22]
 
   stormspire_livewire_greaves:
     name: "活线腿甲"
@@ -2719,8 +2728,8 @@ loot:
     lore:
       - "§7铜线沿腿甲延伸，像一条被驯服的闪电。"
     attributes:
-      攻击速度%: [20, 146]
-      移速加成%: [21, 164]
+      攻击速度%: [20, 60]
+      移速加成%: [12, 35]
 
   bonewaste_sandbone_boots:
     name: "沙骨重靴"
@@ -2750,7 +2759,7 @@ loot:
       - "§7暗潮在腿甲缝隙里回旋，替你卸开重击。"
     attributes:
       生命力: [198, 1729]
-      闪避几率%: [11, 96]
+      闪避几率%: [10, 28]
 
   hidden_tidevault_boots:
     name: "潮库密靴"
@@ -2764,8 +2773,8 @@ loot:
     lore:
       - "§7靴内藏着一枚微小珍珠，会在危险前轻轻震动。"
     attributes:
-      移速加成%: [27, 192]
-      暴击几率%: [15, 114]
+      移速加成%: [12, 35]
+      暴击几率%: [15, 42]
 
   hidden_thunder_cache_legs:
     name: "雷库腿束"
@@ -2779,8 +2788,8 @@ loot:
     lore:
       - "§7腿束扣环内藏着一缕被偷走的塔顶雷声。"
     attributes:
-      攻击速度%: [21, 164]
-      移速加成%: [20, 153]
+      攻击速度%: [21, 60]
+      移速加成%: [12, 35]
 
   mirror_doublewalk_greaves:
     name: "双影腿甲"
@@ -2794,8 +2803,8 @@ loot:
     lore:
       - "§7你迈出一步，镜影会替你试探第二个落点。"
     attributes:
-      闪避几率%: [20, 168]
-      移速加成%: [30, 251]
+      闪避几率%: [10, 28]
+      移速加成%: [12, 35]
 
   dune_mirage_boots:
     name: "蜃景行靴"
@@ -2809,8 +2818,8 @@ loot:
     lore:
       - "§7靴影会在身后拖成三道几乎重叠的假步。"
     attributes:
-      移速加成%: [33, 262]
-      闪避几率%: [18, 157]
+      移速加成%: [12, 35]
+      闪避几率%: [10, 28]
 
   mire_sinking_greaves:
     name: "沉沼腿甲"
@@ -2839,8 +2848,8 @@ loot:
     lore:
       - "§7软靴踩过金砂时，脚印会反射出另一个方向。"
     attributes:
-      闪避几率%: [23, 191]
-      暴击几率%: [20, 168]
+      闪避几率%: [10, 28]
+      暴击几率%: [15, 42]
 
   hidden_plague_pocket_greaves:
     name: "毒袋腿束"
@@ -2854,8 +2863,8 @@ loot:
     lore:
       - "§7暗袋里装着不会洒出的绿雾，只在你受伤时渗出。"
     attributes:
-      吸血倍率%: [18, 143]
-      暴伤倍率%: [48, 408]
+      吸血倍率%: [8, 22]
+      暴伤倍率%: [48, 150]
 
   theater_puppetstring_leggings:
     name: "傀线腿甲"
@@ -2869,8 +2878,8 @@ loot:
     lore:
       - "§7细线从膝甲后方垂落，像舞台仍在牵引你。"
     attributes:
-      攻击速度%: [31, 271]
-      闪避几率%: [26, 227]
+      攻击速度%: [21, 60]
+      闪避几率%: [10, 28]
 
   machine_gearstride_boots:
     name: "齿轮步靴"
@@ -2884,8 +2893,8 @@ loot:
     lore:
       - "§7靴跟里的齿轮会把慌乱步伐修正成最短路线。"
     attributes:
-      移速加成%: [45, 394]
-      攻击速度%: [31, 271]
+      移速加成%: [12, 35]
+      攻击速度%: [21, 60]
 
   eclipse_umbra_greaves:
     name: "蚀影腿铠"
@@ -2900,7 +2909,7 @@ loot:
       - "§7腿铠上有一片永远无法被光照完整的阴影。"
     attributes:
       生命力: [429, 4332]
-      闪避几率%: [26, 243]
+      闪避几率%: [10, 28]
 
   hidden_backstage_slippers:
     name: "后台软靴"
@@ -2914,8 +2923,8 @@ loot:
     lore:
       - "§7软靴只适合走在幕后，却总能绕到敌人身后。"
     attributes:
-      移速加成%: [47, 422]
-      暴击几率%: [31, 271]
+      移速加成%: [12, 35]
+      暴击几率%: [15, 42]
 
   hidden_eclipse_cache_legs:
     name: "蚀藏腿束"
@@ -2929,8 +2938,8 @@ loot:
     lore:
       - "§7腿束会在月光缺口里短暂消失，仿佛从未被看见。"
     attributes:
-      闪避几率%: [31, 271]
-      吸血倍率%: [23, 211]
+      闪避几率%: [10, 28]
+      吸血倍率%: [8, 22]
 
   chaos_nonstep_greaves:
     name: "非步腿甲"
@@ -2944,8 +2953,8 @@ loot:
     lore:
       - "§7腿甲记录的不是你走过的路，而是你没有选择的路。"
     attributes:
-      移速加成%: [61, 586]
-      闪避几率%: [39, 391]
+      移速加成%: [12, 35]
+      闪避几率%: [10, 28]
 
   throne_nullstride_boots:
     name: "虚座长靴"
@@ -2959,7 +2968,7 @@ loot:
     lore:
       - "§7长靴踏下时，脚边空间会短暂塌陷成王座阶梯。"
     attributes:
-      移速加成%: [73, 664]
+      移速加成%: [12, 35]
       物理防御: [109, 1157]
 
   chaos_answerless_leggings:
@@ -2975,7 +2984,7 @@ loot:
       - "§7每一道裂缝都通向另一个同样危险的答案。"
     attributes:
       生命力: [714, 7612]
-      反弹倍率%: [39, 412]
+      反弹倍率%: [21, 60]
 
   hidden_last_door_boots:
     name: "末门暗靴"
@@ -2989,8 +2998,8 @@ loot:
     lore:
       - "§7靴底刻着一扇不该存在的门，门后只有下一步。"
     attributes:
-      移速加成%: [78, 703]
-      暴击几率%: [46, 451]
+      移速加成%: [12, 35]
+      暴击几率%: [15, 42]
 
   hidden_endvault_greaves:
     name: "终库腿束"
@@ -3004,5 +3013,5 @@ loot:
     lore:
       - "§7腿束中的暗格像一个微缩终局，打开时能听见远处王座声。"
     attributes:
-      暴伤倍率%: [109, 1093]
-      闪避几率%: [36, 351]
+      暴伤倍率%: [53, 150]
+      闪避几率%: [10, 28]

@@ -2,6 +2,7 @@ package inori.roguecore.ui
 
 import inori.roguecore.boon.PlayerBoonData
 import inori.roguecore.data.ShardRewardManager
+import inori.roguecore.display.ContentDisplayNameResolver
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.DungeonManager
 import inori.roguecore.dungeon.room.RoomType
@@ -68,8 +69,8 @@ object RunCompleteUI {
             set(6, buildCollectionSummary(summary))
             set(22, buildRoutePreviewHint())
             set(24, buildNextStepHint(summary))
-            set(36, shortcutItem(XMaterial.HOPPER, "§6回收工坊", "§7处理低价值装备、饰品和书类", "/rogue gear storage salvage"))
-            set(37, shortcutItem(XMaterial.SPYGLASS, "§e装备鉴定", "§7鉴定未鉴定装备", "/rogue gear storage identify"))
+            set(36, shortcutItem(XMaterial.HOPPER, "§6回收工坊", "§7处理低价值装备、饰品和书类", "/rogue gear salvage"))
+            set(37, shortcutItem(XMaterial.SPYGLASS, "§e装备鉴定", "§7鉴定未鉴定装备", "/rogue gear identify"))
             set(38, shortcutItem(XMaterial.CRAFTING_TABLE, "§d饰品工坊", "§7鉴定密封饰品或刻印饰品书", "/rogue accessory workshop"))
             set(39, shortcutItem(XMaterial.LECTERN, "§5收藏馆", "§7提交高品质装备和饰品", "/rogue progress collection"))
             set(40, shortcutItem(XMaterial.WRITABLE_BOOK, "§e完整报告", "§7查看本局详细报告", "/rogue run summary"))
@@ -122,7 +123,7 @@ object RunCompleteUI {
                     meta.setDisplayName("§c结算离开")
                     meta.lore = listOf(
                         "",
-                        "§7结束本次 run 并返回原地点",
+                        "§7结束本次冒险并返回原地点",
                         "§7保留当前已获得的碎片结算",
                         "§7当前可结算: §6${ShardRewardManager.getSettlementPreview(player.uniqueId)}",
                         "",
@@ -142,12 +143,12 @@ object RunCompleteUI {
                     return@onClick
                 }
                 val command = when (event.rawSlot) {
-                    36 -> "rogue salvage"
-                    37 -> "rogue identify"
-                    38 -> "rogue aworkshop"
-                    39 -> "rogue collection"
-                    40 -> "rogue summary"
-                    42 -> "rogue build"
+                    36 -> "rogue gear salvage"
+                    37 -> "rogue gear identify"
+                    38 -> "rogue accessory workshop"
+                    39 -> "rogue progress collection"
+                    40 -> "rogue run summary"
+                    42 -> "rogue run build"
                     else -> null
                 }
                 if (command != null) {
@@ -168,7 +169,7 @@ object RunCompleteUI {
     private fun buildRunSummary(player: Player, instance: DungeonInstance, party: Party?) = XMaterial.TOTEM_OF_UNDYING.parseItem()!!.apply {
         val runShards = ShardRewardManager.getRunShards(player.uniqueId)
         itemMeta = itemMeta?.also { meta ->
-            meta.setDisplayName("§6本次 run 总览")
+            meta.setDisplayName("§6本次冒险总览")
             meta.lore = buildList {
                 add("")
                 add("§7通关楼层: §f${instance.config.floorNumber}")
@@ -192,7 +193,7 @@ object RunCompleteUI {
             .entries
             .sortedByDescending { it.value }
             .take(3)
-            .joinToString(" / ") { "${it.key}x${it.value}" }
+            .joinToString(" / ") { "${displayName(it.key, "流派")}x${it.value}" }
             .ifBlank { "尚未成型" }
 
         itemMeta = itemMeta?.also { meta ->
@@ -234,7 +235,13 @@ object RunCompleteUI {
                 "§7回收件数: §f${summary?.salvagedCount ?: 0}",
                 "§7回收本局碎片: §6${summary?.salvagedRunShards ?: 0}",
                 "§7回收灵魂碎片: §e${summary?.salvagedSoulShards ?: 0}"
-            )
+            ).let { base ->
+                val materials = summary?.salvagedMaterials.orEmpty()
+                if (materials.isEmpty()) base else base + listOf(
+                    "",
+                    "§7回收材料: §f" + materials.entries.joinToString(" / ") { "${displayName(it.key, "材料")}x${it.value}" }
+                )
+            }
         }
     }
 
@@ -258,7 +265,7 @@ object RunCompleteUI {
                 add("")
                 add("§7Boss 首杀: §5${summary?.bossFirstKills ?: 0}")
                 add("§7本局点亮: §d${summary?.collectionUnlocks?.size ?: 0}")
-                summary?.collectionUnlocks?.take(4)?.forEach { add("§a- $it") }
+                summary?.collectionUnlocks?.take(4)?.forEach { add("§a- ${displayName(it, "收藏进度")}") }
                 if ((summary?.collectionUnlocks?.size ?: 0) > 4) add("§7... 还有 ${(summary?.collectionUnlocks?.size ?: 0) - 4} 项")
                 add("")
                 add("§e点击下方收藏馆入口查看长期进度")
@@ -273,8 +280,8 @@ object RunCompleteUI {
                 add("")
                 val counts = summary?.lootCounts.orEmpty()
                 var suggestions = 0
-                if ((counts["unidentified_gear"] ?: 0) > 0) { add("§e有未鉴定装备 → /rogue gear storage identify"); suggestions++ }
-                if ((counts["forge_book"] ?: 0) > 0) { add("§6有锻造书 → /rogue gear storage craft"); suggestions++ }
+                if ((counts["unidentified_gear"] ?: 0) > 0) { add("§e有未鉴定装备 → /rogue gear identify"); suggestions++ }
+                if ((counts["forge_book"] ?: 0) > 0) { add("§6有锻造书 → /rogue gear craft"); suggestions++ }
                 if ((counts["sealed_accessory"] ?: 0) > 0) { add("§d有密封饰品 → /rogue accessory identify"); suggestions++ }
                 if ((counts["accessory_inscription"] ?: 0) > 0) { add("§b有饰品刻印书 → /rogue accessory inscribe"); suggestions++ }
                 if ((summary?.collectionUnlocks?.size ?: 0) > 0) { add("§5本局有收藏点亮 → /rogue progress collection"); suggestions++ }
@@ -294,15 +301,7 @@ object RunCompleteUI {
 
     private fun lootKeys(): List<String> = listOf("temporary_gear", "unidentified_gear", "forge_book", "accessory", "sealed_accessory", "accessory_inscription")
 
-    private fun lootLabel(key: String): String = when (key) {
-        "temporary_gear" -> "临时装备"
-        "unidentified_gear" -> "未鉴定装备"
-        "forge_book" -> "锻造书"
-        "accessory" -> "饰品"
-        "sealed_accessory" -> "密封饰品"
-        "accessory_inscription" -> "饰品刻印书"
-        else -> key
-    }
+    private fun lootLabel(key: String): String = ContentDisplayNameResolver.lootCategoryName(key) ?: displayName(key, "掉落")
 
     private fun describeRouteBonus(modifiers: Map<RoomType, Int>): String {
         return modifiers.entries
@@ -315,14 +314,14 @@ object RunCompleteUI {
         return modifiers.entries
             .sortedByDescending { kotlin.math.abs(it.value) }
             .take(3)
-            .joinToString(" / ") { "${it.key.name}${signed(it.value)}" }
+            .joinToString(" / ") { "${ContentDisplayNameResolver.affixTypeName(it.key)}${signed(it.value)}" }
     }
 
     private fun describeFamilyBonus(modifiers: Map<String, Int>): String {
         return modifiers.entries
             .sortedByDescending { kotlin.math.abs(it.value) }
             .take(3)
-            .joinToString(" / ") { "${it.key}${signed(it.value)}" }
+            .joinToString(" / ") { "${displayName(it.key, "未知系别")}${signed(it.value)}" }
     }
 
     private fun signed(value: Int): String {
@@ -332,5 +331,9 @@ object RunCompleteUI {
     private fun bars(value: Int, color: String): String {
         val clamped = value.coerceIn(0, 5)
         return color + "■".repeat(clamped) + "§8" + "■".repeat(5 - clamped)
+    }
+
+    private fun displayName(raw: String, fallback: String): String {
+        return ContentDisplayNameResolver.safeText(raw, fallback)
     }
 }

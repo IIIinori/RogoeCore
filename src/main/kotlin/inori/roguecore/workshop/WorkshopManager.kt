@@ -39,7 +39,7 @@ object WorkshopManager {
             val icon = XMaterial.matchXMaterial(node.getString("icon", "PAPER")!!).orElse(XMaterial.PAPER)
             val recipe = WorkshopRecipe(
                 id = id,
-                name = node.getString("name", id)!!,
+                name = node.getString("name", "未命名配方")!!.takeUnless { it == id } ?: "未命名配方",
                 description = node.getString("description", "")!!,
                 type = type,
                 icon = icon,

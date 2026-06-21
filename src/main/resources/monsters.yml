@@ -4,14 +4,15 @@
 # 1-100 层怪物池。MythicMobs 侧需要提供对应 ID，RogueCore 自检会列出缺失项。
 
 wave-rules:
-  normal-types-min: 3
-  normal-types-max: 5
+  normal-types-min: 2
+  normal-types-max: 3
+  combat-density-multiplier: 0.80
   elite-adds-enabled: true
-  elite-adds-types: 3
-  elite-adds-total: 6
+  elite-adds-types: 2
+  elite-adds-total: 4
   boss-adds-enabled: true
-  boss-adds-types: 4
-  boss-adds-total: 12
+  boss-adds-types: 3
+  boss-adds-total: 7
 
 floors:
   crypt:
@@ -29,8 +30,8 @@ floors:
         - "rogue_crypt_skirmisher"
         - "rogue_crypt_warden"
       base-count: 3
-      count-per-floors: 3
-      max-count: 6
+      count-per-floors: 2
+      max-count: 7
     elite:
       mobs:
         - "rogue_crypt_elite_vanguard"
@@ -58,8 +59,8 @@ floors:
         - "rogue_nether_skirmisher"
         - "rogue_nether_warden"
       base-count: 3
-      count-per-floors: 3
-      max-count: 6
+      count-per-floors: 2
+      max-count: 7
     elite:
       mobs:
         - "rogue_nether_elite_vanguard"
@@ -87,8 +88,8 @@ floors:
         - "rogue_end_skirmisher"
         - "rogue_end_warden"
       base-count: 3
-      count-per-floors: 3
-      max-count: 6
+      count-per-floors: 2
+      max-count: 7
     elite:
       mobs:
         - "rogue_end_elite_vanguard"
@@ -116,8 +117,8 @@ floors:
         - "rogue_frost_skirmisher"
         - "rogue_frost_warden"
       base-count: 3
-      count-per-floors: 3
-      max-count: 7
+      count-per-floors: 2
+      max-count: 8
     elite:
       mobs:
         - "rogue_frost_elite_vanguard"
@@ -145,8 +146,8 @@ floors:
         - "rogue_forge_skirmisher"
         - "rogue_forge_warden"
       base-count: 4
-      count-per-floors: 3
-      max-count: 7
+      count-per-floors: 2
+      max-count: 8
     elite:
       mobs:
         - "rogue_forge_elite_vanguard"
@@ -174,8 +175,8 @@ floors:
         - "rogue_astral_skirmisher"
         - "rogue_astral_warden"
       base-count: 4
-      count-per-floors: 3
-      max-count: 7
+      count-per-floors: 2
+      max-count: 8
     elite:
       mobs:
         - "rogue_astral_elite_vanguard"
@@ -203,8 +204,8 @@ floors:
         - "rogue_crimson_skirmisher"
         - "rogue_crimson_warden"
       base-count: 4
-      count-per-floors: 3
-      max-count: 8
+      count-per-floors: 2
+      max-count: 9
     elite:
       mobs:
         - "rogue_crimson_elite_vanguard"
@@ -232,8 +233,8 @@ floors:
         - "rogue_core_skirmisher"
         - "rogue_core_warden"
       base-count: 4
-      count-per-floors: 3
-      max-count: 8
+      count-per-floors: 2
+      max-count: 9
     elite:
       mobs:
         - "rogue_core_elite_vanguard"
@@ -261,8 +262,8 @@ floors:
         - "rogue_rotwood_skirmisher"
         - "rogue_rotwood_warden"
       base-count: 5
-      count-per-floors: 3
-      max-count: 8
+      count-per-floors: 2
+      max-count: 9
     elite:
       mobs:
         - "rogue_rotwood_elite_vanguard"
@@ -290,8 +291,8 @@ floors:
         - "rogue_stormspire_skirmisher"
         - "rogue_stormspire_warden"
       base-count: 5
-      count-per-floors: 3
-      max-count: 9
+      count-per-floors: 2
+      max-count: 10
     elite:
       mobs:
         - "rogue_stormspire_elite_vanguard"
@@ -319,8 +320,8 @@ floors:
         - "rogue_sunken_skirmisher"
         - "rogue_sunken_warden"
       base-count: 5
-      count-per-floors: 3
-      max-count: 9
+      count-per-floors: 2
+      max-count: 10
     elite:
       mobs:
         - "rogue_sunken_elite_vanguard"
@@ -348,8 +349,8 @@ floors:
         - "rogue_bonewaste_skirmisher"
         - "rogue_bonewaste_warden"
       base-count: 5
-      count-per-floors: 3
-      max-count: 9
+      count-per-floors: 2
+      max-count: 10
     elite:
       mobs:
         - "rogue_bonewaste_elite_vanguard"
@@ -377,8 +378,8 @@ floors:
         - "rogue_mirror_skirmisher"
         - "rogue_mirror_warden"
       base-count: 6
-      count-per-floors: 3
-      max-count: 10
+      count-per-floors: 2
+      max-count: 11
     elite:
       mobs:
         - "rogue_mirror_elite_vanguard"
@@ -406,8 +407,8 @@ floors:
         - "rogue_mire_skirmisher"
         - "rogue_mire_warden"
       base-count: 6
-      count-per-floors: 3
-      max-count: 10
+      count-per-floors: 2
+      max-count: 11
     elite:
       mobs:
         - "rogue_mire_elite_vanguard"
@@ -435,8 +436,8 @@ floors:
         - "rogue_dune_skirmisher"
         - "rogue_dune_warden"
       base-count: 6
-      count-per-floors: 3
-      max-count: 10
+      count-per-floors: 2
+      max-count: 11
     elite:
       mobs:
         - "rogue_dune_elite_vanguard"
@@ -464,8 +465,8 @@ floors:
         - "rogue_theater_skirmisher"
         - "rogue_theater_warden"
       base-count: 6
-      count-per-floors: 3
-      max-count: 11
+      count-per-floors: 2
+      max-count: 12
     elite:
       mobs:
         - "rogue_theater_elite_vanguard"
@@ -493,8 +494,8 @@ floors:
         - "rogue_machine_skirmisher"
         - "rogue_machine_warden"
       base-count: 7
-      count-per-floors: 3
-      max-count: 11
+      count-per-floors: 2
+      max-count: 12
     elite:
       mobs:
         - "rogue_machine_elite_vanguard"
@@ -522,8 +523,8 @@ floors:
         - "rogue_eclipse_skirmisher"
         - "rogue_eclipse_warden"
       base-count: 7
-      count-per-floors: 3
-      max-count: 11
+      count-per-floors: 2
+      max-count: 12
     elite:
       mobs:
         - "rogue_eclipse_elite_vanguard"
@@ -551,8 +552,8 @@ floors:
         - "rogue_chaos_skirmisher"
         - "rogue_chaos_warden"
       base-count: 7
-      count-per-floors: 3
-      max-count: 12
+      count-per-floors: 2
+      max-count: 13
     elite:
       mobs:
         - "rogue_chaos_elite_vanguard"
@@ -580,8 +581,8 @@ floors:
         - "rogue_throne_skirmisher"
         - "rogue_throne_warden"
       base-count: 7
-      count-per-floors: 3
-      max-count: 12
+      count-per-floors: 2
+      max-count: 13
     elite:
       mobs:
         - "rogue_throne_elite_vanguard"
@@ -594,3 +595,4 @@ floors:
     boss:
       mob-id: "rogue_throne_boss_floor{floor}"
       count: 1
+

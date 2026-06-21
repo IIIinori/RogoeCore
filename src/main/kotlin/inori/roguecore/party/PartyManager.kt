@@ -36,10 +36,10 @@ object PartyManager {
     /** 所有队伍 */
     private val parties = ConcurrentHashMap<String, Party>()
 
-    /** 玩家 -> 队伍 ID */
+    /** 玩家 -> 内部队伍键 */
     private val playerPartyMap = ConcurrentHashMap<UUID, String>()
 
-    /** 待处理的邀请: 被邀请者UUID -> (队伍ID, 过期时间戳) */
+    /** 待处理的邀请: 被邀请者 -> (内部队伍键, 过期时间戳) */
     private val pendingInvites = ConcurrentHashMap<UUID, Pair<String, Long>>()
 
     /** 副本中断线后的重连资格 */
@@ -69,7 +69,7 @@ object PartyManager {
         playerPartyMap[leader.uniqueId] = id
         RunPersistenceManager.markDirty()
 
-        leader.sendMessage("§a队伍已创建! §7(ID: $id)")
+        leader.sendMessage("§a队伍已创建！§7使用 §f/rogue party invite <玩家> §7邀请队友。")
         return party
     }
 
@@ -395,11 +395,15 @@ object PartyManager {
     }
 
     private fun broadcastLeaderChanged(party: Party, oldLeader: UUID, newLeader: UUID) {
-        val oldLeaderName = Bukkit.getOfflinePlayer(oldLeader).name ?: oldLeader.toString()
-        val newLeaderName = Bukkit.getOfflinePlayer(newLeader).name ?: newLeader.toString()
+        val oldLeaderName = playerDisplayName(oldLeader)
+        val newLeaderName = playerDisplayName(newLeader)
         for (memberUuid in party.members) {
             Bukkit.getPlayer(memberUuid)?.sendMessage("§e队长已从 §f$oldLeaderName §e转移为 §f$newLeaderName§e。")
         }
+    }
+
+    private fun playerDisplayName(uuid: UUID): String {
+        return Bukkit.getPlayer(uuid)?.name ?: Bukkit.getOfflinePlayer(uuid).name ?: "离线玩家"
     }
 
     fun getPartySnapshots(): List<PartySnapshot> {

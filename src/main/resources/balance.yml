@@ -5,134 +5,154 @@
 
 salvage:
   temporary-loot:
-    run-shards-base: 20
-    run-shards-per-floor: 4
-    score-divisor: 80
+    run-shards-base: 10
+    run-shards-per-floor: 2
+    score-divisor: 140
     soul-iron-base: 1
-    soul-iron-floor-divisor: 20
+    soul-iron-floor-divisor: 22
     rarity-dust:
-      common: 1
-      magic: 2
-      refined: 2
-      rare: 3
-      epic: 5
-      legendary: 8
+      common: 0
+      magic: 1
+      refined: 1
+      rare: 2
+      epic: 3
+      legendary: 5
   permanent-loot:
-    salvage-score-divisor: 900
-    forge-level-soul-iron: 2
-    score-dust-divisor: 500
+    salvage-score-divisor: 1300
+    forge-level-soul-iron: 1
+    score-dust-divisor: 900
   unidentified:
-    dust-base: 2
-    floor-divisor: 15
-    boss-hidden-bonus: 2
+    dust-base: 1
+    floor-divisor: 18
+    boss-hidden-bonus: 1
   sealed-accessory:
-    dust-base: 2
-    floor-divisor: 12
-    boss-hidden-bonus: 2
+    dust-base: 1
+    floor-divisor: 16
+    boss-hidden-bonus: 1
   accessory:
     common:
-      soul_iron: 2
-      soul_iron_floor_divisor: 15
-      inscription_dust: 3
-      inscription_dust_floor_divisor: 10
+      soul_iron: 1
+      soul_iron_floor_divisor: 22
+      inscription_dust: 2
+      inscription_dust_floor_divisor: 14
     rare:
-      inscription_dust: 5
-      inscription_dust_floor_divisor: 12
+      inscription_dust: 3
+      inscription_dust_floor_divisor: 16
       relic_fragment: 1
-      relic_fragment_floor_divisor: 35
+      relic_fragment_floor_divisor: 45
     epic:
-      relic_fragment: 3
-      relic_fragment_floor_divisor: 20
+      relic_fragment: 2
+      relic_fragment_floor_divisor: 28
       crown_shard: 1
-      crown_shard_score_divisor: 80000
+      crown_shard_score_divisor: 120000
     legendary:
-      crown_shard: 3
-      crown_shard_floor_divisor: 25
+      crown_shard: 2
+      crown_shard_floor_divisor: 34
       astral_core: 1
-      astral_core_score_divisor: 120000
+      astral_core_score_divisor: 180000
   forge-book:
     rough:
-      soul_iron: 2
+      soul_iron: 1
       inscription_dust: 1
     refined:
-      soul_iron: 4
-      inscription_dust: 3
+      soul_iron: 2
+      inscription_dust: 2
     rare:
-      soul_iron: 8
+      soul_iron: 5
       relic_fragment: 1
     epic:
-      relic_fragment: 4
+      relic_fragment: 2
       crown_shard: 1
     legendary:
-      crown_shard: 4
+      crown_shard: 2
       astral_core: 1
   accessory-inscription:
     rough:
-      inscription_dust: 3
+      inscription_dust: 2
     refined:
-      inscription_dust: 7
-      soul_iron: 2
+      inscription_dust: 4
+      soul_iron: 1
     rare:
-      inscription_dust: 10
+      inscription_dust: 6
       relic_fragment: 1
     epic:
-      relic_fragment: 3
+      relic_fragment: 2
       crown_shard: 1
     legendary:
-      crown_shard: 3
+      crown_shard: 2
       astral_core: 1
 
 collection:
   gear:
-    soul-base: 300
-    soul-per-floor: 25
-    rewards:
-      low:
-        soul_iron: 8
-        inscription_dust: 12
-      mid:
-        relic_fragment: 4
-        inscription_dust: 10
-      high:
-        crown_shard: 3
-        relic_fragment: 4
-      end:
-        astral_core: 2
-        crown_shard: 4
-  accessory:
-    soul: 1000
-    rewards:
-      NECKLACE:
-        relic_fragment: 6
-        crown_shard: 2
-      RING_1:
-        inscription_dust: 24
-        relic_fragment: 4
-      RING_2:
-        crown_shard: 3
-        relic_fragment: 3
-      CHARM:
-        inscription_dust: 18
-        crown_shard: 2
-      TROPHY:
-        astral_core: 1
-        crown_shard: 5
-  boss:
-    soul-base: 150
-    soul-per-floor: 20
+    soul-base: 360
+    soul-per-floor: 28
     rewards:
       low:
         soul_iron: 4
-      mid:
         inscription_dust: 6
-      high:
+      mid:
         relic_fragment: 2
-      milestone:
-        crown_shard: 3
+        inscription_dust: 5
+      high:
+        crown_shard: 1
+        relic_fragment: 2
+      end:
+        astral_core: 1
+        crown_shard: 2
+  accessory:
+    soul: 1280
+    rewards:
+      NECKLACE:
         relic_fragment: 3
+        crown_shard: 1
+      RING_1:
+        inscription_dust: 12
+        relic_fragment: 2
+      RING_2:
+        crown_shard: 1
+        relic_fragment: 2
+      CHARM:
+        inscription_dust: 10
+        crown_shard: 1
+      TROPHY:
+        astral_core: 1
+        crown_shard: 2
+  boss:
+    soul-base: 180
+    soul-per-floor: 20
+    rewards:
+      low:
+        soul_iron: 2
+      mid:
+        inscription_dust: 3
+      high:
+        relic_fragment: 1
+      milestone:
+        crown_shard: 1
+        relic_fragment: 1
       end-milestone:
-        astral_core: 2
-        crown_shard: 5
+        astral_core: 1
+        crown_shard: 2
+
+attribute-caps:
+  gear:
+    暴击几率: 45
+    闪避几率: 35
+    吸血几率: 45
+    吸血倍率: 45
+    暴伤倍率: 180
+    移速加成: 40
+    攻击速度: 75
+    反弹倍率: 80
+  accessory:
+    暴击几率: 28
+    闪避几率: 22
+    吸血几率: 30
+    吸血倍率: 30
+    暴伤倍率: 120
+    移速加成: 30
+    攻击速度: 50
+    反弹倍率: 60
 
 accessory-effect-caps:
   SOUL_DEBT_INTEREST_REDUCTION: 35
@@ -148,10 +168,38 @@ accessory-effect-caps:
   BOON_OFFER_BONUS: 8
   BOON_ECHO_CHANCE: 250
   BOON_MUTATION_CHANCE: 250
-  ACCESSORY_DROP_CHANCE: 320
-  ACCESSORY_RARITY_LUCK: 1200
-  HIDDEN_ACCESSORY_BONUS: 320
+  ACCESSORY_DROP_CHANCE: 220
+  ACCESSORY_RARITY_LUCK: 800
+  HIDDEN_ACCESSORY_BONUS: 220
+
+storage:
+  loot:
+    enabled: true
+    base-size: 54
+    max-size: 162
+
+hud:
+  dungeon:
+    update-period-ticks: 40
+  lobby:
+    enabled: true
+    default-enabled: true
+    update-period-ticks: 100
+
+generation:
+  blocks-per-tick: 1000
+  progress-step-percent: 20
 
 guide:
   enabled: true
   show-once: true
+  room-navigation:
+    enabled: true
+    sidebar-target: true
+    particle-path: true
+    entrance-highlight: true
+    refresh-period-ticks: 40
+    max-path-segments: 1
+    particles-per-segment: 3
+    particle-keepalive-ticks: 8
+    entrance-highlight-radius: 12

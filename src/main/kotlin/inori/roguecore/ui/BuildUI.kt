@@ -7,6 +7,7 @@ import inori.roguecore.boon.BoonResonanceManager
 import inori.roguecore.boon.PlayerBoonData
 import inori.roguecore.curse.RunCurseManager
 import inori.roguecore.data.ShardRewardManager
+import inori.roguecore.display.ContentDisplayNameResolver
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.DungeonManager
 import inori.roguecore.event.DungeonEventAffix
@@ -90,7 +91,7 @@ object BuildUI {
             meta.lore = buildList {
                 add("")
                 if (instance != null) {
-                    add("§7楼层: §f${instance.config.floorNumber} §8(${instance.config.theme.name})")
+                    add("§7楼层: §f${instance.config.floorNumber} §8(${displayName(instance.config.theme.name, "未知主题")})")
                     add("§7队伍人数: §f${instance.players.size}")
                     add("§7隐藏钥匙: §b${instance.getHiddenKeys()}")
                 } else {
@@ -147,7 +148,7 @@ object BuildUI {
                     add("§8尚未获得神恩")
                 } else {
                     add("§7标签分布:")
-                    tagSummary.forEach { add("§f${it.key} §7x${it.value}") }
+                    tagSummary.forEach { add("§f${displayName(it.key, "未知标签")} §7x${it.value}") }
                 }
             }
         }
@@ -163,7 +164,7 @@ object BuildUI {
                     add("§8尚未获得神恩")
                 } else {
                     boons.drop(page * 14).take(14).forEach { instance ->
-                        val tags = if (instance.boon.tags.isEmpty()) "" else " §8(${instance.boon.tags.joinToString("/")})"
+                        val tags = if (instance.boon.tags.isEmpty()) "" else " §8(${instance.boon.tags.joinToString("/") { displayName(it, "流派") }})"
                         val upgrade = if (instance.canUpgrade) "§a↑" else "§8满"
                         add("${instance.boon.rarity.color}${instance.boon.name} §eLv.${instance.level} $upgrade$tags")
                     }
@@ -284,7 +285,7 @@ object BuildUI {
                 } else {
                     equipped.drop(page * 8).take(8).forEach { view ->
                         val slot = slotName(view.slot)
-                        val theme = view.definition.theme?.let { " §8[$it]" } ?: ""
+                        val theme = view.definition.theme?.let { " §8[${displayName(it, "未知主题")}]" } ?: ""
                         add("§f$slot §7- §b${view.definition.name}$theme")
                         add("§8  评分 ${view.score.toInt()} / 锻造 +${view.forgeLevel} / 热度 ${view.forgeHeat}")
                     }
@@ -305,10 +306,10 @@ object BuildUI {
                     add("§8没有可统计的装备联动")
                 } else {
                     add("§7主题:")
-                    if (themes.isEmpty()) add("§8无主题") else themes.take(5).forEach { add("§f${it.key} §7x${it.value}") }
+                    if (themes.isEmpty()) add("§8无主题") else themes.take(5).forEach { add("§f${displayName(it.key, "未知主题")} §7x${it.value}") }
                     add("")
                     add("§7标签:")
-                    if (tags.isEmpty()) add("§8无标签") else tags.take(6).forEach { add("§f${it.key} §7x${it.value}") }
+                    if (tags.isEmpty()) add("§8无标签") else tags.take(6).forEach { add("§f${displayName(it.key, "未知标签")} §7x${it.value}") }
                 }
             }
         }
@@ -323,7 +324,7 @@ object BuildUI {
                 if (top == null || top.second <= 0) {
                     add("§7尚未形成流派，优先选择能凑 3 个同标签的神恩。")
                 } else {
-                    add("§7主标签: §f${top.first} x${top.second}")
+                    add("§7主标签: §f${displayName(top.first, "流派")} x${top.second}")
                     add(routeAdvice(top.first))
                 }
                 if (instance != null && instance.getHiddenKeys() > 0) {
@@ -383,7 +384,10 @@ object BuildUI {
                 val debt = RunModifierManager.getSoulDebtTotal(player)
                 if (debt > 0) add("§7未偿灵魂债务: §c$debt")
                 val prophecy = RunModifierManager.getModifiers(player).firstOrNull { it.type == RunModifierType.ROOM_PROPHECY }
-                if (prophecy != null) add("§7进行中的预言: §d${RunModifierManager.payloadString(prophecy, "target", "未知")}")
+                if (prophecy != null) {
+                    val target = RunModifierManager.payloadString(prophecy, "target", "")
+                    add("§7进行中的预言: §d${displayName(target, "未知房间")}")
+                }
                 if (curses.isEmpty() && debt <= 0) add("§a当前风险较低")
             }
         }
@@ -404,7 +408,7 @@ object BuildUI {
                         closest.second < 5 -> 5 - closest.second
                         else -> 7 - closest.second
                     }
-                    add("§7优先补 §f${closest.first} §7标签，还差 §e$need §7个到下一阶。")
+                    add("§7优先补 §f${displayName(closest.first, "流派")} §7标签，还差 §e$need §7个到下一阶。")
                 } else {
                     add("§6所有主要标签都已达满共鸣目标。")
                 }
@@ -420,7 +424,7 @@ object BuildUI {
             meta.setDisplayName("§f面板说明")
             meta.lore = listOf(
                 "",
-                "§7此界面汇总当前 run 的关键构筑状态。",
+                "§7此界面汇总当前冒险 的关键构筑状态。",
                 "§7可用命令: §e/rogue run build",
                 "§7临时修正: §e/rogue run modifiers",
                 "§7如果发现内容异常，可让管理员执行:",
@@ -495,6 +499,10 @@ object BuildUI {
 
     private fun stripColor(text: String): String {
         return text.replace(Regex("§."), "")
+    }
+
+    private fun displayName(raw: String, fallback: String): String {
+        return ContentDisplayNameResolver.safeText(raw, fallback)
     }
 
     private fun roman(level: Int): String {

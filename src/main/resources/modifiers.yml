@@ -5,65 +5,65 @@
 
 shop-debt:
   enabled: true
-  grant-base: 55
-  grant-power-scale: 5
-  debt-per-room: 24
-  duration-rooms: 3
+  grant-base: 36
+  grant-power-scale: 2
+  debt-per-room: 28
+  duration-rooms: 2
 
 sealed-chest-pressure:
   enabled: true
-  reward-base: 18
-  reward-power-scale: 3
-  duration-rooms: 3
+  reward-base: 10
+  reward-power-scale: 1
+  duration-rooms: 2
   charges: 1
 
 gamble-streak:
   enabled: true
-  base-multiplier: 1.5
-  high-power-scale: 0.05
-  max-multiplier: 2.5
+  base-multiplier: 1.2
+  high-power-scale: 0.03
+  max-multiplier: 1.8
 
 shrine-blessing:
   enabled: true
   blessing-duration: 2
   twin-duration: 3
-  blessing-reward-base: 8
-  twin-reward-base: 10
-  reward-power-scale: 2
+  blessing-reward-base: 4
+  twin-reward-base: 6
+  reward-power-scale: 0
   twin-relic-scale: 1
-  heal-percent: 0.06
+  heal-percent: 0.02
 
 forge-overdrive:
   enabled: true
-  price: 24
-  discount: 0.25
+  price: 42
+  discount: 0.10
 
 soul-debt:
   enabled: true
-  grant-base: 72
-  grant-power-scale: 8
-  principal-multiplier: 1.25
-  interest-per-room: 8
-  deadline-rooms: 3
+  grant-base: 48
+  grant-power-scale: 4
+  principal-multiplier: 1.35
+  interest-per-room: 10
+  deadline-rooms: 2
   default-penalty: VULNERABLE
 
 delayed-reward:
   enabled: true
-  default-rooms: 3
-  shard-multiplier: 1.8
-  early-fallback-ratio: 0.5
+  default-rooms: 4
+  shard-multiplier: 1.35
+  early-fallback-ratio: 0.35
 
 room-prophecy:
   enabled: true
-  default-within-rooms: 4
-  reward-shards: 36
-  room-weight-bonus: 25
-  miss-penalty-shards: 14
+  default-within-rooms: 3
+  reward-shards: 20
+  room-weight-bonus: 14
+  miss-penalty-shards: 22
 
 route-chain:
   enabled: true
-  default-tolerance: 1
-  room-weight-bonus: 18
+  default-tolerance: 0
+  room-weight-bonus: 10
 
 boon-echo:
   enabled: true

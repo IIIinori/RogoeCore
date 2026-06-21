@@ -2,6 +2,7 @@ package inori.roguecore.boon
 
 import inori.roguecore.accessory.AccessoryEffectHandler
 import inori.roguecore.dependency.DependencySelfCheckManager
+import inori.roguecore.dungeon.DungeonManager
 import inori.roguecore.dungeon.RunPersistenceManager
 import inori.roguecore.milestone.RunMilestoneManager
 import inori.roguecore.modifier.RunModifierManager
@@ -131,7 +132,8 @@ object PlayerBoonData {
             AttributeAPI.takeSourceAttribute(data, sourceKey)
 
             // 添加新属性
-            val attrs = instance.boon.getAttributesAtLevel(instance.level)
+            val floorNumber = DungeonManager.getPlayerDungeon(player)?.config?.floorNumber ?: 1
+            val attrs = instance.boon.getAttributesAtLevel(instance.level, floorNumber)
             AttributeAPI.addSourceAttribute(data, sourceKey, attrs)
 
             // 刷新属性

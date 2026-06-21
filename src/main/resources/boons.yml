@@ -672,7 +672,7 @@ boons:
 
   exp_hunt_first:
     name: "狩猎初印·追猎"
-    description: "扩展神恩：围绕狩猎构筑提供EXECUTE收益"
+    description: "扩展神恩：围绕狩猎构筑提供斩杀收益"
     rarity: COMMON
     icon: CROSSBOW
     max-level: 3
@@ -688,7 +688,7 @@ boons:
         per-tag: 0.20
   exp_hunt_room:
     name: "狩猎回廊·余响"
-    description: "扩展神恩：围绕狩猎构筑提供ROOM_SHARD收益"
+    description: "扩展神恩：围绕狩猎构筑提供房间碎片收益"
     rarity: COMMON
     icon: EXPERIENCE_BOTTLE
     max-level: 3
@@ -703,7 +703,7 @@ boons:
         per-tag: 0.28
   exp_hunt_kill:
     name: "狩猎连携·疾势"
-    description: "扩展神恩：围绕狩猎/风暴构筑提供KILL_SPEED收益"
+    description: "扩展神恩：围绕狩猎/风暴构筑提供击杀加速收益"
     rarity: RARE
     icon: FEATHER
     max-level: 3
@@ -717,7 +717,7 @@ boons:
         per-tag: 0.39
   exp_hunt_bridge:
     name: "狩猎桥契·风暴"
-    description: "扩展神恩：围绕狩猎/风暴构筑提供ROOM_UPGRADE_RANDOM收益"
+    description: "扩展神恩：围绕狩猎/风暴构筑提供随机神恩升级收益"
     rarity: RARE
     icon: AMETHYST_SHARD
     max-level: 3
@@ -734,7 +734,7 @@ boons:
         per-tag: 0.14
   exp_hunt_engine:
     name: "狩猎引擎·律动"
-    description: "扩展神恩：围绕狩猎构筑提供CHAIN_DAMAGE收益"
+    description: "扩展神恩：围绕狩猎构筑提供连锁伤害收益"
     rarity: EPIC
     icon: BEACON
     max-level: 3
@@ -754,7 +754,7 @@ boons:
         per-tag: 0.44
   exp_hunt_legend:
     name: "狩猎终章·王印"
-    description: "扩展神恩：围绕狩猎/风暴构筑提供ROOM_SHARD+LOW_HEALTH_SHIELD收益"
+    description: "扩展神恩：围绕狩猎/风暴构筑提供房间碎片+低血护盾收益"
     rarity: LEGENDARY
     icon: NETHER_STAR
     max-level: 4
@@ -777,7 +777,7 @@ boons:
         per-tag: 0.38
   exp_bulwark_first:
     name: "壁垒初印·守护"
-    description: "扩展神恩：围绕壁垒构筑提供EXECUTE收益"
+    description: "扩展神恩：围绕壁垒构筑提供斩杀收益"
     rarity: COMMON
     icon: SHIELD
     max-level: 3
@@ -793,7 +793,7 @@ boons:
         per-tag: 0.22
   exp_bulwark_room:
     name: "壁垒回廊·余响"
-    description: "扩展神恩：围绕壁垒构筑提供ROOM_HEAL收益"
+    description: "扩展神恩：围绕壁垒构筑提供房间治疗收益"
     rarity: COMMON
     icon: EXPERIENCE_BOTTLE
     max-level: 3
@@ -808,7 +808,7 @@ boons:
         per-tag: 0.31
   exp_bulwark_kill:
     name: "壁垒连携·疾势"
-    description: "扩展神恩：围绕壁垒/圣辉构筑提供KILL_HEAL收益"
+    description: "扩展神恩：围绕壁垒/圣辉构筑提供击杀治疗收益"
     rarity: RARE
     icon: FEATHER
     max-level: 3
@@ -822,7 +822,7 @@ boons:
         per-tag: 0.43
   exp_bulwark_bridge:
     name: "壁垒桥契·圣辉"
-    description: "扩展神恩：围绕壁垒/圣辉构筑提供ROOM_UPGRADE_RANDOM收益"
+    description: "扩展神恩：围绕壁垒/圣辉构筑提供随机神恩升级收益"
     rarity: RARE
     icon: AMETHYST_SHARD
     max-level: 3
@@ -839,7 +839,7 @@ boons:
         per-tag: 0.16
   exp_bulwark_engine:
     name: "壁垒引擎·律动"
-    description: "扩展神恩：围绕壁垒构筑提供LOW_HEALTH_SHIELD收益"
+    description: "扩展神恩：围绕壁垒构筑提供低血护盾收益"
     rarity: EPIC
     icon: BEACON
     max-level: 3
@@ -859,7 +859,7 @@ boons:
         per-tag: 0.48
   exp_bulwark_legend:
     name: "壁垒终章·王印"
-    description: "扩展神恩：围绕壁垒/圣辉构筑提供ROOM_SHARD+LOW_HEALTH_SHIELD收益"
+    description: "扩展神恩：围绕壁垒/圣辉构筑提供房间碎片+低血护盾收益"
     rarity: LEGENDARY
     icon: NETHER_STAR
     max-level: 4
@@ -882,7 +882,7 @@ boons:
         per-tag: 0.41
   exp_blood_first:
     name: "鲜血初印·血誓"
-    description: "扩展神恩：围绕鲜血构筑提供EXECUTE收益"
+    description: "扩展神恩：围绕鲜血构筑提供斩杀收益"
     rarity: COMMON
     icon: REDSTONE
     max-level: 3
@@ -898,7 +898,7 @@ boons:
         per-tag: 0.24
   exp_blood_room:
     name: "鲜血回廊·余响"
-    description: "扩展神恩：围绕鲜血构筑提供ROOM_SHARD收益"
+    description: "扩展神恩：围绕鲜血构筑提供房间碎片收益"
     rarity: COMMON
     icon: EXPERIENCE_BOTTLE
     max-level: 3
@@ -913,7 +913,7 @@ boons:
         per-tag: 0.34
   exp_blood_kill:
     name: "鲜血连携·疾势"
-    description: "扩展神恩：围绕鲜血/深渊构筑提供KILL_SHARD收益"
+    description: "扩展神恩：围绕鲜血/深渊构筑提供击杀碎片收益"
     rarity: RARE
     icon: FEATHER
     max-level: 3
@@ -927,7 +927,7 @@ boons:
         per-tag: 0.47
   exp_blood_bridge:
     name: "鲜血桥契·深渊"
-    description: "扩展神恩：围绕鲜血/深渊构筑提供ROOM_UPGRADE_RANDOM收益"
+    description: "扩展神恩：围绕鲜血/深渊构筑提供随机神恩升级收益"
     rarity: RARE
     icon: AMETHYST_SHARD
     max-level: 3
@@ -944,7 +944,7 @@ boons:
         per-tag: 0.18
   exp_blood_engine:
     name: "鲜血引擎·律动"
-    description: "扩展神恩：围绕鲜血构筑提供CHAIN_DAMAGE收益"
+    description: "扩展神恩：围绕鲜血构筑提供连锁伤害收益"
     rarity: EPIC
     icon: BEACON
     max-level: 3
@@ -964,7 +964,7 @@ boons:
         per-tag: 0.52
   exp_blood_legend:
     name: "鲜血终章·王印"
-    description: "扩展神恩：围绕鲜血/深渊构筑提供ROOM_SHARD+LOW_HEALTH_SHIELD收益"
+    description: "扩展神恩：围绕鲜血/深渊构筑提供房间碎片+低血护盾收益"
     rarity: LEGENDARY
     icon: NETHER_STAR
     max-level: 4
@@ -987,7 +987,7 @@ boons:
         per-tag: 0.44
   exp_storm_first:
     name: "风暴初印·雷引"
-    description: "扩展神恩：围绕风暴构筑提供EXECUTE收益"
+    description: "扩展神恩：围绕风暴构筑提供斩杀收益"
     rarity: COMMON
     icon: LIGHTNING_ROD
     max-level: 3
@@ -1003,7 +1003,7 @@ boons:
         per-tag: 0.26
   exp_storm_room:
     name: "风暴回廊·余响"
-    description: "扩展神恩：围绕风暴构筑提供ROOM_HEAL收益"
+    description: "扩展神恩：围绕风暴构筑提供房间治疗收益"
     rarity: COMMON
     icon: EXPERIENCE_BOTTLE
     max-level: 3
@@ -1018,7 +1018,7 @@ boons:
         per-tag: 0.37
   exp_storm_kill:
     name: "风暴连携·疾势"
-    description: "扩展神恩：围绕风暴/狩猎构筑提供KILL_SPEED收益"
+    description: "扩展神恩：围绕风暴/狩猎构筑提供击杀加速收益"
     rarity: RARE
     icon: FEATHER
     max-level: 3
@@ -1032,7 +1032,7 @@ boons:
         per-tag: 0.51
   exp_storm_bridge:
     name: "风暴桥契·狩猎"
-    description: "扩展神恩：围绕风暴/狩猎构筑提供ROOM_UPGRADE_RANDOM收益"
+    description: "扩展神恩：围绕风暴/狩猎构筑提供随机神恩升级收益"
     rarity: RARE
     icon: AMETHYST_SHARD
     max-level: 3
@@ -1049,7 +1049,7 @@ boons:
         per-tag: 0.20
   exp_storm_engine:
     name: "风暴引擎·律动"
-    description: "扩展神恩：围绕风暴构筑提供LOW_HEALTH_SHIELD收益"
+    description: "扩展神恩：围绕风暴构筑提供低血护盾收益"
     rarity: EPIC
     icon: BEACON
     max-level: 3
@@ -1069,7 +1069,7 @@ boons:
         per-tag: 0.56
   exp_storm_legend:
     name: "风暴终章·王印"
-    description: "扩展神恩：围绕风暴/狩猎构筑提供ROOM_SHARD+LOW_HEALTH_SHIELD收益"
+    description: "扩展神恩：围绕风暴/狩猎构筑提供房间碎片+低血护盾收益"
     rarity: LEGENDARY
     icon: NETHER_STAR
     max-level: 4
@@ -1092,7 +1092,7 @@ boons:
         per-tag: 0.47
   exp_frost_first:
     name: "霜寒初印·霜刻"
-    description: "扩展神恩：围绕霜寒构筑提供EXECUTE收益"
+    description: "扩展神恩：围绕霜寒构筑提供斩杀收益"
     rarity: COMMON
     icon: PACKED_ICE
     max-level: 3
@@ -1108,7 +1108,7 @@ boons:
         per-tag: 0.28
   exp_frost_room:
     name: "霜寒回廊·余响"
-    description: "扩展神恩：围绕霜寒构筑提供ROOM_SHARD收益"
+    description: "扩展神恩：围绕霜寒构筑提供房间碎片收益"
     rarity: COMMON
     icon: EXPERIENCE_BOTTLE
     max-level: 3
@@ -1123,7 +1123,7 @@ boons:
         per-tag: 0.40
   exp_frost_kill:
     name: "霜寒连携·疾势"
-    description: "扩展神恩：围绕霜寒/壁垒构筑提供KILL_HEAL收益"
+    description: "扩展神恩：围绕霜寒/壁垒构筑提供击杀治疗收益"
     rarity: RARE
     icon: FEATHER
     max-level: 3
@@ -1137,7 +1137,7 @@ boons:
         per-tag: 0.55
   exp_frost_bridge:
     name: "霜寒桥契·壁垒"
-    description: "扩展神恩：围绕霜寒/壁垒构筑提供ROOM_UPGRADE_RANDOM收益"
+    description: "扩展神恩：围绕霜寒/壁垒构筑提供随机神恩升级收益"
     rarity: RARE
     icon: AMETHYST_SHARD
     max-level: 3
@@ -1154,7 +1154,7 @@ boons:
         per-tag: 0.22
   exp_frost_engine:
     name: "霜寒引擎·律动"
-    description: "扩展神恩：围绕霜寒构筑提供CHAIN_DAMAGE收益"
+    description: "扩展神恩：围绕霜寒构筑提供连锁伤害收益"
     rarity: EPIC
     icon: BEACON
     max-level: 3
@@ -1174,7 +1174,7 @@ boons:
         per-tag: 0.60
   exp_frost_legend:
     name: "霜寒终章·王印"
-    description: "扩展神恩：围绕霜寒/壁垒构筑提供ROOM_SHARD+LOW_HEALTH_SHIELD收益"
+    description: "扩展神恩：围绕霜寒/壁垒构筑提供房间碎片+低血护盾收益"
     rarity: LEGENDARY
     icon: NETHER_STAR
     max-level: 4
@@ -1197,7 +1197,7 @@ boons:
         per-tag: 0.50
   exp_abyss_first:
     name: "深渊初印·凝视"
-    description: "扩展神恩：围绕深渊构筑提供EXECUTE收益"
+    description: "扩展神恩：围绕深渊构筑提供斩杀收益"
     rarity: COMMON
     icon: CRYING_OBSIDIAN
     max-level: 3
@@ -1213,7 +1213,7 @@ boons:
         per-tag: 0.30
   exp_abyss_room:
     name: "深渊回廊·余响"
-    description: "扩展神恩：围绕深渊构筑提供ROOM_HEAL收益"
+    description: "扩展神恩：围绕深渊构筑提供房间治疗收益"
     rarity: COMMON
     icon: EXPERIENCE_BOTTLE
     max-level: 3
@@ -1228,7 +1228,7 @@ boons:
         per-tag: 0.43
   exp_abyss_kill:
     name: "深渊连携·疾势"
-    description: "扩展神恩：围绕深渊/鲜血构筑提供KILL_SHARD收益"
+    description: "扩展神恩：围绕深渊/鲜血构筑提供击杀碎片收益"
     rarity: RARE
     icon: FEATHER
     max-level: 3
@@ -1242,7 +1242,7 @@ boons:
         per-tag: 0.59
   exp_abyss_bridge:
     name: "深渊桥契·鲜血"
-    description: "扩展神恩：围绕深渊/鲜血构筑提供ROOM_UPGRADE_RANDOM收益"
+    description: "扩展神恩：围绕深渊/鲜血构筑提供随机神恩升级收益"
     rarity: RARE
     icon: AMETHYST_SHARD
     max-level: 3
@@ -1259,7 +1259,7 @@ boons:
         per-tag: 0.24
   exp_abyss_engine:
     name: "深渊引擎·律动"
-    description: "扩展神恩：围绕深渊构筑提供LOW_HEALTH_SHIELD收益"
+    description: "扩展神恩：围绕深渊构筑提供低血护盾收益"
     rarity: EPIC
     icon: BEACON
     max-level: 3
@@ -1279,7 +1279,7 @@ boons:
         per-tag: 0.64
   exp_abyss_legend:
     name: "深渊终章·王印"
-    description: "扩展神恩：围绕深渊/鲜血构筑提供ROOM_SHARD+LOW_HEALTH_SHIELD收益"
+    description: "扩展神恩：围绕深渊/鲜血构筑提供房间碎片+低血护盾收益"
     rarity: LEGENDARY
     icon: NETHER_STAR
     max-level: 4
@@ -1302,7 +1302,7 @@ boons:
         per-tag: 0.53
   exp_holy_first:
     name: "圣辉初印·祈耀"
-    description: "扩展神恩：围绕圣辉构筑提供EXECUTE收益"
+    description: "扩展神恩：围绕圣辉构筑提供斩杀收益"
     rarity: COMMON
     icon: TOTEM_OF_UNDYING
     max-level: 3
@@ -1318,7 +1318,7 @@ boons:
         per-tag: 0.32
   exp_holy_room:
     name: "圣辉回廊·余响"
-    description: "扩展神恩：围绕圣辉构筑提供ROOM_SHARD收益"
+    description: "扩展神恩：围绕圣辉构筑提供房间碎片收益"
     rarity: COMMON
     icon: EXPERIENCE_BOTTLE
     max-level: 3
@@ -1333,7 +1333,7 @@ boons:
         per-tag: 0.46
   exp_holy_kill:
     name: "圣辉连携·疾势"
-    description: "扩展神恩：围绕圣辉/壁垒构筑提供KILL_SPEED收益"
+    description: "扩展神恩：围绕圣辉/壁垒构筑提供击杀加速收益"
     rarity: RARE
     icon: FEATHER
     max-level: 3
@@ -1347,7 +1347,7 @@ boons:
         per-tag: 0.63
   exp_holy_bridge:
     name: "圣辉桥契·壁垒"
-    description: "扩展神恩：围绕圣辉/壁垒构筑提供ROOM_UPGRADE_RANDOM收益"
+    description: "扩展神恩：围绕圣辉/壁垒构筑提供随机神恩升级收益"
     rarity: RARE
     icon: AMETHYST_SHARD
     max-level: 3
@@ -1364,7 +1364,7 @@ boons:
         per-tag: 0.26
   exp_holy_engine:
     name: "圣辉引擎·律动"
-    description: "扩展神恩：围绕圣辉构筑提供CHAIN_DAMAGE收益"
+    description: "扩展神恩：围绕圣辉构筑提供连锁伤害收益"
     rarity: EPIC
     icon: BEACON
     max-level: 3
@@ -1384,7 +1384,7 @@ boons:
         per-tag: 0.68
   exp_holy_legend:
     name: "圣辉终章·王印"
-    description: "扩展神恩：围绕圣辉/壁垒构筑提供ROOM_SHARD+LOW_HEALTH_SHIELD收益"
+    description: "扩展神恩：围绕圣辉/壁垒构筑提供房间碎片+低血护盾收益"
     rarity: LEGENDARY
     icon: NETHER_STAR
     max-level: 4
@@ -1407,7 +1407,7 @@ boons:
         per-tag: 0.56
   exp_treasure_first:
     name: "财宝初印·掘金"
-    description: "扩展神恩：围绕财宝构筑提供EXECUTE收益"
+    description: "扩展神恩：围绕财宝构筑提供斩杀收益"
     rarity: COMMON
     icon: GOLD_NUGGET
     max-level: 3
@@ -1423,7 +1423,7 @@ boons:
         per-tag: 0.34
   exp_treasure_room:
     name: "财宝回廊·余响"
-    description: "扩展神恩：围绕财宝构筑提供ROOM_HEAL收益"
+    description: "扩展神恩：围绕财宝构筑提供房间治疗收益"
     rarity: COMMON
     icon: EXPERIENCE_BOTTLE
     max-level: 3
@@ -1438,7 +1438,7 @@ boons:
         per-tag: 0.49
   exp_treasure_kill:
     name: "财宝连携·疾势"
-    description: "扩展神恩：围绕财宝/狩猎构筑提供KILL_HEAL收益"
+    description: "扩展神恩：围绕财宝/狩猎构筑提供击杀治疗收益"
     rarity: RARE
     icon: FEATHER
     max-level: 3
@@ -1452,7 +1452,7 @@ boons:
         per-tag: 0.67
   exp_treasure_bridge:
     name: "财宝桥契·狩猎"
-    description: "扩展神恩：围绕财宝/狩猎构筑提供ROOM_UPGRADE_RANDOM收益"
+    description: "扩展神恩：围绕财宝/狩猎构筑提供随机神恩升级收益"
     rarity: RARE
     icon: AMETHYST_SHARD
     max-level: 3
@@ -1469,7 +1469,7 @@ boons:
         per-tag: 0.28
   exp_treasure_engine:
     name: "财宝引擎·律动"
-    description: "扩展神恩：围绕财宝构筑提供LOW_HEALTH_SHIELD收益"
+    description: "扩展神恩：围绕财宝构筑提供低血护盾收益"
     rarity: EPIC
     icon: BEACON
     max-level: 3
@@ -1489,7 +1489,7 @@ boons:
         per-tag: 0.72
   exp_treasure_legend:
     name: "财宝终章·王印"
-    description: "扩展神恩：围绕财宝/狩猎构筑提供ROOM_SHARD+LOW_HEALTH_SHIELD收益"
+    description: "扩展神恩：围绕财宝/狩猎构筑提供房间碎片+低血护盾收益"
     rarity: LEGENDARY
     icon: NETHER_STAR
     max-level: 4

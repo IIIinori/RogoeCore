@@ -1,18 +1,22 @@
 package inori.roguecore.ui
 
+import inori.roguecore.balance.BalanceConfigManager
 import inori.roguecore.boon.PlayerBoonData
 import inori.roguecore.combat.RoomCombatManager
 import inori.roguecore.data.ShardRewardManager
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.DungeonManager
 import inori.roguecore.relic.PlayerRelicData
+import inori.roguecore.stats.PerfMonitor
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.boss.BossBar
 import org.bukkit.entity.Player
+import org.bukkit.scoreboard.RenderType
 import org.bukkit.scoreboard.DisplaySlot
+import org.bukkit.scoreboard.Criteria
 import org.bukkit.scoreboard.Objective
 import org.bukkit.scoreboard.Scoreboard
 import taboolib.common.LifeCycle
@@ -31,11 +35,21 @@ import java.util.concurrent.ConcurrentHashMap
  */
 object DungeonHudManager {
 
+    private const val MAX_LINES = 15
+    private val LINE_ENTRIES = arrayOf(
+        "§0", "§1", "§2", "§3", "§4",
+        "§5", "§6", "§7", "§8", "§9",
+        "§a", "§b", "§c", "§d", "§e"
+    )
+
     private data class HudSession(
         val previousScoreboard: Scoreboard,
         val scoreboard: Scoreboard,
         val objective: Objective,
-        val bossBar: BossBar
+        val bossBar: BossBar,
+        var lastRender: Long = 0L,
+        var lastTitle: String = "",
+        val lastLines: Array<String> = Array(MAX_LINES) { "" }
     )
 
     private data class TimedActionBar(
@@ -69,9 +83,9 @@ object DungeonHudManager {
         }
         val manager = Bukkit.getScoreboardManager() ?: return
         val scoreboard = manager.newScoreboard
-        val objective = scoreboard.registerNewObjective("roguecore", "dummy")
+        val objective = scoreboard.registerNewObjective("roguecore", Criteria.DUMMY, "§6§lRogueCore", RenderType.INTEGER)
         objective.displaySlot = DisplaySlot.SIDEBAR
-        objective.displayName = "§6§lRogueCore"
+        setupSidebarSlots(scoreboard, objective)
 
         val bossBar = Bukkit.createBossBar("§6RogueCore", BarColor.BLUE, BarStyle.SOLID)
         bossBar.addPlayer(player)
@@ -128,23 +142,38 @@ object DungeonHudManager {
     }
 
     private fun render(player: Player) {
-        val session = sessions[player.uniqueId] ?: return
-        val instance = DungeonManager.getPlayerDungeon(player) ?: return
-        renderSidebar(session, player, instance)
-        renderBossBar(session, player, instance)
-        renderActionBar(player)
+        PerfMonitor.measure("hud.dungeon.render") {
+            val session = sessions[player.uniqueId] ?: return@measure
+            val instance = DungeonManager.getPlayerDungeon(player) ?: return@measure
+            if (shouldRefreshSidebar(session)) {
+                PerfMonitor.measure("hud.dungeon.sidebar") {
+                    renderSidebar(session, player, instance)
+                }
+            }
+            PerfMonitor.measure("hud.dungeon.bossbar") {
+                renderBossBar(session, player, instance)
+            }
+            renderActionBar(player)
+        }
     }
 
     private fun renderSidebar(session: HudSession, player: Player, instance: DungeonInstance) {
         val scoreboard = session.scoreboard
         val objective = session.objective
-        scoreboard.entries.forEach(scoreboard::resetScores)
-        objective.displayName = buildSidebarTitle(instance)
+        val title = buildSidebarTitle(instance)
+        if (session.lastTitle != title) {
+            objective.displayName = title
+            session.lastTitle = title
+        }
 
-        val lines = uniquify(buildSidebarLines(player, instance).take(15))
-        val maxScore = lines.size
-        lines.forEachIndexed { index, line ->
-            objective.getScore(trimLine(line)).score = maxScore - index
+        val lines = normalizeLines(buildSidebarLines(player, instance))
+        for (index in 0 until MAX_LINES) {
+            val line = lines[index]
+            if (session.lastLines[index] == line) {
+                continue
+            }
+            applySidebarLine(scoreboard, index, line)
+            session.lastLines[index] = line
         }
 
         if (player.scoreboard !== scoreboard) {
@@ -173,7 +202,7 @@ object DungeonHudManager {
                 val cleared = (total - activeRoom.aliveMobs.size).coerceAtLeast(0)
                 "§e$cleared/$total"
             }
-            else -> "§7寻找下一房间"
+            else -> RoomGuideManager.describeTarget(player, instance)
         }
 
         return buildList {
@@ -221,7 +250,7 @@ object DungeonHudManager {
                 bossBar.color = BarColor.BLUE
                 bossBar.style = BarStyle.SEGMENTED_10
                 bossBar.progress = if (totalCombat <= 0) 0.0 else (clearedCombat.toDouble() / totalCombat.toDouble()).coerceIn(0.0, 1.0)
-                bossBar.setTitle("§b探索中：已清理战斗房 $clearedCombat/$totalCombat")
+                bossBar.setTitle("§b探索中：${ChatColor.stripColor(RoomGuideManager.describeTarget(player, instance)) ?: "继续探索"}")
             }
         }
     }
@@ -304,16 +333,46 @@ object DungeonHudManager {
         return if (extra > 0) "§f$main§7+$extra" else "§f$main"
     }
 
-    private fun uniquify(lines: List<String>): List<String> {
-        val used = hashSetOf<String>()
-        return lines.map { line ->
-            var candidate = line
-            while (!used.add(candidate)) {
-                candidate += "§r"
-            }
-            candidate
+    private fun setupSidebarSlots(scoreboard: Scoreboard, objective: Objective) {
+        for (index in 0 until MAX_LINES) {
+            val entry = LINE_ENTRIES[index]
+            val team = scoreboard.registerNewTeam(teamName(index))
+            team.addEntry(entry)
+            objective.getScore(entry).score = MAX_LINES - index
         }
     }
+
+    private fun normalizeLines(lines: List<String>): List<String> {
+        val result = lines.take(MAX_LINES).map(::trimLine).toMutableList()
+        while (result.size < MAX_LINES) {
+            result += ""
+        }
+        return result
+    }
+
+    private fun applySidebarLine(scoreboard: Scoreboard, index: Int, line: String) {
+        val team = scoreboard.getTeam(teamName(index)) ?: return
+        if (team.prefix != line) {
+            team.prefix = line
+        }
+        if (team.suffix.isNotEmpty()) {
+            team.suffix = ""
+        }
+    }
+
+    private fun teamName(index: Int): String = "rcd$index"
+
+    private fun shouldRefreshSidebar(session: HudSession): Boolean {
+        val now = System.currentTimeMillis()
+        val periodTicks = sidebarUpdatePeriodTicks().coerceAtLeast(10)
+        if (now - session.lastRender < periodTicks * 50L) {
+            return false
+        }
+        session.lastRender = now
+        return true
+    }
+
+    private fun sidebarUpdatePeriodTicks(): Int = BalanceConfigManager.getInt("hud.dungeon.update-period-ticks", 10)
 
     private fun trimLine(line: String): String {
         return if (line.length <= 40) line else line.take(40)

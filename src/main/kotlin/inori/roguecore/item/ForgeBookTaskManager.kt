@@ -3,6 +3,7 @@ package inori.roguecore.item
 import inori.roguecore.data.DatabaseManager
 import inori.roguecore.data.PermanentMaterialManager
 import inori.roguecore.data.PlayerDataManager
+import inori.roguecore.display.ContentDisplayNameResolver
 import inori.roguecore.relic.RelicEffectHandler
 import inori.roguecore.unlock.UnlockManager
 import org.bukkit.entity.Player
@@ -213,5 +214,13 @@ object ForgeBookTaskManager {
             minutes > 0 -> "${minutes}分${rest}秒"
             else -> "${rest}秒"
         }
+    }
+
+    fun taskDisplayName(task: ForgeTask): String {
+        val name = DungeonLootManager.getDefinitionName(task.lootId)
+        if (!name.isNullOrBlank()) {
+            return name
+        }
+        return ContentDisplayNameResolver.safeText(task.lootId, "未知装备")
     }
 }

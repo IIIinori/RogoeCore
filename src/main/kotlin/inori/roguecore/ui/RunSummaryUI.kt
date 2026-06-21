@@ -1,5 +1,6 @@
 package inori.roguecore.ui
 
+import inori.roguecore.display.ContentDisplayNameResolver
 import inori.roguecore.summary.RunEndReason
 import inori.roguecore.summary.RunSummary
 import inori.roguecore.summary.RunSummaryManager
@@ -274,7 +275,7 @@ object RunSummaryUI {
                     if (summary.collectionUnlocks.isEmpty()) {
                         add("§8本局没有点亮收藏")
                     } else {
-                        summary.collectionUnlocks.take(8).forEach { add("§a- $it") }
+                        summary.collectionUnlocks.take(8).forEach { add("§a- ${ContentDisplayNameResolver.safeText(it, "收藏进度")}") }
                         if (summary.collectionUnlocks.size > 8) add("§7... 还有 ${summary.collectionUnlocks.size - 8} 项")
                     }
                 }
@@ -290,7 +291,7 @@ object RunSummaryUI {
                     add("")
                     var suggestions = 0
                     if ((summary.lootCounts["unidentified_gear"] ?: 0) > 0) { add("§e未鉴定装备 → /rogue gear storage identify"); suggestions++ }
-                    if ((summary.lootCounts["forge_book"] ?: 0) > 0) { add("§6锻造书 → /rogue gear storage craft"); suggestions++ }
+                    if ((summary.lootCounts["forge_book"] ?: 0) > 0) { add("§6锻造书 → /rogue gear craft"); suggestions++ }
                     if ((summary.lootCounts["sealed_accessory"] ?: 0) > 0) { add("§d密封饰品 → /rogue accessory identify"); suggestions++ }
                     if ((summary.lootCounts["accessory_inscription"] ?: 0) > 0) { add("§b饰品刻印书 → /rogue accessory inscribe"); suggestions++ }
                     if (summary.salvagedCount == 0 && summary.lootCounts.values.sum() > 0) { add("§6低价值物品 → /rogue gear storage salvage"); suggestions++ }
@@ -312,15 +313,7 @@ object RunSummaryUI {
 
     private fun lootKeys(): List<String> = listOf("temporary_gear", "unidentified_gear", "forge_book", "accessory", "sealed_accessory", "accessory_inscription")
 
-    private fun lootLabel(key: String): String = when (key) {
-        "temporary_gear" -> "临时装备"
-        "unidentified_gear" -> "未鉴定装备"
-        "forge_book" -> "锻造书"
-        "accessory" -> "饰品"
-        "sealed_accessory" -> "密封饰品"
-        "accessory_inscription" -> "饰品刻印书"
-        else -> key
-    }
+    private fun lootLabel(key: String): String = ContentDisplayNameResolver.lootCategoryName(key) ?: ContentDisplayNameResolver.safeText(key, "掉落")
 
     private fun materialName(id: String): String {
         return when (id) {
@@ -329,7 +322,7 @@ object RunSummaryUI {
             "relic_fragment" -> "§d遗物残片"
             "crown_shard" -> "§6王冠碎片"
             "astral_core" -> "§5星界核心"
-            else -> "§f$id"
+            else -> "§f${ContentDisplayNameResolver.safeText(id, "未知材料")}"
         }
     }
 

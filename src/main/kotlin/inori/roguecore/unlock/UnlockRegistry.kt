@@ -35,7 +35,7 @@ object UnlockRegistry {
             try {
                 unlocks[id] = UnlockDefinition(
                     id = id,
-                    name = node.getString("name") ?: id,
+                    name = node.getString("name")?.takeUnless { it == id } ?: "未命名研究",
                     description = node.getString("description") ?: "",
                     icon = XMaterial.matchXMaterial(node.getString("icon") ?: "PAPER").orElse(XMaterial.PAPER),
                     cost = node.getInt("cost", 100).coerceAtLeast(1),

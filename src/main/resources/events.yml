@@ -3,34 +3,34 @@
 # ================================
 
 event-scaling:
-  reward-per-floor: 0.08
-  max-reward-multiplier: 2.2
-  price-per-floor: 0.05
-  max-price-multiplier: 1.8
-  risk-per-floor: 0.03
-  max-risk-multiplier: 1.45
-  max-risk-percent: 0.75
-  extra-offer-every-floors: 5
+  reward-per-floor: 0.05
+  max-reward-multiplier: 1.55
+  price-per-floor: 0.065
+  max-price-multiplier: 2.15
+  risk-per-floor: 0.042
+  max-risk-multiplier: 1.85
+  max-risk-percent: 0.90
+  extra-offer-every-floors: 8
   max-extra-offers: 1
-  material-bonus-every-floors: 6
-  max-material-bonus: 2
+  material-bonus-every-floors: 10
+  max-material-bonus: 1
 
 event-variants:
   shop:
     black-market-floor: 6
-    black-market-price: 72
-    black-market-ember-reward: 2
-    black-market-sigil-reward: 1
+    black-market-price: 102
+    black-market-ember-reward: 0
+    black-market-sigil-reward: 0
     black-market-grant-hidden-loot: true
   shrine:
     twin-prayer-floor: 8
-    twin-prayer-price: 44
-    twin-prayer-heal-percent: 0.45
+    twin-prayer-price: 62
+    twin-prayer-heal-percent: 0.30
   trial:
     blood-trial-floor: 8
-    blood-trial-health-percent: 0.4
-    blood-trial-shard-min: 30
-    blood-trial-shard-max: 56
+    blood-trial-health-percent: 0.48
+    blood-trial-shard-min: 22
+    blood-trial-shard-max: 40
 
 event-affixes:
   rules:
@@ -454,7 +454,7 @@ event-affixes:
 
     exp2_event_01:
       name: "§d微光折券"
-      description: "微光折券会让本层SHOP事件更偏向SHOP_DISCOUNT变体"
+      description: "微光折券会让本层商店事件更偏向折扣商店变体"
       rooms: ["SHOP"]
       family: SHOP_DISCOUNT
       power: 1
@@ -462,7 +462,7 @@ event-affixes:
       weight: 18
     exp2_event_02:
       name: "§d遗柜巡商"
-      description: "遗柜巡商会让本层SHOP事件更偏向SHOP_RELIC变体"
+      description: "遗柜巡商会让本层商店事件更偏向遗物商店变体"
       rooms: ["SHOP"]
       family: SHOP_RELIC
       power: 2
@@ -470,7 +470,7 @@ event-affixes:
       weight: 18
     exp2_event_03:
       name: "§d矿车账本"
-      description: "矿车账本会让本层SHOP事件更偏向SHOP_MATERIAL变体"
+      description: "矿车账本会让本层商店事件更偏向材料商店变体"
       rooms: ["SHOP"]
       family: SHOP_MATERIAL
       power: 3
@@ -478,7 +478,7 @@ event-affixes:
       weight: 18
     exp2_event_04:
       name: "§d黑债暗号"
-      description: "黑债暗号会让本层SHOP事件更偏向SHOP_BLACK变体"
+      description: "黑债暗号会让本层商店事件更偏向黑市商店变体"
       rooms: ["SHOP"]
       family: SHOP_BLACK
       power: 4
@@ -486,7 +486,7 @@ event-affixes:
       weight: 18
     exp2_event_05:
       name: "§d银箱夹层"
-      description: "银箱夹层会让本层CHEST事件更偏向CHEST_SHARD变体"
+      description: "银箱夹层会让本层宝箱事件更偏向碎片宝箱变体"
       rooms: ["CHEST"]
       family: CHEST_SHARD
       power: 1
@@ -494,7 +494,7 @@ event-affixes:
       weight: 17
     exp2_event_06:
       name: "§d祷印箱锁"
-      description: "祷印箱锁会让本层CHEST事件更偏向CHEST_BOON变体"
+      description: "祷印箱锁会让本层宝箱事件更偏向神恩宝箱变体"
       rooms: ["CHEST"]
       family: CHEST_BOON
       power: 2
@@ -502,7 +502,7 @@ event-affixes:
       weight: 17
     exp2_event_07:
       name: "§d锻包封条"
-      description: "锻包封条会让本层CHEST事件更偏向CHEST_FORGE变体"
+      description: "锻包封条会让本层宝箱事件更偏向锻造宝箱变体"
       rooms: ["CHEST"]
       family: CHEST_FORGE
       power: 3
@@ -510,7 +510,7 @@ event-affixes:
       weight: 17
     exp2_event_08:
       name: "§d兵架暗轨"
-      description: "兵架暗轨会让本层CHEST事件更偏向CHEST_GEAR变体"
+      description: "兵架暗轨会让本层宝箱事件更偏向装备宝箱变体"
       rooms: ["CHEST"]
       family: CHEST_GEAR
       power: 4
@@ -518,7 +518,7 @@ event-affixes:
       weight: 17
     exp2_event_09:
       name: "§d温光圣灯"
-      description: "温光圣灯会让本层SHRINE事件更偏向SHRINE_HEAL变体"
+      description: "温光圣灯会让本层神龛事件更偏向治疗神龛变体"
       rooms: ["SHRINE"]
       family: SHRINE_HEAL
       power: 1
@@ -526,7 +526,7 @@ event-affixes:
       weight: 16
     exp2_event_10:
       name: "§d洁盐长盘"
-      description: "洁盐长盘会让本层SHRINE事件更偏向SHRINE_PURIFY变体"
+      description: "洁盐长盘会让本层神龛事件更偏向净化神龛变体"
       rooms: ["SHRINE"]
       family: SHRINE_PURIFY
       power: 2
@@ -534,7 +534,7 @@ event-affixes:
       weight: 16
     exp2_event_11:
       name: "§d遗泉耳语"
-      description: "遗泉耳语会让本层SHRINE事件更偏向SHRINE_RELIC变体"
+      description: "遗泉耳语会让本层神龛事件更偏向遗物神龛变体"
       rooms: ["SHRINE"]
       family: SHRINE_RELIC
       power: 3
@@ -542,7 +542,7 @@ event-affixes:
       weight: 16
     exp2_event_12:
       name: "§d晨祷帷幕"
-      description: "晨祷帷幕会让本层SHRINE事件更偏向SHRINE变体"
+      description: "晨祷帷幕会让本层神龛事件更偏向神龛变体"
       rooms: ["SHRINE"]
       family: SHRINE
       power: 4
@@ -550,7 +550,7 @@ event-affixes:
       weight: 16
     exp2_event_13:
       name: "§d勇者门槛"
-      description: "勇者门槛会让本层TRIAL事件更偏向TRIAL变体"
+      description: "勇者门槛会让本层试炼事件更偏向试炼变体"
       rooms: ["TRIAL"]
       family: TRIAL
       power: 1
@@ -558,7 +558,7 @@ event-affixes:
       weight: 15
     exp2_event_14:
       name: "§d血铁地契"
-      description: "血铁地契会让本层TRIAL事件更偏向TRIAL_FORGE变体"
+      description: "血铁地契会让本层试炼事件更偏向锻造试炼变体"
       rooms: ["TRIAL"]
       family: TRIAL_FORGE
       power: 2
@@ -566,7 +566,7 @@ event-affixes:
       weight: 15
     exp2_event_15:
       name: "§d谕者裁定"
-      description: "谕者裁定会让本层TRIAL事件更偏向TRIAL_RELIC变体"
+      description: "谕者裁定会让本层试炼事件更偏向遗物试炼变体"
       rooms: ["TRIAL"]
       family: TRIAL_RELIC
       power: 3
@@ -574,7 +574,7 @@ event-affixes:
       weight: 15
     exp2_event_16:
       name: "§d稳手绒布"
-      description: "稳手绒布会让本层GAMBLE事件更偏向GAMBLE_SAFE变体"
+      description: "稳手绒布会让本层赌局事件更偏向稳健赌局变体"
       rooms: ["GAMBLE"]
       family: GAMBLE_SAFE
       power: 4
@@ -582,7 +582,7 @@ event-affixes:
       weight: 15
     exp2_event_17:
       name: "§d赤注封蜡"
-      description: "赤注封蜡会让本层GAMBLE事件更偏向GAMBLE_HIGH变体"
+      description: "赤注封蜡会让本层赌局事件更偏向高注赌局变体"
       rooms: ["GAMBLE"]
       family: GAMBLE_HIGH
       power: 1
@@ -590,7 +590,7 @@ event-affixes:
       weight: 14
     exp2_event_18:
       name: "§d武库鬼牌"
-      description: "武库鬼牌会让本层GAMBLE事件更偏向GAMBLE_GEAR变体"
+      description: "武库鬼牌会让本层赌局事件更偏向装备赌局变体"
       rooms: ["GAMBLE"]
       family: GAMBLE_GEAR
       power: 2
@@ -598,7 +598,7 @@ event-affixes:
       weight: 14
     exp2_event_19:
       name: "§d回旋赌桌"
-      description: "回旋赌桌会让本层GAMBLE事件更偏向GAMBLE变体"
+      description: "回旋赌桌会让本层赌局事件更偏向赌局变体"
       rooms: ["GAMBLE"]
       family: GAMBLE
       power: 3
@@ -606,7 +606,7 @@ event-affixes:
       weight: 14
     exp2_event_20:
       name: "§d旧王夹柜"
-      description: "旧王夹柜会让本层HIDDEN事件更偏向HIDDEN变体"
+      description: "旧王夹柜会让本层隐藏事件更偏向隐藏变体"
       rooms: ["HIDDEN"]
       family: HIDDEN
       power: 4
@@ -614,7 +614,7 @@ event-affixes:
       weight: 14
     exp2_event_21:
       name: "§d遗龛烛台"
-      description: "遗龛烛台会让本层HIDDEN事件更偏向HIDDEN_RELIC变体"
+      description: "遗龛烛台会让本层隐藏事件更偏向隐藏遗物变体"
       rooms: ["HIDDEN"]
       family: HIDDEN_RELIC
       power: 1
@@ -622,7 +622,7 @@ event-affixes:
       weight: 13
     exp2_event_22:
       name: "§d锻架暗层"
-      description: "锻架暗层会让本层HIDDEN事件更偏向HIDDEN_FORGE变体"
+      description: "锻架暗层会让本层隐藏事件更偏向隐藏锻造变体"
       rooms: ["HIDDEN"]
       family: HIDDEN_FORGE
       power: 2
@@ -630,7 +630,7 @@ event-affixes:
       weight: 13
     exp2_event_23:
       name: "§d兵匣夹墙"
-      description: "兵匣夹墙会让本层HIDDEN事件更偏向HIDDEN_GEAR变体"
+      description: "兵匣夹墙会让本层隐藏事件更偏向隐藏装备变体"
       rooms: ["HIDDEN"]
       family: HIDDEN_GEAR
       power: 3
@@ -638,7 +638,7 @@ event-affixes:
       weight: 13
     exp2_event_24:
       name: "§d柔羽长榻"
-      description: "柔羽长榻会让本层REST事件更偏向REST_RECOVERY变体"
+      description: "柔羽长榻会让本层休整事件更偏向恢复休整变体"
       rooms: ["REST"]
       family: REST_RECOVERY
       power: 4
@@ -646,7 +646,7 @@ event-affixes:
       weight: 13
     exp2_event_25:
       name: "§d静修圆盘"
-      description: "静修圆盘会让本层REST事件更偏向REST_TRAINING变体"
+      description: "静修圆盘会让本层休整事件更偏向训练休整变体"
       rooms: ["REST"]
       family: REST_TRAINING
       power: 1
@@ -654,7 +654,7 @@ event-affixes:
       weight: 12
     exp2_event_26:
       name: "§d安眠火盆"
-      description: "安眠火盆会让本层REST事件更偏向REST变体"
+      description: "安眠火盆会让本层休整事件更偏向休整变体"
       rooms: ["REST"]
       family: REST
       power: 2
@@ -662,7 +662,7 @@ event-affixes:
       weight: 12
     exp2_event_27:
       name: "§d王印契笔"
-      description: "王印契笔会让本层CONTRACT事件更偏向CONTRACT变体"
+      description: "王印契笔会让本层契约事件更偏向契约变体"
       rooms: ["CONTRACT"]
       family: CONTRACT
       power: 3
@@ -670,7 +670,7 @@ event-affixes:
       weight: 12
     exp2_event_28:
       name: "§d撤离税牌"
-      description: "撤离税牌会让本层EXTRACTION事件更偏向EXTRACTION变体"
+      description: "撤离税牌会让本层撤离事件更偏向撤离变体"
       rooms: ["EXTRACTION"]
       family: EXTRACTION
       power: 4
@@ -678,7 +678,7 @@ event-affixes:
       weight: 12
     exp2_event_29:
       name: "§d余烬锻票"
-      description: "余烬锻票会让本层FORGE事件更偏向FORGE变体"
+      description: "余烬锻票会让本层铁匠事件更偏向铁匠变体"
       rooms: ["FORGE"]
       family: FORGE
       power: 1
@@ -734,7 +734,7 @@ event-affixes:
       weight: 15
     exp2_event_36:
       name: "§d炉核布袋"
-      description: "炉核布袋会让本层CHEST事件更偏向CHEST_FORGE变体"
+      description: "炉核布袋会让本层宝箱事件更偏向锻造宝箱变体"
       rooms: ["CHEST"]
       family: CHEST_FORGE
       power: 4
@@ -742,7 +742,7 @@ event-affixes:
       weight: 10
     exp2_event_37:
       name: "§d佣兵武架"
-      description: "佣兵武架会让本层CHEST事件更偏向CHEST_GEAR变体"
+      description: "佣兵武架会让本层宝箱事件更偏向装备宝箱变体"
       rooms: ["CHEST"]
       family: CHEST_GEAR
       power: 1
@@ -750,7 +750,7 @@ event-affixes:
       weight: 9
     exp2_event_38:
       name: "§d长明灯油"
-      description: "长明灯油会让本层SHRINE事件更偏向SHRINE_HEAL变体"
+      description: "长明灯油会让本层神龛事件更偏向治疗神龛变体"
       rooms: ["SHRINE"]
       family: SHRINE_HEAL
       power: 2
@@ -758,7 +758,7 @@ event-affixes:
       weight: 9
     exp2_event_39:
       name: "§d净化圣盐"
-      description: "净化圣盐会让本层SHRINE事件更偏向SHRINE_PURIFY变体"
+      description: "净化圣盐会让本层神龛事件更偏向净化神龛变体"
       rooms: ["SHRINE"]
       family: SHRINE_PURIFY
       power: 3
@@ -766,7 +766,7 @@ event-affixes:
       weight: 9
     exp2_event_40:
       name: "§d圣泉回响"
-      description: "圣泉回响会让本层SHRINE事件更偏向SHRINE_RELIC变体"
+      description: "圣泉回响会让本层神龛事件更偏向遗物神龛变体"
       rooms: ["SHRINE"]
       family: SHRINE_RELIC
       power: 4
@@ -774,144 +774,144 @@ event-affixes:
       weight: 9
 
 shop:
-  boon-price-min: 20
-  boon-price-max: 50
-  heal-price: 15
-  relic-price: 48
+  boon-price-min: 34
+  boon-price-max: 82
+  heal-price: 30
+  relic-price: 90
 
 forge:
-  reroll-price: 18
-  lock-affix-price: 6
+  reroll-price: 30
+  lock-affix-price: 14
   cooling:
-    ember-cost: 1
-    heat-reduce: 2
+    ember-cost: 2
+    heat-reduce: 1
   no-heat-reforge:
-    shard-price: 28
-    ember-cost: 1
-    sigil-cost: 1
+    shard-price: 48
+    ember-cost: 2
+    sigil-cost: 2
   materials:
     boss-ember:
       reward-min: 1
-      reward-max: 2
-      temper-cost: 1
+      reward-max: 1
+      temper-cost: 2
     hidden-sigil:
       reward-min: 1
       reward-max: 1
-      lock-cost: 1
+      lock-cost: 2
   heat:
-    max: 6
-    reforge: 1
-    upgrade: 2
-    temper: 3
-  temper-price: 28
-  temper-price-per-level: 12
-  upgrade-price: 22
-  upgrade-price-per-level: 10
-  attribute-bonus-per-level: 0.18
-  max-upgrades: 3
+    max: 5
+    reforge: 2
+    upgrade: 3
+    temper: 4
+  temper-price: 38
+  temper-price-per-level: 18
+  upgrade-price: 34
+  upgrade-price-per-level: 16
+  attribute-bonus-per-level: 0.14
+  max-upgrades: 2
   permanent-convert:
     enabled: true
-    min-floor: 10
-    base-price: 120
-    score-scale: 1.6
-    forge-level-price: 35
-    boss-ember-cost: 2
-    hidden-sigil-cost: 1
-  salvage-base: 8
-  salvage-score-scale: 0.35
-  salvage-forge-bonus: 6
+    min-floor: 16
+    base-price: 240
+    score-scale: 2.40
+    forge-level-price: 68
+    boss-ember-cost: 3
+    hidden-sigil-cost: 2
+  salvage-base: 5
+  salvage-score-scale: 0.20
+  salvage-forge-bonus: 3
 
 permanent-forge:
   enabled: true
   upgrade:
-    max-level: 10
-    base-price: 300
-    price-per-level: 220
-    attribute-bonus-per-level: 0.22
+    max-level: 7
+    base-price: 500
+    price-per-level: 360
+    attribute-bonus-per-level: 0.12
   reroll:
-    base-price: 420
-    price-per-forge-level: 80
+    base-price: 660
+    price-per-forge-level: 120
   lock:
-    price: 260
+    price: 460
   materials:
     upgrade:
-      soul_iron: 2
+      soul_iron: 3
     reroll:
-      inscription_dust: 2
+      inscription_dust: 3
     lock:
-      inscription_dust: 1
+      inscription_dust: 2
     rarity-upgrade:
       magic:
-        soul_iron: 8
-        inscription_dust: 4
+        soul_iron: 12
+        inscription_dust: 6
       rare:
-        soul_iron: 16
-        relic_fragment: 3
+        soul_iron: 24
+        relic_fragment: 4
       epic:
-        relic_fragment: 8
-        crown_shard: 2
+        relic_fragment: 12
+        crown_shard: 3
       legendary:
-        crown_shard: 6
-        astral_core: 1
+        crown_shard: 9
+        astral_core: 2
   rarity-upgrade:
     enabled: true
-    base-price: 1200
-    price-multiplier: 1.8
-    forge-level-price: 160
+    base-price: 1900
+    price-multiplier: 2.10
+    forge-level-price: 220
   salvage:
     enabled: true
-    base-return: 80
-    score-scale: 0.8
-    forge-level-return: 90
+    base-return: 50
+    score-scale: 0.42
+    forge-level-return: 52
     rarity-return:
       common: 0
-      magic: 120
-      rare: 320
-      epic: 760
-      legendary: 1600
+      magic: 70
+      rare: 180
+      epic: 390
+      legendary: 860
 
 extraction:
-  cashout-ratio: 0.5
-  min-cashout-run-shards: 20
+  cashout-ratio: 0.32
+  min-cashout-run-shards: 36
 
 contract:
-  shard-reward-min: 26
-  shard-reward-max: 52
-  fragile-health-penalty: 6.0
-  withered-heal-multiplier: 0.5
-  vulnerable-damage-multiplier: 1.25
-  hollow-damage-multiplier: 0.8
-  crown-shard-reward: 44
+  shard-reward-min: 16
+  shard-reward-max: 30
+  fragile-health-penalty: 8.0
+  withered-heal-multiplier: 0.35
+  vulnerable-damage-multiplier: 1.35
+  hollow-damage-multiplier: 0.7
+  crown-shard-reward: 26
 
 chest:
-  shard-min: 10
-  shard-max: 30
+  shard-min: 6
+  shard-max: 18
   give-boon: true
 
 rest:
-  heal-percent: 1.0
+  heal-percent: 0.65
 
 trial:
-  hp-cost-percent: 0.2
-  relic-hp-cost-percent: 0.35
-  shard-reward-min: 18
-  shard-reward-max: 40
+  hp-cost-percent: 0.28
+  relic-hp-cost-percent: 0.45
+  shard-reward-min: 10
+  shard-reward-max: 24
 
 gamble:
-  shard-win-min: 12
-  shard-win-max: 36
-  loss-percent: 0.35
-  damage-percent: 0.25
+  shard-win-min: 10
+  shard-win-max: 24
+  loss-percent: 0.45
+  damage-percent: 0.30
 
 shrine:
-  blessing-cost: 20
-  purify-price: 26
-  heal-percent: 0.3
-  sacrifice-health-percent: 0.2
-  sacrifice-shard-reward: 28
+  blessing-cost: 34
+  purify-price: 45
+  heal-percent: 0.2
+  sacrifice-health-percent: 0.28
+  sacrifice-shard-reward: 16
 
 hidden:
-  shard-min: 24
-  shard-max: 48
+  shard-min: 14
+  shard-max: 30
   give-relic: true
   give-boon: true

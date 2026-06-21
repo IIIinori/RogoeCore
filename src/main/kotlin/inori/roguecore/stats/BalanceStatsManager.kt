@@ -2,6 +2,7 @@ package inori.roguecore.stats
 
 import inori.roguecore.boon.Boon
 import inori.roguecore.boon.BoonRegistry
+import inori.roguecore.display.ContentDisplayNameResolver
 import inori.roguecore.dungeon.route.NextFloorRoute
 import inori.roguecore.milestone.RunMilestoneType
 import inori.roguecore.modifier.RunModifierType
@@ -245,9 +246,9 @@ object BalanceStatsManager {
         }
     }
 
-    private fun displayBoon(id: String): String = BoonRegistry.get(id)?.name ?: id
+    private fun displayBoon(id: String): String = BoonRegistry.get(id)?.name ?: ContentDisplayNameResolver.safeText(id, "未知神恩")
 
-    private fun displayRelic(id: String): String = RelicRegistry.get(id)?.name ?: id
+    private fun displayRelic(id: String): String = RelicRegistry.get(id)?.name ?: ContentDisplayNameResolver.safeText(id, "未知遗物")
 
     private fun displayMilestone(id: String): String {
         return runCatching { RunMilestoneType.valueOf(id).displayName }.getOrDefault(id)

@@ -2,6 +2,7 @@ package inori.roguecore.ui
 
 import inori.roguecore.item.DungeonLootManager
 import inori.roguecore.item.GearStorageManager
+import inori.roguecore.display.ContentDisplayNameResolver
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
@@ -127,7 +128,7 @@ object GearStorageUI {
         return item.clone().apply {
             itemMeta = itemMeta?.also { meta ->
                 if (favorite) {
-                    val currentName = if (meta.hasDisplayName()) meta.displayName else item.type.name
+                    val currentName = if (meta.hasDisplayName()) meta.displayName else ContentDisplayNameResolver.materialTypeName(item.type.name, "装备")
                     if (!currentName.startsWith("§6★ ")) {
                         meta.setDisplayName("§6★ $currentName")
                     }

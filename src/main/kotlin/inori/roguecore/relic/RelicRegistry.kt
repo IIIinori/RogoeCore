@@ -33,7 +33,7 @@ object RelicRegistry {
             try {
                 relics[id] = Relic(
                     id = id,
-                    name = node.getString("name") ?: id,
+                    name = node.getString("name")?.takeUnless { it == id } ?: "未命名遗物",
                     description = node.getString("description") ?: "",
                     rarity = runCatching { RelicRarity.valueOf((node.getString("rarity") ?: "COMMON").uppercase()) }
                         .getOrDefault(RelicRarity.COMMON),

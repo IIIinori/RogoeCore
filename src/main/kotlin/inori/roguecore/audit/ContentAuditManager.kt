@@ -26,6 +26,7 @@ import inori.roguecore.unlock.UnlockRegistry
 import taboolib.library.configuration.ConfigurationSection
 import taboolib.library.xseries.XMaterial
 import java.io.File
+import java.time.LocalDate
 
 /**
  * 配置内容自检。
@@ -72,6 +73,7 @@ object ContentAuditManager {
         auditAccessories(errors, warnings)
         auditBalance(errors, warnings)
         val mythicStats = auditMythicMobs(errors, warnings)
+        auditDisplayLeakage(warnings)
         auditQualityMarkers(warnings)
 
         return Result(
@@ -141,6 +143,7 @@ object ContentAuditManager {
         duplicateBy(affixes, { it.description }, "副本词缀描述", warnings)
         duplicateBy(affixes, { "${it.type.name}|${fmt(it.value)}" }, "副本词缀效果签名", warnings)
         auditAffixRawConfig(errors, warnings)
+        auditAffixRotationConfig(errors, warnings, affixes.map { it.id }.toSet())
     }
 
     private fun auditEventAffixes(errors: MutableList<String>, warnings: MutableList<String>) {
@@ -502,6 +505,44 @@ object ContentAuditManager {
         val keepSignatureForFutureVerboseMode = warnings
     }
 
+    private fun auditDisplayLeakage(warnings: MutableList<String>) {
+        val issues = mutableListOf<String>()
+        BoonRegistry.getAll().forEach { boon ->
+            collectDisplayLeak(issues, "神恩 ${boon.id} 名称", boon.name)
+            collectDisplayLeak(issues, "神恩 ${boon.id} 描述", boon.description)
+            boon.tags.forEachIndexed { index, tag ->
+                collectDisplayLeak(issues, "神恩 ${boon.id} 标签[$index]", tag)
+            }
+        }
+        RelicRegistry.getAll().forEach { relic ->
+            collectDisplayLeak(issues, "遗物 ${relic.id} 名称", relic.name)
+            collectDisplayLeak(issues, "遗物 ${relic.id} 描述", relic.description)
+        }
+        AffixRegistry.getAll().forEach { affix ->
+            collectDisplayLeak(issues, "副本词缀 ${affix.id} 名称", affix.name)
+            collectDisplayLeak(issues, "副本词缀 ${affix.id} 描述", affix.description)
+        }
+        EventAffixManager.getAll().forEach { affix ->
+            collectDisplayLeak(issues, "事件词缀 ${affix.id} 名称", affix.name)
+            collectDisplayLeak(issues, "事件词缀 ${affix.id} 描述", affix.description)
+            collectDisplayLeak(issues, "事件词缀 ${affix.id} family", affix.family)
+        }
+        AccessoryRegistry.getAll().forEach { accessory ->
+            collectDisplayLeak(issues, "饰品 ${accessory.id} 名称", accessory.name)
+            accessory.lore.forEachIndexed { index, line ->
+                collectDisplayLeak(issues, "饰品 ${accessory.id} lore[$index]", line)
+            }
+            accessory.tags.forEachIndexed { index, tag ->
+                collectDisplayLeak(issues, "饰品 ${accessory.id} tag[$index]", tag)
+            }
+        }
+        val unique = issues.distinct()
+        unique.take(30).forEach { warnings += "可见文案疑似暴露内部ID: $it" }
+        if (unique.size > 30) {
+            warnings += "可见文案疑似暴露内部ID: 还有 ${unique.size - 30} 条未显示"
+        }
+    }
+
     private fun auditBoonRawConfig(errors: MutableList<String>, warnings: MutableList<String>) {
         val section = BoonRegistry.config.getConfigurationSection("boons") ?: run {
             errors += "boons.yml 缺少 boons 节点"
@@ -611,6 +652,55 @@ object ContentAuditManager {
             }
             if (parsed in setOf(AffixType.ELITE_KEY_CHANCE, AffixType.HIDDEN_LOOT_CHANCE, AffixType.BOSS_RELIC_CHANCE, AffixType.LOW_HEALTH_PRESSURE, AffixType.HEALING_REDUCE, AffixType.MOB_LIFESTEAL, AffixType.MOB_REGEN) && value > 1.0) {
                 warnings += "副本词缀 $id 的 ${parsed?.name} 通常应使用 0-1 小数概率/比例，当前为 $value"
+            }
+        }
+    }
+
+    private fun auditAffixRotationConfig(errors: MutableList<String>, warnings: MutableList<String>, knownAffixIds: Set<String>) {
+        val section = AffixRegistry.config.getConfigurationSection("rotation") ?: return
+        val enabled = section.getBoolean("enabled", false)
+        val cycleDays = section.getInt("cycle-days", 7)
+        if (cycleDays <= 0) {
+            errors += "affixes.yml rotation.cycle-days 必须 > 0"
+        }
+        val anchorDate = section.getString("anchor-date")?.trim().orEmpty()
+        if (anchorDate.isNotBlank() && runCatching { LocalDate.parse(anchorDate) }.isFailure) {
+            errors += "affixes.yml rotation.anchor-date 格式错误，应为 yyyy-MM-dd: $anchorDate"
+        }
+        val timezone = section.getString("timezone")?.trim().orEmpty()
+        if (timezone.isNotBlank() && runCatching { java.time.ZoneId.of(timezone) }.isFailure) {
+            errors += "affixes.yml rotation.timezone 无效: $timezone"
+        }
+        val poolsSection = section.getConfigurationSection("pools")
+        if (enabled && poolsSection == null) {
+            warnings += "affixes.yml 启用了 rotation，但未配置 rotation.pools；运行时将回退全池"
+            return
+        }
+        if (poolsSection == null) return
+
+        val poolNames = poolsSection.getKeys(false).toSet()
+        if (enabled && poolNames.isEmpty()) {
+            warnings += "affixes.yml 启用了 rotation，但 rotation.pools 为空；运行时将回退全池"
+        }
+        val defaultPool = section.getString("default-pool")?.trim().orEmpty()
+        if (defaultPool.isNotBlank() && defaultPool !in poolNames) {
+            errors += "affixes.yml rotation.default-pool 指向未知池: $defaultPool"
+        }
+        val order = section.getStringList("order").map { it.trim() }.filter { it.isNotBlank() }
+        order.filter { it !in poolNames }.forEach { bad ->
+            errors += "affixes.yml rotation.order 包含未知池: $bad"
+        }
+        for (poolName in poolNames) {
+            val node = poolsSection.getConfigurationSection(poolName) ?: continue
+            node.getStringList("types").forEach { type ->
+                if (!enumExists<AffixType>(type)) {
+                    errors += "affixes.yml rotation.pools.$poolName.types 存在未知词缀类型: $type"
+                }
+            }
+            node.getStringList("ids").forEach { id ->
+                if (id !in knownAffixIds) {
+                    warnings += "affixes.yml rotation.pools.$poolName.ids 引用了不存在的词缀ID: $id"
+                }
             }
         }
     }
@@ -751,5 +841,28 @@ object ContentAuditManager {
 
     private fun fmt(value: Double): String {
         return if (value == value.toLong().toDouble()) value.toLong().toString() else String.format("%.4f", value)
+    }
+
+    private fun collectDisplayLeak(issues: MutableList<String>, label: String, text: String?) {
+        val value = text?.trim().orEmpty()
+        if (value.isBlank()) {
+            return
+        }
+        if (looksLikeInternalId(value)) {
+            issues += "$label -> $value"
+        }
+    }
+
+    private fun looksLikeInternalId(text: String): Boolean {
+        if (text.length >= 16 && text.all { it.isLetterOrDigit() || it == '-' }) {
+            return true
+        }
+        if (text.matches(Regex("^[0-9a-fA-F\\-]{32,36}$"))) {
+            return true
+        }
+        if (text.matches(Regex("^[A-Z0-9_\\-]{3,}$"))) {
+            return true
+        }
+        return text.matches(Regex("^[a-z0-9_\\-]{3,}$")) && text.contains('_')
     }
 }

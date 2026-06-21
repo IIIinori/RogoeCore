@@ -7,6 +7,7 @@ import inori.roguecore.event.EventAffixManager
 import inori.roguecore.relic.RelicRegistry
 import inori.roguecore.unlock.UnlockManager
 import inori.roguecore.unlock.UnlockRegistry
+import inori.roguecore.display.ContentDisplayNameResolver
 import org.bukkit.entity.Player
 import taboolib.library.xseries.XMaterial
 import taboolib.module.ui.openMenu
@@ -21,39 +22,38 @@ object CodexUI {
             rows(6)
             handLocked(true)
 
-            val contentSlots = setOf(10, 12, 14, 16, 28, 30, 32, 34, 49)
+            map(
+                "####H####",
+                "#.......#",
+                "#a.b.c.d#",
+                "#.......#",
+                "#e.f.g.h#",
+                "####B####"
+            )
             val glass = XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()!!.apply {
                 itemMeta = itemMeta?.also { it.setDisplayName(" ") }
             }
-            for (slot in 0 until 54) {
-                if (slot !in contentSlots) {
-                    set(slot, glass)
-                }
-            }
-
-            set(10, buildRoutesItem(player))
-            set(12, buildBoonsItem())
-            set(14, buildRelicsItem(player))
-            set(16, buildDungeonAffixesItem())
-            set(28, buildCoreEventsItem(player))
-            set(30, buildAdvancedEventsItem(player))
-            set(32, buildEventAffixesItem())
-            set(34, buildProgressItem(player, unlockedIds.size))
-            set(49, XMaterial.ENCHANTING_TABLE.parseItem()!!.apply {
+            set('#', glass); set('.', glass)
+            set('H', XMaterial.KNOWLEDGE_BOOK.parseItem()!!.apply { itemMeta = itemMeta?.also { it.setDisplayName("§5§l冒险图鉴"); it.lore = listOf("", "§7查看路线、神恩、遗物、词缀和事件内容池") } })
+            set('a', buildRoutesItem(player))
+            set('b', buildBoonsItem())
+            set('c', buildRelicsItem(player))
+            set('d', buildDungeonAffixesItem())
+            set('e', buildCoreEventsItem(player))
+            set('f', buildAdvancedEventsItem(player))
+            set('g', buildEventAffixesItem())
+            set('h', buildProgressItem(player, unlockedIds.size))
+            set('B', XMaterial.ENCHANTING_TABLE.parseItem()!!.apply {
                 itemMeta = itemMeta?.also { meta ->
                     meta.setDisplayName("§d返回研究所")
                     meta.lore = listOf("", "§7点击返回研究界面")
                 }
             })
 
-            onClick { event ->
-                event.isCancelled = true
-                when (event.rawSlot) {
-                    49 -> {
-                        player.closeInventory()
-                        UnlockUI.open(player)
-                    }
-                }
+            onClick { event -> event.isCancelled = true }
+            onClick('B') {
+                player.closeInventory()
+                UnlockUI.open(player)
             }
         }
     }
@@ -83,7 +83,7 @@ object CodexUI {
         val byRarity = boons.groupBy { it.rarity }
         val tags = boons.flatMap { it.tags }.groupingBy { it }.eachCount()
             .entries.sortedByDescending { it.value }
-            .joinToString(" / ") { "${it.key}x${it.value}" }
+            .joinToString(" / ") { "${safeText(it.key, "流派")}x${it.value}" }
 
         itemMeta = itemMeta?.also { meta ->
             meta.setDisplayName("§6神恩图鉴")
@@ -179,7 +179,7 @@ object CodexUI {
             .eachCount()
             .entries
             .sortedByDescending { it.value }
-            .joinToString(" / ") { "${it.key}x${it.value}" }
+            .joinToString(" / ") { "${safeText(it.key, "房间")}x${it.value}" }
 
         itemMeta = itemMeta?.also { meta ->
             meta.setDisplayName("§d事件词缀")
@@ -217,5 +217,9 @@ object CodexUI {
         } else {
             "§7$name §8(未完成)"
         }
+    }
+
+    private fun safeText(raw: String, fallback: String): String {
+        return ContentDisplayNameResolver.safeText(raw, fallback)
     }
 }

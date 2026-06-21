@@ -31,7 +31,7 @@ object TalentRegistry {
         for (id in section.getKeys(false)) {
             val s = section.getConfigurationSection(id) ?: continue
             try {
-                val name = s.getString("name") ?: id
+                val name = s.getString("name")?.takeUnless { it == id } ?: "未命名天赋"
                 val description = s.getString("description") ?: ""
                 val iconStr = s.getString("icon") ?: "PAPER"
                 val icon = XMaterial.matchXMaterial(iconStr).orElse(XMaterial.PAPER)

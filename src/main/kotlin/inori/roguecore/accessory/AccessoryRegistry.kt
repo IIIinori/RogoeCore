@@ -189,7 +189,7 @@ object AccessoryRegistry {
             val node = qualities.getConfigurationSection(id) ?: continue
             inscriptionQualities[id.lowercase()] = AccessoryInscriptionQuality(
                 id = id.lowercase(),
-                displayName = node.getString("name") ?: id,
+                displayName = node.getString("name")?.takeUnless { it == id } ?: "未命名品质",
                 color = node.getString("color") ?: "§f",
                 weight = node.getInt("weight", 10).coerceAtLeast(1),
                 timeMillis = node.getInt("time-seconds", 60).coerceAtLeast(1) * 1000L,
@@ -214,7 +214,7 @@ object AccessoryRegistry {
             val node = section.getConfigurationSection(id) ?: continue
             rarities[id.lowercase()] = AccessoryRarity(
                 id = id.lowercase(),
-                displayName = node.getString("name") ?: id,
+                displayName = node.getString("name")?.takeUnless { it == id } ?: "未命名稀有度",
                 color = node.getString("color") ?: "§f",
                 weight = node.getInt("weight", 10).coerceAtLeast(1),
                 multiplier = node.getDouble("multiplier", 1.0).coerceAtLeast(0.01)
@@ -239,7 +239,7 @@ object AccessoryRegistry {
                 val range = parseRange(node.getString("range") ?: "1-100")
                 definitions[id] = AccessoryDefinition(
                     id = id,
-                    name = node.getString("name") ?: id,
+                    name = node.getString("name")?.takeUnless { it == id } ?: "未命名饰品",
                     material = XMaterial.matchXMaterial(node.getString("material") ?: "AMETHYST_SHARD").orElse(XMaterial.AMETHYST_SHARD),
                     slot = slot,
                     tags = node.getStringList("tags").map { it.lowercase() }.toSet(),
@@ -279,8 +279,8 @@ object AccessoryRegistry {
         for (rawName in section.getKeys(false)) {
             val values = section.getDoubleList(rawName)
             if (values.size < 2) continue
-            val percentage = rawName.endsWith("%")
-            val name = rawName.removeSuffix("%").trim()
+            val percentage = rawName.endsWith("%") || rawName.endsWith("％")
+            val name = rawName.removeSuffix("%").removeSuffix("％").trim()
             result += DungeonLootAttributeDefinition(name, values[0], values[1], percentage)
         }
         return result

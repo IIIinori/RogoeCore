@@ -10,9 +10,13 @@ dungeon:
   room-height: 4
   corridor-width: 3
   floor-level: 64
+  room-count:
+    base-min: 7
+    base-max: 10
+    per-10-floors: 2
   hidden-room:
     enabled: true
-    chance: 0.45
+    chance: 0.30
     elite-key-chance: 0.35
     boss-keys: 1
 
@@ -199,42 +203,63 @@ floors:
     light: END_ROD
 
 room-weights:
-  COMBAT: 60
-  ELITE: 10
-  SHOP: 10
-  FORGE: 6
-  CHEST: 10
-  REST: 8
-  EXTRACTION: 4
+  COMBAT: 64
+  ELITE: 12
+  SHOP: 7
+  FORGE: 5
+  CHEST: 8
+  REST: 5
+  EXTRACTION: 3
   CONTRACT: 4
-  TRIAL: 6
+  TRIAL: 7
   GAMBLE: 3
-  SHRINE: 3
+  SHRINE: 2
 
 room-diversity:
   enabled: true
-  post-cap-multiplier: 0.35
+  post-cap-multiplier: 0.25
   unique-types:
     - EXTRACTION
   soft-caps:
-    SHOP: 2
-    FORGE: 2
-    REST: 2
+    SHOP: 1
+    FORGE: 1
+    REST: 1
     EXTRACTION: 1
-    CONTRACT: 2
-    TRIAL: 2
+    CONTRACT: 1
+    TRIAL: 1
     GAMBLE: 1
     SHRINE: 1
 
 soul-shards:
-  per-room-clear: 5
-  per-dungeon-clear: 50
-  floor-multiplier: 0.2
-  death-penalty: 0.5
+  per-room-clear: 3
+  per-dungeon-clear: 28
+  floor-multiplier: 0.14
+  death-penalty: 0.4
 
 database:
   file: "data.db"
   table: "roguecore_playerdata"
+
+starter-gear:
+  enabled: true
+  first-join-only: true
+  mark-key: "starter_gear_granted"
+  source: "CHEST"
+  floor: 1
+  # 逗号分隔: permanent/temporary, rarity=<common|magic|rare|epic|legendary>, no-affix, fixed-roll
+  extra: "permanent_common_noaffix_fixedroll"
+  items:
+    - "crypt_blade"
+    - "crypt_crown"
+    - "crypt_guard"
+    - "crypt_greaves"
+    - "crypt_sabatons"
+    - "crypt_lantern"
+  messages:
+    title: "§6已发放新手装备"
+    lines:
+      - "§7你获得了一套永久新手装备。"
+      - "§7可使用 §e/rogue gear storage §7管理装备。"
 
 party:
   max-size: 4

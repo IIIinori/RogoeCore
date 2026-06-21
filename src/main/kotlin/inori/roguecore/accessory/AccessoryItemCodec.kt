@@ -1,6 +1,8 @@
 package inori.roguecore.accessory
 
 import inori.roguecore.item.DungeonBoundItem
+import inori.roguecore.display.ContentDisplayNameResolver
+import inori.roguecore.item.DungeonLootManager
 import inori.roguecore.item.DungeonLootSource
 import org.bukkit.NamespacedKey
 import org.bukkit.inventory.ItemStack
@@ -171,10 +173,13 @@ object AccessoryItemCodec {
     }
 
     private fun buildLore(instance: AccessoryInstance, menuPreview: Boolean): List<String> {
+        val attributePercentageMap = instance.definition.attributes
+            .groupBy { it.name }
+            .mapValues { (_, attributes) -> attributes.any { it.percentage } }
         return buildList {
             add("§8${instance.rarity.displayName} · ${instance.definition.slot.displayName}")
             if (instance.definition.tags.isNotEmpty()) {
-                add("§8标签: ${instance.definition.tags.joinToString(" / ") { "§f$it" }}")
+                add("§8标签: ${instance.definition.tags.joinToString(" / ") { "§f${ContentDisplayNameResolver.safeText(it, "通用")}" }}")
             }
             if (instance.definition.lore.isNotEmpty()) {
                 addAll(instance.definition.lore)
@@ -183,7 +188,8 @@ object AccessoryItemCodec {
                 add("")
                 add("§7饰品属性:")
                 for ((name, value) in instance.rolledAttributes) {
-                    add("§8- §f$name §a+${format(value)}")
+                    val mark = DungeonLootManager.getPercentageMarkSuffix(name, attributePercentageMap[name] == true)
+                    add("§8- §f$name §a+${format(value)}$mark")
                 }
             }
             if (instance.effects.isNotEmpty()) {

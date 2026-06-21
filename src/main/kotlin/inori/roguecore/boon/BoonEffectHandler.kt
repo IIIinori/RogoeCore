@@ -240,20 +240,21 @@ object BoonEffectHandler {
     fun onBoonAcquired(player: Player, boon: Boon, level: Int) {
         if (!DungeonManager.isInDungeon(player)) return
         val instance = DungeonManager.getPlayerDungeon(player)
+        val floor = instance?.config?.floorNumber ?: 1
         for (effect in boon.effects) {
             when (effect.type) {
                 BoonEffectType.NEXT_BOON_ECHO -> {
-                    val charges = effect.valueAt(level).toInt().coerceAtLeast(1)
+                    val charges = effect.valueAt(level, floor).toInt().coerceAtLeast(1)
                     RunModifierManager.addBoonEcho(player, charges, boon.name)
                 }
                 BoonEffectType.NEXT_BOON_MUTATION -> {
-                    val extra = effect.valueAt(level).toInt().coerceAtLeast(1)
+                    val extra = effect.valueAt(level, floor).toInt().coerceAtLeast(1)
                     RunModifierManager.addBoonMutation(player, extra, boon.name)
                 }
                 BoonEffectType.ROOM_PROPHECY -> {
                     val target = parseRoomType(effect.tag) ?: listOf(RoomType.CHEST, RoomType.ELITE, RoomType.SHRINE, RoomType.FORGE).random()
                     val within = effect.threshold.toInt().coerceAtLeast(RunModifierManager.prophecyWithinRooms())
-                    val amount = effect.valueAt(level).toInt().coerceAtLeast(instance?.let { RunModifierManager.prophecyReward(it) } ?: 24)
+                    val amount = effect.valueAt(level, floor).toInt().coerceAtLeast(instance?.let { RunModifierManager.prophecyReward(it) } ?: 24)
                     RunModifierManager.addRoomProphecy(player, target, within, "shards", amount, boon.name)
                 }
                 BoonEffectType.ROUTE_CHAIN -> {
@@ -264,13 +265,13 @@ object BoonEffectHandler {
                             sequence,
                             boon.name,
                             rewardKind = "boon_echo",
-                            rewardAmount = effect.valueAt(level).toInt().coerceAtLeast(1)
+                            rewardAmount = effect.valueAt(level, floor).toInt().coerceAtLeast(1)
                         )
                     }
                 }
                 BoonEffectType.DELAYED_REWARD_SHARD -> {
                     val rooms = effect.threshold.toInt().coerceAtLeast(RunModifierManager.delayedRewardRooms())
-                    val amount = effect.valueAt(level).toInt().coerceAtLeast(1)
+                    val amount = effect.valueAt(level, floor).toInt().coerceAtLeast(1)
                     RunModifierManager.addDelayedReward(player, "shards", amount, rooms, boon.name)
                 }
                 else -> Unit
@@ -292,13 +293,13 @@ object BoonEffectHandler {
                     BoonEffectType.EXECUTE -> {
                         val threshold = effect.threshold / 100.0
                         if (healthRate <= threshold) {
-                            val bonus = effect.valueAt(instance.level) + effect.scaleAt(PlayerBoonData.getTagCount(player.uniqueId, effect.tag))
+                            val bonus = effectValue(player, instance, effect)
                             event.damage = event.damage * (1.0 + bonus / 100.0)
                         }
                     }
                     BoonEffectType.CHAIN_DAMAGE -> {
                         if (!skipChain && roll(effect) && isReady(player.uniqueId, instance.boon.id, effect)) {
-                            val damage = effect.valueAt(instance.level) + effect.scaleAt(PlayerBoonData.getTagCount(player.uniqueId, effect.tag))
+                            val damage = effectValue(player, instance, effect)
                             chainDamage(player, target, damage, effect.radius, effect.limit)
                         }
                     }
@@ -315,13 +316,13 @@ object BoonEffectHandler {
             for (effect in instance.boon.effects) {
                 when (effect.type) {
                     BoonEffectType.RETALIATE -> {
-                        val damage = effect.valueAt(instance.level) + effect.scaleAt(PlayerBoonData.getTagCount(player.uniqueId, effect.tag))
+                        val damage = effectValue(player, instance, effect)
                         attacker.damage(damage, player)
                     }
                     BoonEffectType.LOW_HEALTH_SHIELD -> {
                         val threshold = (effect.threshold / 100.0).coerceIn(0.0, 1.0)
                         if (healthRate <= threshold && roll(effect) && isReady(player.uniqueId, instance.boon.id, effect)) {
-                            val amount = effect.valueAt(instance.level) + effect.scaleAt(PlayerBoonData.getTagCount(player.uniqueId, effect.tag))
+                            val amount = effectValue(player, instance, effect)
                             applyAbsorption(player, amount, effect.durationSeconds)
                         }
                     }
@@ -397,7 +398,8 @@ object BoonEffectHandler {
     }
 
     private fun effectValue(player: Player, instance: BoonInstance, effect: BoonEffect): Double {
-        return effect.valueAt(instance.level) + effect.scaleAt(PlayerBoonData.getTagCount(player.uniqueId, effect.tag))
+        val floor = DungeonManager.getPlayerDungeon(player)?.config?.floorNumber ?: 1
+        return effect.valueAt(instance.level, floor) + effect.scaleAt(PlayerBoonData.getTagCount(player.uniqueId, effect.tag))
     }
 
     private fun parseRoomType(value: String): RoomType? {

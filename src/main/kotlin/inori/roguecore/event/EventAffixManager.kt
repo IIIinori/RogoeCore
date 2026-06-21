@@ -3,6 +3,7 @@ package inori.roguecore.event
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.room.RoomType
 import inori.roguecore.dungeon.route.NextFloorRoute
+import inori.roguecore.stats.PerfMonitor
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.function.info
@@ -23,6 +24,8 @@ object EventAffixManager {
     private val rules = mutableListOf<Triple<Int, Int, Int>>()
 
     fun getAll(): Collection<DungeonEventAffix> = affixes.values
+
+    fun get(id: String): DungeonEventAffix? = affixes[id]
 
     @Awake(LifeCycle.ENABLE)
     fun load() {
@@ -53,12 +56,12 @@ object EventAffixManager {
                 }
                 affixes[id] = DungeonEventAffix(
                     id = id,
-                    name = node.getString("name") ?: id,
+                    name = node.getString("name")?.takeUnless { it == id } ?: "未命名事件词缀",
                     description = node.getString("description") ?: "",
                     rooms = rooms,
                     minFloor = node.getInt("min-floor", 1).coerceAtLeast(1),
                     weight = node.getInt("weight", 10).coerceAtLeast(1),
-                    family = (node.getString("family") ?: rooms.first().name).uppercase(),
+                    family = (node.getString("family") ?: "GENERIC").uppercase(),
                     power = node.getInt("power", 1).coerceAtLeast(1)
                 )
             }
@@ -68,22 +71,24 @@ object EventAffixManager {
     }
 
     fun rollAffixes(floorNumber: Int, route: NextFloorRoute? = null): List<DungeonEventAffix> {
-        val count = getAffixCount(floorNumber)
-        if (count <= 0) {
-            return emptyList()
-        }
-        val pool = affixes.values.filter { floorNumber >= it.minFloor }.toMutableList()
-        if (pool.isEmpty()) {
-            return emptyList()
-        }
+        return PerfMonitor.measure("event-affix.roll") {
+            val count = getAffixCount(floorNumber)
+            if (count <= 0) {
+                return@measure emptyList()
+            }
+            val pool = affixes.values.filter { floorNumber >= it.minFloor }.toMutableList()
+            if (pool.isEmpty()) {
+                return@measure emptyList()
+            }
 
-        val result = mutableListOf<DungeonEventAffix>()
-        repeat(count.coerceAtMost(pool.size)) {
-            val picked = weightedRandom(pool, route) ?: return@repeat
-            result += picked
-            pool.remove(picked)
+            val result = mutableListOf<DungeonEventAffix>()
+            repeat(count.coerceAtMost(pool.size)) {
+                val picked = weightedRandom(pool, route) ?: return@repeat
+                result += picked
+                pool.remove(picked)
+            }
+            result
         }
-        return result
     }
 
     fun hasAffix(instance: DungeonInstance, id: String): Boolean {

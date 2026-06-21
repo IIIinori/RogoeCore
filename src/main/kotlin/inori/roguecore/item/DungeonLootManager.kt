@@ -1,11 +1,14 @@
 package inori.roguecore.item
 
 import inori.roguecore.affix.AffixManager
+import inori.roguecore.balance.BalanceConfigManager
 import inori.roguecore.data.PermanentMaterialManager
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.DungeonManager
+import inori.roguecore.display.ContentDisplayNameResolver
 import inori.roguecore.guide.GuideManager
 import inori.roguecore.relic.RelicEffectHandler
+import inori.roguecore.stats.PerfMonitor
 import inori.roguecore.summary.RunSummaryManager
 import inori.roguecore.unlock.UnlockManager
 import org.bukkit.Material
@@ -16,7 +19,9 @@ import org.bukkit.event.inventory.InventoryDragEvent
 import org.bukkit.event.player.PlayerItemHeldEvent
 import org.bukkit.event.player.PlayerSwapHandItemsEvent
 import org.bukkit.inventory.EquipmentSlot
+import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.persistence.PersistentDataType
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
@@ -78,6 +83,8 @@ object DungeonLootManager {
     private var eliteCount = 1
     private var bossCount = 1
     private var apPercentageMark = "(%)"
+    private var apPercentageMarkDisabledAttributes = emptySet<String>()
+    private var apPercentageMarkDisabledKeywords = emptyList<String>()
     private var protectionEnabled = true
     private var protectionEmptySlotWeight = 2.1
     private var protectionDuplicatePenalty = 0.72
@@ -191,6 +198,13 @@ object DungeonLootManager {
         eliteCount = config.getInt("rules.elite-count", 1).coerceAtLeast(1)
         bossCount = config.getInt("rules.boss-count", 1).coerceAtLeast(1)
         apPercentageMark = config.getString("rules.ap-percentage-mark") ?: "(%)"
+        apPercentageMarkDisabledAttributes = config.getStringList("rules.ap-percentage-mark-disabled-attributes")
+            .map { it.trim().lowercase() }
+            .filter { it.isNotEmpty() }
+            .toSet()
+        apPercentageMarkDisabledKeywords = config.getStringList("rules.ap-percentage-mark-disabled-keywords")
+            .map { it.trim().lowercase() }
+            .filter { it.isNotEmpty() }
         loadDropProtectionRules()
         permanentGearBindOnConvert = config.getBoolean("permanent-gear.bind-on-convert", true)
         loadIdentificationRules()
@@ -259,7 +273,7 @@ object DungeonLootManager {
             val node = qualitySection.getConfigurationSection(id) ?: continue
             forgeBookQualities[id.lowercase()] = ForgeBookQuality(
                 id = id.lowercase(),
-                name = node.getString("name") ?: id,
+                name = node.getString("name")?.takeUnless { it == id } ?: "未命名锻造书品质",
                 color = node.getString("color") ?: "§f",
                 rarityId = node.getString("rarity") ?: "common",
                 timeMillis = node.getInt("time-seconds", 60).coerceAtLeast(1) * 1000L,
@@ -290,7 +304,7 @@ object DungeonLootManager {
             val node = section.getConfigurationSection(id) ?: continue
             val rarity = DungeonLootRarity(
                 id = id,
-                displayName = node.getString("name") ?: id,
+                displayName = node.getString("name")?.takeUnless { it == id } ?: "未命名稀有度",
                 color = node.getString("color") ?: "§f",
                 weight = node.getInt("weight", 10).coerceAtLeast(1),
                 multiplier = node.getDouble("multiplier", 1.0).coerceAtLeast(0.0),
@@ -315,7 +329,7 @@ object DungeonLootManager {
 
             affixes += DungeonLootAffix(
                 id = id,
-                name = node.getString("name") ?: id,
+                name = node.getString("name")?.takeUnless { it == id } ?: "未命名词条",
                 type = type,
                 weight = node.getInt("weight", 10).coerceAtLeast(1),
                 minFloor = range.first,
@@ -355,7 +369,7 @@ object DungeonLootManager {
 
             setBonuses += DungeonLootSetBonus(
                 id = id,
-                name = node.getString("name") ?: id,
+                name = node.getString("name")?.takeUnless { it == id } ?: "未命名套装",
                 themes = parseLowercaseSet(node.getStringList("themes")),
                 tags = parseLowercaseSet(node.getStringList("tags")),
                 tiers = tiers
@@ -373,7 +387,7 @@ object DungeonLootManager {
         for (id in section.getKeys(false)) {
             val node = section.getConfigurationSection(id) ?: continue
             try {
-                val name = node.getString("name") ?: id
+                val name = node.getString("name")?.takeUnless { it == id } ?: "未命名装备"
                 val material = XMaterial.matchXMaterial(node.getString("material") ?: "STONE_SWORD")
                     .orElse(XMaterial.STONE_SWORD)
                 val sources = node.getStringList("sources").mapNotNull { parseSource(it) }.toSet()
@@ -425,50 +439,52 @@ object DungeonLootManager {
     }
 
     private fun grant(player: Player, instance: DungeonInstance, source: DungeonLootSource, count: Int): Boolean {
-        val pool = definitions.filter { it.matches(source, instance.config.floorNumber) }
-        if (pool.isEmpty()) {
-            return false
-        }
+        return PerfMonitor.measure("loot.grant") {
+            val pool = definitions.filter { it.matches(source, instance.config.floorNumber) }
+            if (pool.isEmpty()) {
+                return@measure false
+            }
 
-        var granted = false
-        repeat(count.coerceAtLeast(1)) {
-            val definition = weightedRandom(pool) { candidate ->
-                effectiveLootWeight(player, candidate)
-            } ?: return@repeat
-            val item = if (shouldDropUnidentified(source)) {
-                buildUnidentifiedLoot(definition, source, instance.config.floorNumber)
-            } else {
-                buildRolledLoot(definition, source, source.displayName(), instance.config.floorNumber, 0, 0, 0, 0.0)?.item
-            } ?: return@repeat
-            give(player, item)
-            if (isUnidentifiedLoot(item)) {
-                RunSummaryManager.onLootGained(player.uniqueId, "unidentified_gear")
-                GuideManager.showOnce(player, GuideManager.UNIDENTIFIED_LOOT, listOf(
-                    "§e你获得了未鉴定装备。",
-                    "§7在 §6/rogue gear storage identify §7中鉴定后会变成绑定你的永久装备。"
-                ))
-            } else {
-                RunSummaryManager.onLootGained(player.uniqueId, "temporary_gear")
-            }
-            GuideManager.showOnce(player, GuideManager.SALVAGE, listOf(
-                "§e不需要的装备、饰品和书类可以回收。",
-                "§7打开 §6/rogue gear storage salvage §7可分解低价值物品换材料。"
-            ))
-            if (shouldDropForgeBook(player, source)) {
-                val quality = rollForgeBookQuality(player)
-                val book = quality?.let { buildForgeBook(definition, source, instance.config.floorNumber, it) }
-                if (book != null) {
-                    give(player, book)
-                    RunSummaryManager.onLootGained(player.uniqueId, "forge_book")
-                    GuideManager.showOnce(player, GuideManager.FORGE_BOOK, listOf(
-                        "§e你获得了锻造书。",
-                        "§7在 §6/rogue gear storage craft §7中消耗材料和时间打造永久装备。"
+            var granted = false
+            repeat(count.coerceAtLeast(1)) {
+                val definition = weightedRandom(pool) { candidate ->
+                    effectiveLootWeight(player, candidate)
+                } ?: return@repeat
+                val item = if (shouldDropUnidentified(source)) {
+                    buildUnidentifiedLoot(definition, source, instance.config.floorNumber)
+                } else {
+                    buildRolledLoot(definition, source, source.displayName(), instance.config.floorNumber, 0, 0, 0, 0.0)?.item
+                } ?: return@repeat
+                give(player, item)
+                if (isUnidentifiedLoot(item)) {
+                    RunSummaryManager.onLootGained(player.uniqueId, "unidentified_gear")
+                    GuideManager.showOnce(player, GuideManager.UNIDENTIFIED_LOOT, listOf(
+                        "§e你获得了未鉴定装备。",
+                        "§7在 §6/rogue gear storage identify §7中鉴定后会变成绑定你的永久装备。"
                     ))
+                } else {
+                    RunSummaryManager.onLootGained(player.uniqueId, "temporary_gear")
                 }
+                GuideManager.showOnce(player, GuideManager.SALVAGE, listOf(
+                    "§e不需要的装备、饰品和书类可以回收。",
+                    "§7打开 §6/rogue gear storage salvage §7可分解低价值物品换材料。"
+                ))
+                if (shouldDropForgeBook(player, source)) {
+                    val quality = rollForgeBookQuality(player)
+                    val book = quality?.let { buildForgeBook(definition, source, instance.config.floorNumber, it) }
+                    if (book != null) {
+                        give(player, book)
+                        RunSummaryManager.onLootGained(player.uniqueId, "forge_book")
+                        GuideManager.showOnce(player, GuideManager.FORGE_BOOK, listOf(
+                            "§e你获得了锻造书。",
+                            "§7在 §6/rogue gear storage craft §7中消耗材料和时间打造永久装备。"
+                        ))
+                    }
+                }
+                granted = true
             }
-            granted = true
+            granted
         }
-        return granted
     }
 
     private fun shouldDropUnidentified(source: DungeonLootSource): Boolean {
@@ -508,7 +524,7 @@ object DungeonLootManager {
     ): ItemStack? {
         val item = XMaterial.ENCHANTED_BOOK.parseItem() ?: XMaterial.BOOK.parseItem() ?: return null
         val meta = item.itemMeta ?: return item
-        meta.setDisplayName("${quality.color}${quality.name}锻造书: §f${definition.name}")
+        meta.setDisplayName("${quality.color}${quality.displayName()}锻造书: §f${definition.name}")
         meta.persistentDataContainer.set(forgeBookKey, PersistentDataType.BYTE, 1)
         meta.persistentDataContainer.set(forgeBookQualityKey, PersistentDataType.STRING, quality.id)
         meta.persistentDataContainer.set(forgeBookLootIdKey, PersistentDataType.STRING, definition.id)
@@ -517,7 +533,7 @@ object DungeonLootManager {
         meta.lore = listOf(
             "",
             "§7记载着一件装备的锻造方法。",
-            "§7品质: ${quality.color}${quality.name}",
+            "§7品质: ${quality.color}${quality.displayName()}",
             "§7预计耗时: §f${ForgeBookTaskManager.formatDuration(quality.timeMillis)}",
             "§7灵魂碎片: §6${quality.soulShards}",
             "§7材料需求: ${PermanentMaterialManager.formatCost(quality.materials)}",
@@ -526,12 +542,12 @@ object DungeonLootManager {
             "",
             "§e使用 §6/rogue gear storage craft §e开始锻造"
         )
-        item.itemMeta = meta
+        applyLootMeta(item, meta)
         return item
     }
 
     private fun buildUnidentifiedLoot(definition: DungeonLootDefinition, source: DungeonLootSource, floor: Int): ItemStack? {
-        val item = XMaterial.MAP.parseItem() ?: XMaterial.PAPER.parseItem() ?: return null
+        val item = XMaterial.PAPER.parseItem() ?: return null
         val meta = item.itemMeta ?: return item
         val sourceName = source.displayName()
         meta.setDisplayName("§e未鉴定的${definition.name}")
@@ -549,7 +565,7 @@ object DungeonLootManager {
             "§7层数: §f$floor",
             "§e使用 §6/rogue gear storage identify §e进行鉴定"
         )
-        item.itemMeta = meta
+        applyLootMeta(item, meta)
         return item
     }
 
@@ -564,6 +580,7 @@ object DungeonLootManager {
         attributeBonusPerLevel: Double,
         forcedRarity: DungeonLootRarity? = null,
         forcedAffixes: List<DungeonLootAffix>? = null,
+        fixedRoll: Boolean = false,
         lockedAffixId: String? = null
     ): RolledLoot? {
         val item = definition.material.parseItem() ?: return null
@@ -611,7 +628,7 @@ object DungeonLootManager {
             lore += ""
             lore += "§7属性:"
             for (attribute in allAttributes) {
-                val value = rollAttributeValue(attribute, multiplier)
+                val value = rollAttributeValue(attribute, multiplier, fixedRoll)
                 lore += renderAttributeLine(attribute.name, value, attribute.percentage)
             }
         }
@@ -630,7 +647,7 @@ object DungeonLootManager {
 
         val score = score(definition, rarity, selectedAffixes, forgeLevel, attributeBonusPerLevel)
         meta.persistentDataContainer.set(scoreKey, PersistentDataType.DOUBLE, score)
-        item.itemMeta = meta
+        applyLootMeta(item, meta)
 
         return RolledLoot(DungeonBoundItem.mark(item) ?: item, rarity, selectedAffixes, score)
     }
@@ -644,7 +661,7 @@ object DungeonLootManager {
         refreshEquippedSetBonuses(player)
         val leftovers = player.inventory.addItem(item)
         if (leftovers.isEmpty()) {
-            player.sendMessage("§6获得临时装备: §f${item.itemMeta?.displayName ?: item.type.name}")
+            player.sendMessage("§6获得临时装备: §f${item.itemMeta?.displayName ?: materialTypeName(item.type)}")
             return
         }
 
@@ -766,7 +783,7 @@ object DungeonLootManager {
             nextHeat,
             heatCap,
             attributeBonusPerLevel,
-            currentRarity,
+            forcedRarity = currentRarity,
             lockedAffixId = lockedAffixId
         )
             ?: return LootActionResult(false, "§c重铸失败，请检查装备配置。")
@@ -813,7 +830,7 @@ object DungeonLootManager {
             current.forgeHeat,
             heatCap,
             attributeBonusPerLevel,
-            currentRarity,
+            forcedRarity = currentRarity,
             lockedAffixId = lockedAffixId
         )
             ?: return LootActionResult(false, "§c无热重铸失败，请检查装备配置。")
@@ -856,9 +873,9 @@ object DungeonLootManager {
             nextHeat,
             heatCap,
             attributeBonusPerLevel,
-            currentRarity,
-            currentAffixes,
-            lockedAffixId
+            forcedRarity = currentRarity,
+            forcedAffixes = currentAffixes,
+            lockedAffixId = lockedAffixId
         ) ?: return LootActionResult(false, "§c升阶失败，请检查装备配置。")
 
         if (currentItem != null && currentItem.amount > 1) {
@@ -916,7 +933,7 @@ object DungeonLootManager {
             nextHeat,
             heatCap,
             attributeBonusPerLevel,
-            currentRarity,
+            forcedRarity = currentRarity,
             lockedAffixId = lockedAffixId
         )
             ?: return LootActionResult(false, "§c淬火失败，请检查装备配置。")
@@ -1002,7 +1019,7 @@ object DungeonLootManager {
         val newHeat = (currentHeat - heatReduce.coerceAtLeast(1)).coerceAtLeast(0)
         val meta = item.itemMeta ?: return LootActionResult(false, "§c退火失败，请稍后再试。")
         meta.persistentDataContainer.set(forgeHeatKey, PersistentDataType.INTEGER, newHeat)
-        item.itemMeta = meta
+        applyLootMeta(item, meta)
         refreshSingleItemLore(item, heatCap)
         refreshEquippedSetBonuses(player)
         return LootActionResult(
@@ -1177,7 +1194,7 @@ object DungeonLootManager {
         } else {
             meta.persistentDataContainer.set(lockedAffixKey, PersistentDataType.STRING, nextLocked)
         }
-        item.itemMeta = meta
+        applyLootMeta(item, meta)
         refreshSingleItemLore(item)
         refreshEquippedSetBonuses(player)
 
@@ -1227,7 +1244,11 @@ object DungeonLootManager {
 
     fun getDefinitionIds(): List<String> = definitions.map { it.id }.sorted()
 
+    fun getDefinitionName(id: String): String? = definitions.firstOrNull { it.id.equals(id, ignoreCase = true) }?.name
+
     fun getForgeBookQualityIds(): List<String> = forgeBookQualities.keys.sorted()
+
+    fun getForgeBookQualityName(id: String): String? = forgeBookQualities[id.lowercase()]?.name
 
     fun buildAdminGiveItem(
         player: Player,
@@ -1238,12 +1259,32 @@ object DungeonLootManager {
         extra: String
     ): AdminGiveItemResult {
         val definition = definitions.firstOrNull { it.id.equals(lootId, ignoreCase = true) }
-            ?: return AdminGiveItemResult(false, null, "§c装备模板不存在: §f$lootId")
+            ?: return AdminGiveItemResult(false, null, "§c装备模板不存在: §f${ContentDisplayNameResolver.safeText(lootId, "未知装备")}")
         return when (kind.lowercase()) {
             "gear" -> {
-                val rolled = buildRolledLoot(definition, source, "管理员给予", floor.coerceAtLeast(1), 0, 0, 0, 0.0)
+                val gearOptions = parseAdminGearOptions(extra)
+                val rarity = gearOptions.rarityId?.let { id ->
+                    rarities.firstOrNull { it.id.equals(id, ignoreCase = true) }
+                }
+                if (gearOptions.rarityId != null && rarity == null) {
+                    return AdminGiveItemResult(false, null, "§c装备稀有度不存在: §f${ContentDisplayNameResolver.safeText(gearOptions.rarityId, "未知稀有度")}")
+                }
+                val forcedAffixes = if (gearOptions.noAffix) emptyList<DungeonLootAffix>() else null
+                val rolled = buildRolledLoot(
+                    definition,
+                    source,
+                    "管理员给予",
+                    floor.coerceAtLeast(1),
+                    0,
+                    0,
+                    0,
+                    0.0,
+                    forcedRarity = rarity,
+                    forcedAffixes = forcedAffixes,
+                    fixedRoll = gearOptions.fixedRoll
+                )
                     ?: return AdminGiveItemResult(false, null, "§c装备生成失败，请检查配置。")
-                if (extra.equals("permanent", ignoreCase = true)) {
+                if (gearOptions.permanent) {
                     makePermanent(rolled.item, player)
                 }
                 AdminGiveItemResult(true, rolled.item, "§a已生成装备: §f${definition.name} §7(${if (isPermanentLoot(rolled.item)) "永久" else "临时"})")
@@ -1258,10 +1299,64 @@ object DungeonLootManager {
                     ?: return AdminGiveItemResult(false, null, "§c没有可用锻造书品质。")
                 val item = buildForgeBook(definition, source, floor.coerceAtLeast(1), quality)
                     ?: return AdminGiveItemResult(false, null, "§c锻造书生成失败。")
-                AdminGiveItemResult(true, DungeonBoundItem.mark(item) ?: item, "§a已生成锻造书: §f${definition.name} §7(${quality.name})")
+                AdminGiveItemResult(true, DungeonBoundItem.mark(item) ?: item, "§a已生成锻造书: §f${definition.name} §7(${quality.displayName()})")
             }
             else -> AdminGiveItemResult(false, null, "§c不支持的装备测试物品类型: §f$kind")
         }
+    }
+
+    private data class AdminGearOptions(
+        val permanent: Boolean,
+        val noAffix: Boolean,
+        val rarityId: String?,
+        val fixedRoll: Boolean
+    )
+
+    private fun parseAdminGearOptions(extra: String): AdminGearOptions {
+        val lower = extra.trim().lowercase()
+        val tokens = lower
+            .split(",", "|", ";", " ", ":", "/")
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
+        var permanent = false
+        var noAffix = false
+        var rarityId: String? = null
+        var fixedRoll = false
+
+        if ("temporary" in tokens || lower.contains("temporary")) {
+            permanent = false
+        }
+        if ("permanent" in tokens || lower.contains("permanent")) {
+            permanent = true
+        }
+        if (lower.contains("no-affix") || lower.contains("no_affix") || lower.contains("noaffix")) {
+            noAffix = true
+        }
+        if (lower.contains("fixed-roll") || lower.contains("fixed_roll") || lower.contains("fixedroll")) {
+            fixedRoll = true
+        }
+
+        rarityId = Regex("""rarity\s*=\s*([a-z_]+)""")
+            .find(lower)
+            ?.groupValues
+            ?.getOrNull(1)
+            ?.trim()
+            ?.lowercase()
+            ?.takeIf { it.isNotEmpty() }
+
+        if (rarityId == null) {
+            val candidates = listOf("common", "magic", "rare", "epic", "legendary")
+            rarityId = candidates.firstOrNull { candidate ->
+                tokens.contains(candidate) || lower.contains("_$candidate") || lower.contains("${candidate}_") || lower == candidate
+            }
+        }
+
+        return AdminGearOptions(
+            permanent = permanent,
+            noAffix = noAffix,
+            rarityId = rarityId,
+            fixedRoll = fixedRoll
+        )
     }
 
     fun buildForgeBookResultForPlayer(
@@ -1405,7 +1500,7 @@ object DungeonLootManager {
         } else {
             meta.persistentDataContainer.remove(favoriteKey)
         }
-        item.itemMeta = meta
+        applyLootMeta(item, meta)
         refreshPermanentLore(item, getPermanentOwnerName(item))
         return true
     }
@@ -1452,7 +1547,7 @@ object DungeonLootManager {
         val meta = item.itemMeta ?: return false
         meta.persistentDataContainer.set(ownerUuidKey, PersistentDataType.STRING, player.uniqueId.toString())
         meta.persistentDataContainer.set(ownerNameKey, PersistentDataType.STRING, player.name)
-        item.itemMeta = meta
+        applyLootMeta(item, meta)
         refreshPermanentLore(item, player.name)
         return true
     }
@@ -1518,9 +1613,9 @@ object DungeonLootManager {
             0,
             0,
             attributeBonusPerLevel,
-            currentRarity,
-            currentAffixes,
-            lockedAffixId
+            forcedRarity = currentRarity,
+            forcedAffixes = currentAffixes,
+            lockedAffixId = lockedAffixId
         ) ?: return LootActionResult(false, "§c局外升阶失败，请检查装备配置。")
         makePermanent(upgraded.item, player)
         setFavorite(upgraded.item, favorite)
@@ -1553,7 +1648,7 @@ object DungeonLootManager {
             0,
             0,
             attributeBonusPerLevel,
-            currentRarity,
+            forcedRarity = currentRarity,
             lockedAffixId = lockedAffixId
         ) ?: return LootActionResult(false, "§c局外重铸失败，请检查装备配置。")
         makePermanent(rolled.item, player)
@@ -1573,7 +1668,7 @@ object DungeonLootManager {
         }
         val meta = item.itemMeta ?: return LootActionResult(false, "§c清锁失败，请稍后再试。")
         meta.persistentDataContainer.remove(lockedAffixKey)
-        item.itemMeta = meta
+        applyLootMeta(item, meta)
         refreshSingleItemLore(item)
         refreshEquippedSetBonuses(player)
         return LootActionResult(true, "§7已清除 §f${definition.name} §7的锁定词条。")
@@ -1683,7 +1778,7 @@ object DungeonLootManager {
         }
         meta.persistentDataContainer.set(permanentLootKey, PersistentDataType.BYTE, 1)
         meta.persistentDataContainer.remove(forgeHeatKey)
-        item.itemMeta = meta
+        applyLootMeta(item, meta)
         refreshPermanentLore(item, owner?.name ?: getPermanentOwnerName(item))
         DungeonBoundItem.unmark(item)
     }
@@ -1712,7 +1807,7 @@ object DungeonLootManager {
         }
         meta.persistentDataContainer.set(baseLoreKey, PersistentDataType.STRING, permanentLore.joinToString("\n"))
         meta.lore = permanentLore
-        item.itemMeta = meta
+        applyLootMeta(item, meta)
     }
 
     private fun getEquippedDefinitions(player: Player): List<EquippedDefinitionView> {
@@ -1777,7 +1872,7 @@ object DungeonLootManager {
             }
         }
         meta.lore = finalLore
-        view.item.itemMeta = meta
+        applyLootMeta(view.item, meta)
     }
 
     private fun refreshSingleItemLore(item: ItemStack, explicitHeatCap: Int? = null) {
@@ -1786,7 +1881,7 @@ object DungeonLootManager {
         val affixes = getAffixes(item)
         if (affixes.isEmpty()) {
             meta.persistentDataContainer.remove(baseLoreKey)
-            item.itemMeta = meta
+            applyLootMeta(item, meta)
             return
         }
         val lore = getBaseLore(item).toMutableList()
@@ -1820,7 +1915,7 @@ object DungeonLootManager {
         }
         meta.persistentDataContainer.set(baseLoreKey, PersistentDataType.STRING, lore.joinToString("\n"))
         meta.lore = lore
-        item.itemMeta = meta
+        applyLootMeta(item, meta)
     }
 
     private fun getBaseLore(item: ItemStack): List<String> {
@@ -1829,6 +1924,16 @@ object DungeonLootManager {
             ?.split("\n")
             ?: meta.lore
             ?: emptyList()
+    }
+
+    private fun applyLootMeta(item: ItemStack, meta: ItemMeta) {
+        meta.isUnbreakable = true
+        meta.hideAll()
+        item.itemMeta = meta
+    }
+
+    private fun ItemMeta.hideAll() {
+        addItemFlags(*ItemFlag.values())
     }
 
     private fun getHeatCapFromLore(lore: List<String>): Int {
@@ -1892,19 +1997,50 @@ object DungeonLootManager {
         }
     }
 
-    private fun rollAttributeValue(attribute: DungeonLootAttributeDefinition, multiplier: Double): Double {
-        val base = if (attribute.max > attribute.min) {
+    private fun rollAttributeValue(attribute: DungeonLootAttributeDefinition, multiplier: Double, fixedRoll: Boolean = false): Double {
+        val base = if (fixedRoll) {
+            if (attribute.max > attribute.min) (attribute.min + attribute.max) / 2.0 else attribute.min
+        } else if (attribute.max > attribute.min) {
             Random.nextDouble(attribute.min, attribute.max)
         } else {
             attribute.min
         }
-        return base * multiplier
+        return capGeneratedAttribute("gear", attribute.name, base * multiplier)
+    }
+
+    private fun capGeneratedAttribute(scope: String, name: String, value: Double): Double {
+        val cap = BalanceConfigManager.getDouble("attribute-caps.$scope.$name", Double.NaN)
+        return if (cap.isNaN() || cap <= 0.0) value else value.coerceAtMost(cap)
     }
 
     private fun renderAttributeLine(name: String, value: Double, percentage: Boolean): String {
         val formatted = formatNumber(value)
-        val mark = if (percentage) " $apPercentageMark" else ""
+        val mark = getPercentageMarkSuffix(name, percentage)
         return "§7$name: §a+$formatted$mark"
+    }
+
+    fun getPercentageMarkSuffix(name: String, percentage: Boolean): String {
+        if (!percentage) {
+            return ""
+        }
+        return if (shouldAppendPercentageMark(name)) " $apPercentageMark" else ""
+    }
+
+    private fun shouldAppendPercentageMark(name: String): Boolean {
+        if (apPercentageMark.isBlank()) {
+            return false
+        }
+        val normalized = name.trim().lowercase()
+        if (normalized.isEmpty()) {
+            return true
+        }
+        if (normalized in apPercentageMarkDisabledAttributes) {
+            return false
+        }
+        if (apPercentageMarkDisabledKeywords.any { normalized.contains(it) }) {
+            return false
+        }
+        return true
     }
 
     private fun formatNumber(value: Double): String {
@@ -2081,8 +2217,8 @@ object DungeonLootManager {
         val result = mutableListOf<DungeonLootAttributeDefinition>()
         for (key in section.getKeys(false)) {
             val raw = section.get(key)
-            val percentage = key.endsWith("%")
-            val name = key.removeSuffix("%")
+            val percentage = key.endsWith("%") || key.endsWith("％")
+            val name = key.removeSuffix("%").removeSuffix("％")
             val values = when (raw) {
                 is List<*> -> {
                     val min = raw.getOrNull(0)?.toString()?.toDoubleOrNull() ?: 0.0
@@ -2177,6 +2313,18 @@ object DungeonLootManager {
             DungeonLootSource.BOSS -> "Boss 战利品"
             DungeonLootSource.HIDDEN -> "隐藏宝藏"
         }
+    }
+
+    private fun ForgeBookQuality.displayName(): String {
+        return if (name.equals(id, ignoreCase = true)) {
+            ContentDisplayNameResolver.safeText(id, "锻造书")
+        } else {
+            name
+        }
+    }
+
+    private fun materialTypeName(type: Material): String {
+        return ContentDisplayNameResolver.materialTypeName(type.name, "物品")
     }
 
     private fun slotDisplayName(slot: EquipmentSlot?): String {

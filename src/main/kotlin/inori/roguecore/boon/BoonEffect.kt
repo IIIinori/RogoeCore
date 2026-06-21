@@ -1,5 +1,7 @@
 package inori.roguecore.boon
 
+import inori.roguecore.display.ContentDisplayNameResolver
+
 /**
  * Boon 的触发型效果定义。
  */
@@ -17,7 +19,12 @@ data class BoonEffect(
 ) {
 
     fun valueAt(level: Int): Double {
-        return valuePerLevel * level
+        return valueAt(level, floorNumber = 1)
+    }
+
+    fun valueAt(level: Int, floorNumber: Int): Double {
+        val floorMultiplier = BoonScaling.floorMultiplier(floorNumber)
+        return valuePerLevel * level * floorMultiplier
     }
 
     fun scaleAt(tagCount: Int): Double {
@@ -29,10 +36,15 @@ data class BoonEffect(
     }
 
     fun describe(level: Int): String {
-        val value = valueAt(level)
+        return describe(level, floorNumber = 1)
+    }
+
+    fun describe(level: Int, floorNumber: Int): String {
+        val value = valueAt(level, floorNumber)
         val scale = if (tag.isBlank()) 0.0 else perTag
+        val safeTag = displayName(tag, "目标")
         val suffix = if (tag.isNotBlank() && scale > 0.0) {
-            "§8(每个${tag}再 +${format(scale)})"
+            "§8(每个${safeTag}再 +${format(scale)})"
         } else {
             ""
         }
@@ -91,9 +103,9 @@ data class BoonEffect(
             BoonEffectType.NEXT_BOON_MUTATION ->
                 "§5变质: §7获得后使下一次神恩选择额外出现 §d${format(value.coerceAtLeast(1.0))} §7个候选"
             BoonEffectType.ROOM_PROPHECY ->
-                "§d预言: §7获得后预言 §f${tag.ifBlank { "随机" }} §7房，期限 §b${format(threshold.coerceAtLeast(1.0))} §7房"
+                "§d预言: §7获得后预言 §f${safeTag.ifBlank { "随机" }} §7房，期限 §b${format(threshold.coerceAtLeast(1.0))} §7房"
             BoonEffectType.ROUTE_CHAIN ->
-                "§a订单: §7获得后要求按 §f${tag.ifBlank { "指定路线" }.replace(">", " > ")} §7推进，完成后触发奖励"
+                "§a订单: §7获得后要求按 §f${routeChainText(safeTag)} §7推进，完成后触发奖励"
             BoonEffectType.SOUL_DEBT_RELIEF ->
                 "§a赎债: §7清房时削减 §e${format(value)} §7灵魂债务$suffix"
             BoonEffectType.DELAYED_REWARD_SHARD ->
@@ -107,5 +119,16 @@ data class BoonEffect(
         } else {
             String.format("%.1f", value)
         }
+    }
+
+    private fun routeChainText(raw: String): String {
+        val route = raw.ifBlank { "指定路线" }
+        return route.split(">")
+            .map { part -> displayName(part, "房间") }
+            .joinToString(" > ")
+    }
+
+    private fun displayName(raw: String, fallback: String): String {
+        return ContentDisplayNameResolver.safeText(raw, fallback)
     }
 }

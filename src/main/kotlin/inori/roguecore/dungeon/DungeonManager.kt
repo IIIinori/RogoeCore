@@ -4,6 +4,7 @@ import inori.roguecore.accessory.PlayerAccessoryData
 import inori.roguecore.affix.AffixManager
 import inori.roguecore.affix.AffixType
 import inori.roguecore.affix.DungeonAffix
+import inori.roguecore.balance.BalanceConfigManager
 import inori.roguecore.boon.BoonEffectHandler
 import inori.roguecore.boon.PlayerBoonData
 import inori.roguecore.combat.RoomCombatManager
@@ -24,6 +25,7 @@ import inori.roguecore.summary.RunEndReason
 import inori.roguecore.summary.RunSummaryManager
 import inori.roguecore.relic.PlayerRelicData
 import inori.roguecore.relic.RelicEffectHandler
+import inori.roguecore.stats.PerfMonitor
 import inori.roguecore.ui.DungeonGuiGuard
 import inori.roguecore.ui.DungeonHudManager
 import inori.roguecore.ui.DungeonSceneCueManager
@@ -36,6 +38,8 @@ import inori.roguecore.world.VoidWorldManager
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
 import taboolib.common.platform.function.info
 import taboolib.common.platform.function.warning
 import java.util.UUID
@@ -46,6 +50,8 @@ import java.util.concurrent.ConcurrentHashMap
  * 每个副本 = 一个独立世界，完全隔离
  */
 object DungeonManager {
+
+    private const val NIGHT_VISION_DURATION_TICKS = 20 * 60 * 60 * 8
 
     /** 所有活跃的副本实例 */
     private val instances = ConcurrentHashMap<String, DungeonInstance>()
@@ -58,35 +64,89 @@ object DungeonManager {
 
     /** 离线期间副本结束后，等待玩家下次上线时清理的 run 临时状态 */
     private val pendingOfflineCleanup = ConcurrentHashMap.newKeySet<UUID>()
+    private val dungeonNightVisionPlayers = ConcurrentHashMap.newKeySet<UUID>()
 
     /**
      * 创建新副本实例（独立世界）
      */
     fun createDungeon(config: DungeonConfig = DungeonConfig()): DungeonInstance? {
-        // 生成实例 ID
-        val instanceId = UUID.randomUUID().toString().substring(0, 8)
+        return PerfMonitor.measure("dungeon.create.sync") {
+            // 生成实例 ID
+            val instanceId = UUID.randomUUID().toString().substring(0, 8)
 
-        // 为这个副本创建独立世界
-        val world = VoidWorldManager.createInstanceWorld(instanceId)
-        if (world == null) {
-            warning("[RogueCore] 无法为副本 $instanceId 创建世界")
-            return null
+            // 为这个副本创建独立世界
+            val world = VoidWorldManager.createInstanceWorld(instanceId)
+            if (world == null) {
+                warning("[RogueCore] 无法为副本 $instanceId 创建世界")
+                return@measure null
+            }
+
+            // 在世界原点生成地牢
+            val origin = Location(world, 0.0, config.floorLevel.toDouble(), 0.0)
+            val affixes = AffixManager.rollAffixes(config.floorNumber, config.route)
+            val eventAffixes = EventAffixManager.rollAffixes(config.floorNumber, config.route)
+            val adjustedConfig = applyGenerationAffixes(config, affixes)
+            val generator = DungeonGenerator(world, origin, adjustedConfig)
+            val instance = generator.generate(instanceId, affixes, eventAffixes)
+
+            instances[instance.id] = instance
+            RunPersistenceManager.markDirty()
+            val affixNames = if (affixes.isNotEmpty()) affixes.joinToString(", ") { it.name } else "无"
+            val eventAffixNames = if (eventAffixes.isNotEmpty()) eventAffixes.joinToString(", ") { it.name } else "无"
+            info("[RogueCore] 副本 ${instance.id} 已创建 (${instance.rooms.size}个房间, 战斗词缀: $affixNames, 事件词缀: $eventAffixNames)")
+            instance
         }
+    }
 
-        // 在世界原点生成地牢
-        val origin = Location(world, 0.0, config.floorLevel.toDouble(), 0.0)
-        val affixes = AffixManager.rollAffixes(config.floorNumber, config.route)
-        val eventAffixes = EventAffixManager.rollAffixes(config.floorNumber, config.route)
-        val adjustedConfig = applyGenerationAffixes(config, affixes)
-        val generator = DungeonGenerator(world, origin, adjustedConfig)
-        val instance = generator.generate(instanceId, affixes, eventAffixes)
-
-        instances[instance.id] = instance
-        RunPersistenceManager.markDirty()
-        val affixNames = if (affixes.isNotEmpty()) affixes.joinToString(", ") { it.name } else "无"
-        val eventAffixNames = if (eventAffixes.isNotEmpty()) eventAffixes.joinToString(", ") { it.name } else "无"
-        info("[RogueCore] 副本 ${instance.id} 已创建 (${instance.rooms.size}个房间, 战斗词缀: $affixNames, 事件词缀: $eventAffixNames)")
-        return instance
+    fun createDungeonAsync(
+        config: DungeonConfig = DungeonConfig(),
+        progressPlayers: List<Player> = emptyList(),
+        onComplete: (DungeonInstance?) -> Unit
+    ) {
+        PerfMonitor.measure("dungeon.create.async.start") {
+            val instanceId = UUID.randomUUID().toString().substring(0, 8)
+            val world = VoidWorldManager.createInstanceWorld(instanceId)
+            if (world == null) {
+                warning("[RogueCore] 无法为副本 $instanceId 创建世界")
+                onComplete(null)
+                return@measure
+            }
+            val origin = Location(world, 0.0, config.floorLevel.toDouble(), 0.0)
+            val affixes = AffixManager.rollAffixes(config.floorNumber, config.route)
+            val eventAffixes = EventAffixManager.rollAffixes(config.floorNumber, config.route)
+            val adjustedConfig = applyGenerationAffixes(config, affixes)
+            val generator = DungeonGenerator(world, origin, adjustedConfig)
+            val blocksPerTick = BalanceConfigManager.getInt("generation.blocks-per-tick", 1200).coerceAtLeast(100)
+            val step = BalanceConfigManager.getInt("generation.progress-step-percent", 20).coerceAtLeast(5)
+            var lastProgressStep = -1
+            generator.generateChunked(
+                instanceId = instanceId,
+                affixes = affixes,
+                eventAffixes = eventAffixes,
+                blocksPerTick = blocksPerTick,
+                onProgress = { progress ->
+                    val current = ((progress * 100).toInt() / step) * step
+                    if (current != lastProgressStep && current in 0..100) {
+                        lastProgressStep = current
+                        progressPlayers.forEach { it.sendMessage("§e正在生成副本 §f$current%") }
+                    }
+                },
+                onComplete = { instance ->
+                    PerfMonitor.measure("dungeon.create.async.complete") {
+                        instances[instance.id] = instance
+                        RunPersistenceManager.markDirty()
+                        val affixNames = if (affixes.isNotEmpty()) affixes.joinToString(", ") { it.name } else "无"
+                        val eventAffixNames = if (eventAffixes.isNotEmpty()) eventAffixes.joinToString(", ") { it.name } else "无"
+                        info("[RogueCore] 副本 ${instance.id} 已分帧创建 (${instance.rooms.size}个房间, 战斗词缀: $affixNames, 事件词缀: $eventAffixNames)")
+                        onComplete(instance)
+                    }
+                },
+                onFailure = { throwable ->
+                    warning("[RogueCore] 分帧生成副本 $instanceId 失败: ${throwable.message}")
+                    onComplete(null)
+                }
+            )
+        }
     }
 
     private fun applyGenerationAffixes(config: DungeonConfig, affixes: List<DungeonAffix>): DungeonConfig {
@@ -164,6 +224,7 @@ object DungeonManager {
 
         // 传送到起点
         player.teleport(instance.getSpawnLocation())
+        applyDungeonNightVision(player)
 
         if (startRun) {
             // 记录运行 + 应用天赋，仅在新 run 生效。
@@ -224,6 +285,7 @@ object DungeonManager {
         TalentManager.removeTalents(player)
         DungeonBoundItem.clearFromPlayer(player)
         ForgeMaterialManager.clear(player.uniqueId)
+        clearDungeonNightVision(player)
         DungeonGuiGuard.unlock(player)
         DungeonHudManager.detach(player)
         player.sendMessage("§e你离线期间本次冒险已经结束，临时状态已自动结算并清理。")
@@ -245,6 +307,7 @@ object DungeonManager {
         PartyManager.clearDungeonReconnect(player.uniqueId)
         PartyManager.onPlayerJoin(player)
         player.teleport(instance.getSpawnLocation())
+        applyDungeonNightVision(player)
         TalentManager.applyTalents(player)
         PlayerBoonData.reapply(player)
         RunCurseManager.reapply(player)
@@ -253,7 +316,7 @@ object DungeonManager {
         DungeonLootManager.refreshEquippedSetBonuses(player)
         DungeonHudManager.attach(player)
         DungeonSceneCueManager.showDungeonEntry(player, instance, "重返冒险")
-        player.sendMessage("§a你已重返未结束的副本 §f${instance.id}§a。")
+        player.sendMessage("§a你已重返未结束的第 §f${instance.config.floorNumber} §a层副本。")
         RunPersistenceManager.markDirty()
         val party = PartyManager.getPartyByDungeonId(instance.id)
         if (instance.completed) {
@@ -272,6 +335,7 @@ object DungeonManager {
 
         instance.players.remove(player.uniqueId)
         RoomCombatManager.onPlayerLeave(player)
+        clearDungeonNightVision(player)
         DungeonGuiGuard.unlock(player)
         DungeonHudManager.detach(player)
         PartyManager.markDungeonDisconnect(player, dungeonId)
@@ -347,6 +411,7 @@ object DungeonManager {
             BalanceStatsManager.recordFloorEntered(nextConfig.floorNumber)
             RunSummaryManager.onFloorEntered(uuid, nextConfig.floorNumber)
             player.teleport(nextInstance.getSpawnLocation())
+            applyDungeonNightVision(player)
             notifyAffixes(player, nextInstance)
             RunModifierManager.applyFloorProphecyAffix(player, nextInstance)
             PlayerAccessoryData.reapply(player)
@@ -422,6 +487,7 @@ object DungeonManager {
         TalentManager.removeTalents(player)
         DungeonBoundItem.clearFromPlayer(player)
         ForgeMaterialManager.clear(player.uniqueId)
+        clearDungeonNightVision(player)
 
         DungeonGuiGuard.unlock(player)
         DungeonHudManager.detach(player)
@@ -495,6 +561,7 @@ object DungeonManager {
                 RunModifierManager.clear(uuid)
                 TalentManager.removeTalents(player)
                 DungeonBoundItem.clearFromPlayer(player)
+                clearDungeonNightVision(player)
                 DungeonGuiGuard.unlock(player)
                 DungeonHudManager.detach(player)
                 if (returnLoc != null) {
@@ -521,6 +588,7 @@ object DungeonManager {
         playerDungeonMap.clear()
         returnLocations.clear()
         pendingOfflineCleanup.clear()
+        dungeonNightVisionPlayers.clear()
         // 清理可能残留的副本世界
         VoidWorldManager.destroyAll()
         info("[RogueCore] 所有副本已清理")
@@ -567,5 +635,21 @@ object DungeonManager {
         }
         instance.destroy()
         info("[RogueCore] 副本 ${instance.id} 已销毁")
+    }
+
+    private fun applyDungeonNightVision(player: Player) {
+        // 先移除同类效果，再添加，避免使用已废弃的 force 重载。
+        player.removePotionEffect(PotionEffectType.NIGHT_VISION)
+        player.addPotionEffect(
+            PotionEffect(PotionEffectType.NIGHT_VISION, NIGHT_VISION_DURATION_TICKS, 0, true, false, false)
+        )
+        dungeonNightVisionPlayers.add(player.uniqueId)
+    }
+
+    private fun clearDungeonNightVision(player: Player) {
+        if (!dungeonNightVisionPlayers.remove(player.uniqueId)) {
+            return
+        }
+        player.removePotionEffect(PotionEffectType.NIGHT_VISION)
     }
 }

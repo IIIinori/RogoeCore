@@ -4,6 +4,7 @@ import inori.roguecore.boon.Boon
 import inori.roguecore.boon.BoonResonanceManager
 import inori.roguecore.boon.PlayerBoonData
 import inori.roguecore.data.ShardRewardManager
+import inori.roguecore.display.ContentDisplayNameResolver
 import inori.roguecore.dungeon.DungeonManager
 import inori.roguecore.modifier.RunModifierManager
 import org.bukkit.entity.Player
@@ -96,7 +97,7 @@ object BoonSelectUI {
             .entries
             .sortedByDescending { it.value }
             .take(3)
-            .joinToString(" / ") { "${it.key}x${it.value}" }
+            .joinToString(" / ") { "${displayName(it.key, "流派")}x${it.value}" }
             .ifBlank { "尚未成型" }
 
         return XMaterial.NETHER_STAR.parseItem()!!.apply {
@@ -123,7 +124,7 @@ object BoonSelectUI {
 
     private fun buildCandidateInfoItem(player: Player, boons: List<Boon>): ItemStack {
         val candidateTags = boons.flatMap { it.tags }.distinct()
-        val synergy = candidateTags.joinToString(" / ").ifBlank { "无明显流派" }
+        val synergy = candidateTags.joinToString(" / ") { displayName(it, "流派") }.ifBlank { "无明显流派" }
         val owned = PlayerBoonData.getBoons(player)
         val repeatable = boons.count { boon -> owned.any { it.boon.id == boon.id } }
 
@@ -178,6 +179,7 @@ object BoonSelectUI {
     private fun buildBoonItem(player: Player, boon: Boon, currentLevel: Int, nextLevel: Int): ItemStack {
         val item = boon.icon.parseItem() ?: XMaterial.PAPER.parseItem()!!
         val meta = item.itemMeta ?: return item
+        val floorNumber = DungeonManager.getPlayerDungeon(player)?.config?.floorNumber ?: 1
 
         val rarityTag = "${boon.rarity.color}[${boon.rarity.displayName}]"
         val levelTag = if (currentLevel > 0) " §eLv.$currentLevel → Lv.$nextLevel" else " §eLv.1"
@@ -187,7 +189,7 @@ object BoonSelectUI {
         meta.setDisplayName("$rarityTag §f${boon.name}$levelTag")
         meta.lore = buildList {
             add("")
-            addAll(boon.getPreviewLore(nextLevel))
+            addAll(boon.getPreviewLore(nextLevel, floorNumber))
             if (bestSynergy != null && bestSynergy.value > 0) {
                 val afterPick = bestSynergy.value + 1
                 val levelHint = when {
@@ -196,7 +198,7 @@ object BoonSelectUI {
                     afterPick >= 3 -> "§aI"
                     else -> "§8未激活"
                 }
-                add("§7当前流派共鸣: §a${bestSynergy.key} x${bestSynergy.value} §7→ x$afterPick $levelHint")
+                add("§7当前流派共鸣: §a${displayName(bestSynergy.key, "流派")} x${bestSynergy.value} §7→ x$afterPick $levelHint")
             }
             val echo = RunModifierManager.getModifiers(player).firstOrNull { it.type == inori.roguecore.modifier.RunModifierType.BOON_ECHO }
             if (echo != null) {
@@ -207,5 +209,9 @@ object BoonSelectUI {
         }
         item.itemMeta = meta
         return item
+    }
+
+    private fun displayName(raw: String, fallback: String): String {
+        return ContentDisplayNameResolver.safeText(raw, fallback)
     }
 }

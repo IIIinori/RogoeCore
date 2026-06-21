@@ -518,77 +518,77 @@ relics:
     value: 1
   exp2_relic_17:
     name: "王庭邮戳"
-    description: "王庭邮戳会改变本局资源节奏，提供BOON_OFFER_BONUS相关收益"
+    description: "王庭邮戳会改变本局资源节奏，提供神恩候选相关收益"
     rarity: EPIC
     icon: AMETHYST_SHARD
     effect-type: BOON_OFFER_BONUS
     value: 26.6
   exp2_relic_18:
     name: "蓝焰火漆"
-    description: "蓝焰火漆会改变本局资源节奏，提供ROOM_UPGRADE_CHANCE相关收益"
+    description: "蓝焰火漆会改变本局资源节奏，提供房间升级相关收益"
     rarity: COMMON
     icon: GOLD_NUGGET
     effect-type: ROOM_UPGRADE_CHANCE
     value: 28
   exp2_relic_19:
     name: "古井铜镜"
-    description: "古井铜镜会改变本局资源节奏，提供BOON_RARITY_LUCK相关收益"
+    description: "古井铜镜会改变本局资源节奏，提供神恩幸运相关收益"
     rarity: RARE
     icon: EMERALD
     effect-type: BOON_RARITY_LUCK
     value: 29.3
   exp2_relic_20:
     name: "长夜斗篷"
-    description: "长夜斗篷会改变本局资源节奏，提供BOSS_LOOT_CHANCE相关收益"
+    description: "长夜斗篷会改变本局资源节奏，提供Boss 战利品相关收益"
     rarity: COMMON
     icon: CLOCK
     effect-type: BOSS_LOOT_CHANCE
     value: 30.7
   exp2_relic_21:
     name: "琥珀箭羽"
-    description: "琥珀箭羽会改变本局资源节奏，提供HIDDEN_RELIC_BOOST相关收益"
+    description: "琥珀箭羽会改变本局资源节奏，提供隐藏遗物相关收益"
     rarity: EPIC
     icon: PAPER
     effect-type: HIDDEN_RELIC_BOOST
     value: 9
   exp2_relic_22:
     name: "磨损桂冠"
-    description: "磨损桂冠会改变本局资源节奏，提供ELITE_RELIC_CHANCE相关收益"
+    description: "磨损桂冠会改变本局资源节奏，提供精英遗物相关收益"
     rarity: RARE
     icon: BLAZE_POWDER
     effect-type: ELITE_RELIC_CHANCE
     value: 33.4
   exp2_relic_23:
     name: "藏金鱼钩"
-    description: "藏金鱼钩会改变本局资源节奏，提供BLACK_MARKET_DISCOUNT相关收益"
+    description: "藏金鱼钩会改变本局资源节奏，提供黑市折扣相关收益"
     rarity: LEGENDARY
     icon: TRIPWIRE_HOOK
     effect-type: BLACK_MARKET_DISCOUNT
     value: 34.7
   exp2_relic_24:
     name: "薄暮胸针"
-    description: "薄暮胸针会改变本局资源节奏，提供CHEST_EXTRA_LOOT_CHANCE相关收益"
+    description: "薄暮胸针会改变本局资源节奏，提供宝箱额外战利品相关收益"
     rarity: COMMON
     icon: SHIELD
     effect-type: CHEST_EXTRA_LOOT_CHANCE
     value: 36
   exp2_relic_25:
     name: "赤潮骨牌"
-    description: "赤潮骨牌会改变本局资源节奏，提供KILL_SHARD相关收益"
+    description: "赤潮骨牌会改变本局资源节奏，提供击杀碎片相关收益"
     rarity: EPIC
     icon: AMETHYST_SHARD
     effect-type: KILL_SHARD
     value: 6
   exp2_relic_26:
     name: "虚界航标"
-    description: "虚界航标会改变本局资源节奏，提供ROOM_HEAL相关收益"
+    description: "虚界航标会改变本局资源节奏，提供房间治疗相关收益"
     rarity: COMMON
     icon: GOLD_NUGGET
     effect-type: ROOM_HEAL
     value: 7
   exp2_relic_27:
     name: "祝圣蜡封"
-    description: "祝圣蜡封会改变本局资源节奏，提供LOW_HEALTH_DAMAGE相关收益"
+    description: "祝圣蜡封会改变本局资源节奏，提供低血伤害相关收益"
     rarity: COMMON
     icon: EMERALD
     effect-type: LOW_HEALTH_DAMAGE
@@ -596,28 +596,28 @@ relics:
     threshold: 40
   exp2_relic_28:
     name: "赌徒短绳"
-    description: "赌徒短绳会改变本局资源节奏，提供BONUS_LOOT_CHANCE相关收益"
+    description: "赌徒短绳会改变本局资源节奏，提供额外战利品相关收益"
     rarity: RARE
     icon: CLOCK
     effect-type: BONUS_LOOT_CHANCE
     value: 41.5
   exp2_relic_29:
     name: "密教齿轮"
-    description: "密教齿轮会改变本局资源节奏，提供SHOP_DISCOUNT相关收益"
+    description: "密教齿轮会改变本局资源节奏，提供折扣商店相关收益"
     rarity: EPIC
     icon: PAPER
     effect-type: SHOP_DISCOUNT
     value: 42.8
   exp2_relic_30:
     name: "精英猎牌"
-    description: "精英猎牌会改变本局资源节奏，提供BOSS_EMBER_BONUS相关收益"
+    description: "精英猎牌会改变本局资源节奏，提供Boss 余烬相关收益"
     rarity: COMMON
     icon: BLAZE_POWDER
     effect-type: BOSS_EMBER_BONUS
     value: 44.2
   exp2_relic_31:
     name: "符文酒杯"
-    description: "符文酒杯会改变本局资源节奏，提供HIDDEN_KEY_CHANCE相关收益"
+    description: "符文酒杯会改变本局资源节奏，提供隐藏钥匙相关收益"
     rarity: RARE
     icon: TRIPWIRE_HOOK
     effect-type: HIDDEN_KEY_CHANCE
@@ -631,84 +631,84 @@ relics:
     value: 9
   exp2_relic_33:
     name: "群星罗盘"
-    description: "群星罗盘会改变本局资源节奏，提供ELITE_LOOT_CHANCE相关收益"
+    description: "群星罗盘会改变本局资源节奏，提供精英战利品相关收益"
     rarity: EPIC
     icon: AMETHYST_SHARD
     effect-type: ELITE_LOOT_CHANCE
     value: 48.2
   exp2_relic_34:
     name: "破晓缎带"
-    description: "破晓缎带会改变本局资源节奏，提供SHOP_HEAL_DISCOUNT相关收益"
+    description: "破晓缎带会改变本局资源节奏，提供商店治疗折扣相关收益"
     rarity: LEGENDARY
     icon: GOLD_NUGGET
     effect-type: SHOP_HEAL_DISCOUNT
     value: 49.6
   exp2_relic_35:
     name: "银鸦铃片"
-    description: "银鸦铃片会改变本局资源节奏，提供SHOP_MATERIAL_BONUS相关收益"
+    description: "银鸦铃片会改变本局资源节奏，提供商店材料相关收益"
     rarity: COMMON
     icon: EMERALD
     effect-type: SHOP_MATERIAL_BONUS
     value: 50.9
   exp2_relic_36:
     name: "王座旧钉"
-    description: "王座旧钉会改变本局资源节奏，提供SHRINE_RELIC_BOOST相关收益"
+    description: "王座旧钉会改变本局资源节奏，提供神龛遗物相关收益"
     rarity: COMMON
     icon: CLOCK
     effect-type: SHRINE_RELIC_BOOST
     value: 4
   exp2_relic_37:
     name: "焦痕卷轴"
-    description: "焦痕卷轴会改变本局资源节奏，提供GAMBLE_INSURANCE相关收益"
+    description: "焦痕卷轴会改变本局资源节奏，提供赌局保险相关收益"
     rarity: EPIC
     icon: PAPER
     effect-type: GAMBLE_INSURANCE
     value: 53.6
   exp2_relic_38:
     name: "灵魂纺锤"
-    description: "灵魂纺锤会改变本局资源节奏，提供TRIAL_FORGE_BONUS相关收益"
+    description: "灵魂纺锤会改变本局资源节奏，提供试炼锻造相关收益"
     rarity: COMMON
     icon: BLAZE_POWDER
     effect-type: TRIAL_FORGE_BONUS
     value: 55
   exp2_relic_39:
     name: "古堡白钥"
-    description: "古堡白钥会改变本局资源节奏，提供CHEST_MATERIAL_BONUS相关收益"
+    description: "古堡白钥会改变本局资源节奏，提供宝箱材料相关收益"
     rarity: COMMON
     icon: TRIPWIRE_HOOK
     effect-type: CHEST_MATERIAL_BONUS
     value: 56.3
   exp2_relic_40:
     name: "祈愿烟斗"
-    description: "祈愿烟斗会改变本局资源节奏，提供HIDDEN_LOOT_BONUS相关收益"
+    description: "祈愿烟斗会改变本局资源节奏，提供隐藏战利品相关收益"
     rarity: RARE
     icon: SHIELD
     effect-type: HIDDEN_LOOT_BONUS
     value: 57.7
   exp2_relic_41:
     name: "月井币模"
-    description: "月井币模会改变本局资源节奏，提供BOON_OFFER_BONUS相关收益"
+    description: "月井币模会改变本局资源节奏，提供神恩候选相关收益"
     rarity: EPIC
     icon: AMETHYST_SHARD
     effect-type: BOON_OFFER_BONUS
     value: 59
   exp2_relic_42:
     name: "余烬砂漏"
-    description: "余烬砂漏会改变本局资源节奏，提供ROOM_UPGRADE_CHANCE相关收益"
+    description: "余烬砂漏会改变本局资源节奏，提供房间升级相关收益"
     rarity: COMMON
     icon: GOLD_NUGGET
     effect-type: ROOM_UPGRADE_CHANCE
     value: 60.4
   exp2_relic_43:
     name: "猎团残旗"
-    description: "猎团残旗会改变本局资源节奏，提供BOON_RARITY_LUCK相关收益"
+    description: "猎团残旗会改变本局资源节奏，提供神恩幸运相关收益"
     rarity: RARE
     icon: EMERALD
     effect-type: BOON_RARITY_LUCK
     value: 61.7
   exp2_relic_44:
     name: "黑市火柴"
-    description: "黑市火柴会改变本局资源节奏，提供BOSS_LOOT_CHANCE相关收益"
+    description: "黑市火柴会改变本局资源节奏，提供Boss 战利品相关收益"
     rarity: COMMON
     icon: CLOCK
     effect-type: BOSS_LOOT_CHANCE

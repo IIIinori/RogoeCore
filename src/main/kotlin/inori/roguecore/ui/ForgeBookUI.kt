@@ -2,6 +2,7 @@ package inori.roguecore.ui
 
 import inori.roguecore.data.PermanentMaterialManager
 import inori.roguecore.data.PlayerDataManager
+import inori.roguecore.display.ContentDisplayNameResolver
 import inori.roguecore.item.DungeonLootManager
 import inori.roguecore.item.ForgeBookTaskManager
 import org.bukkit.entity.Player
@@ -137,8 +138,9 @@ object ForgeBookUI {
                 meta.setDisplayName(if (done) "§a打造完成" else "§e打造中")
                 meta.lore = buildList {
                     add("")
-                    add("§7品质: §f${task.qualityId}")
-                    add("§7来源: §f${task.source.name}")
+                    add("§7装备: §f${ForgeBookTaskManager.taskDisplayName(task)}")
+                    add("§7品质: §f${DungeonLootManager.getForgeBookQualityName(task.qualityId) ?: "未知品质"}")
+                    add("§7来源: §f${ContentDisplayNameResolver.lootSourceName(task.source.name) ?: "未知来源"}")
                     add("§7层数: §f${task.floor}")
                     if (done) {
                         add("§a点击领取装备")

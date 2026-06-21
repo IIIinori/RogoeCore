@@ -10,6 +10,7 @@ import taboolib.common.platform.function.warning
 import taboolib.library.xseries.XMaterial
 import taboolib.module.configuration.Config
 import taboolib.module.configuration.Configuration
+import kotlin.random.Random
 
 /**
  * 楼层管理器 — 从 config.yml 加载楼层配置
@@ -35,6 +36,9 @@ object FloorManager {
     private var hiddenRoomChance = 0.35
     private var hiddenEliteKeyChance = 0.35
     private var hiddenBossKeys = 1
+    private var roomCountBaseMin = 7
+    private var roomCountBaseMax = 10
+    private var roomCountPerTenFloors = 2
 
     private data class FloorEntry(
         val minFloor: Int,
@@ -59,6 +63,9 @@ object FloorManager {
         hiddenRoomChance = config.getDouble("dungeon.hidden-room.chance", 0.35)
         hiddenEliteKeyChance = config.getDouble("dungeon.hidden-room.elite-key-chance", 0.35)
         hiddenBossKeys = config.getInt("dungeon.hidden-room.boss-keys", 1).coerceAtLeast(0)
+        roomCountBaseMin = config.getInt("dungeon.room-count.base-min", 7).coerceAtLeast(5)
+        roomCountBaseMax = config.getInt("dungeon.room-count.base-max", 10).coerceAtLeast(roomCountBaseMin)
+        roomCountPerTenFloors = config.getInt("dungeon.room-count.per-10-floors", 2).coerceAtLeast(0)
 
         // 楼层主题
         val floorsSection = config.getConfigurationSection("floors")
@@ -111,13 +118,16 @@ object FloorManager {
             ?: floorThemes.lastOrNull()
             ?: FloorEntry(1, 999, FloorTheme.DEFAULT, 4)
 
-        val size = baseWidth + (floorNumber - 1) * widthPerFloor
+        val baseTarget = Random.nextInt(roomCountBaseMin, roomCountBaseMax + 1)
+        val targetRoomCount = baseTarget + ((floorNumber - 1) / 10) * roomCountPerTenFloors
+        val dynamicDepth = dynamicDepthForRoomCount(targetRoomCount)
+        val size = dynamicSizeForRoomCount(floorNumber, targetRoomCount)
 
         return DungeonConfig(
             dungeonWidth = size,
             dungeonDepth = size,
             minPartitionSize = minPartitionSize,
-            maxBSPDepth = entry.bspDepth,
+            maxBSPDepth = dynamicDepth,
             minRoomSize = minRoomSize,
             roomHeight = roomHeight,
             corridorWidth = corridorWidth,
@@ -129,9 +139,27 @@ object FloorManager {
             hiddenEliteKeyChance = hiddenEliteKeyChance,
             hiddenBossKeys = hiddenBossKeys,
             route = route,
+            targetRoomCount = targetRoomCount,
             roomWeightModifiers = (route?.roomWeightModifiers ?: emptyMap()) + extraRoomWeightModifiers.mapValues { (type, value) ->
                 value + ((route?.roomWeightModifiers ?: emptyMap())[type] ?: 0)
             }
         )
+    }
+
+    private fun dynamicDepthForRoomCount(targetRoomCount: Int): Int {
+        return when {
+            targetRoomCount <= 8 -> 3
+            targetRoomCount <= 12 -> 4
+            targetRoomCount <= 20 -> 5
+            targetRoomCount <= 32 -> 6
+            else -> 7
+        }
+    }
+
+    private fun dynamicSizeForRoomCount(floorNumber: Int, targetRoomCount: Int): Int {
+        val floorScaled = baseWidth + (floorNumber - 1) * widthPerFloor
+        val roomScaled = baseWidth + targetRoomCount * 3
+        val cap = roomScaled + 24
+        return floorScaled.coerceIn(roomScaled, cap)
     }
 }

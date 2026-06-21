@@ -405,6 +405,7 @@ object RunPersistenceManager {
             "hidden-elite-key-chance" to config.hiddenEliteKeyChance,
             "hidden-boss-keys" to config.hiddenBossKeys,
             "route" to (config.route?.name ?: ""),
+            "target-room-count" to config.targetRoomCount,
             "room-weight-modifiers" to config.roomWeightModifiers.mapKeys { it.key.name },
             "theme" to mapOf(
                 "name" to config.theme.name,
@@ -451,6 +452,7 @@ object RunPersistenceManager {
             hiddenEliteKeyChance = raw["hidden-elite-key-chance"]?.toString()?.toDoubleOrNull() ?: 0.35,
             hiddenBossKeys = raw["hidden-boss-keys"]?.toString()?.toIntOrNull() ?: 1,
             route = route,
+            targetRoomCount = raw["target-room-count"]?.toString()?.toIntOrNull() ?: 10,
             roomWeightModifiers = roomWeightModifiers
         )
     }

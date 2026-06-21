@@ -5,6 +5,7 @@ import inori.roguecore.balance.BalanceConfigManager
 import inori.roguecore.data.PermanentMaterialManager
 import inori.roguecore.data.PlayerDataManager
 import inori.roguecore.data.ShardRewardManager
+import inori.roguecore.display.ContentDisplayNameResolver
 import inori.roguecore.item.DungeonBoundItem
 import inori.roguecore.item.DungeonLootManager
 import inori.roguecore.item.DungeonLootSource
@@ -119,7 +120,7 @@ object SalvageManager {
         val rarityName = DungeonLootManager.getLootRarityName(item) ?: "未知"
         val score = DungeonLootManager.getScore(item)
         val floor = DungeonLootManager.getLootFloor(item)
-        val name = item.itemMeta?.displayName ?: definition?.name ?: item.type.name
+        val name = item.itemMeta?.displayName ?: definition?.name ?: ContentDisplayNameResolver.materialTypeName(item.type.name, "装备")
         if (DungeonLootManager.isPermanentLoot(item)) {
             val blocked = when {
                 DungeonLootManager.isFavorite(item) -> "§c已收藏的永久装备不能分解。"

@@ -1,5 +1,6 @@
 package inori.roguecore.boon
 
+import inori.roguecore.display.ContentDisplayNameResolver
 import taboolib.library.xseries.XMaterial
 
 /**
@@ -28,10 +29,19 @@ data class Boon(
      * @return AP属性名 -> Number[min, max]
      */
     fun getAttributesAtLevel(level: Int): HashMap<String, Array<Number>> {
+        return getAttributesAtLevel(level, floorNumber = 1)
+    }
+
+    /**
+     * 获取指定等级与楼层下的属性值
+     * @return AP属性名 -> Number[min, max]
+     */
+    fun getAttributesAtLevel(level: Int, floorNumber: Int): HashMap<String, Array<Number>> {
         val result = hashMapOf<String, Array<Number>>()
+        val floorMultiplier = BoonScaling.floorMultiplier(floorNumber)
         for ((attrName, perLevel) in attributes) {
-            val min = perLevel[0] * level
-            val max = perLevel[1] * level
+            val min = perLevel[0] * level * floorMultiplier
+            val max = perLevel[1] * level * floorMultiplier
             result[attrName] = arrayOf(min, max)
         }
         return result
@@ -41,34 +51,43 @@ data class Boon(
      * 生成当前等级下的展示文本。
      */
     fun getPreviewLore(level: Int): List<String> {
+        return getPreviewLore(level, floorNumber = 1)
+    }
+
+    /**
+     * 生成当前等级与楼层下的展示文本。
+     */
+    fun getPreviewLore(level: Int, floorNumber: Int): List<String> {
         val lore = mutableListOf<String>()
-        val rendered = renderDescription(level)
+        val floorMultiplier = BoonScaling.floorMultiplier(floorNumber)
+        val rendered = renderDescription(level, floorNumber)
         if (rendered.isNotBlank()) {
             lore += "§7$rendered"
         }
         for ((attrName, values) in attributes) {
-            lore += "§7$attrName: §a+${format(values[0] * level)}"
+            lore += "§7$attrName: §a+${format(values[0] * level * floorMultiplier)}"
         }
         for (effect in effects) {
-            lore += effect.describe(level)
+            lore += effect.describe(level, floorNumber)
         }
         if (tags.isNotEmpty()) {
-            lore += "§8流派: ${tags.joinToString(" / ") { "§f$it" }}"
+            lore += "§8流派: ${tags.joinToString(" / ") { "§f${displayName(it, "流派")}" }}"
         }
         return lore
     }
 
-    private fun renderDescription(level: Int): String {
+    private fun renderDescription(level: Int, floorNumber: Int): String {
         if (description.isBlank()) {
             return ""
         }
-        val firstAttr = attributes.values.firstOrNull()?.getOrNull(0)?.times(level)
+        val floorMultiplier = BoonScaling.floorMultiplier(floorNumber)
+        val firstAttr = attributes.values.firstOrNull()?.getOrNull(0)?.times(level)?.times(floorMultiplier)
         val firstEffect = effects.firstOrNull()
         return description
-            .replace("{value}", format(firstAttr ?: firstEffect?.valueAt(level) ?: 0.0))
+            .replace("{value}", format(firstAttr ?: firstEffect?.valueAt(level, floorNumber) ?: 0.0))
             .replace("{threshold}", format(firstEffect?.threshold ?: 0.0))
             .replace("{per_tag}", format(firstEffect?.perTag ?: 0.0))
-            .replace("{tag}", firstEffect?.tag ?: "")
+            .replace("{tag}", firstEffect?.tag?.takeIf { it.isNotBlank() }?.let { displayName(it, "目标") } ?: "")
     }
 
     private fun format(value: Double): String {
@@ -77,5 +96,9 @@ data class Boon(
         } else {
             String.format("%.1f", value)
         }
+    }
+
+    private fun displayName(raw: String, fallback: String): String {
+        return ContentDisplayNameResolver.safeText(raw, fallback)
     }
 }

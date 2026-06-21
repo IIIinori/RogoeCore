@@ -42,10 +42,37 @@ object PermanentMaterialManager {
         container[key(type)] = get(player, type) + amount
     }
 
+    fun set(player: Player, type: MaterialType, amount: Int) {
+        val container = DatabaseManager.getOrCreateContainer(player.uniqueId)
+        container[key(type)] = amount.coerceAtLeast(0)
+    }
+
+    fun take(player: Player, type: MaterialType, amount: Int): Boolean {
+        val safeAmount = amount.coerceAtLeast(0)
+        if (safeAmount == 0) return true
+        val current = get(player, type)
+        if (current < safeAmount) return false
+        val container = DatabaseManager.getOrCreateContainer(player.uniqueId)
+        container[key(type)] = current - safeAmount
+        return true
+    }
+
     fun addAll(player: Player, rewards: Map<MaterialType, Int>) {
         for ((type, amount) in rewards) {
             add(player, type, amount)
         }
+    }
+
+    fun materialNames(): List<String> {
+        return MaterialType.values().map { it.displayName }
+    }
+
+    fun fromDisplayName(name: String): MaterialType? {
+        return MaterialType.values().firstOrNull { it.displayName == name }
+    }
+
+    fun formatOwnedLine(player: Player, type: MaterialType): String {
+        return "${type.coloredName()} §fx${get(player, type)}"
     }
 
     fun hasCost(player: Player, cost: Map<MaterialType, Int>): Boolean {

@@ -9,6 +9,7 @@ import inori.roguecore.summary.RunSummaryManager
 import inori.roguecore.dungeon.DungeonManager
 import inori.roguecore.item.ForgeBookTaskManager
 import inori.roguecore.item.IdentificationTaskManager
+import inori.roguecore.item.StarterGearManager
 import inori.roguecore.modifier.RunModifierManager
 import inori.roguecore.party.PartyManager
 import org.bukkit.entity.Player
@@ -42,6 +43,7 @@ object DungeonListener {
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player
         val uuid = player.uniqueId
+        StarterGearManager.tryGrantOnJoin(player)
         submit(async = true) {
             DatabaseManager.preload(uuid)
         }

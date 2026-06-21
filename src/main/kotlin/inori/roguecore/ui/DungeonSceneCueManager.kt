@@ -1,5 +1,6 @@
 package inori.roguecore.ui
 
+import inori.roguecore.display.ContentDisplayNameResolver
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.dungeon.room.Room
 import inori.roguecore.dungeon.room.RoomType
@@ -18,8 +19,9 @@ import org.bukkit.entity.Player
 object DungeonSceneCueManager {
 
     fun showDungeonEntry(player: Player, instance: DungeonInstance, routeName: String? = null) {
+        val themeName = ContentDisplayNameResolver.safeText(instance.config.theme.name, "未知主题")
         val subtitle = buildString {
-            append("§7${instance.config.theme.name}")
+            append("§7$themeName")
             append(" §8· §f第${instance.config.floorNumber}层")
             if (!routeName.isNullOrBlank()) {
                 append(" §8· §b$routeName")
@@ -30,7 +32,7 @@ object DungeonSceneCueManager {
             title = "§b§l深入地牢",
             subtitle = subtitle,
             sound = Sound.ITEM_GOAT_HORN_SOUND_0,
-            actionBar = "§b进入第${instance.config.floorNumber}层：${instance.config.theme.name}",
+            actionBar = "§b进入第${instance.config.floorNumber}层：$themeName",
             stay = 35
         )
     }

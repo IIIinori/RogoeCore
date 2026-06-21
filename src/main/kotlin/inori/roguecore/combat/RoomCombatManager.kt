@@ -505,7 +505,8 @@ object RoomCombatManager {
             return
         }
 
-        val allCombatRooms = instance.rooms.filter { it.isCombatRoom }
+        val reachableIds = collectReachableRoomIds(instance)
+        val allCombatRooms = instance.rooms.filter { it.isCombatRoom && it.id in reachableIds }
         val allCleared = allCombatRooms.all { it.state == RoomState.CLEARED }
 
         if (allCleared) {
@@ -577,7 +578,8 @@ object RoomCombatManager {
     }
 
     fun getCombatProgress(instance: DungeonInstance): Pair<Int, Int> {
-        val combatRooms = instance.rooms.filter { it.isCombatRoom }
+        val reachableIds = collectReachableRoomIds(instance)
+        val combatRooms = instance.rooms.filter { it.isCombatRoom && it.id in reachableIds }
         val cleared = combatRooms.count { it.state == RoomState.CLEARED }
         return cleared to combatRooms.size
     }
@@ -595,6 +597,26 @@ object RoomCombatManager {
         val px = location.blockX - ox
         val pz = location.blockZ - oz
         return instance.rooms.firstOrNull { it.contains(px, pz) }
+    }
+
+    private fun collectReachableRoomIds(instance: DungeonInstance): Set<Int> {
+        val start = instance.rooms.firstOrNull { it.type == RoomType.SPAWN } ?: instance.rooms.firstOrNull() ?: return emptySet()
+        val byId = instance.rooms.associateBy { it.id }
+        val visited = linkedSetOf<Int>()
+        val queue = ArrayDeque<Room>()
+        visited += start.id
+        queue.add(start)
+        while (queue.isNotEmpty()) {
+            val room = queue.removeFirst()
+            for (nextId in room.connections) {
+                val next = byId[nextId] ?: continue
+                if (!visited.add(nextId)) {
+                    continue
+                }
+                queue.add(next)
+            }
+        }
+        return visited
     }
 
     /**

@@ -7,6 +7,7 @@ import org.bukkit.event.inventory.InventoryDragEvent
 import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerItemHeldEvent
 import org.bukkit.event.player.PlayerSwapHandItemsEvent
+import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.ItemStack
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.module.configuration.Config
@@ -114,6 +115,11 @@ object PermanentGearProtection {
         cursor: ItemStack?,
         hotbar: ItemStack?
     ): Boolean {
+        // 玩家自身背包界面(InventoryType.CRAFTING/CREATIVE)允许快捷穿戴与整理，不视为外部容器。
+        if (event.view.type == InventoryType.CRAFTING || event.view.type == InventoryType.CREATIVE) {
+            return false
+        }
+
         val topSize = event.view.topInventory.size
         val clickedTop = event.rawSlot in 0 until topSize
         if (clickedTop && (DungeonLootManager.isPermanentLoot(current) || DungeonLootManager.isPermanentLoot(cursor))) {

@@ -2,6 +2,7 @@ package inori.roguecore.accessory
 
 import inori.roguecore.dungeon.DungeonInstance
 import inori.roguecore.balance.BalanceConfigManager
+import inori.roguecore.display.ContentDisplayNameResolver
 import inori.roguecore.guide.GuideManager
 import inori.roguecore.item.DungeonLootSource
 import inori.roguecore.summary.RunSummaryManager
@@ -83,7 +84,7 @@ object AccessoryDropManager {
         valueMultiplier: Double = 1.0
     ): AccessoryBuildResult {
         val definition = AccessoryRegistry.get(accessoryId)
-            ?: return AccessoryBuildResult(false, "§c饰品模板不存在: $accessoryId")
+            ?: return AccessoryBuildResult(false, "§c饰品模板不存在: ${ContentDisplayNameResolver.safeText(accessoryId, "未知饰品")}")
         val item = roll(definition, source, floor, player, extraRarityLuck, valueMultiplier)
             ?.let(AccessoryItemCodec::toItemStack)
             ?: return AccessoryBuildResult(false, "§c饰品生成失败。")
@@ -142,7 +143,7 @@ object AccessoryDropManager {
         val attrs = linkedMapOf<String, Double>()
         for (attribute in definition.attributes) {
             val base = if (attribute.max > attribute.min) Random.nextDouble(attribute.min, attribute.max) else attribute.min
-            attrs[attribute.name] = base * multiplier
+            attrs[attribute.name] = capGeneratedAttribute(attribute.name, base * multiplier)
         }
         val effects = definition.effects.map { effect ->
             effect.copy(value = capEffectValue(effect.type, effect.value * multiplier))
@@ -160,6 +161,11 @@ object AccessoryDropManager {
         }
         val index = rarities.indexOfFirst { it.id == base.id }
         return rarities.getOrNull(index + 1) ?: base
+    }
+
+    private fun capGeneratedAttribute(name: String, value: Double): Double {
+        val cap = BalanceConfigManager.getDouble("attribute-caps.accessory.$name", Double.NaN)
+        return if (cap.isNaN() || cap <= 0.0) value else value.coerceAtMost(cap)
     }
 
     private fun capEffectValue(type: AccessoryEffectType, value: Double): Double {

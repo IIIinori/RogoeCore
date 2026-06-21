@@ -4,14 +4,74 @@
 # 扩容版：允许同类压力/奖励在不同楼层和数值下复用，但避免完整效果签名重复。
 
 rules:
-  "1-5": [0, 1]
-  "6-10": [1, 2]
-  "11-20": [2, 3]
-  "21-35": [3, 4]
-  "36-50": [4, 5]
-  "51-70": [5, 6]
-  "71-90": [6, 7]
-  "91-100": [7, 8]
+  "1-5": [1, 2]
+  "6-10": [2, 3]
+  "11-20": [3, 4]
+  "21-35": [4, 5]
+  "36-50": [5, 6]
+  "51-70": [6, 7]
+  "71-90": [7, 8]
+  "91-100": [8, 9]
+
+rotation:
+  # 是否启用“副本词缀轮换池”
+  enabled: true
+  # 每个池持续天数
+  cycle-days: 7
+  # 轮换锚点日期（格式: yyyy-MM-dd）
+  anchor-date: "2026-05-04"
+  # 时区（为空时使用服务器系统时区）
+  timezone: "Asia/Shanghai"
+  # 当前池未匹配到词缀时，是否回退到全池
+  fallback-to-all: true
+  # 未命中任何池规则时，默认归属池（可选）
+  default-pool: "classic"
+  # 轮换顺序
+  order:
+    - highrisk
+    - expansion
+    - classic
+  # 池规则（满足任一条件即命中）
+  pools:
+    classic:
+      # 按 ID 前缀匹配
+      id-prefixes:
+        - "crypt_"
+        - "iron_"
+        - "red_"
+        - "burning_"
+        - "no_"
+        - "black_"
+        - "last_"
+        - "deep_"
+        - "bone_"
+        - "void_"
+        - "royal_"
+        - "hunger_"
+        - "crown_"
+        - "soul_"
+        - "treasure_"
+        - "boon_"
+        - "weapon_"
+        - "elite_"
+        - "boss_"
+        - "golden_"
+        - "hidden_"
+        - "oracle_"
+        - "astral_"
+        - "chest_"
+    expansion:
+      id-prefixes:
+        - "exp_"
+    highrisk:
+      id-prefixes:
+        - "exp2_"
+      # 也支持按类型匹配，作为补充
+      types:
+        - MOB_DAMAGE_MULTIPLY
+        - HEALING_REDUCE
+        - MOB_LIFESTEAL
+        - BOSS_DAMAGE_MULTIPLY
 
 affixes:
   crypt_thick_blood:
@@ -515,7 +575,7 @@ affixes:
     advanced: true
   exp2_affix_09:
     name: "§c骨鼓压阵"
-    description: "骨鼓压阵会改变本层规则，触发MOB_DAMAGE_MULTIPLY相关影响"
+    description: "骨鼓压阵会改变本层规则，触发怪物伤害相关影响"
     type: MOB_DAMAGE_MULTIPLY
     value: 1.206
     difficulty: true
@@ -524,7 +584,7 @@ affixes:
     advanced: true
   exp2_affix_10:
     name: "§6清场献税"
-    description: "清场献税会改变本层规则，触发COMBAT_SHARD_FLAT相关影响"
+    description: "清场献税会改变本层规则，触发战斗房碎片相关影响"
     type: COMBAT_SHARD_FLAT
     value: 11
     difficulty: false
@@ -533,7 +593,7 @@ affixes:
     advanced: true
   exp2_affix_11:
     name: "§6精英暗匙"
-    description: "精英暗匙会改变本层规则，触发ELITE_KEY_CHANCE相关影响"
+    description: "精英暗匙会改变本层规则，触发精英钥匙相关影响"
     type: ELITE_KEY_CHANCE
     value: 0.105
     difficulty: false
@@ -542,7 +602,7 @@ affixes:
     advanced: true
   exp2_affix_12:
     name: "§6王冠炉核"
-    description: "王冠炉核会改变本层规则，触发BOSS_EMBER_BONUS相关影响"
+    description: "王冠炉核会改变本层规则，触发Boss 余烬相关影响"
     type: BOSS_EMBER_BONUS
     value: 13
     difficulty: false
@@ -551,7 +611,7 @@ affixes:
     advanced: true
   exp2_affix_13:
     name: "§c濒危回廊"
-    description: "濒危回廊会改变本层规则，触发LOW_HEALTH_PRESSURE相关影响"
+    description: "濒危回廊会改变本层规则，触发濒危压迫相关影响"
     type: LOW_HEALTH_PRESSURE
     value: 0.117
     difficulty: true
@@ -560,7 +620,7 @@ affixes:
     advanced: true
   exp2_affix_14:
     name: "§c活髓墙根"
-    description: "活髓墙根会改变本层规则，触发MOB_REGEN相关影响"
+    description: "活髓墙根会改变本层规则，触发怪物恢复相关影响"
     type: MOB_REGEN
     value: 0.123
     difficulty: true
@@ -569,7 +629,7 @@ affixes:
     advanced: true
   exp2_affix_15:
     name: "§c壳生怪潮"
-    description: "壳生怪潮会改变本层规则，触发MOB_SPAWN_SHIELD相关影响"
+    description: "壳生怪潮会改变本层规则，触发怪物护盾相关影响"
     type: MOB_SPAWN_SHIELD
     value: 16
     difficulty: true
@@ -578,7 +638,7 @@ affixes:
     advanced: true
   exp2_affix_16:
     name: "§c断命狂鼓"
-    description: "断命狂鼓会改变本层规则，触发MOB_LOW_HEALTH_RAGE相关影响"
+    description: "断命狂鼓会改变本层规则，触发残血狂怒相关影响"
     type: MOB_LOW_HEALTH_RAGE
     value: 0.135
     difficulty: true
@@ -587,7 +647,7 @@ affixes:
     advanced: true
   exp2_affix_17:
     name: "§c燃爪残痕"
-    description: "燃爪残痕会改变本层规则，触发MOB_FIRE_ATTACK相关影响"
+    description: "燃爪残痕会改变本层规则，触发火焰攻击相关影响"
     type: MOB_FIRE_ATTACK
     value: 18
     difficulty: true
@@ -596,7 +656,7 @@ affixes:
     advanced: true
   exp2_affix_18:
     name: "§c虚界潮汐"
-    description: "虚界潮汐会改变本层规则，触发VOID_FIELD相关影响"
+    description: "虚界潮汐会改变本层规则，触发虚空脉冲相关影响"
     type: VOID_FIELD
     value: 19
     difficulty: true
@@ -605,7 +665,7 @@ affixes:
     advanced: true
   exp2_affix_19:
     name: "§c折疗盐雾"
-    description: "折疗盐雾会改变本层规则，触发HEALING_REDUCE相关影响"
+    description: "折疗盐雾会改变本层规则，触发治疗削弱相关影响"
     type: HEALING_REDUCE
     value: 0.153
     difficulty: true
@@ -614,7 +674,7 @@ affixes:
     advanced: true
   exp2_affix_20:
     name: "§c饥牙走廊"
-    description: "饥牙走廊会改变本层规则，触发MOB_LIFESTEAL相关影响"
+    description: "饥牙走廊会改变本层规则，触发怪物吸血相关影响"
     type: MOB_LIFESTEAL
     value: 0.159
     difficulty: true
@@ -623,7 +683,7 @@ affixes:
     advanced: true
   exp2_affix_21:
     name: "§c王座震怒"
-    description: "王座震怒会改变本层规则，触发BOSS_DAMAGE_MULTIPLY相关影响"
+    description: "王座震怒会改变本层规则，触发Boss 伤害相关影响"
     type: BOSS_DAMAGE_MULTIPLY
     value: 1.41
     difficulty: true
@@ -632,7 +692,7 @@ affixes:
     advanced: true
   exp2_affix_22:
     name: "§6余烬清算"
-    description: "余烬清算会改变本层规则，触发COMBAT_EMBER_FLAT相关影响"
+    description: "余烬清算会改变本层规则，触发战斗房余烬相关影响"
     type: COMBAT_EMBER_FLAT
     value: 23
     difficulty: false
@@ -641,7 +701,7 @@ affixes:
     advanced: true
   exp2_affix_23:
     name: "§6暗影夹层"
-    description: "暗影夹层会改变本层规则，触发HIDDEN_LOOT_CHANCE相关影响"
+    description: "暗影夹层会改变本层规则，触发隐藏战利品相关影响"
     type: HIDDEN_LOOT_CHANCE
     value: 0.177
     difficulty: false
@@ -659,7 +719,7 @@ affixes:
     advanced: true
   exp2_affix_25:
     name: "§6星界邀函"
-    description: "星界邀函会改变本层规则，触发BOSS_RELIC_CHANCE相关影响"
+    description: "星界邀函会改变本层规则，触发Boss 遗物相关影响"
     type: BOSS_RELIC_CHANCE
     value: 0.189
     difficulty: false
@@ -668,7 +728,7 @@ affixes:
     advanced: true
   exp2_affix_26:
     name: "§6宝箱银矿"
-    description: "宝箱银矿会改变本层规则，触发CHEST_SHARD_BONUS相关影响"
+    description: "宝箱银矿会改变本层规则，触发宝箱碎片相关影响"
     type: CHEST_SHARD_BONUS
     value: 27
     difficulty: false

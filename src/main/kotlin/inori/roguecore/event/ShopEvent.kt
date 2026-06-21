@@ -67,7 +67,13 @@ object ShopEvent {
         if (boonCandidates.isNotEmpty()) {
             val price = Random.nextInt(boonPriceMin, boonPriceMax + 1)
             boonCandidates.forEachIndexed { index, boon ->
-                goods.add(ShopGood.BoonGood(boon, price + index * (boonPriceMin / 3).coerceAtLeast(2)))
+                goods.add(
+                    ShopGood.BoonGood(
+                        boon = boon,
+                        price = price + index * (boonPriceMin / 3).coerceAtLeast(2),
+                        floorNumber = instance.config.floorNumber
+                    )
+                )
             }
         }
 
@@ -265,14 +271,18 @@ object ShopEvent {
             }
         }
 
-        class BoonGood(val boon: Boon, price: Int) : ShopGood(price) {
+        class BoonGood(
+            val boon: Boon,
+            price: Int,
+            val floorNumber: Int
+        ) : ShopGood(price) {
             override fun toItemStack(): ItemStack {
                 return (boon.icon.parseItem() ?: XMaterial.PAPER.parseItem()!!).apply {
                     itemMeta = itemMeta?.also { meta ->
                         meta.setDisplayName("${boon.rarity.color}[${boon.rarity.displayName}] §f${boon.name}")
                         val lore = mutableListOf<String>()
                         lore.add("")
-                        lore.addAll(boon.getPreviewLore(1))
+                        lore.addAll(boon.getPreviewLore(1, floorNumber))
                         lore.add("")
                         lore.add("§e价格: §6$price §e本局碎片")
                         lore.add("§e点击购买")

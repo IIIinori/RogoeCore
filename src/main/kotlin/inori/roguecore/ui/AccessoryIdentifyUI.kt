@@ -5,6 +5,7 @@ import inori.roguecore.accessory.AccessoryItemCodec
 import inori.roguecore.accessory.AccessoryRegistry
 import inori.roguecore.data.PermanentMaterialManager
 import inori.roguecore.data.PlayerDataManager
+import inori.roguecore.display.ContentDisplayNameResolver
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
@@ -137,9 +138,9 @@ object AccessoryIdentifyUI {
                 meta.setDisplayName(if (done) "§a饰品鉴定完成" else "§e饰品鉴定中")
                 meta.lore = buildList {
                     add("")
-                    add("§7饰品: §f${definition?.name ?: task.accessoryId}")
-                    add("§7槽位: §d${definition?.slot?.displayName ?: "未知"}")
-                    add("§7来源: §f${task.source.name}")
+                    add("§7饰品: §f${AccessoryIdentificationTaskManager.taskDisplayName(task)}")
+                    add("§7槽位: §d${definition?.slot?.displayName ?: "饰品"}")
+                    add("§7来源: §f${ContentDisplayNameResolver.lootSourceName(task.source.name) ?: "未知来源"}")
                     add("§7层数: §f${task.floor}")
                     if (done) {
                         add("§a点击领取饰品")

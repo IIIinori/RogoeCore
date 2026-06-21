@@ -3,6 +3,7 @@ package inori.roguecore.accessory
 import inori.roguecore.data.DatabaseManager
 import inori.roguecore.data.PermanentMaterialManager
 import inori.roguecore.data.PlayerDataManager
+import inori.roguecore.display.ContentDisplayNameResolver
 import inori.roguecore.item.DungeonLootManager
 import inori.roguecore.item.DungeonLootSource
 import org.bukkit.entity.Player
@@ -187,5 +188,13 @@ object AccessoryIdentificationTaskManager {
             minutes > 0 -> "${minutes}分${rest}秒"
             else -> "${rest}秒"
         }
+    }
+
+    fun taskDisplayName(task: IdentifyTask): String {
+        val name = AccessoryRegistry.get(task.accessoryId)?.name
+        if (!name.isNullOrBlank()) {
+            return name
+        }
+        return ContentDisplayNameResolver.safeText(task.accessoryId, "未知饰品")
     }
 }

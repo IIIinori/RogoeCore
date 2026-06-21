@@ -17,6 +17,7 @@ import inori.roguecore.item.DungeonLootManager
 import inori.roguecore.relic.PlayerRelicData
 import inori.roguecore.relic.RelicEffectType
 import inori.roguecore.relic.RelicSelectManager
+import inori.roguecore.display.ContentDisplayNameResolver
 import inori.roguecore.stats.BalanceStatsManager
 import inori.roguecore.summary.RunSummaryManager
 import org.bukkit.attribute.Attribute
@@ -702,7 +703,7 @@ object RunModifierManager {
             RunModifierType.SOUL_DEBT -> listOf(
                 "§7债务本金: §c${modifier.value.toInt().coerceAtLeast(0)}",
                 "§7每房利息: §e${payloadInt(modifier, "interest", 0)}",
-                "§7逾期惩罚: §c${payloadString(modifier, "penalty", soulDebtPenalty)}"
+                "§7逾期惩罚: §c${displayName(payloadString(modifier, "penalty", soulDebtPenalty), "惩罚")}"
             )
             RunModifierType.DELAYED_REWARD -> listOf(
                 "§7托管类型: §f${rewardName(payloadString(modifier, "kind", "shards"))}",
@@ -715,14 +716,14 @@ object RunModifierManager {
                 "§7失败扣除: §c${payloadInt(modifier, "miss", prophecyMissPenalty)} §7本局碎片"
             )
             RunModifierType.ROUTE_CHAIN -> listOf(
-                "§7目标序列: §f${payloadString(modifier, "sequence", "").replace(">", " §8> §f")}",
+                "§7目标序列: ${formatRouteSequence(payloadString(modifier, "sequence", ""))}",
                 "§7当前进度: §b${payloadInt(modifier, "progress", 0)}",
                 "§7容错次数: §e${payloadInt(modifier, "tolerance", 0)}"
             )
             RunModifierType.BOON_ECHO -> listOf("§7下一次神恩选择后额外复制 §d${modifier.value.toInt().coerceAtLeast(1)} §7次")
             RunModifierType.BOON_MUTATION -> listOf("§7下一次神恩候选额外增加 §d${modifier.value.toInt().coerceAtLeast(1)} §7项")
             RunModifierType.RELIC_CHARGE_RULE -> listOf(
-                "§7遗物: §f${modifier.source}",
+                "§7遗物: §f${displayName(modifier.source, "遗物")}",
                 "§7充能: §b${modifier.charges}§7/§f${payloadInt(modifier, "max", modifier.value.toInt())}",
                 "§7满层奖励: §d${rewardName(payloadString(modifier, "reward", "boon_echo"))}"
             )
@@ -1041,7 +1042,19 @@ object RunModifierManager {
             "boon_echo" -> "神恩回响"
             "boon_mutation" -> "神恩变质"
             "charge_only" -> "保留充能"
-            else -> kind
+            else -> displayName(kind, "奖励")
         }
+    }
+
+    private fun formatRouteSequence(raw: String): String {
+        val parts = raw.split(">").map { it.trim() }.filter { it.isNotEmpty() }
+        if (parts.isEmpty()) {
+            return "§f未指定"
+        }
+        return parts.joinToString(" §8> §f") { displayName(it, "房间") }.let { "§f$it" }
+    }
+
+    private fun displayName(raw: String, fallback: String): String {
+        return ContentDisplayNameResolver.safeText(raw, fallback)
     }
 }

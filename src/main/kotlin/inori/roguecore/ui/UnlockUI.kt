@@ -1,6 +1,7 @@
 package inori.roguecore.ui
 
 import inori.roguecore.data.PlayerDataManager
+import inori.roguecore.display.ContentDisplayNameResolver
 import inori.roguecore.unlock.UnlockDefinition
 import inori.roguecore.unlock.UnlockManager
 import inori.roguecore.unlock.UnlockRegistry
@@ -172,7 +173,7 @@ object UnlockUI {
             lore += ""
             lore += "§7前置研究:"
             for (requirement in unlock.requires) {
-                val name = UnlockRegistry.get(requirement)?.name ?: requirement
+                val name = UnlockRegistry.get(requirement)?.name ?: ContentDisplayNameResolver.safeText(requirement, "前置研究")
                 lore += if (UnlockManager.hasUnlock(player, requirement)) {
                     "§a$name"
                 } else {

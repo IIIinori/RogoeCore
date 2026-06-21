@@ -29,12 +29,15 @@ import inori.roguecore.event.TrialEvent
 import inori.roguecore.item.DungeonLootManager
 import inori.roguecore.item.DungeonLootSource
 import inori.roguecore.modifier.RunModifierManager
+import inori.roguecore.ops.OpsConfigManager
 import inori.roguecore.party.PartyManager
 import inori.roguecore.relic.PlayerRelicData
 import inori.roguecore.relic.RelicRegistry
 import inori.roguecore.stats.BalanceStatsManager
+import inori.roguecore.stats.PerfMonitor
 import inori.roguecore.talent.TalentManager
 import inori.roguecore.talent.TalentRegistry
+import inori.roguecore.display.ContentDisplayNameResolver
 import inori.roguecore.ui.AccessoryIdentifyUI
 import inori.roguecore.ui.AccessoryInscriptionUI
 import inori.roguecore.ui.AccessoryUI
@@ -46,9 +49,12 @@ import inori.roguecore.ui.ForgeBookUI
 import inori.roguecore.ui.GearStorageUI
 import inori.roguecore.ui.GuideUI
 import inori.roguecore.ui.IdentifyUI
+import inori.roguecore.ui.LobbyHudManager
+import inori.roguecore.ui.LootStorageUI
 import inori.roguecore.ui.PermanentForgeUI
 import inori.roguecore.ui.RogueMenuUI
 import inori.roguecore.ui.RunCompleteUI
+import inori.roguecore.ui.RunEnterUI
 import inori.roguecore.ui.RunMilestoneUI
 import inori.roguecore.ui.RunModifierUI
 import inori.roguecore.ui.RunSummaryUI
@@ -70,12 +76,14 @@ import taboolib.common.platform.command.subCommand
 import taboolib.common.platform.command.component.CommandComponent
 import taboolib.expansion.createHelper
 import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
 
 
 @CommandHeader("rogue", permission = "roguecore.use")
 object CommandRogue {
 
     private val giveKinds = listOf("gear", "unidentified", "forgebook", "accessory", "sealed", "inscription")
+    private val dungeonEnterPending = ConcurrentHashMap.newKeySet<UUID>()
     private val sources = DungeonLootSource.entries.map { it.name }
 
     @CommandBody
@@ -100,7 +108,7 @@ object CommandRogue {
                 suggestion<Player> { _, _ -> (1..100).map { it.toString() } }
                 execute<Player> { sender, _, argument -> enterDungeon(sender, argument.toIntOrNull() ?: 1) }
             }
-            execute<Player> { sender, _, _ -> enterDungeon(sender, 1) }
+            execute<Player> { sender, _, _ -> if (DungeonManager.isInDungeon(sender)) enterDungeon(sender, 1) else RunEnterUI.open(sender) }
         }
         literal("leave") { execute<Player> { sender, _, _ -> leaveDungeon(sender) } }
         literal("rejoin") { execute<Player> { sender, _, _ -> rejoinDungeon(sender) } }
@@ -137,6 +145,7 @@ object CommandRogue {
     @CommandBody(description = "装备命令")
     val gear = subCommand {
         literal("storage") { execute<Player> { sender, _, _ -> GearStorageUI.open(sender) } }
+        literal("loot") { execute<Player> { sender, _, _ -> LootStorageUI.open(sender) } }
         literal("forge") { execute<Player> { sender, _, _ -> openPermanentForge(sender) } }
         literal("identify") { execute<Player> { sender, _, _ -> IdentifyUI.open(sender) } }
         literal("craft") { execute<Player> { sender, _, _ -> ForgeBookUI.open(sender) } }
@@ -163,24 +172,81 @@ object CommandRogue {
         literal("codex") { execute<Player> { sender, _, _ -> CodexUI.open(sender) } }
         literal("stats") { execute<Player> { sender, _, _ -> showStats(sender) } }
         literal("guide") { execute<Player> { sender, _, _ -> GuideUI.open(sender) } }
+        literal("hud") {
+            literal("on") { execute<Player> { sender, _, _ -> LobbyHudManager.setEnabled(sender, true); sender.sendMessage("§a局外侧栏 已开启。") } }
+            literal("off") { execute<Player> { sender, _, _ -> LobbyHudManager.setEnabled(sender, false); sender.sendMessage("§c局外侧栏 已关闭。") } }
+            literal("toggle") { execute<Player> { sender, _, _ -> sender.sendMessage(if (LobbyHudManager.toggle(sender)) "§a局外侧栏 已开启。" else "§c局外侧栏 已关闭。") } }
+            execute<Player> { sender, _, _ -> LobbyHudManager.sendStatus(sender) }
+        }
         execute<CommandSender> { sender, _, _ -> showProgressHelp(sender) }
     }
 
     @CommandBody(description = "管理员命令", permission = "roguecore.admin")
     val admin = subCommand {
         literal("audit") { execute<CommandSender> { sender, _, _ -> runContentAudit(sender) } }
+        literal("perf") {
+            literal("reset") { execute<CommandSender> { sender, _, _ -> PerfMonitor.reset(); sender.sendMessage("§a性能采样已重置。") } }
+            execute<CommandSender> { sender, _, _ -> PerfMonitor.sendSummary(sender) }
+        }
+        literal("ops") {
+            literal("list") { execute<CommandSender> { sender, _, _ -> showOpsList(sender) } }
+            literal("clear-all") { execute<CommandSender> { sender, _, _ -> OpsConfigManager.clearAll(); sender.sendMessage("§a在线覆盖已全部清除。") } }
+            literal("get") {
+                dynamic("path") {
+                    execute<CommandSender> { sender, _, argument -> showOpsGet(sender, argument) }
+                }
+            }
+            literal("clear") {
+                dynamic("path") {
+                    execute<CommandSender> { sender, _, argument -> clearOpsPath(sender, argument) }
+                }
+            }
+            literal("set") {
+                dynamic("path") {
+                    dynamic("value") {
+                        execute<CommandSender> { sender, context, argument ->
+                            setOpsPath(sender, context["path"], argument)
+                        }
+                    }
+                }
+            }
+            execute<CommandSender> { sender, _, _ -> showOpsHelp(sender) }
+        }
         literal("stats") {
             literal("reset") { execute<CommandSender> { sender, _, _ -> BalanceStatsManager.reset(); sender.sendMessage("§a平衡统计已重置。") } }
             execute<CommandSender> { sender, _, _ -> BalanceStatsManager.sendSummary(sender) }
         }
+        literal("affix-rotation") {
+            literal("status") { execute<CommandSender> { sender, _, _ -> showAffixRotationStatus(sender) } }
+            execute<CommandSender> { sender, _, _ -> showAffixRotationStatus(sender) }
+        }
         literal("reload") { execute<CommandSender> { sender, _, _ -> reloadConfigs(sender) } }
         literal("dungeons") { execute<CommandSender> { sender, _, _ -> showDungeons(sender) } }
-        literal("destroy") { dynamic("dungeonId") { suggestion<CommandSender> { _, _ -> DungeonManager.getActiveDungeons().map { it.id } }; execute<CommandSender> { sender, _, argument -> destroyDungeon(sender, argument) } } }
+        literal("destroy") {
+            dynamic("dungeon") {
+                suggestion<CommandSender> { _, _ ->
+                    val size = DungeonManager.getActiveDungeons().size
+                    (1..size).map { it.toString() }
+                }
+                execute<CommandSender> { sender, _, argument -> destroyDungeon(sender, argument) }
+            }
+        }
         literal("forceleave") { dynamic("player") { suggestion<CommandSender> { _, _ -> Bukkit.getOnlinePlayers().map { it.name } }; execute<CommandSender> { sender, _, argument -> forceLeave(sender, argument) } } }
         literal("shards") {
             literal("give") { adminShardAmount("give") }
             literal("take") { adminShardAmount("take") }
             literal("set") { adminShardAmount("set") }
+        }
+        literal("materials") {
+            literal("give") { adminMaterialAmount("give") }
+            literal("take") { adminMaterialAmount("take") }
+            literal("set") { adminMaterialAmount("set") }
+            literal("show") {
+                dynamic("player") {
+                    suggestion<CommandSender> { _, _ -> Bukkit.getOnlinePlayers().map { it.name } }
+                    execute<CommandSender> { sender, _, argument -> adminMaterialShow(sender, argument) }
+                }
+            }
         }
         literal("unlock") {
             dynamic("player") {
@@ -217,7 +283,7 @@ object CommandRogue {
                                 dynamic("extra") {
                                     suggestion<CommandSender> { _, context ->
                                         when (context["kind"].lowercase()) {
-                                            "gear" -> listOf("temporary", "permanent")
+                                            "gear" -> listOf("temporary", "permanent", "permanent_common_noaffix_fixedroll")
                                             "forgebook" -> DungeonLootManager.getForgeBookQualityIds()
                                             "inscription" -> AccessoryRegistry.getInscriptionQualities().map { it.id }.sorted()
                                             else -> emptyList()
@@ -239,6 +305,10 @@ object CommandRogue {
             player.sendMessage("§c你已经在地牢中了! 使用 /rogue run leave 离开")
             return
         }
+        if (player.uniqueId in dungeonEnterPending) {
+            player.sendMessage("§7副本正在生成中，请不要重复点击。")
+            return
+        }
         val party = PartyManager.getParty(player)
         val config = FloorManager.getFloorConfig(floor)
         if (party != null) {
@@ -246,6 +316,7 @@ object CommandRogue {
                 player.sendMessage("§c只有队长才能开启副本!")
                 return
             }
+            val members = mutableListOf<Player>()
             for (uuid in party.members) {
                 val member = Bukkit.getPlayer(uuid)
                 if (member == null) {
@@ -256,25 +327,41 @@ object CommandRogue {
                     player.sendMessage("§c队员 ${member.name} 已在副本中!")
                     return
                 }
+                if (member.uniqueId in dungeonEnterPending) {
+                    player.sendMessage("§c队员 ${member.name} 正在生成副本，请稍候。")
+                    return
+                }
+                members += member
             }
-            player.sendMessage("§e正在为队伍生成地牢...")
-            val instance = DungeonManager.joinPartyDungeon(party, config)
-            if (instance == null) {
-                player.sendMessage("§c地牢创建失败!")
-                return
-            }
-            for (uuid in party.members) {
-                Bukkit.getPlayer(uuid)?.sendMessage("§a队伍已进入地牢 §f${instance.id} §a(${config.theme.name} - ${instance.rooms.size}个房间)")
+            members.forEach { dungeonEnterPending += it.uniqueId }
+            members.forEach { it.closeInventory(); it.sendMessage("§e正在为队伍生成副本，请稍候...") }
+            DungeonManager.createDungeonAsync(config, members) { instance ->
+                if (instance == null) {
+                    members.forEach { it.sendMessage("§c地牢创建失败!") }
+                    members.forEach { dungeonEnterPending -= it.uniqueId }
+                    return@createDungeonAsync
+                }
+                party.dungeonId = instance.id
+                for (member in members) {
+                    DungeonManager.joinDungeon(member, instance.id)
+                    member.sendMessage("§a队伍已进入第 §f${config.floorNumber} §a层副本 §7(${displayThemeName(config.theme.name)} - ${instance.rooms.size} 个房间)")
+                }
+                members.forEach { dungeonEnterPending -= it.uniqueId }
             }
         } else {
-            player.sendMessage("§e正在生成地牢...")
-            val instance = DungeonManager.createDungeon(config)
-            if (instance == null) {
-                player.sendMessage("§c地牢创建失败!")
-                return
+            dungeonEnterPending += player.uniqueId
+            player.closeInventory()
+            player.sendMessage("§e正在生成副本，请稍候...")
+            DungeonManager.createDungeonAsync(config, listOf(player)) { instance ->
+                if (instance == null) {
+                    player.sendMessage("§c地牢创建失败!")
+                    dungeonEnterPending -= player.uniqueId
+                    return@createDungeonAsync
+                }
+                DungeonManager.joinDungeon(player, instance.id)
+                player.sendMessage("§a已进入第 §f${config.floorNumber} §a层副本 §7(${displayThemeName(config.theme.name)} - ${instance.rooms.size} 个房间)")
+                dungeonEnterPending -= player.uniqueId
             }
-            DungeonManager.joinDungeon(player, instance.id)
-            player.sendMessage("§a已进入地牢 §f${instance.id} §a(${config.theme.name} - ${instance.rooms.size}个房间)")
         }
     }
 
@@ -323,12 +410,16 @@ object CommandRogue {
         }
         player.sendMessage("§6===== 队伍信息 §7(${party.size}/${party.maxSize}) §6=====")
         for (uuid in party.members) {
-            val name = Bukkit.getPlayer(uuid)?.name ?: Bukkit.getOfflinePlayer(uuid).name ?: uuid.toString()
+            val name = playerDisplayName(uuid)
             val tag = if (party.isLeader(uuid)) " §6[队长]" else ""
             val online = if (Bukkit.getPlayer(uuid) != null) "§a" else "§7"
             player.sendMessage("  $online$name$tag")
         }
-        if (party.dungeonId != null) player.sendMessage("§e当前副本: §f${party.dungeonId}")
+        party.dungeonId?.let { dungeonId ->
+            val dungeon = DungeonManager.getDungeonById(dungeonId)
+            val dungeonText = dungeon?.let { "第 ${it.config.floorNumber} 层" } ?: "进行中"
+            player.sendMessage("§e当前副本: §f$dungeonText")
+        }
     }
 
     private fun openPermanentForge(player: Player) {
@@ -361,7 +452,7 @@ object CommandRogue {
         if (boons.isNotEmpty()) {
             player.sendMessage("§e当前神恩:")
             for (b in boons) {
-                val tags = if (b.boon.tags.isNotEmpty()) " §8(${b.boon.tags.joinToString("/")})" else ""
+                val tags = if (b.boon.tags.isNotEmpty()) " §8(${b.boon.tags.joinToString("/") { inori.roguecore.display.ContentDisplayNameResolver.safeText(it, "流派") }})" else ""
                 player.sendMessage("  ${b.boon.rarity.color}${b.boon.name} §eLv.${b.level}$tags")
             }
         }
@@ -382,10 +473,25 @@ object CommandRogue {
         }
     }
 
+    private fun CommandComponent.adminMaterialAmount(action: String) {
+        dynamic("player") {
+            suggestion<CommandSender> { _, _ -> Bukkit.getOnlinePlayers().map { it.name } }
+            dynamic("material") {
+                suggestion<CommandSender> { _, _ -> PermanentMaterialManager.materialNames() }
+                dynamic("amount") {
+                    suggestion<CommandSender> { _, _ -> listOf("1", "5", "10", "50", "100") }
+                    execute<CommandSender> { sender, context, argument ->
+                        adminMaterials(sender, listOf(action, context["player"], context["material"], argument))
+                    }
+                }
+            }
+        }
+    }
+
     private fun adminGive(sender: CommandSender, args: List<String>) {
         if (args.size < 3) {
-            sender.sendMessage("§c用法: /rogue admin give <player> <kind> <id> [source] [floor] [extra]")
-            sender.sendMessage("§7kind: gear, unidentified, forgebook, accessory, sealed, inscription")
+            sender.sendMessage("§c用法: /rogue admin give <玩家> <类型> <内容> [来源] [层数] [额外]")
+            sender.sendMessage("§7类型: 装备、未鉴定装备、锻造书、饰品、密封饰品、刻印书")
             return
         }
         val target = Bukkit.getPlayerExact(args[0])
@@ -409,19 +515,33 @@ object CommandRogue {
             }
             "sealed" -> {
                 val definition = AccessoryRegistry.get(id)
-                if (definition == null) DungeonLootManager.AdminGiveItemResult(false, null, "§c饰品模板不存在: §f$id")
+                if (definition == null) {
+                    DungeonLootManager.AdminGiveItemResult(
+                        false,
+                        null,
+                        "§c饰品模板不存在: §f${ContentDisplayNameResolver.safeText(id, "未知饰品")}"
+                    )
+                }
                 else DungeonLootManager.AdminGiveItemResult(true, AccessoryItemCodec.buildSealedAccessory(definition, source, floor), "§a已生成密封饰品: §f${definition.name}")
             }
             "inscription" -> {
                 val definition = AccessoryRegistry.get(id)
                 val quality = AccessoryRegistry.getInscriptionQuality(extra) ?: AccessoryRegistry.getInscriptionQuality("rough")
                 when {
-                    definition == null -> DungeonLootManager.AdminGiveItemResult(false, null, "§c饰品模板不存在: §f$id")
-                    quality == null -> DungeonLootManager.AdminGiveItemResult(false, null, "§c刻印品质不存在: §f$extra")
+                    definition == null -> DungeonLootManager.AdminGiveItemResult(
+                        false,
+                        null,
+                        "§c饰品模板不存在: §f${ContentDisplayNameResolver.safeText(id, "未知饰品")}"
+                    )
+                    quality == null -> DungeonLootManager.AdminGiveItemResult(
+                        false,
+                        null,
+                        "§c刻印品质不存在: §f${ContentDisplayNameResolver.safeText(extra, "未知品质")}"
+                    )
                     else -> DungeonLootManager.AdminGiveItemResult(true, AccessoryItemCodec.buildInscriptionBook(definition, source, floor, quality), "§a已生成饰品刻印书: §f${definition.name} §7(${quality.displayName})")
                 }
             }
-            else -> DungeonLootManager.AdminGiveItemResult(false, null, "§c未知 kind: §f$kind")
+            else -> DungeonLootManager.AdminGiveItemResult(false, null, "§c未知测试物品类型: §f$kind")
         }
         if (!result.success || result.item == null) {
             sender.sendMessage(result.message)
@@ -473,6 +593,64 @@ object CommandRogue {
                 sender.sendMessage("§a已将 §f${target.name} §a的灵魂碎片设置为 §6$amount§a。")
             }
             else -> sender.sendMessage("§c未知操作: §f${args[0]}")
+        }
+    }
+
+    private fun adminMaterials(sender: CommandSender, args: List<String>) {
+        if (args.size < 4) {
+            sender.sendMessage("§c用法: /rogue admin materials <give|take|set> <player> <材料中文名> <amount>")
+            sender.sendMessage("§7材料: ${PermanentMaterialManager.materialNames().joinToString("、")}")
+            return
+        }
+        val target = Bukkit.getPlayerExact(args[1])
+        if (target == null) {
+            sender.sendMessage("§c玩家不在线: §f${args[1]}")
+            return
+        }
+        val type = PermanentMaterialManager.fromDisplayName(args[2])
+        if (type == null) {
+            sender.sendMessage("§c未知材料: §f${args[2]}")
+            sender.sendMessage("§7仅支持中文名: ${PermanentMaterialManager.materialNames().joinToString("、")}")
+            return
+        }
+        val amount = args[3].toIntOrNull()
+        if (amount == null || amount < 0) {
+            sender.sendMessage("§c数量必须是大于等于 0 的整数。")
+            return
+        }
+        when (args[0].lowercase()) {
+            "give" -> {
+                PermanentMaterialManager.add(target, type, amount)
+                sender.sendMessage("§a已为 §f${target.name} §a增加 ${type.coloredName()} §fx$amount§a。")
+            }
+            "take" -> {
+                if (!PermanentMaterialManager.take(target, type, amount)) {
+                    sender.sendMessage("§c${target.name} 的${type.displayName}不足，无法扣除 §fx$amount§c。")
+                    return
+                }
+                sender.sendMessage("§a已从 §f${target.name} §a扣除 ${type.coloredName()} §fx$amount§a。")
+            }
+            "set" -> {
+                PermanentMaterialManager.set(target, type, amount)
+                sender.sendMessage("§a已将 §f${target.name} §a的${type.displayName}设置为 §fx$amount§a。")
+            }
+            else -> sender.sendMessage("§c未知操作: §f${args[0]}")
+        }
+    }
+
+    private fun adminMaterialShow(sender: CommandSender, playerName: String?) {
+        if (playerName.isNullOrBlank()) {
+            sender.sendMessage("§c用法: /rogue admin materials show <player>")
+            return
+        }
+        val target = Bukkit.getPlayerExact(playerName)
+        if (target == null) {
+            sender.sendMessage("§c玩家不在线: §f$playerName")
+            return
+        }
+        sender.sendMessage("§6===== ${target.name} 的局外锻造材料 =====")
+        PermanentMaterialManager.MaterialType.values().forEach { type ->
+            sender.sendMessage("§7- ${PermanentMaterialManager.formatOwnedLine(target, type)}")
         }
     }
 
@@ -545,32 +723,35 @@ object CommandRogue {
     }
 
     private fun showDungeons(sender: CommandSender) {
-        val dungeons = DungeonManager.getActiveDungeons()
+        val dungeons = DungeonManager.getActiveDungeons().sortedBy { it.config.floorNumber }
         if (dungeons.isEmpty()) {
             sender.sendMessage("§7当前没有活跃副本。")
             return
         }
         sender.sendMessage("§6===== 活跃副本 ${dungeons.size} 个 =====")
-        for (dungeon in dungeons) {
-            val names = dungeon.players.map { uuid -> Bukkit.getPlayer(uuid)?.name ?: Bukkit.getOfflinePlayer(uuid).name ?: uuid.toString() }
-            sender.sendMessage("§e${dungeon.id} §7- Floor §f${dungeon.config.floorNumber} §8(${dungeon.config.theme.name}) §7玩家:${dungeon.players.size} §8[${names.joinToString(", ")}]")
+        dungeons.forEachIndexed { index, dungeon ->
+            val names = dungeon.players.map(::playerDisplayName)
+            sender.sendMessage("§e副本 ${index + 1} §7- 第 §f${dungeon.config.floorNumber} §7层 §8(${displayThemeName(dungeon.config.theme.name)}) §7玩家:${dungeon.players.size} §8[${names.joinToString(", ")}]")
         }
     }
 
-    private fun destroyDungeon(sender: CommandSender, dungeonId: String?) {
-        if (dungeonId.isNullOrBlank()) {
-            sender.sendMessage("§c用法: /rogue admin destroy <dungeonId>")
+    private fun destroyDungeon(sender: CommandSender, dungeonToken: String?) {
+        if (dungeonToken.isNullOrBlank()) {
+            sender.sendMessage("§c用法: /rogue admin destroy <副本编号>")
             return
         }
-        val dungeon = DungeonManager.getDungeonById(dungeonId)
+        val dungeons = DungeonManager.getActiveDungeons().sortedBy { it.config.floorNumber }
+        val dungeon = dungeonToken.toIntOrNull()
+            ?.let { index -> dungeons.getOrNull(index - 1) }
+            ?: DungeonManager.getDungeonById(dungeonToken)
         if (dungeon == null) {
-            sender.sendMessage("§c未找到副本: §f$dungeonId")
+            sender.sendMessage("§c未找到对应的活跃副本。")
             return
         }
         val playerCount = dungeon.players.size
         val floor = dungeon.config.floorNumber
         DungeonManager.destroyDungeon(dungeon.id)
-        sender.sendMessage("§a已销毁副本 §f${dungeon.id} §7(Floor $floor, 玩家 $playerCount)")
+        sender.sendMessage("§a已销毁该副本 §7(Floor $floor, 玩家 $playerCount)")
     }
 
     private fun forceLeave(sender: CommandSender, name: String?) {
@@ -589,7 +770,7 @@ object CommandRogue {
             return
         }
         DungeonManager.leaveDungeon(target)
-        sender.sendMessage("§a已强制让 §f${target.name} §a离开副本 §f${dungeon.id}")
+        sender.sendMessage("§a已强制让 §f${target.name} §a离开当前副本。")
         target.sendMessage("§c管理员已强制将你移出副本。")
     }
 
@@ -599,18 +780,18 @@ object CommandRogue {
             player.sendMessage("§c你不在地牢中!")
             return
         }
-        player.sendMessage("§6===== 地牢信息 =====")
-        player.sendMessage("§eID: §f${dungeon.id}")
-        player.sendMessage("§e主题: §f${dungeon.config.theme.name}")
+        player.sendMessage("§6===== 副本信息 =====")
+        player.sendMessage("§e当前楼层: §f第 ${dungeon.config.floorNumber} 层")
+        player.sendMessage("§e主题: §f${displayThemeName(dungeon.config.theme.name)}")
         player.sendMessage("§e房间数: §f${dungeon.rooms.size}")
         player.sendMessage("§e玩家数: §f${dungeon.players.size}")
-        for (room in dungeon.rooms) {
+        dungeon.rooms.forEachIndexed { index, room ->
             val stateColor = when (room.state.name) {
                 "CLEARED" -> "§a"
                 "ACTIVE" -> "§c"
                 else -> "§7"
             }
-            player.sendMessage("  ${stateColor}#${room.id} §f${room.type.displayName} ${stateColor}[${room.state.name}]")
+            player.sendMessage("  ${stateColor}房间 ${index + 1} §f${room.type.displayName} ${stateColor}[${roomStateName(room.state.name)}]")
         }
         player.sendMessage("§e隐藏钥匙: §b${dungeon.getHiddenKeys()}")
     }
@@ -625,7 +806,7 @@ object CommandRogue {
             return
         }
         DungeonManager.joinDungeon(player, instance.id)
-        player.sendMessage("§a新地牢 §f${instance.id} §a已生成 (${instance.rooms.size}个房间)")
+        player.sendMessage("§a新的第 §f${config.floorNumber} §a层副本已生成 §7(${instance.rooms.size} 个房间)")
     }
 
     private fun reloadConfigs(sender: CommandSender) {
@@ -654,15 +835,15 @@ object CommandRogue {
         sender.sendMessage("§e/rogue §7- 打开主菜单")
         sender.sendMessage("§e/rogue run ... §7- 冒险、副本、构筑、报告")
         sender.sendMessage("§e/rogue party ... §7- 队伍管理")
-        sender.sendMessage("§e/rogue gear storage ... §7- 装备、鉴定、锻造、回收")
+        sender.sendMessage("§e/rogue gear storage/loot ... §7- 装备仓库、战利品仓库、鉴定、锻造、回收")
         sender.sendMessage("§e/rogue accessory box ... §7- 饰品匣、饰品鉴定、饰品刻印")
-        sender.sendMessage("§e/rogue progress ... §7- 天赋、研究、收藏、图鉴、引导")
+        sender.sendMessage("§e/rogue progress ... §7- 天赋、研究、收藏、图鉴、引导、局外侧栏")
         sender.sendMessage("§e/rogue admin ... §7- 管理与测试")
     }
 
     private fun showRunHelp(sender: CommandSender, unknown: String = "") {
         if (unknown.isNotBlank()) sender.sendMessage("§c未知冒险操作: §f$unknown")
-        sender.sendMessage("§6冒险: §e/rogue run enter [floor]§7, leave, rejoin, route, build, modifiers, milestones, summary")
+        sender.sendMessage("§6冒险: §e/rogue run enter §7打开层数选择，§e/rogue run enter <floor>§7直接进入，leave, rejoin, route, build, modifiers, milestones, summary")
     }
 
     private fun showPartyHelp(sender: CommandSender, unknown: String = "") {
@@ -672,7 +853,7 @@ object CommandRogue {
 
     private fun showGearHelp(sender: CommandSender, unknown: String = "") {
         if (unknown.isNotBlank()) sender.sendMessage("§c未知装备操作: §f$unknown")
-        sender.sendMessage("§6装备: §e/rogue gear storage§7, forge, identify, craft, salvage, materials, workshop")
+        sender.sendMessage("§6装备: §e/rogue gear storage§7, loot, forge, identify, craft, salvage, materials, workshop")
     }
 
     private fun showAccessoryHelp(sender: CommandSender, unknown: String = "") {
@@ -682,22 +863,112 @@ object CommandRogue {
 
     private fun showProgressHelp(sender: CommandSender, unknown: String = "") {
         if (unknown.isNotBlank()) sender.sendMessage("§c未知成长操作: §f$unknown")
-        sender.sendMessage("§6成长: §e/rogue progress talent§7, unlocks, collection, codex, stats, guide")
+        sender.sendMessage("§6成长: §e/rogue progress talent§7, unlocks, collection, codex, stats, guide, hud")
     }
 
     private fun showAdminHelp(sender: CommandSender) {
         sender.sendMessage("§6===== RogueCore 管理命令 =====")
         sender.sendMessage("§e/rogue admin audit §7- 内容自检")
         sender.sendMessage("§e/rogue admin stats [reset] §7- 平衡统计")
+        sender.sendMessage("§e/rogue admin perf [reset] §7- 关键路径性能采样")
+        sender.sendMessage("§e/rogue admin affix-rotation [status] §7- 查看副本词缀轮换池")
+        sender.sendMessage("§e/rogue admin ops ... §7- 在线覆盖平衡参数(内存)")
         sender.sendMessage("§e/rogue admin reload §7- 重载配置")
         sender.sendMessage("§e/rogue admin dungeons/destroy/forceleave §7- 副本管理")
-        sender.sendMessage("§e/rogue admin shards/unlock/talentset/reset §7- 玩家数据")
-        sender.sendMessage("§e/rogue admin give <player> <kind> <id> [source] [floor] [extra] §7- 给测试物品")
+        sender.sendMessage("§e/rogue admin shards/materials/unlock/talentset/reset §7- 玩家数据")
+        sender.sendMessage("§e/rogue admin give <玩家> <类型> <内容> [来源] [层数] [额外] §7- 给测试物品")
+        sender.sendMessage("§e/rogue admin materials <give|take|set|show> <玩家> [材料中文名] [数量] §7- 管理局外锻造材料")
+    }
+
+    private fun showOpsHelp(sender: CommandSender) {
+        sender.sendMessage("§6===== RogueCore 在线调参 =====")
+        sender.sendMessage("§e/rogue admin ops list §7- 查看当前覆盖")
+        sender.sendMessage("§e/rogue admin ops get <path> §7- 查看单个覆盖")
+        sender.sendMessage("§e/rogue admin ops set <path> <value> §7- 设置覆盖(支持 int/double/bool)")
+        sender.sendMessage("§e/rogue admin ops clear <path> §7- 清除单个覆盖")
+        sender.sendMessage("§e/rogue admin ops clear-all §7- 清除所有覆盖")
+        sender.sendMessage("§7允许前缀: hud., guide., generation., storage.loot.")
+    }
+
+    private fun showOpsList(sender: CommandSender) {
+        val entries = OpsConfigManager.list()
+        if (entries.isEmpty()) {
+            sender.sendMessage("§7当前没有在线覆盖。")
+            return
+        }
+        sender.sendMessage("§6===== 当前在线覆盖 ${entries.size} 项 =====")
+        entries.forEach { (path, value) ->
+            sender.sendMessage("§e$path §7= §f$value")
+        }
+    }
+
+    private fun showOpsGet(sender: CommandSender, path: String?) {
+        if (path.isNullOrBlank()) {
+            sender.sendMessage("§c用法: /rogue admin ops get <path>")
+            return
+        }
+        val value = OpsConfigManager.get(path)
+        if (value == null) {
+            sender.sendMessage("§7未设置覆盖: §f$path")
+            return
+        }
+        sender.sendMessage("§e$path §7= §f$value")
+    }
+
+    private fun clearOpsPath(sender: CommandSender, path: String?) {
+        if (path.isNullOrBlank()) {
+            sender.sendMessage("§c用法: /rogue admin ops clear <path>")
+            return
+        }
+        if (OpsConfigManager.clear(path)) {
+            sender.sendMessage("§a已清除覆盖: §f$path")
+        } else {
+            sender.sendMessage("§7该路径没有覆盖: §f$path")
+        }
+    }
+
+    private fun setOpsPath(sender: CommandSender, path: String?, rawValue: String?) {
+        if (path.isNullOrBlank() || rawValue.isNullOrBlank()) {
+            sender.sendMessage("§c用法: /rogue admin ops set <path> <value>")
+            return
+        }
+        val result = OpsConfigManager.set(path, rawValue)
+        if (result.isSuccess) {
+            sender.sendMessage("§a已设置覆盖: §f$path §7= §f$rawValue")
+        } else {
+            sender.sendMessage("§c设置失败: ${result.exceptionOrNull()?.message ?: "未知错误"}")
+        }
     }
 
     private fun runContentAudit(sender: CommandSender) {
         val result = ContentAuditManager.run()
         for (line in ContentAuditManager.format(result)) sender.sendMessage(line)
+    }
+
+    private fun showAffixRotationStatus(sender: CommandSender) {
+        val snapshot = AffixRegistry.getRotationSnapshot()
+        sender.sendMessage("§6===== 副本词缀轮换池 =====")
+        sender.sendMessage("§7状态: ${if (snapshot.enabled) "§a已启用" else "§8未启用"}")
+        sender.sendMessage("§7当前池: §f${snapshot.activePool ?: "全池(未限制)"}")
+        sender.sendMessage("§7轮换周期: §f${snapshot.cycleDays} 天")
+        sender.sendMessage("§7锚点日期: §f${snapshot.anchorDate}")
+        sender.sendMessage("§7时区: §f${snapshot.timezone}")
+    }
+
+    private fun playerDisplayName(uuid: UUID): String {
+        return Bukkit.getPlayer(uuid)?.name ?: Bukkit.getOfflinePlayer(uuid).name ?: "离线玩家"
+    }
+
+    private fun displayThemeName(raw: String): String = ContentDisplayNameResolver.safeText(raw, "未知主题")
+
+    private fun roomStateName(state: String): String = when (state) {
+        "CLEARED" -> "已清理"
+        "ACTIVE" -> "进行中"
+        "COMPLETED" -> "已完成"
+        "LOCKED" -> "未开放"
+        "VISITED" -> "已进入"
+        "IDLE" -> "未进入"
+        else -> "未知"
     }
 
     private data class ResolvedTarget(val uuid: UUID, val name: String, val player: Player? = null)

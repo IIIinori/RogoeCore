@@ -39,7 +39,7 @@ object BoonRegistry {
         for (id in section.getKeys(false)) {
             val boonSection = section.getConfigurationSection(id) ?: continue
             try {
-                val name = boonSection.getString("name") ?: id
+                val name = boonSection.getString("name")?.takeUnless { it == id } ?: "未命名神恩"
                 val description = boonSection.getString("description") ?: ""
                 val rarityStr = boonSection.getString("rarity") ?: "COMMON"
                 val rarity = try { BoonRarity.valueOf(rarityStr.uppercase()) } catch (_: Exception) { BoonRarity.COMMON }
@@ -88,7 +88,7 @@ object BoonRegistry {
 
                 val boon = Boon(
                     id = id,
-                    name = name,
+                    name = name.takeUnless { it == id } ?: "未命名神恩",
                     description = description,
                     rarity = rarity,
                     icon = icon,

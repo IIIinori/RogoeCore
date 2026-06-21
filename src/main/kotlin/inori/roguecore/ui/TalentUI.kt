@@ -133,7 +133,6 @@ object TalentUI {
 
         val lore = mutableListOf<String>()
         lore.add("")
-        lore.add("§8ID: ${talent.id}")
 
         if (currentLevel > 0) {
             val value = talent.getValue(currentLevel)

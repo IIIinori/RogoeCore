@@ -1,6 +1,7 @@
 package inori.roguecore.balance
 
 import inori.roguecore.data.PermanentMaterialManager
+import inori.roguecore.ops.OpsConfigManager
 import taboolib.module.configuration.Config
 import taboolib.module.configuration.Configuration
 
@@ -11,15 +12,15 @@ object BalanceConfigManager {
         private set
 
     fun getInt(path: String, default: Int): Int {
-        return config.getInt(path, default)
+        return OpsConfigManager.getInt(config, path, default)
     }
 
     fun getDouble(path: String, default: Double): Double {
-        return config.getDouble(path, default)
+        return OpsConfigManager.getDouble(config, path, default)
     }
 
     fun getBoolean(path: String, default: Boolean): Boolean {
-        return config.getBoolean(path, default)
+        return OpsConfigManager.getBoolean(config, path, default)
     }
 
     fun getMaterialMap(path: String, default: Map<PermanentMaterialManager.MaterialType, Int> = emptyMap()): Map<PermanentMaterialManager.MaterialType, Int> {

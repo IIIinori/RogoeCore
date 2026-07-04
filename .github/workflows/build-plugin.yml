@@ -70,5 +70,4 @@ jobs:
             "${{ steps.artifact.outputs.jar_path }}" \
             --repo "${{ github.repository }}" \
             --title "${{ steps.artifact.outputs.release_name }}" \
-            --notes "Built from commit ${{ github.sha }} by Arcat AI." \
-            --prerelease
+            --notes "Built from commit ${{ github.sha }} by Arcat AI."

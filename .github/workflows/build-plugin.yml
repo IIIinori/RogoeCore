@@ -8,6 +8,9 @@ on:
         required: false
         default: dev
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,9 +30,45 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
+      - name: Resolve plugin jar
+        id: artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ ! -d build/libs ]; then
+            echo "No Gradle build output found under build/libs" >&2
+            exit 1
+          fi
+
+          jar_path="$(find build/libs -maxdepth 1 -type f -name '*.jar' ! -name '*-sources.jar' ! -name '*-javadoc.jar' | sort | head -n 1)"
+          if [ -z "$jar_path" ]; then
+            echo "No plugin jar found under build/libs" >&2
+            exit 1
+          fi
+
+          version="${{ github.event.inputs.version || 'dev' }}"
+          safe_version="$(printf '%s' "$version" | tr -c 'A-Za-z0-9._-' '-')"
+          tag="arcat-$safe_version-$GITHUB_RUN_ID"
+          release_name="Arcat Plugin $version #$GITHUB_RUN_NUMBER"
+
+          echo "jar_path=$jar_path" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "release_name=$release_name" >> "$GITHUB_OUTPUT"
+
       - name: Upload plugin artifact
         uses: actions/upload-artifact@v4
         with:
           name: plugin-jar
-          path: |
-            build/libs/*.jar
+          path: ${{ steps.artifact.outputs.jar_path }}
+
+      - name: Publish GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.artifact.outputs.tag }}" \
+            "${{ steps.artifact.outputs.jar_path }}" \
+            --repo "${{ github.repository }}" \
+            --title "${{ steps.artifact.outputs.release_name }}" \
+            --notes "Built from commit ${{ github.sha }} by Arcat AI." \
+            --prerelease
